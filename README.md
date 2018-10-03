@@ -10,7 +10,7 @@ Longer: a Red Team's SIEM that serves three goals:
 
 Here's a conceptual overview of how RedELK works.
 
-![](./images/redelk_overview_.png)
+![](./images/redelk_overview.png)
 
 
 RedELK uses the typical components Filebeat (shipping), Logstash (filtering), Elasticsearch (storage) and Kibana (viewing). Rsync is used for a second syncing of teamserver data: logs, keystrokes, screenshots, etc. Nginx is used for authentication to Kibana, as well as serving the screenshots, beaconlogs, keystrokes in an easy way in the operator's browser.
