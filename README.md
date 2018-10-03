@@ -181,7 +181,7 @@ During installation all actions are logged in a log file in the current working 
 During operations, all RedELK specific logs are logged on the ELK server in `/var/log/redelk`. You probably only need this for troubleshooting.
 
 
-# Authors and contribution#
+# Authors and contribution #
 This project is developed and maintained by:
 - Marc Smeets (@smeetsie on Github and @mramsmeets on Twitter).
 - Mark Bergman (@xychix on Github and Twitter)
