@@ -27,7 +27,7 @@ RedELK currently supports:
 
 RedELK requires a modification to the default haproxy configuration in order to log more details.
 
-In the general section:
+In the 'general' section:
 ```
 log-format frontend:%f/%H/%fi:%fp\ backend:%b\ client:%ci:%cp\ GMT:%T\ useragent:%[capture.req.hdr(1)]\ body:%[capture.req.hdr(0)]\ request:%r
 ```
@@ -78,7 +78,7 @@ Copy and extract elkserver.tgz on your RedELK server as part of your red team in
 Run: `install-teamserver.sh`
 This script will set the timezone (default Europe/Amsterdam), install logstash, elasticsearch, kibana and dependencies, install required certificates, deploy the logstash configuration and required custom ruby enrichment scripts, download GeoIP databases, install Nginx, configure Nginx, create a local user 'redelk' with the earlier generated SSH keys, install the script for rsyncing of remote logs on teamservers, install the script used for creating of thumbnails of screenshots, install the RedELK configuration files, install crontab file for RedELK tasks, install GeoIP elasticsearch plugins and adjust the template, install the python enrichment scripts, and finally install the python blue team detection scripts.
 
-You are not done yet. You need to manually enter the details of your teamservers in `/etc/cron.d/redelk`. 
+You are not done yet. You need to manually enter the details of your teamservers in `/etc/cron.d/redelk`, as well as tune the config files in `/etc/redelk` (see section below). 
 
 **Setting up enrichment and detection**
 
@@ -95,10 +95,16 @@ If you alter these files prior to your initial setup, these changes will be incl
 To change the authentication onto Nginx, change `/etc/nginx/htpasswd.users` to include your preferred credentials. Or `./RedELK/elkserver/etc/nginx/htpasswd.users` prior to initial setup.
 
 
+# Under the hood #
+If you want to take a look under the hood on the ELK server, take a look at the redelk cron file in `/etc/cron.d/redelk`. It starts several scripts in `/usr/share/redelk/bin/`. Some scripts are for enrichment, others are for alarming. The configuration of these scripts is done with the config files in `/etc/redelk/`. 
+There is also heavy enrichment done (inlcuding the generation of hyperlinks for screenshtos, etc) in logstash. You can check that out direcly form the logstash config files in `/etc/logstash/conf.d/`.
+
+
 # Current state  and features on todo-list #
 This project is still in alpha phase. This means that it works on our machines and our environment, but no extended testing is performed on different setups. This also means that naming and structure of the code is still subject to change.
 
 We are working (and you are invited to contribute) on the following features for next versions:
+- **default index issue**. Automate the selection of the rtops-\* index as the default one in Kibana. This is a manual step at this moment.
 - **Include the real external IP address of a beacon**. As Cobalt Strike has no knowledge of the real external IP address of a beacon session, we need to get this form the traffic index. So far, we have not found a true 100% reliable way for doing this. 
 - **Support for Apache redirectors**. Fully tested and working filebeat and logstash configuration files that support Apache based redirectors. Possibly additional custom log configuration needed for Apache. Low priority.
 - **Solve rsyslog max log line issue**. Rsyslog (default syslog service on Ubuntu) breaks long syslog lines. Depending on the CS profile you use, this can become an issue. As a result, the parsing of some of the fields are properly parsed by logstash, and thus not properly included in elasticsearch.
@@ -115,9 +121,9 @@ We are working (and you are invited to contribute) on the following features for
 
 **First time login**
 
-Browse to your RedELK server's IP address and login with the credentials from Nginx (default is redelk:redelk). You are now in a Kibana interface. 
+Browse to your RedELK server's IP address and login with the credentials from Nginx (default is redelk:redelk). You are now in a Kibana interface. You may be asked to create a default index for kibana. You can select any of the available indices, it doesn't matter which one you pick.
 
-There are probably two things you want to do here: look at dashboards, or look and search the data in more detail. You switch between those views using the buttons on the left bar (default Kibana functionality).
+There are probably two things you want to do here: look at dashboards, or look and search the data in more detail. You can switch between those views using the buttons on the left bar (default Kibana functionality).
 
 ### Dashboards ###
 Click on the dashboard icon on the left, and you'll be given 2 choices: Traffic and Beacon. 
