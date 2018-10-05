@@ -1,0 +1,28 @@
+[req]
+distinguished_name = req_distinguished_name
+x509_extensions = v3_req
+prompt = no
+
+[req_distinguished_name]
+C = MODIFYME
+ST = MODIFYME
+L = MODIFYME
+O = MODIFYME
+OU = MODIFYME
+CN = MODIFYME
+emailAddress = MODIFYME
+
+[v3_ca]
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid:always,issuer:always
+basicConstraints = CA:TRUE
+
+[v3_req]
+keyUsage = keyEncipherment, dataEncipherment
+extendedKeyUsage = serverAuth
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1 = dnsnameofyourredelkserver
+DNS.2 = someseconddnsname
+IP.1 = 123.123.123.123

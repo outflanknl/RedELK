@@ -1,0 +1,63 @@
+filebeat.prospectors:
+- type: log
+  scan_frequency: 5s
+  enabled: true
+  fields_under_root: true
+  paths:
+    - /root/cobaltstrike/logs/*/events.log
+  fields:
+    infralogtype: rtops
+    cslogtype: events
+
+- type: log
+  scan_frequency: 5s
+  enabled: true
+  fields_under_root: true
+  paths:
+    - /root/cobaltstrike/logs/*/weblog.log
+  fields:
+    infralogtype: rtops
+    cslogtype: weblog
+
+- type: log
+  scan_frequency: 5s
+  enabled: true
+  fields_under_root: true
+  paths:
+    - /root/cobaltstrike/logs/*/*/beacon_*.log
+  multiline.pattern: '^\d\d\/\d\d\s\d\d\:\d\d\:\d\d\s\[' # match "06/19 12:32:56 ["
+  multiline.negate: true
+  multiline.match: after
+  fields:
+    infralogtype: rtops
+    cslogtype: beacon
+
+- type: log
+  scan_frequency: 5s
+  enabled: true
+  fields_under_root: true
+  paths:
+    - /root/cobaltstrike/logs/*/*/keystrokes/keystrokes_*.txt
+  multiline.pattern: '^\d\d\/\d\d\s\d\d\:\d\d\:\d\d\s\bReceived keystrokes\b$' # match "06/19 12:32:56 Received keystrokes"
+  multiline.negate: true
+  multiline.match: after
+  fields:
+    infralogtype: rtops
+    cslogtype: keystrokes
+
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: false
+
+setup.template.settings:
+  index.number_of_shards: 3
+
+name: "@@HOSTNAME@@"
+fields_under_root: true
+fields:
+  attackscenario: @@ATTACKSCENARIO@@
+harvester.limit: 1
+
+output.logstash:
+  hosts: ["@@HOSTANDPORT@@"]
+  ssl.certificate_authorities: ["/etc/filebeat/redelkCA.crt"]
