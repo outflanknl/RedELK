@@ -44,7 +44,7 @@ capture request header User-Agent len 512
 
 **First time installation**
 
-Adjust `./certs/config.cnf` to include the right detials for the TLS certificates. Once done, run: `initial-setup.sh` This will create a CA, generate necessary certificates for secure communication between redirs, teamserver and elkserver and generates a SSH keypair for secure rsync authentication of the elkserver to the teamserver. It also generates `teamservers.tgz`, `redirs.tgz` and `elkserver.tgz` that contain the installation packages for each component.
+Adjust `./certs/config.cnf` to include the right details for the TLS certificates. Once done, run: `initial-setup.sh` This will create a CA, generate necessary certificates for secure communication between redirs, teamserver and elkserver and generates a SSH keypair for secure rsync authentication of the elkserver to the teamserver. It also generates `teamservers.tgz`, `redirs.tgz` and `elkserver.tgz` that contain the installation packages for each component.
 Rerunning this initial setup is not required. But if you want new certificates for a new operation, you can simply run this again. 
 
 **Installation of redirectors**
