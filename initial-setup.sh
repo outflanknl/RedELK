@@ -99,7 +99,7 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "Copying certificates to relevant redir and teamserver folders."
-cp ./certs/* ./elkserver/logstash/certs/ >> $LOGFILE 2>&1
+cp -r ./certs ./elkserver/logstash/ >> $LOGFILE 2>&1
 cp ./certs/redelkCA.crt ./teamservers/filebeat/ >> $LOGFILE 2>&1
 cp ./certs/redelkCA.crt ./redirs/filebeat/ >> $LOGFILE 2>&1
 
