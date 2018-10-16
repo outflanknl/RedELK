@@ -1,5 +1,9 @@
 Red Team's SIEM - easy deployable tool for Red Teams used for tracking and alarming about Blue Team activities as well as better usability for the Red Team in long term operations.
 
+Initial public release at BruCON 2018:
+- Video: https://www.youtube.com/watch?v=OjtftdPts4g
+- Presentation slides: https://github.com/outflanknl/Presentations/blob/master/MirrorOnTheWall_BruCon2018_UsingBlueTeamTechniquesinRedTeamOps_Bergman-Smeets_FINAL.pdf
+
 # Goal of the project #
 Short: a Red Team's SIEM.
 
