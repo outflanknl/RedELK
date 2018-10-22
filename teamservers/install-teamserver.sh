@@ -165,7 +165,7 @@ fi
 echo "Setting ssh key authentication for scponly user"
 grep scponly /etc/passwd > /dev/null
 EXIT=$?
-if [ $EXIT -ne 0  ]; then
+if [ $EXIT -eq 0  ]; then
     mkdir -p /home/scponly/.ssh && cat ./ssh/id_rsa.pub >> /home/scponly/.ssh/authorized_keys && chown -R scponly /home/scponly/.ssh && chmod 700 /home/scponly/.ssh 
 fi  >> $LOGFILE 2>&1
 ERROR=$?
