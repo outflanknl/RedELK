@@ -189,7 +189,7 @@ allowscp
 allowsftp
 allowrsync
 user = scponly:011:100110:
-EOF 
+EOF
 fi >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
