@@ -34,7 +34,7 @@ if [ "$CHECKFILEBEATINSTALLED" = "true" ]; then
     echo "Checking if filebeat is already installed"
     dpkg -s filebeat | grep Status >> $LOGFILE 2>&1
     ERROR=$?
-    if [ $ERROR -e 0 ] ; then
+    if [ $ERROR -eq 0 ] ; then
         echoerror "Filebeat already installed. Quiting (Error Code: $ERROR)."
         echo "[X] Filebeat already installed."
         echo " Please check manually if the installed version equals what your ELK server expects." 
@@ -165,7 +165,7 @@ fi
 echo "Setting ssh key authentication for scponly user"
 grep scponly /etc/passwd > /dev/null
 EXIT=$?
-if [ $EXIT -e 0  ]; then
+if [ $EXIT -eq 0  ]; then
     mkdir -p /home/scponly/.ssh && cat ./ssh/id_rsa.pub >> /home/scponly/.ssh/authorized_keys && chown -R scponly /home/scponly/.ssh && chmod 700 /home/scponly/.ssh 
 fi  >> $LOGFILE 2>&1
 ERROR=$?
