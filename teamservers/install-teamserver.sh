@@ -32,7 +32,7 @@ fi
 
 if [ "$CHECKFILEBEATINSTALLED" = "true" ]; then
     echo "Checking if filebeat is already installed"
-    dpkg -s filebeat | grep Status >> $LOGFILE 2>&1
+    dpkg -s filebeat 2>&1 | grep Status >> $LOGFILE 2>&1
     ERROR=$?
     if [ $ERROR -eq 0 ] ; then
         echoerror "Filebeat already installed. Quiting (Error Code: $ERROR)."
