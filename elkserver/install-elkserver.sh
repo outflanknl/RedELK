@@ -188,6 +188,9 @@ if [ $ERROR -ne 0 ]; then
 fi
 sleep 10
 
+echo "Sleeping for a few seconds to let all services start properly"
+sleep 30
+
 echo "Restarting nginx"
 service nginx restart >> $LOGFILE 2>&1
 ERROR=$?
