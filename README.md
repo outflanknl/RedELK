@@ -108,7 +108,6 @@ There is also heavy enrichment done (inlcuding the generation of hyperlinks for 
 This project is still in alpha phase. This means that it works on our machines and our environment, but no extended testing is performed on different setups. This also means that naming and structure of the code is still subject to change.
 
 We are working (and you are invited to contribute) on the following features for next versions:
-- **default index issue**. Automate the selection of the rtops-\* index as the default one in Kibana. This is a manual step at this moment.
 - **Include the real external IP address of a beacon**. As Cobalt Strike has no knowledge of the real external IP address of a beacon session, we need to get this form the traffic index. So far, we have not found a true 100% reliable way for doing this. 
 - **Support for Apache redirectors**. Fully tested and working filebeat and logstash configuration files that support Apache based redirectors. Possibly additional custom log configuration needed for Apache. Low priority.
 - **Solve rsyslog max log line issue**. Rsyslog (default syslog service on Ubuntu) breaks long syslog lines. Depending on the CS profile you use, this can become an issue. As a result, the parsing of some of the fields are properly parsed by logstash, and thus not properly included in elasticsearch.
