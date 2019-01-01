@@ -4,10 +4,7 @@
 #
 # Author: Outflank B.V. / Mark Bergman / @xychix
 #
-# License : BSD3
-#
-# Version: 0.8
-#
+
 import requests
 import json
 from datetime import datetime

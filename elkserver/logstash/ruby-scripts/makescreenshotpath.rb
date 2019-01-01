@@ -4,9 +4,6 @@
 #
 # Author: Outflank B.V. / Marc Smeets / @mramsmeets
 #
-# License : BSD3
-#
-
 
 def register(params)
 #        @timestamp = params["timestamp"]
