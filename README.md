@@ -101,7 +101,7 @@ To change the authentication onto Nginx, change `/etc/nginx/htpasswd.users` to i
 
 # Under the hood #
 If you want to take a look under the hood on the ELK server, take a look at the redelk cron file in `/etc/cron.d/redelk`. It starts several scripts in `/usr/share/redelk/bin/`. Some scripts are for enrichment, others are for alarming. The configuration of these scripts is done with the config files in `/etc/redelk/`. 
-There is also heavy enrichment done (inlcuding the generation of hyperlinks for screenshtos, etc) in logstash. You can check that out direcly form the logstash config files in `/etc/logstash/conf.d/`.
+There is also heavy enrichment done (including the generation of hyperlinks for screenshots, etc) in logstash. You can check that out directly form the logstash config files in `/etc/logstash/conf.d/`.
 
 
 # Current state  and features on todo-list #
