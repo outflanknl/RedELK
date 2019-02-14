@@ -4,6 +4,8 @@ Initial public release at BruCON 2018:
 - Video: https://www.youtube.com/watch?v=OjtftdPts4g
 - Presentation slides: https://github.com/outflanknl/Presentations/blob/master/MirrorOnTheWall_BruCon2018_UsingBlueTeamTechniquesinRedTeamOps_Bergman-Smeets_FINAL.pdf
 
+Detailed background on our reasoning for this tooling in our blog post: https://outflank.nl/blog/2019/02/14/introducing-redelk-part-1-why-we-need-it/
+
 # Goal of the project #
 Short: a Red Team's SIEM.
 
