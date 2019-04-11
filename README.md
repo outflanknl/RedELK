@@ -44,5 +44,5 @@ We are working (and you are invited to contribute) on many things, amongst other
 
 # Donation
 Do you really like this project, or did it save you time and/or money? You may support us and send your donation to:
-BTC: 13h1mEkNUjy4PBUnHzG7sMDmbHtv9EUcds
-LTC: LiXDkcLhwa2mhs2qdkEbceznpMPDzWRZx5
+- BTC: 13h1mEkNUjy4PBUnHzG7sMDmbHtv9EUcds
+- LTC: LiXDkcLhwa2mhs2qdkEbceznpMPDzWRZx5
