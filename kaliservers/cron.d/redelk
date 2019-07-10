@@ -1,0 +1,19 @@
+# Part of RedELK
+# cron.d script for periodic actions related to RedELK
+#
+# Author: Outflank B.V. / Marc Smeets / @mramsmeets
+#
+# License : BSD3
+#
+# Version: 0.8
+#
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+# Command to sync the logs from empire to our scponly user's home directory
+# m h dom mon dow user  command
+* * * * * root /usr/bin/rsync -ax --delete /opt/Empire/downloads /home/scponly/; /bin/chown -R scponly:scponly /home/scponly/*
+*/2 * * * * root /usr/bin/sqlite3 /opt/Empire/data/empire.db < /opt/Empire/sql_query/agent.sql >> /opt/Empire/logs/agents.log
+*/2 * * * * root /usr/bin/sqlite3 /opt/Empire/data/empire.db < /opt/Empire/sql_query/screenshots.sql >> /opt/Empire/logs/screenshots.log
+

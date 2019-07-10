@@ -1,0 +1,1 @@
+select json_object('name', substr(name,instr(name,'/')+1), 'screenshot', '/empirelogs/'||substr(name,instr(name,'/')+1)||'/'||substr(message, instr(message, 'screenshot'),instr(message, 'png')-instr(message, 'screenshot')+3), 'time_stamp', time_stamp) from reporting where (message LIKE '%File screenshot%') and (time_stamp > datetime(datetime('now','localtime'),'-2 minutes'));

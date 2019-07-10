@@ -1,0 +1,37 @@
+filebeat.prospectors:
+- type: log
+  scan_frequency: 5s
+  enabled: true
+  fields_under_root: true
+  paths:
+    - /opt/Empire/logs/agents.log
+  fields:
+    infralogtype: empire 
+    empire_logtype: agents
+
+- type: log
+  scan_frequency: 5s
+  enabled: true
+  fields_under_root: true
+  paths:
+    - /opt/Empire/logs/screenshots.log
+  fields:
+    infralogtype: empire
+    empire_logtype: screenshots
+
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: false
+
+setup.template.settings:
+  index.number_of_shards: 3
+
+name: "@@HOSTNAME@@"
+fields_under_root: true
+fields:
+  attackscenario: @@ATTACKSCENARIO@@
+harvester.limit: 1
+
+output.logstash:
+  hosts: ["@@HOSTANDPORT@@"]
+  ssl.certificate_authorities: ["/etc/filebeat/redelkCA.crt"]
