@@ -1,11 +1,8 @@
+#
 # Part of RedELK
 # cron.d script for periodic actions related to RedELK
 #
-# Author: Outflank B.V. / Marc Smeets / @mramsmeets
-#
-# License : BSD3
-#
-# Version: 0.8
+# Author: Outflank B.V. / Marc Smeets 
 #
 
 SHELL=/bin/sh

@@ -4,9 +4,7 @@
 # Script to get remote Cobalt Strike logs via rsync 
 # The output is saved in /var/www/html/cslogs/$hostname/logs/
 #
-# Author: Outflank B.V. / Marc Smeets / @mramsmeets
-#
-# License : BSD3
+# Author: Outflank B.V. / Marc Smeets 
 #
 
 LOGFILE="/var/log/redelk/getremotelogs.log"

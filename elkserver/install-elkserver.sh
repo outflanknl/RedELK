@@ -3,11 +3,7 @@
 # Part of RedELK
 # Script to install RedELK on ELK server
 #
-# Author: Outflank B.V. / Marc Smeets / @mramsmeets
-#
-# License : BSD3
-#
-# Version: 0.8
+# Author: Outflank B.V. / Marc Smeets 
 #
 
 
@@ -15,12 +11,56 @@ LOGFILE="redelk-install.log"
 INSTALLER="RedELK elkserver installer"
 TIMEZONE="Europe/Amsterdam"
 CWD=`pwd`
+ELKVERSION="6.4.1"
 
 echoerror() {
     printf "`date +'%b %e %R'` $INSTALLER - ${RC} * ERROR ${EC}: $@\n" >> $LOGFILE 2>&1
 }
 
+preinstallcheck() {
+    echo "Starting pre installation checks"
+    SHOULDEXIT=false
+    # checking logstash version
+    if [ -n "$(dpkg -s logstash 2>/dev/null| grep Status)" ]; then
+        INSTALLEDVERSION=`dpkg -s logstash |grep Version|awk '{print $2}'|sed 's/^1\://g'|sed 's/\-1$//g'` >> $LOGFILE 2>&1
+        if [ "$INSTALLEDVERSION" != "$ELKVERSION" ]; then
+            echo "[X] Logstash: installed version $INSTALLEDVERSION, required version $ELKVERSION. Please fix manually."
+            echoerror "Logstash version mismatch. Please fix manually."
+            SHOULDEXIT=true
+        else
+            echo "[!] Logstash: required version is installed ($INSTALLEDVERSION). Should be good. Stopping now before continuing installation."
+            service logstash stop
+            ERROR=$?
+            if [ $ERROR -ne 0 ]; then
+                echoerror "Could not stop logstash (Error Code: $ERROR)."
+            fi
+        fi
+    fi
+    # checking elasticsearch version
+    if [ -n "$(dpkg -s elasticsearch 2>/dev/null| grep Status)" ]; then
+        INSTALLEDVERSION=`dpkg -s elasticsearch |grep Version|awk '{print $2}'` >> $LOGFILE 2>&1
+        if [ "$INSTALLEDVERSION" != "$ELKVERSION" ]; then
+            echo "[X] Elasticsearch: installed version $INSTALLEDVERSION, required version $ELKVERSION. Please fix manually."
+            echoerror "Elasticsearch version mismatch. Please fix manually."
+            SHOULDEXIT=true
+        else
+            echo "[!] Elasticsearch: required version is installed ($INSTALLEDVERSION). Should be good. Stopping now before continuing installation."
+            service elasticsearch stop
+            ERROR=$?
+            if [ $ERROR -ne 0 ]; then
+                echoerror "Could not stop elasticsearch (Error Code: $ERROR)."
+            fi
+        fi
+   fi
+   if [ "$SHOULDEXIT" = true ]; then
+       exit 1
+   fi
+}
+
 echo "This script will install and configure necessary components for RedELK on ELK server"
+printf "`date +'%b %e %R'` $INSTALLER - Starting installer\n" > $LOGFILE 2>&1
+
+preinstallcheck
 
 echo "Setting timezone"
 timedatectl set-timezone $TIMEZONE  >> $LOGFILE 2>&1
@@ -74,7 +114,8 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "Installing logstash"
-apt-get install -y logstash > $LOGFILE 2>&1
+#logstash versions in apt are defined as 1:6.4.1-1
+apt-get install -y logstash=1:$ELKVERSION-1 > $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install logstash (Error Code: $ERROR)."
@@ -117,7 +158,7 @@ fi
 cd $CWD
 
 echo "Installing elasticsearch"
-apt-get install -y elasticsearch > $LOGFILE 2>&1
+apt-get install -y elasticsearch=$ELKVERSION > $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install elasticsearch (Error Code: $ERROR)."
@@ -131,7 +172,7 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "Installing Kibana"
-apt-get install -y kibana > $LOGFILE 2>&1
+apt-get install -y kibana=$ELKVERSION > $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install Kibana (Error Code: $ERROR)."
@@ -188,6 +229,23 @@ if [ $ERROR -ne 0 ]; then
 fi
 sleep 10
 
+echo "Checking if Kibana is up before continuing"
+COUNTER=0
+RECHECK=true
+while [ "$RECHECK" = true ]; do
+    if [ -n "$(service kibana status |grep 'active (running)')" ]; then
+        RECHECK=false
+    fi
+    echo "Kibana not up yet, sleeping another few seconds."
+    sleep 3
+    COUNTER=$((COUNTER+1))
+    if [ $COUNTER -eq "20" ]; then
+        echoerror "Kibana still not up, waited for way too long. Continuing and hoping for the best."
+        RECHECK=false
+    fi
+done
+sleep 10 # just to give Kibana some extra time after systemd says Kibana is active.
+
 echo "Restarting nginx"
 service nginx restart >> $LOGFILE 2>&1
 ERROR=$?
@@ -235,7 +293,7 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "Creating RedELK config directory"
-mkdir -p /etc/redelk >> $LOGFILE 2>&1 >> $LOGFILE 2>&1
+mkdir -p /etc/redelk >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not create RedELK config directory (Error Code: $ERROR)."
@@ -253,6 +311,14 @@ curl -X POST "http://localhost:5601/api/saved_objects/_bulk_create" -H 'kbn-xsrf
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install Kibana template (Error Code: $ERROR)."
+fi
+
+# setting default index to d76c6b70-b617-11e8-bc1a-cf8fa3255855 == rtops-*
+echo "Setting the Kibana default index"
+curl -X POST "http://localhost:5601/api/kibana/settings/defaultIndex" -H "Content-Type: application/json" -H "kbn-xsrf: true" -d"{\"value\":\"d76c6b70-b617-11e8-bc1a-cf8fa3255855\"}" >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Could not set the default index for Kibana (Error Code: $ERROR)."
 fi
 
 echo "Installing GeoIP index template adjustment"
@@ -297,6 +363,12 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not adjust Kibana logo (Error Code: $ERROR)."
 fi
 
+grep -i error $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -eq 0 ]; then
+    echo "[X] There were errors while running this installer. Manually check the log file $LOGFILE. Exiting now."
+    exit
+fi
 
 echo ""
 echo ""

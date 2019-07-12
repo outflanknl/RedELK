@@ -5,10 +5,6 @@
 #
 # Author: Outflank B.V. / Marc Smeets / @mramsmeets
 #
-# License : BSD3
-#
-# Version: 0.8
-#
 
 LOGFILE="/var/log/redelk/alarm.log"
 

@@ -1,15 +1,11 @@
 #!/usr/bin/python3
-# version: 19 september 2018  v01
 #
 # Part of RedELK
 # Script to start enrichment process of data in elasticsearch
 #
 # Author: Outflank B.V. / Mark Bergman / @xychix
 #
-# License : BSD3
-#
-# Version: 0.8
-#
+
 from elasticsearch import Elasticsearch
 import json
 import sys

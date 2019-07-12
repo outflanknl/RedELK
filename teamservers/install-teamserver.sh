@@ -3,23 +3,39 @@
 # Part of RedELK
 # Script to install RedELK on Cobalt Strike teamservers
 #
-# Author: Outflank B.V. / Marc Smeets / @mramsmeets
-#
-# License : BSD3
-#
-# Version: 0.8
+# Author: Outflank B.V. / Marc Smeets 
 #
 
 LOGFILE="redelk-install.log"
 INSTALLER="RedELK teamserver installer"
 TIMEZONE="Europe/Amsterdam"
-CHECKFILEBEATINSTALLED=true # set to false to skip the check for already insatlled filebeats. Warning, only do this if you are really sure your installed filebeat version works OK with your ELK stack version on the elkserver
+ELKVERSION="6.4.1"
 
 echoerror() {
     printf "`date +'%b %e %R'` $INSTALLER - ${RC} * ERROR ${EC}: $@\n" >> $LOGFILE 2>&1
 }
 
+preinstallcheck() {
+    echo "Starting pre installation checks"
+    if [ -n "$(dpkg -s filebeat 2>/dev/null| grep Status)" ]; then
+        INSTALLEDVERSION=`dpkg -s filebeat |grep Version|awk '{print $2}'` >> $LOGFILE 2>&1
+        if [ "$INSTALLEDVERSION" != "$ELKVERSION" ]; then
+            echo "[X] Filebeat: installed version $INSTALLEDVERSION, required version $ELKVERSION. Please fix manually."
+            echoerror "Filebeat version mismatch. Please fix manually."
+            exit 1
+        else
+            echo "[!] Filebeat: required version is installed ($INSTALLEDVERSION). Should be good. Stopping service now before continuing installation."
+            service filebeat stop
+            ERROR=$?
+            if [ $ERROR -ne 0 ]; then
+                echoerror "Could not stop filebeat (Error Code: $ERROR)."
+            fi
+        fi
+    fi
+}
+
 echo "This script will install and configure necessary components for RedELK on Cobalt Strike teamservers"
+printf "`date +'%b %e %R'` $INSTALLER - Starting installer\n" > $LOGFILE 2>&1
 
 if ! [ $# -eq 3 ] ; then
     echo "[X] ERROR Incorrect amount of parameters"
@@ -30,17 +46,7 @@ if ! [ $# -eq 3 ] ; then
     exit 1
 fi
 
-if [ "$CHECKFILEBEATINSTALLED" = "true" ]; then
-    echo "Checking if filebeat is already installed"
-    dpkg -s filebeat | grep Status >> $LOGFILE 2>&1
-    ERROR=$?
-    if [ $ERROR -e 0 ] ; then
-        echoerror "Filebeat already installed. Quiting (Error Code: $ERROR)."
-        echo "[X] Filebeat already installed."
-        echo " Please check manually if the installed version equals what your ELK server expects." 
-        echo " Quiting."
-    fi
-fi
+preinstallcheck
 
 echo "Setting timezone"
 timedatectl set-timezone $TIMEZONE >> $LOGFILE 2>&1
@@ -87,7 +93,7 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "Installing filebeat ..."
-apt-get install -y filebeat >> $LOGFILE 2>&1
+apt-get install -y filebeat=$ELKVERSION >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install filebeat (Error Code: $ERROR)."
@@ -165,8 +171,8 @@ fi
 echo "Setting ssh key authentication for scponly user"
 grep scponly /etc/passwd > /dev/null
 EXIT=$?
-if [ $EXIT -e 0  ]; then
-    mkdir -p /home/scponly/.ssh && cat ./ssh/id_rsa.pub >> /home/scponly/.ssh/authorized_keys && chown -R scponly /home/scponly/.ssh && chmod 700 /home/scponly/.ssh 
+if [ $EXIT -eq 0  ]; then
+    mkdir -p /home/scponly/.ssh && cat ./ssh/id_rsa.pub >> /home/scponly/.ssh/authorized_keys && chown -R scponly /home/scponly/.ssh && chmod 700 /home/scponly/.ssh
 fi  >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
@@ -184,12 +190,12 @@ echo "Configuring rssh"
 grep scponly /etc/rssh.conf > /dev/null
 EXIT=$?
 if [ $EXIT -ne 0 ]; then
-    cat << EOF >> /etc/rssh.conf 
+    cat << EOF >> /etc/rssh.conf
 allowscp
 allowsftp
 allowrsync
 user = scponly:011:100110:
-EOF 
+EOF
 fi >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
@@ -197,14 +203,22 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "Creating crontab for local rscync of cobaltstrike logs"
-cp ./cron.d/redelk /etc/cron.d/redelk >> $LOGFILE 2>&1
+if [ ! -f /etc/cron.d/redelk ]; then
+    cp ./cron.d/redelk /etc/cron.d/redelk >> $LOGFILE 2>&1
+fi
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not create crontab for local rsync of cobaltstrike logs (Error Code: $ERROR)."
+fi
+
+grep -i error $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -eq 0 ]; then
+    echo "[X] There were errors while running this installer. Manually check the log file $LOGFILE. Exiting now."
+    exit
 fi
 
 echo ""
 echo ""
 echo "Done with setup of RedELK on teamserver."
 echo ""
-

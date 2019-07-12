@@ -5,10 +5,6 @@
 #
 # Author: Outflank B.V. / Marc Smeets / @mramsmeets
 #
-# License : BSD3
-#
-# Version: 0.8
-#
 
 LOGFILE="./redelk-inintialsetup.log"
 INSTALLER="RedELK cert and key installer"
@@ -18,6 +14,7 @@ echoerror() {
 }
 
 echo "This script will generate necessary keys RedELK deployments"
+printf "`date +'%b %e %R'` $INSTALLER - Starting installer\n" > $LOGFILE 2>&1
 
 if ! [ $# -eq 1 ] ; then
     echo "[X] ERROR missing parameter"
@@ -91,7 +88,7 @@ fi
 
 echo "Converting ELK server private key to PKCS8 format"
 if [ ! -f "./certs/elkserver.key.pem" ]; then
-    mv ./certs/elkserver.key ./certs/elkserver.key.pem && openssl pkcs8 -in ./certs/elkserver.key.pem -topk8 -nocrypt -out ./certs/elkserver.key
+    cp ./certs/elkserver.key ./certs/elkserver.key.pem && openssl pkcs8 -in ./certs/elkserver.key.pem -topk8 -nocrypt -out ./certs/elkserver.key
 fi  >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
@@ -149,6 +146,12 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not TGZ for teamserver directory (Error Code: $ERROR)."
 fi
 
+grep -i error $LOGFILE 2>$1
+ERROR=$?
+if [ $ERROR -eq 0 ]; then
+    echo "[X] There were errors while running this installer. Manually check the log file $LOGFILE. Exiting now."
+    exit
+fi
 
 echo ""
 echo ""

@@ -1,4 +1,11 @@
 #!/usr/bin/python3
+#
+# Part of Red ELK
+# Script to generate thumbnails of images 
+# The output is saved next to input file as ".thumb.jpg" 
+#
+# Author: Outflank B.V. / Marc Smeets
+#
 
 try:
   from PIL import Image

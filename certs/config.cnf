@@ -4,13 +4,13 @@ x509_extensions = v3_req
 prompt = no
 
 [req_distinguished_name]
-C = MODIFYME
-ST = MODIFYME
-L = MODIFYME
-O = MODIFYME
-OU = MODIFYME
-CN = MODIFYME
-emailAddress = MODIFYME
+C = MODIFYME, for example NL
+ST = MODIFYME, for example Noord-Holland
+L = MODIFYME, for example Amsterdam
+O = MODIFYME, for example Outflank B.V.
+OU = MODIFYME, for example IT-OPS
+CN = MODIFYME, for example outflank.nl
+emailAddress = MODIFYME, for example totallynotavirus@outflank.nl
 
 [v3_ca]
 subjectKeyIdentifier = hash

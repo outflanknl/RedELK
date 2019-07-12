@@ -1,4 +1,11 @@
 #!/usr/bin/env python
+#
+# Part of RedELK
+# Script to email events as alarms
+#
+# Author: Outflank B.V. / Mark Bergman / @xychix
+#
+
 import argparse
 import csv, hashlib
 import requests
