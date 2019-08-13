@@ -4,8 +4,6 @@ Initial public release at BruCON 2018:
 - Video: https://www.youtube.com/watch?v=OjtftdPts4g
 - Presentation slides: https://github.com/outflanknl/Presentations/blob/master/MirrorOnTheWall_BruCon2018_UsingBlueTeamTechniquesinRedTeamOps_Bergman-Smeets_FINAL.pdf
 
-Detailed reasoning for why we need such tooling in our blog post: https://outflank.nl/blog/2019/02/14/introducing-redelk-part-1-why-we-need-it/
-
 # Goal of the project #
 Short: a Red Team's SIEM.
 
@@ -41,8 +39,3 @@ We are working (and you are invited to contribute) on many things, amongst other
 - **DNS traffic analyses**. Ingest, filter and query for suspicious activities on the DNS level. This will take considerable work due to the large amount of noise/bogus DNS queries performed  by scanners and online DNS inventory services. 
 - **Other alarm channels**. Think Slack, Telegram, whatever other way you want for receiving alarms.
 - **Fine grained authorisation**. Possibility for blocking certain views, searches, and dashboards, or masking certain details in some views. Useful for situations where you don't want to give out all information to all visitors. 
-
-# Donation
-Do you really like this project, or did it save you time and/or money? You may support us and send your donation to:
-- BTC: 13h1mEkNUjy4PBUnHzG7sMDmbHtv9EUcds
-- LTC: LiXDkcLhwa2mhs2qdkEbceznpMPDzWRZx5

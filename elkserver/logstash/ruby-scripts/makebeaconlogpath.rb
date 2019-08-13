@@ -2,7 +2,7 @@
 # Part of RedELK
 # Script to have logstash insert an extra field pointing to the full TXT file of a Cobalt Strike keystrokes file
 #
-# Author: Outflank B.V. / Marc Smeets / @mramsmeets
+# Author: Outflank B.V. / Marc Smeets
 #
 
 def register(params)

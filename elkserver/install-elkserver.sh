@@ -11,7 +11,12 @@ LOGFILE="redelk-install.log"
 INSTALLER="RedELK elkserver installer"
 TIMEZONE="Europe/Amsterdam"
 CWD=`pwd`
-ELKVERSION="6.4.1"
+ELKVERSION="6.8.2"
+
+#set locale for current session and default locale
+export LC_ALL="en_US.UTF-8"
+echo -e 'LANG=en_US.UTF-8\nLC_ALL=en_US.UTF-8' > /etc/default/locale
+locale-gen
 
 echoerror() {
     printf "`date +'%b %e %R'` $INSTALLER - ${RC} * ERROR ${EC}: $@\n" >> $LOGFILE 2>&1
@@ -106,15 +111,14 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not update APT (Error Code: $ERROR)."
 fi
 
-echo "Installing openjdk-8-jre-headless"
-apt-get install -y openjdk-8-jre-headless >> $LOGFILE 2>&1
+echo "Installing openjdk-11-jre-headless"
+apt-get install -y openjdk-11-jre-headless >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not install openjdk-8-jre-headless (Error Code: $ERROR)."
+    echoerror "Could not install openjdk-11-jre-headless (Error Code: $ERROR)."
 fi
 
 echo "Installing logstash"
-#logstash versions in apt are defined as 1:6.4.1-1
 apt-get install -y logstash=1:$ELKVERSION-1 > $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
@@ -128,11 +132,18 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not copy logstash config (Error Code: $ERROR)."
 fi
 
-echo "Copying CA file"
+echo "Copying Logstash certificate files"
 cp -r ./logstash/certs /etc/logstash/ >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not copy CA file (Error Code: $ERROR)."
+    echoerror "Could not copy Logstash certificate files (Error Code: $ERROR)."
+fi
+
+echo "Setting ownership of Logstash certificate files"
+chown logstash /etc/logstash/certs/* >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Error with setting ownership of Logstach cert files (Error Code: $ERROR)."
 fi
 
 echo "Copying logstash Ruby scripts"
@@ -227,24 +238,6 @@ ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not start Kibana (Error Code: $ERROR)."
 fi
-sleep 10
-
-echo "Checking if Kibana is up before continuing"
-COUNTER=0
-RECHECK=true
-while [ "$RECHECK" = true ]; do
-    if [ -n "$(service kibana status |grep 'active (running)')" ]; then
-        RECHECK=false
-    fi
-    echo "Kibana not up yet, sleeping another few seconds."
-    sleep 3
-    COUNTER=$((COUNTER+1))
-    if [ $COUNTER -eq "20" ]; then
-        echoerror "Kibana still not up, waited for way too long. Continuing and hoping for the best."
-        RECHECK=false
-    fi
-done
-sleep 10 # just to give Kibana some extra time after systemd says Kibana is active.
 
 echo "Restarting nginx"
 service nginx restart >> $LOGFILE 2>&1
@@ -306,6 +299,27 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not copy RedELK config files (Error Code: $ERROR)."
 fi
 
+echo "Checking if Kibana is up before continuing"
+sleep 30
+COUNTER=0
+RECHECK=true
+while [ "$RECHECK" = true ]; do
+    touch /tmp/kibanaupcheck.txt
+    curl -XGET 'http://localhost:5601/status' -I -o /tmp/kibanaupcheck.txt >> $LOGFILE 2>&1
+    sleep 3
+    if [ -n "$(grep '200 OK' /tmp/kibanaupcheck.txt)" ]; then
+        RECHECK=false
+    fi
+    echo "Kibana not up yet, sleeping another few seconds."
+    sleep 3
+    COUNTER=$((COUNTER+1))
+    if [ $COUNTER -eq "20" ]; then
+        echoerror "Kibana still not up, waited for way too long. Continuing and hoping for the best."
+        RECHECK=false
+    fi
+done
+sleep 10 # just to give Kibana some extra time after systemd says Kibana is active.
+
 echo "Installing Kibana template"
 curl -X POST "http://localhost:5601/api/saved_objects/_bulk_create" -H 'kbn-xsrf: true' -H "Content-Type: application/json" -d @./templates/redelk_kibana_all.json >> $LOGFILE 2>&1
 ERROR=$?
@@ -313,9 +327,9 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not install Kibana template (Error Code: $ERROR)."
 fi
 
-# setting default index to d76c6b70-b617-11e8-bc1a-cf8fa3255855 == rtops-*
+# setting default index to rtops
 echo "Setting the Kibana default index"
-curl -X POST "http://localhost:5601/api/kibana/settings/defaultIndex" -H "Content-Type: application/json" -H "kbn-xsrf: true" -d"{\"value\":\"d76c6b70-b617-11e8-bc1a-cf8fa3255855\"}" >> $LOGFILE 2>&1
+curl -X POST "http://localhost:5601/api/kibana/settings/defaultIndex" -H "Content-Type: application/json" -H "kbn-xsrf: true" -d"{\"value\":\"rtops\"}" >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not set the default index for Kibana (Error Code: $ERROR)."
@@ -328,12 +342,13 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not install GeoIP index template adjust (Error Code: $ERROR)."
 fi
 
-echo "Installing GeoIP elasticsearch plugin"
-echo Y | /usr/share/elasticsearch/bin/elasticsearch-plugin -s install ingest-geoip >> $LOGFILE 2>&1
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echoerror "Could not install GeoIP elasticsearch plugin (Error Code: $ERROR)."
-fi
+# GeoIP is built-in since version 6.7 - no longer required to install
+#echo "Installing GeoIP elasticsearch plugin"
+#echo Y | /usr/share/elasticsearch/bin/elasticsearch-plugin -s install ingest-geoip >> $LOGFILE 2>&1
+#ERROR=$?
+#if [ $ERROR -ne 0 ]; then
+#    echoerror "Could not install GeoIP elasticsearch plugin (Error Code: $ERROR)."
+#fi
 
 echo "Creating crontab for redelk user actions"
 cp ./cron.d/redelk /etc/cron.d/redelk >> $LOGFILE 2>&1
@@ -373,11 +388,15 @@ fi
 echo ""
 echo ""
 echo "Done with base setup of RedELK on ELK server"
-echo ""
-echo "WARNING - YOU STILL NEED TO ADJUST CONFIG FILES"
-echo " - adjust the /etc/cron.d/redelk file to include your teamservers"
-echo " - adjust all config files in /etc/redelk/"
-echo ""
 echo "You can now login to RedELK Kibana on this machine using redelk:redelk as credentials."
 echo ""
-
+echo "!!! WARNING - YOU ARE NOT DONE YET !!!"
+echo ""
+echo "You are *REQUIRED* to:"
+echo " - adjust the /etc/cron.d/redelk file to include your teamservers"
+echo " - adjust all config files in /etc/redelk/ to include your specifics like VT API, email server details, etc"
+echo ""
+echo "You are *ADVISED* to:"
+echo " - reset default nginx credentials by adjusting the file /etc/nginx/htpasswd.users. You can use the htpasswd tool from apache2-utils package"
+echo ""
+echo ""

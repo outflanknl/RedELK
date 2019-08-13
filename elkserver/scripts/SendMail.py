@@ -28,7 +28,7 @@ def SendMail(to, mail, subject, fromaddr=config.fromAddr, attachment = "None", s
     html = mail
     msg['Subject'] = subject
     msg['From'] = formataddr((str(Header(fromaddr, 'utf-8')), fromaddr))
-    msg['To'] = to
+    msg['To'] = ", ".join(to)
     msg['Date'] = formatdate()
     #DONE PREPARATION, BUILD MAIL
     msg.attach(MIMEText(html,'html'))

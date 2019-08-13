@@ -1,11 +1,7 @@
 # Part of RedELK
 # cron.d script for periodic actions related to RedELK
 #
-# Author: Outflank B.V. / Marc Smeets / @mramsmeets
-#
-# License : BSD3
-#
-# Version: 0.8
+# Author: Outflank B.V. / Marc Smeets
 #
 
 SHELL=/bin/sh
@@ -20,11 +16,21 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 # m h dom mon dow user  command
 00 00,12 * * * redelk /usr/share/redelk/bin/run_torexitnodeupdate.sh
 
+# Run update script for SSLBL Botnet C2 IP addresses every 30min
+# m h dom mon dow user  command
+*/30 * * * * redelk /usr/share/redelk/bin/run_abusechbotnetc2ipupdate.sh
+
+# Run update script for SSLBL SSL Certificate Blacklis
+# m h dom mon dow user  command
+*/30 * * * * redelk /usr/share/redelk/bin/run_abusechsslcertupdate.sh
+
+# Run update script for rogue domain list
+# m h dom mon dow user  command
+*/30 * * * * redelk /usr/share/redelk/bin/run_roguedomainsupdate.sh
 
 # Start script to create thumbnails of received screenshots
 # m h dom mon dow user  command
-*/5 * * * * redelk /usr/share/redelk/bin/makethumbnail.py /var/www/html/cslogs/
-
+*/2 * * * * redelk /usr/share/redelk/bin/makethumbnail.py /var/www/html/cslogs/
 
 # Start the enrichment of beacon data in ELK
 * * * * * redelk /usr/share/redelk/bin/run_enrich.sh 

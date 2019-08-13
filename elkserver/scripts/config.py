@@ -1,6 +1,6 @@
 import json
 
-with open('/etc/redelk/alarm.json.config') as json_data:
+with open('/etc/redelk/alarm.json.conf') as json_data:
     d = json.load(json_data)
 
 #### General
@@ -39,8 +39,8 @@ if "smtpPass" in d: smtpPass = d['smtpPass']
 fromAddr=""
 if "fromAddr" in d: fromAddr = d['fromAddr']
 
-toAddr=""
-if "toAddr" in d: toAddr = d['toAddr']
+toAddrs=[""]
+if "toAddrs" in d: toAddrs = d['toAddrs']
 
 #### directory for cache files (including shelves)
 tempDir="/tmp"

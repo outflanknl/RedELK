@@ -1,9 +1,9 @@
 #!/bin/sh
 #
 # Part of RedELK
-# Script to generate TLS certificates and SSH keys required for RedELK 
+# Script to generate TLS certificates, SSH keys and installation packages required for RedELK 
 #
-# Author: Outflank B.V. / Marc Smeets / @mramsmeets
+# Author: Outflank B.V. / Marc Smeets
 #
 
 LOGFILE="./redelk-inintialsetup.log"
@@ -28,6 +28,14 @@ if [  ! -f $1 ];then
     echoerror "Could not find openssl config file"
     exit 1
 fi >> $LOGFILE 2>&1
+
+echo ""
+echo "Will generate TLS certificates for the following DNS names and/or IP addresses:"
+grep -E "^DNS\.|^IP\." certs/config.cnf
+echo ""
+echo "[!] Make sure your ELK server will be reachable on these DNS names or IP addresses or your TLS setup will fail!"
+echo "Abort within 10 seconds to correct if needed."
+sleep 10
 
 echo "Creating certs dir if necessary"
 if [ ! -d "./certs" ]; then
@@ -55,7 +63,6 @@ ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not generate certificate authority (Error Code: $ERROR)."
 fi
-
 
 echo "Generating private key for ELK server"
 if [ ! -f "./certs/elkserver.key" ]; then
@@ -123,6 +130,17 @@ cp ./sshkey/id_rsa.pub ./teamservers/ssh/id_rsa.pub >> $LOGFILE 2>&1
 cp ./sshkey/id_rsa.pub ./elkserver/ssh/id_rsa.pub >> $LOGFILE 2>&1
 cp ./sshkey/id_rsa ./elkserver/ssh/id_rsa >> $LOGFILE 2>&1
 
+echo "Copying VERSION file to subfolders."
+if [ -f "./VERSION" ]; then
+    cp ./VERSION teamservers/
+    cp ./VERSION elkserver/
+    cp ./VERSION redirs/
+fi >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Could not copy VERSION file to subfolders (Error Code: $ERROR)."
+fi
+
 echo "Creating TGZ packages for easy distribution"
 if [ ! -f "./elkserver.tgz" ]; then
     tar zcvf elkserver.tgz elkserver/
@@ -146,7 +164,7 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not TGZ for teamserver directory (Error Code: $ERROR)."
 fi
 
-grep -i error $LOGFILE 2>$1
+grep -i error $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -eq 0 ]; then
     echo "[X] There were errors while running this installer. Manually check the log file $LOGFILE. Exiting now."

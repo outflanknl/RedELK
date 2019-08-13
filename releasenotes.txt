@@ -1,0 +1,41 @@
+
+RedELK release notes
+
+
+### version 0.9 
+* Support for Cobalt Strike 3.14
+* Upgraded jvm to OpenJDK 11.0
+* Upgraded Filebeat, Elasticsearch, Logstash and Kibana to 6.8.2
+* Support for Cobalt Strike Downloads: downloaded files from each teamserver can be searched and downloaded directly from the RedELK Kibana interface. No more need to login to each teamserver to search and download files.
+* Support for MITRE ATT&CK numbers in Cobalt Strike's task output. This is indexed as field "attack_technique". Fancy visuals are not yet included in this release.
+* New alarm: rogue user-agents that connect to your C2 backend. Basic list (e.g. curl*, python*) is pre populated on /etc/redelk/rogue_useragents.conf
+* Support for Cobalt Strike SMB and TCP type beacons. Regardless of type (SMB or TCP) linked beacons are now tracked in ES field 'beacon_linked' (true/false). Parent or child state is tracked in the field 'beacon_linkmode' (child or parent) and IP address of the parent/child is tracked in the fields 'target_linkparentnode' and 'target_linkchildnode'.
+* Full support for changed logging in Cobalt Strike version 3.14. This includes more log files, structured time format logging as well as changed timestamp to now include (UTC) time zone. Thanks @fastlorenzo for quick fix on the time zone part.
+* Modified hyperlinks in Kibana to screenshots, log files, etc. to include the new timestamp as used in Cobalt Strike version 3.14.
+* Cobalt Strike profiles are rsynced to RedELK server. Interpretation and full inclusion in RedELK is to be done at a later moment.
+* Much improved error checking and reporting in installation scripts.
+* Installer now checks state of Kibana before continuing and inserting templates.
+* Improved pre-install checks, e.g. already installed packages and existing directories.
+* Version of ELK packages is fixed instead of installing the latest available version.
+* Installer now better states essential manual post-installation steps.
+* Fixed bug that made installers crash with 'unsupported locale settings' in some circumstances. Locale is now set explicitly during installation.
+* Ownership and permission of logstash certificates are now set to work on Ubuntu 18.04 and higher.
+* Modified Cobalt Strike logstash rules to use UTC instead of system's time zone.
+* Fixed bugs in ES template to now have every IP address defined as type IP address.
+* Many, many under the hood optimizations and bugfixes of python scripts used for enrichment and alarming.
+* Added tracking of IP addresses for which alarms are sent; 1 alarm per applicable IP address.
+* RedELK now tracks abuse.ch for known botnet IP addresses SSL certs of botnets. Data goes to /etc/redelk/abuse*.conf files. Alarming to be done in later release.
+# RedELK now tracks multiple sources for known rogue domain names. Data goes to /etc/redelk/roguedomains.conf. Alarming to be done in later release.
+
+
+### Version 0.8
+* Default Kibana index is now set during installation - thanks @neu5ron
+* Fixed installer bug in copying logstash certificates directory - thanks @justsly
+* Fixed bug in redirector logstash rule, useragent regex was missing - thanks @justsly
+* Multiple typos and errors in installation scripts - thanks @justsly and @fastlorenzo
+* Significant addition of known AV username-hostname combinations
+* Date header added to sending of emails - thanks @fastlorenzo
+* Reformat of TOR exit node IP list for easier interpretation
+
+
+### Version 0.7 - initial public version

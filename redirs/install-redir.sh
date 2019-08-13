@@ -9,7 +9,12 @@
 LOGFILE="redelk-install.log"
 INSTALLER="RedELK redirector installer"
 TIMEZONE="Europe/Amsterdam"
-ELKVERSION="6.4.1"
+ELKVERSION="6.8.2"
+
+#set default locale
+export LC_ALL="en_US.UTF-8"
+echo -e 'LANG=en_US.UTF-8\nLC_ALL=en_US.UTF-8' > /etc/default/locale
+locale-gen
 
 echoerror() {
     printf "`date +'%b %e %R'` $INSTALLER - ${RC} * ERROR ${EC}: $@\n" >> $LOGFILE 2>&1
@@ -41,7 +46,7 @@ if ! [ $# -eq 3 ] ; then
     echo "[X] ERROR Incorrect amount of parameters"
     echo "[X] require 1st parameter: identifier of this machine to set in filebeat config."
     echo "[X] require 2nd parameter: attackscenario name."
-    echo "[X] require 3rd parameter: IP/DNS:port where to ship logs to."
+    echo "[X] require 3rd parameter: IP/DNS:port where to ship logs to (enter 5044 if you are using default logstash port)."
     echoerror "Incorrect amount of parameters"
     exit 1
 fi
@@ -99,8 +104,8 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not install filebeat (Error Code: $ERROR)."
 fi
 
-echo "Setting filebat to auto start after reboot"
-update-rc.d filebeat defaults 95 10 >> $LOGFILE 2>&1
+echo "Setting filebeat to auto start after reboot"
+systemctl enable filebeat >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not change auto boot settings (Error Code: $ERROR)."

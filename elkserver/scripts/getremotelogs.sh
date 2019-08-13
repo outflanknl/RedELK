@@ -20,4 +20,6 @@ mkdir -p /var/www/html/cslogs/$2 >> $LOGFILE 2>&1
 
 echo "`date` ######## Start of rsync to $1" >> $LOGFILE 2>&1
 rsync -axv -e 'ssh -o "StrictHostKeyChecking=no" -i /home/redelk/.ssh/id_rsa' $3@$1:~/logs /var/www/html/cslogs/$2 >> $LOGFILE 2>&1
+rsync -axv -e 'ssh -o "StrictHostKeyChecking=no" -i /home/redelk/.ssh/id_rsa' $3@$1:~/downloads /var/www/html/cslogs/$2 >> $LOGFILE 2>&1
+rsync -axv -e 'ssh -o "StrictHostKeyChecking=no" -i /home/redelk/.ssh/id_rsa' $3@$1:~/profiles /var/www/html/cslogs/$2 >> $LOGFILE 2>&1
 echo "`date` ######## Done with rsync" >> $LOGFILE 2>&1
