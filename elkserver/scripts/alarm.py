@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 #
 # Part of RedELK
-# Script to start enrichment process of data in elasticsearch
+# Script to check if there are alarms to be sent
 #
 # Author: Outflank B.V. / Mark Bergman / @xychix
 #
@@ -43,7 +43,7 @@ def setTags(tag,lst):
     #sys.stdout.flush()
 
 class alarm():
-  def __init__(self,to="mark@bergman.nl",subject="Alarms from RedElk"):
+  def __init__(self,to,subject="Alarms from RedElk"):
     self.to = to
     self.subject = subject
     self.body = ""
