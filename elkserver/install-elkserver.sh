@@ -24,7 +24,16 @@ echoerror() {
 
 preinstallcheck() {
     echo "Starting pre installation checks"
+    
     SHOULDEXIT=false
+    
+    # Checking if OS is Debian / APT based
+    if [ ! -f  /etc/debian_version ]; then
+        echo "[X] This system does not seem to be Debian/APT-based. RedELK installer only supports Debian/APT based systems."
+        echoerror "System is not Debian/APT based. Not supported. Quitting."
+        SHOULDEXIT=true
+    fi
+ 
     # checking logstash version
     if [ -n "$(dpkg -s logstash 2>/dev/null| grep Status)" ]; then
         INSTALLEDVERSION=`dpkg -s logstash |grep Version|awk '{print $2}'|sed 's/^1\://g'|sed 's/\-1$//g'` >> $LOGFILE 2>&1
@@ -336,7 +345,7 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "Installing GeoIP index template adjustment"
-curl -XPUT -H 'Content-Type: application/json' http://localhost:9200/_template/redirhaproxy- -d@./templates/elasticsearch-template-geoip-es6x.json >> $LOGFILE 2>&1
+curl -XPUT -H 'Content-Type: application/json' http://localhost:9200/_template/redirtraffic- -d@./templates/elasticsearch-template-geoip-es6x.json >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install GeoIP index template adjust (Error Code: $ERROR)."

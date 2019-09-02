@@ -5,7 +5,8 @@ filebeat.prospectors:
   paths:
     - /var/log/haproxy.log
   fields:
-    infralogtype: redirhaproxy
+    infralogtype: redirtraffic
+    redirprogram: haproxy
 
 filebeat.config.modules:
   path: ${path.config}/modules.d/*.yml

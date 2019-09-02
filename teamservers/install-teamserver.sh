@@ -22,6 +22,14 @@ echoerror() {
 
 preinstallcheck() {
     echo "Starting pre installation checks"
+
+    # Checking if OS is Debian / APT based
+    if [ ! -f  /etc/debian_version ]; then
+        echo "[X] This system does not seem to be Debian/APT-based. RedELK installer only supports Debian/APT based systems."
+        echoerror "System is not Debian/APT based. Not supported. Quitting."
+        exit 1
+    fi
+
     if [ -n "$(dpkg -s filebeat 2>/dev/null| grep Status)" ]; then
         INSTALLEDVERSION=`dpkg -s filebeat |grep Version|awk '{print $2}'` >> $LOGFILE 2>&1
         if [ "$INSTALLEDVERSION" != "$ELKVERSION" ]; then

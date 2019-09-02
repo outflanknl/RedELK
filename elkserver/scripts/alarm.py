@@ -21,7 +21,7 @@ def pprint(r):
  s = json.dumps(r, indent=2, sort_keys=True)
  return(s)
 
-def getQuery(query,size="5000",index="redirhaproxy-*"):
+def getQuery(query,size="5000",index="redirtraffic-*"):
   #NOT tags:enriched_v01 AND NOT cslogtype:beacon_newbeacon AND cslogtype:beacon_*
   q3 = {'query': {'query_string': {'query': query }}}
   r3 = es.search(index=index, body=q3, size=size)
@@ -29,7 +29,7 @@ def getQuery(query,size="5000",index="redirhaproxy-*"):
     return(None)
   return(r3['hits']['hits'])
 
-def countQuery(query,index="redirhaproxy-*"):
+def countQuery(query,index="redirtraffic-*"):
   #NOT tags:enriched_v01 AND NOT cslogtype:beacon_newbeacon AND cslogtype:beacon_*
   q3 = {'query': {'query_string': {'query': query }}}
   r3 = es.search(index=index, body=q3, size=0)
@@ -75,8 +75,8 @@ class alarm():
       self.alarm = True
 
   def alarm_check1(self):
-    ## This check queries for IP's that aren't listed in any iplist* but do talk to cobaltstrike* paths on redirectors\n
-    q = "NOT tags:iplist_* AND haproxy_dest:cobaltstrike* AND NOT tags:ALARMED_* AND tags:enrich_*"
+    ## This check queries for IP's that aren't listed in any iplist* but do talk to c2* paths on redirectors\n
+    q = "NOT tags:iplist_* AND redir.destination:c2* AND NOT tags:ALARMED_* AND tags:enrich_*"
     i = countQuery(q)
     if i >= 10000: i = 10000
     r = getQuery(q,i)
@@ -85,7 +85,7 @@ class alarm():
     #if i > 0: report['alarm'] = True #if the query gives 'new ip's we hit on them
     report['fname'] = "alarm_check1"
     report['name'] = "Unkown IP to C2"
-    report['description'] = "This check queries for IP's that aren't listed in any iplist* but do talk to cobaltstrike* paths on redirectors\n"
+    report['description'] = "This check queries for IP's that aren't listed in any iplist* but do talk to c2* paths on redirectors\n"
     report['query'] = q
     UniqueIPs = {}
     if type(r) != type([]) : r = []
@@ -109,14 +109,14 @@ class alarm():
           UniqueIPs[ip['_source']['src_ip']]['ISP'] = ip['_source']['geoip']['as_org']
         if 'redir_host' in ip['_source']:
           UniqueIPs[ip['_source']['src_ip']]['redir_host'] = ip['_source']['redir_host']
-        if 'haproxy_request' in ip['_source']:
-          UniqueIPs[ip['_source']['src_ip']]['haproxy_request'] = ip['_source']['haproxy_request']
+        if 'redir.traffic.request' in ip['_source']:
+          UniqueIPs[ip['_source']['src_ip']]['redir.traffic.request'] = ip['_source']['redir.traffic.request']
         if 'attackscenario' in ip['_source']:
           UniqueIPs[ip['_source']['src_ip']]['attackscenario'] = ip['_source']['attackscenario']
         if 'tags' in ip['_source']:
           UniqueIPs[ip['_source']['src_ip']]['tags'] = ip['_source']['tags']
-        if 'haproxy_timestamp' in ip['_source']:
-          UniqueIPs[ip['_source']['src_ip']]['haproxy_timestamp'] = ip['_source']['haproxy_timestamp']
+        if 'redir.traffic.timestamp' in ip['_source']:
+          UniqueIPs[ip['_source']['src_ip']]['redir.traffic.timestamp'] = ip['_source']['redir.traffic.timestamp']
         report['alarm'] = True
         print("[A] alarm set in %s"%report['fname'])
         if 'times_seen' in UniqueIPs[ip['_source']['src_ip']]: UniqueIPs[ip['_source']['src_ip']]['times_seen'] += 1
@@ -230,17 +230,17 @@ class alarm():
     return(report)
 
   def alarm_check3(self):
-    ## This check queries for UA's that are listed in any blacklist_useragents.conf and do talk to cobaltstrike* paths on redirectors\n
+    ## This check queries for UA's that are listed in any blacklist_useragents.conf and do talk to c2* paths on redirectors\n
     keywords = ["curl","python"]
     # IF NO KEYWORDS EXIT
     qSub = ""
     for keyword in keywords:
       if qSub == "":
-        qSub = "(haproxy_useragent:%s"%keyword
-        qSub = qSub + " OR haproxy_useragent:%s"%keyword
+        qSub = "(redir.traffic.useragent:%s"%keyword
+        qSub = qSub + " OR redir.traffic.useragent:%s"%keyword
     qSub = qSub + ") "
 
-    q = "%s AND haproxy_dest:cobaltstrike* AND tags:enrich_* AND NOT tags:ALARMED_* "%qSub
+    q = "%s AND redir.destination:c2* AND tags:enrich_* AND NOT tags:ALARMED_* "%qSub
     i = countQuery(q)
     print("[q] querying %s"%q)
     if i >= 10000: i = 10000
@@ -250,7 +250,7 @@ class alarm():
     #if i > 0: report['alarm'] = True #if the query gives 'new lines's we hit on them
     report['fname'] = "alarm_check3"
     report['name'] = "Blacklisted UA to C2"
-    report['description'] = "This check queries for UA's that are blacklisted in blacklist_useragents.conf and do talk to cobaltstrike* paths on redirectors\n"
+    report['description'] = "This check queries for UA's that are blacklisted in blacklist_useragents.conf and do talk to c2* paths on redirectors\n"
     report['query'] = q
     UniqueLINEs = {}
     if type(r) != type([]) : r = []
@@ -265,14 +265,14 @@ class alarm():
         UniqueLINEs[line['_source']['src_ip']]['ISP'] = line['_source']['geoip']['as_org']
       if 'redir_host' in line['_source']:
         UniqueLINEs[line['_source']['src_ip']]['redir_host'] = line['_source']['redir_host']
-      if 'haproxy_request' in line['_source']:
-        UniqueLINEs[line['_source']['src_ip']]['haproxy_request'] = line['_source']['haproxy_request']
+      if 'redir.traffic.request' in line['_source']:
+        UniqueLINEs[line['_source']['src_ip']]['redir.traffic.request'] = line['_source']['redir.traffic.request']
       if 'attackscenario' in line['_source']:
         UniqueLINEs[line['_source']['src_ip']]['attackscenario'] = line['_source']['attackscenario']
       if 'tags' in line['_source']:
         UniqueLINEs[line['_source']['src_ip']]['tags'] = line['_source']['tags']
-      if 'haproxy_timestamp' in line['_source']:
-        UniqueLINEs[line['_source']['src_ip']]['haproxy_timestamp'] = line['_source']['haproxy_timestamp']
+      if 'redir.traffic.timestamp' in line['_source']:
+        UniqueLINEs[line['_source']['src_ip']]['redir.traffic.timestamp'] = line['_source']['redir.traffic.timestamp']
       report['alarm'] = True
       print("[A] alarm set in %s"%report['fname'])
       if 'times_seen' in UniqueLINEs[line['_source']['src_ip']]: UniqueLINEs[line['_source']['src_ip']]['times_seen'] += 1

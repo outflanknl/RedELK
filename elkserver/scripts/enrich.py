@@ -140,7 +140,7 @@ def buildQueryBIG_OR(array,field,index,prefix="",postfix=""):
   query = query + postfix
   return(query)
 
-def setTagByQuery(query,tag,index="redirhaproxy-*"):
+def setTagByQuery(query,tag,index="redirtraffic-*"):
   q3 = {'query': {'query_string': {'query': query }}}
   q3['script'] = {"inline": "ctx._source.tags.add(params.tag)","lang": "painless","params":{"tag":tag}}
   #return(q3)
@@ -202,12 +202,12 @@ def findIPLines(fname,tag,field="src_ip"):
     if len(ipL) > 0:
       print("[D] running a ip %s/%x"%(ListCNT,ListsCNT))
       ListCNT = ListCNT + 1
-      query = buildQueryBIG_OR(ipL,field,"redirhaproxy-*","NOT tags:%s AND ("%tag,")")
+      query = buildQueryBIG_OR(ipL,field,"redirtraffic-*","NOT tags:%s AND ("%tag,")")
       r,rT = setTagByQuery(query,tag)
   return(r,rT)
 
 #section build for greynoise, in essence loop over all items in index that don't have tag X set
-def findUntaggedLines(tag,size=qSize,index="redirhaproxy-*"):
+def findUntaggedLines(tag,size=qSize,index="redirtraffic-*"):
   query = "NOT tags:%s"%tag
   q3 = {'query': {'query_string': {'query': 'FILLME'}}}
   q3['query']['query_string']['query'] = query
@@ -250,14 +250,14 @@ def enrich_greynoise():
   return(nTotal,rTt)
 #end section
 
-def findTaggedLines(tag,size=qSize,index="redirhaproxy-*"):
+def findTaggedLines(tag,size=qSize,index="redirtraffic-*"):
   query = "tags:%s"%tag
   q3 = {'query': {'query_string': {'query': 'FILLME'}}}
   q3['query']['query_string']['query'] = query
   r3 = es.search(index=index, body=q3, size=size)
   return(r3['hits']['hits'],r3['hits']['total'])
 
-def deleteTag(tag,size=qSize,index="redirhaproxy-*"):
+def deleteTag(tag,size=qSize,index="redirtraffic-*"):
   run = True
   totals = 0
   while(run):
