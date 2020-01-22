@@ -131,11 +131,14 @@ def setTags(tag,lst):
     #sys.stdout.write('.')
     #sys.stdout.flush()
 
-def buildQueryBIG_OR(array,field,index,prefix="",postfix=""):
+def buildQueryBIG_OR(array,field,index,prefix="",postfix="",fuzzy=False):
   sep = prefix
   query = ""
   for item in array:
-    query = query + " %s %s:%s" % (sep, field,item)
+    if fuzzy:
+      query = query + " %s %s:*%s*" % (sep, field,item)
+    else:
+      query = query + " %s %s:%s" % (sep, field,item)
     sep = "OR"
   query = query + postfix
   return(query)
@@ -178,7 +181,7 @@ def readConfigLines(fname):
             out.append(line.strip())
     return(out)
 
-def findIPLines(fname,tag,field="src_ip"):
+def findIPLines(fname,tag,field="src_ip",fuzzy=False):
   # We will dig trough ALL data finding specific IP related lines and tag them
   with open(fname) as f:
     content = f.readlines()
@@ -200,7 +203,7 @@ def findIPLines(fname,tag,field="src_ip"):
   ListCNT = 1
   for ipL in ipListList:
     if len(ipL) > 0:
-      print("[D] running a ip %s/%x"%(ListCNT,ListsCNT))
+      print("[D] running an ip %s/%x"%(ListCNT,ListsCNT))
       ListCNT = ListCNT + 1
       query = buildQueryBIG_OR(ipL,field,"redirtraffic-*","NOT tags:%s AND ("%tag,")")
       r,rT = setTagByQuery(query,tag)
@@ -344,3 +347,14 @@ if __name__ == '__main__':
   tagsSet = 0
   tagsSet,rT = enrich_greynoise()
   print("Summary: date: %s, tagsSet: %s, Function:enrich_greynoise (total to tag is %s)"%(datetime.datetime.now(),tagsSet,rT))
+
+  ###fronting (basically IP in another field)
+  ipList = '/etc/redelk/iplist_redteam.conf'
+  tagsSet = 0
+  tagsSet,rT = findIPLines(ipList,"iplist_redteam_v01df","haproxy_body",True)
+  print("Summary: date: %s, tagsSet: %s, Function:iplist_redteamdf (total to tag is %s)"%(datetime.datetime.now(),tagsSet,rT))
+
+  ipList = '/etc/redelk/iplist_customer.conf'
+  tagsSet = 0
+  tagsSet,rT = findIPLines(ipList,"iplist_customer_v01df","haproxy_body",True)
+  print("Summary: date: %s, tagsSet: %s, Function:iplist_customerdf (total to tag is %s)"%(datetime.datetime.now(),tagsSet,rT))
