@@ -13,7 +13,7 @@ ELKVERSION="6.8.2"
 
 #set locale for current session and default locale
 export LC_ALL="en_US.UTF-8"
-echo -e 'LANG=en_US.UTF-8\nLC_ALL=en_US.UTF-8' > /etc/default/locale
+printf 'LANG=en_US.UTF-8\nLC_ALL=en_US.UTF-8\n' > /etc/default/locale
 locale-gen
 
 echoerror() {
