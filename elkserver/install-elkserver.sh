@@ -169,12 +169,12 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Coul not change auto boot settings (Error Code: $ERROR)."
 fi
 
-#echo "Downloading GeoIP database files"
-#mkdir -p /usr/share/logstash/GeoLite2-dbs >> $LOGFILE 2>&1 && cd /tmp && curl http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz -O >> $LOGFILE 2>&1 && curl http://geolite.maxmind.com/download/geoip/database/GeoLite2-ASN.tar.gz -O >> $LOGFILE 2>&1 && tar zxvf /tmp/GeoLite2-ASN.tar.gz >> $LOGFILE 2>&1 && tar zxvf /tmp/GeoLite2-City.tar.gz >> $LOGFILE 2>&1 && mv /tmp/Geo*/*.mmdb /usr/share/logstash/GeoLite2-dbs >> $LOGFILE 2>&1 && chown -R logstash:logstash /usr/share/logstash/GeoLite2-dbs >> $LOGFILE 2>&1
-#ERROR=$?
-#if [ $ERROR -ne 0 ]; then
-#    echoerror "Could not download geoIP database files (Error Code: $ERROR)."
-#fi
+echo "Copying GeoIP database files"
+mkdir -p /usr/share/logstash/GeoLite2-dbs >> $LOGFILE 2>&1 && mv logstash/*.mmdb /usr/share/logstash/GeoLite2-dbs >> $LOGFILE 2>&1 && chown -R logstash:logstash /usr/share/logstash/GeoLite2-dbs >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Could not copy geoIP database files (Error Code: $ERROR)."
+fi
 cd $CWD
 
 echo "Installing elasticsearch"
