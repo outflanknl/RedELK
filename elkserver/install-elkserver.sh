@@ -329,16 +329,38 @@ while [ "$RECHECK" = true ]; do
 done
 sleep 10 # just to give Kibana some extra time after systemd says Kibana is active.
 
-echo "Installing Kibana template"
-curl -X POST "http://localhost:5601/api/saved_objects/_bulk_create" -H 'kbn-xsrf: true' -H "Content-Type: application/json" -d @./templates/redelk_kibana_all.json >> $LOGFILE 2>&1
+echo "Installing Kibana template for indices"
+curl -X POST "http://localhost:5601/api/saved_objects/_bulk_create" -H 'kbn-xsrf: true' -H "Content-Type: application/json" -d @./templates/redelk_kibana_index*.json >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not install Kibana template (Error Code: $ERROR)."
+    echoerror "Could not install Kibana template for indices (Error Code: $ERROR)."
 fi
 
-# setting default index to rtops
+echo "Installing Kibana template for searches"
+curl -X POST "http://localhost:5601/api/saved_objects/_bulk_create" -H 'kbn-xsrf: true' -H "Content-Type: application/json" -d @./templates/redelk_kibana_searches.json >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Could not install Kibana template for searches (Error Code: $ERROR)."
+fi
+
+echo "Installing Kibana template for visuals"
+curl -X POST "http://localhost:5601/api/saved_objects/_bulk_create" -H 'kbn-xsrf: true' -H "Content-Type: application/json" -d @./templates/redelk_kibana_visuals.json >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Could not install Kibana template for visuals (Error Code: $ERROR)."
+fi
+
+echo "Installing Kibana template for dashboards"
+curl -X POST "http://localhost:5601/api/saved_objects/_bulk_create" -H 'kbn-xsrf: true' -H "Content-Type: application/json" -d @./templates/redelk_kibana_dashboards.json >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Could not install Kibana template for dashboards (Error Code: $ERROR)."
+fi
+
+
+# setting default index to redirtraffic
 echo "Setting the Kibana default index"
-curl -X POST "http://localhost:5601/api/kibana/settings/defaultIndex" -H "Content-Type: application/json" -H "kbn-xsrf: true" -d"{\"value\":\"rtops\"}" >> $LOGFILE 2>&1
+curl -X POST "http://localhost:5601/api/kibana/settings/defaultIndex" -H "Content-Type: application/json" -H "kbn-xsrf: true" -d"{\"value\":\"redirtraffic\"}" >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not set the default index for Kibana (Error Code: $ERROR)."
