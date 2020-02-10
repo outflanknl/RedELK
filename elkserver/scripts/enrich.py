@@ -347,14 +347,3 @@ if __name__ == '__main__':
   tagsSet = 0
   tagsSet,rT = enrich_greynoise()
   print("Summary: date: %s, tagsSet: %s, Function:enrich_greynoise (total to tag is %s)"%(datetime.datetime.now(),tagsSet,rT))
-
-  ###fronting (basically IP in another field)
-  ipList = '/etc/redelk/iplist_redteam.conf'
-  tagsSet = 0
-  tagsSet,rT = findIPLines(ipList,"iplist_redteam_v01df","haproxy_body",True)
-  print("Summary: date: %s, tagsSet: %s, Function:iplist_redteamdf (total to tag is %s)"%(datetime.datetime.now(),tagsSet,rT))
-
-  ipList = '/etc/redelk/iplist_customer.conf'
-  tagsSet = 0
-  tagsSet,rT = findIPLines(ipList,"iplist_customer_v01df","haproxy_body",True)
-  print("Summary: date: %s, tagsSet: %s, Function:iplist_customerdf (total to tag is %s)"%(datetime.datetime.now(),tagsSet,rT))
