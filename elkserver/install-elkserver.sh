@@ -330,7 +330,7 @@ done
 sleep 10 # just to give Kibana some extra time after systemd says Kibana is active.
 
 echo "Installing Kibana template for indices"
-curl -X POST "http://localhost:5601/api/saved_objects/_bulk_create" -H 'kbn-xsrf: true' -H "Content-Type: application/json" -d @./templates/redelk_kibana_index*.json >> $LOGFILE 2>&1
+for i in ./templates/redelk_kibana_index*.json; do curl -X POST "http://localhost:5601/api/saved_objects/_bulk_create" -H 'kbn-xsrf: true' -H "Content-Type: application/json" -d @$i; done >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install Kibana template for indices (Error Code: $ERROR)."
