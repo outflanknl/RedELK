@@ -71,13 +71,16 @@ class HA():
       else:
         self.report[md5]['result'] = 'previousAlarm'
         self.report[md5]['record'] = self.hd[md5]
-        if V > 1: print("[2] %s %s already submitted to IBM on %s"%(md5,self.hd[md5]['filenames'],self.hd[md5]['seen']))
+        if V > 1: print("[2] %s %s already submitted to HA on %s"%(md5,self.hd[md5]['filenames'],self.hd[md5]['seen']))
     if V > 5: print("[6] testing %s"%((qlist+qlist1h)[:16]))
     if len( (qlist+qlist1h)[:16] ) > 0:
       if V > 8: print("[9] %s completely new files left, will take %s rounds"%( len(qlist), len(qlist)/16 ))
       if V > 8: print("[9] %s files left which haven't been tested for an hour "%( len(qlist1h) ))
-      r = self.HAreport((qlist+qlist1h)[:16])
-      ### here we neeed to work with the IBM response_code
+      toTestList = (qlist+qlist1h)[:16]
+      r = self.HAreport(toTestList)
+      for md5 in toTestList:
+        self.hd[md5]['seen'] = now
+      ### here we neeed to work with the HA response_code
       #Looping over individual results
       if 'results' not in r: r['results'] = []  #dirty hack.
       self.debug.append(r)
