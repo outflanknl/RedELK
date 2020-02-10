@@ -43,8 +43,7 @@ def setTags(tag,lst):
     #sys.stdout.flush()
 
 class alarm():
-  def __init__(self,to,subject="Alarms from RedElk"):
-    self.to = to
+  def __init__(self,subject="Alarms from RedElk"):
     self.subject = subject
     self.body = ""
     self.alarm = False
@@ -76,7 +75,7 @@ class alarm():
 
   def alarm_check1(self):
     ## This check queries for IP's that aren't listed in any iplist* but do talk to c2* paths on redirectors\n
-    q = "NOT tags:iplist_* AND redir.destination:c2* AND NOT tags:ALARMED_* AND tags:enrich_*"
+    q = "NOT tags:iplist_* AND redir.backendname:c2* AND NOT tags:ALARMED_* AND tags:enrich_*"
     i = countQuery(q)
     if i >= 10000: i = 10000
     r = getQuery(q,i)
@@ -101,26 +100,26 @@ class alarm():
         #print("[D] %s < %s"%(timestamp,nowDelayed))
         #print("[D]%s"% ip['_id'])
         rAlarmed.append(ip)
-        if ip['_source']['src_ip'] not in UniqueIPs:
-          UniqueIPs[ip['_source']['src_ip']] = {}
+        if ip['_source']['redirtraffic.sourceip'] not in UniqueIPs:
+          UniqueIPs[ip['_source']['redirtraffic.sourceip']] = {}
         if 'timezone' in ip['_source']['geoip']:
-          UniqueIPs[ip['_source']['src_ip']]['timezone'] = ip['_source']['geoip']['timezone']
+          UniqueIPs[ip['_source']['redirtraffic.sourceip']]['timezone'] = ip['_source']['geoip']['timezone']
         if 'as_org' in ip['_source']['geoip']:
-          UniqueIPs[ip['_source']['src_ip']]['ISP'] = ip['_source']['geoip']['as_org']
-        if 'redir_host' in ip['_source']:
-          UniqueIPs[ip['_source']['src_ip']]['redir_host'] = ip['_source']['redir_host']
-        if 'redir.traffic.request' in ip['_source']:
-          UniqueIPs[ip['_source']['src_ip']]['redir.traffic.request'] = ip['_source']['redir.traffic.request']
+          UniqueIPs[ip['_source']['redirtraffic.sourceip']]['ISP'] = ip['_source']['geoip']['as_org']
+        if 'redir.frontendname' in ip['_source']:
+          UniqueIPs[ip['_source']['redirtraffic.sourceip']]['redir.frontendname'] = ip['_source']['redir.frontendname']
+        if 'redirtraffic.request' in ip['_source']:
+          UniqueIPs[ip['_source']['redirtraffic.sourceip']]['redirtraffic.request'] = ip['_source']['redirtraffic.request']
         if 'attackscenario' in ip['_source']:
-          UniqueIPs[ip['_source']['src_ip']]['attackscenario'] = ip['_source']['attackscenario']
+          UniqueIPs[ip['_source']['redirtraffic.sourceip']]['attackscenario'] = ip['_source']['attackscenario']
         if 'tags' in ip['_source']:
-          UniqueIPs[ip['_source']['src_ip']]['tags'] = ip['_source']['tags']
-        if 'redir.traffic.timestamp' in ip['_source']:
-          UniqueIPs[ip['_source']['src_ip']]['redir.traffic.timestamp'] = ip['_source']['redir.traffic.timestamp']
+          UniqueIPs[ip['_source']['redirtraffic.sourceip']]['tags'] = ip['_source']['tags']
+        if 'redirtraffic.timestamp' in ip['_source']:
+          UniqueIPs[ip['_source']['redirtraffic.sourceip']]['redirtraffic.timestamp'] = ip['_source']['redirtraffic.timestamp']
         report['alarm'] = True
         print("[A] alarm set in %s"%report['fname'])
-        if 'times_seen' in UniqueIPs[ip['_source']['src_ip']]: UniqueIPs[ip['_source']['src_ip']]['times_seen'] += 1
-        else: UniqueIPs[ip['_source']['src_ip']]['times_seen'] = 1
+        if 'times_seen' in UniqueIPs[ip['_source']['redirtraffic.sourceip']]: UniqueIPs[ip['_source']['redirtraffic.sourceip']]['times_seen'] += 1
+        else: UniqueIPs[ip['_source']['redirtraffic.sourceip']]['times_seen'] = 1
     report['results'] = UniqueIPs
     with open("/tmp/ALARMED_alarm_check1.ips","a") as f: 
       for ip in UniqueIPs:
@@ -244,14 +243,16 @@ class alarm():
         uaList.append(line.strip())
     keywords = uaList
     # IF NO KEYWORDS EXIT
+    print(keywords)
     qSub = ""
     for keyword in keywords:
       if qSub == "":
-        qSub = "(redir.traffic.useragent:%s"%keyword
-        qSub = qSub + " OR redir.traffic.useragent:%s"%keyword
+        qSub = "(redirtraffic.headeruseragent:%s"%keyword
+      else:
+        qSub = qSub + " OR redirtraffic.headeruseragent:%s"%keyword
     qSub = qSub + ") "
-
-    q = "%s AND redir.destination:c2* AND tags:enrich_* AND NOT tags:ALARMED_* "%qSub
+    #q = "%s AND redir.backendname:c2* AND tags:enrich_* AND NOT tags:ALARMED_* "%qSub
+    q = "%s AND redir.backendname:c2* AND NOT tags:ALARMED_* "%qSub
     i = countQuery(q)
     print("[q] querying %s"%q)
     if i >= 10000: i = 10000
@@ -268,26 +269,26 @@ class alarm():
     rAlarmed = []
     for line in r:
       rAlarmed.append(line)
-      if line['_source']['src_ip'] not in UniqueLINEs:
-        UniqueLINEs[line['_source']['src_ip']] = {}
+      if line['_source']['redirtraffic.sourceip'] not in UniqueLINEs:
+        UniqueLINEs[line['_source']['redirtraffic.sourceip']] = {}
       if 'timezone' in line['_source']['geoip']:
-        UniqueLINEs[line['_source']['src_ip']]['timezone'] = line['_source']['geoip']['timezone']
+        UniqueLINEs[line['_source']['redirtraffic.sourceip']]['timezone'] = line['_source']['geoip']['timezone']
       if 'as_org' in line['_source']['geoip']:
-        UniqueLINEs[line['_source']['src_ip']]['ISP'] = line['_source']['geoip']['as_org']
-      if 'redir_host' in line['_source']:
-        UniqueLINEs[line['_source']['src_ip']]['redir_host'] = line['_source']['redir_host']
-      if 'redir.traffic.request' in line['_source']:
-        UniqueLINEs[line['_source']['src_ip']]['redir.traffic.request'] = line['_source']['redir.traffic.request']
+        UniqueLINEs[line['_source']['redirtraffic.sourceip']]['ISP'] = line['_source']['geoip']['as_org']
+      if 'redir.frontendname' in line['_source']:
+        UniqueLINEs[line['_source']['redirtraffic.sourceip']]['redir.frontendname'] = line['_source']['redir.frontendname']
+      if 'redirtraffic.request' in line['_source']:
+        UniqueLINEs[line['_source']['redirtraffic.sourceip']]['redirtraffic.request'] = line['_source']['redirtraffic.request']
       if 'attackscenario' in line['_source']:
-        UniqueLINEs[line['_source']['src_ip']]['attackscenario'] = line['_source']['attackscenario']
+        UniqueLINEs[line['_source']['redirtraffic.sourceip']]['attackscenario'] = line['_source']['attackscenario']
       if 'tags' in line['_source']:
-        UniqueLINEs[line['_source']['src_ip']]['tags'] = line['_source']['tags']
-      if 'redir.traffic.timestamp' in line['_source']:
-        UniqueLINEs[line['_source']['src_ip']]['redir.traffic.timestamp'] = line['_source']['redir.traffic.timestamp']
+        UniqueLINEs[line['_source']['redirtraffic.sourceip']]['tags'] = line['_source']['tags']
+      if 'redirtraffic.timestamp' in line['_source']:
+        UniqueLINEs[line['_source']['redirtraffic.sourceip']]['redirtraffic.timestamp'] = line['_source']['redirtraffic.timestamp']
       report['alarm'] = True
       print("[A] alarm set in %s"%report['fname'])
-      if 'times_seen' in UniqueLINEs[line['_source']['src_ip']]: UniqueLINEs[line['_source']['src_ip']]['times_seen'] += 1
-      else: UniqueLINEs[line['_source']['src_ip']]['times_seen'] = 1
+      if 'times_seen' in UniqueLINEs[line['_source']['redirtraffic.sourceip']]: UniqueLINEs[line['_source']['redirtraffic.sourceip']]['times_seen'] += 1
+      else: UniqueLINEs[line['_source']['redirtraffic.sourceip']]['times_seen'] = 1
     report['results'] = UniqueLINEs
     # TODO before returning we might have to set an tag on our resultset so we alarm only once. (maybe a tag per alarm?  "ALARMED_%s"%report['fname'] migt do)
     setTags("ALARMED_%s"%report['fname'],rAlarmed)
@@ -307,6 +308,7 @@ if __name__ == '__main__':
   </head><body>
   """
   count = 0
+  subjectPostPend = ""
   #print(a.checkDict)
   try:
     for k,v in a.checkDict.items():
@@ -314,12 +316,13 @@ if __name__ == '__main__':
         count = count + 1
         mail = mail + "<p style=\"font-size:%spx\">Alarm on item %s while \"%s\"</p>\n"%(fontsize,item,v['name'])
         mail = mail + "<p style=\"color:#770000; font-size:%spx\">%s</p>\n"%(fontsize-3,pprint(itemData))
+        subjectPostPend = " | %s"%v['name']
   except:
     pass
   mail = mail + "</body></html>\n"
   if count >= 1:
     from SendMail import *
-    smtpResp = SendMail(config.toAddrs,mail,"Alarm from %s"%socket.gethostname())
+    smtpResp = SendMail(config.toAddrs,mail,"Alarm from %s %s"%(socket.gethostname(),subjectPostPend))
     #for to in config.toAddrs:
     #  print("[a] mail to %s from %s"%(to,config.toAddrs))
     #  smtpResp = SendMail(to,mail,"Alarm from RedELK")
