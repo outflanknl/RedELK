@@ -13,8 +13,8 @@ ELKVERSION="6.8.2"
 
 #set default locale
 export LC_ALL="en_US.UTF-8"
-printf 'LANG=en_US.UTF-8\nLC_ALL=en_US.UTF-8\n' > /etc/default/locale
-locale-gen
+printf 'LANG=en_US.UTF-8\nLC_ALL=en_US.UTF-8\n' > /etc/default/locale >> $LOGFILE 2>&1
+locale-gen >> $LOGFILE 2>&1
 
 echoerror() {
     printf "`date +'%b %e %R'` $INSTALLER - ${RC} * ERROR ${EC}: $@\n" >> $LOGFILE 2>&1
