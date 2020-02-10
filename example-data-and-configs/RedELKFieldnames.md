@@ -95,6 +95,8 @@
 
 
 ### RedELK introduced fields ###
+| Field name   | Type    | Description    |
+| --- | --- | --- |
 | attackscenario      | String  | Name of the attackscenario this redirector traffic belongs to, configured in filebeat.yml on redir |
 | attack_technique    | String  | Array like list of T-numbers from MITRE ATT&CK framework. Only present on cslogtype:beacon_task log messages. |
 | beacon_arch         | String  | The architecture of the beacon, x86 or x64. Only present on cslogtype:beacon_newbeacon log messages. |
