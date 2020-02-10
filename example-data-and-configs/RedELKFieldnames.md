@@ -5,6 +5,7 @@
 ## Index redirtraffic-*
 
 # ELK stack default fields
+```
 beat.hostname	   	String      : Hostname of redirector, alias to agent.hostname (legacy field name, dropped in v7 in favor of agent.hostname)
 beat.name	   	    String      : Host identifier as entered in the filebeat.yml cionfig file on the redir (legacy field name, dropped in v7 in favor of host.name)
 beat.version	   	String      : Version of filebeat running on the redirector
@@ -14,8 +15,10 @@ log.file.path	   	String      : File path of the log file on the redirector
 message	   	        String      : Full log message
 offset	   	        Number      : Number of bytes read
 prospector.type	   	String      : Legacy naming of input.type, as defined in the filebeat.yml config file
+```
 
 # RedELK introduced fields
+```
 attackscenario                      String  : Name of the attackscenario this redirector traffic belongs to, configured in filebeat.yml on redir
 geoip.as_org	   	                String  : AS name according to GeoIP lookup, source is redirtraffic.sourceip
 geoip.asn	   	                    String  : AS number according to GeoIP lookup, source is redirtraffic.sourceip
@@ -58,3 +61,4 @@ redirtraffic.sourcedns              String  : Reverse DNS lookup of thesource.ip
 redirtraffic.sourceipcdn 	   	    IP      : In case of CDN setup, IP address that initiated the traffic to the redirector, as reported by the redirector program
 redirtraffic.sourceportcdn 	   	    Number  : In case of CDN setup, source Port of the initiated traffic to the redirector, as reported by the redirector program
 redirtraffic.sourcednscdn 	   	    String  : In case of CDN setup, the reverse DNS lookup of redirtraffic.sourceipcdn
+```
