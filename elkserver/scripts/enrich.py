@@ -181,7 +181,7 @@ def readConfigLines(fname):
             out.append(line.strip())
     return(out)
 
-def findIPLines(fname,tag,field="src_ip",fuzzy=False):
+def findIPLines(fname,tag,field="redirtraffic.sourceip",fuzzy=False):
   # We will dig trough ALL data finding specific IP related lines and tag them
   with open(fname) as f:
     content = f.readlines()
@@ -215,8 +215,8 @@ def findUntaggedLines(tag,size=qSize,index="redirtraffic-*"):
   q3 = {'query': {'query_string': {'query': 'FILLME'}}}
   q3['query']['query_string']['query'] = query
   r3 = es.search(index=index, body=q3, size=size)
-  #print("Query %s"%q3)
-  #print("items retreived %s"%len(r3['hits']['hits']))
+  print("Query %s"%q3)
+  print("items retreived %s"%len(r3['hits']['hits']))
   return(r3['hits']['hits'],r3['hits']['total'])
 
 def enrich_greynoiseSet(handler):
@@ -226,7 +226,7 @@ def enrich_greynoiseSet(handler):
   for l in Set:
     l["_source"]['tags'].append(tag)
     try:
-      ip = l["_source"]["src_ip"]
+      ip = l["_source"]["redirtraffic.sourceip"]
       l["_source"]["greynoise"] = handler.queryIp(ip)
     except:
       pass
@@ -344,9 +344,9 @@ if __name__ == '__main__':
   tagsSet,TotalNotTagged = enrichV1()
   print("Summary: date: %s, tagsSet: %s, Function:enrichV1 (total to tag is %s)"%(datetime.datetime.now(),tagsSet,TotalNotTagged))
 
-  #tagsSet = 0
-  #tagsSet,rT = enrich_greynoise()
-  #print("Summary: date: %s, tagsSet: %s, Function:enrich_greynoise (total to tag is %s)"%(datetime.datetime.now(),tagsSet,rT))
+  tagsSet = 0
+  tagsSet,rT = enrich_greynoise()
+  print("Summary: date: %s, tagsSet: %s, Function:enrich_greynoise (total to tag is %s)"%(datetime.datetime.now(),tagsSet,rT))
 
   ###fronting (basically IP in another field)
   ipList = '/etc/redelk/iplist_redteam.conf'
