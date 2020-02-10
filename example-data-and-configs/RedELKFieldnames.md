@@ -100,15 +100,15 @@
 ### RedELK introduced fields ###
 | Field name   | Type    | Description    |
 | --- | --- | --- |
-| attackscenario      | String  | Name of the attackscenario this redirector traffic belongs to, configured in filebeat.yml on redir |
+| attackscenario      | String  | Name of the attackscenario this beacon belongs to, configured in filebeat.yml on teamserver |
 | attack_technique    | String  | Array like list of T-numbers from MITRE ATT&CK framework. Only present on cslogtype:beacon_task log messages. |
 | beacon_arch         | String  | The architecture of the beacon, x86 or x64. Only present on cslogtype:beacon_newbeacon log messages. |
 | beacon_checkin      | String  | Message from the beacon while checking in. Only present on cslogtype:beacon_checkin log messages. |
-| beacon_id           | String  | The Cobalt Strike own ID of the beacon. |
+| beacon_id           | String  | The Cobalt Strike ID of the beacon. |
 | beacon_input        | String  | The input line as stated by the operator. Only present on cslogtype:beacon_input log messages. |
 | beacon_task         | String  | The task as acknowledged by Cobalt Strike. Only present on cslogtype:beacon_task log messages. |
 | beacon_output       | String  | The output as reported by Cobalt Strike. Basicly the same info as csmessage, with '[output]' stripped. |
-| beaconlogfile       | String  | TheClickable link to the full beacon log file. |
+| beaconlogfile       | String  | Clickable link to the full beacon log file. |
 | cslogtype           | String  | Identifier of the type of Cobalt Strike logfile. Can be beacon_task, beacon_input, beacon_newbeacon, etc. |
 | csmessage           | String  | The entire log message from Cobalt Strike |
 | cstimestamp         | String  | The timestamp of the log message as reported by Cobalt Strike |
@@ -136,3 +136,40 @@
 | beats_input_codec_plain_applied | Filebeat native tag |
 | _rubyparseok | Logstash Ruby plugin native tag |
 | enriched_v01 | Indicator enrich.py ran successfully  |
+
+
+## Index beacondb ##
+
+### ELK stack / Filebeat default fields ###
+| Field name   | Type    | Description    |
+| --- | --- | --- |
+| beat.hostname  | String | Hostname of redirector, alias to agent.hostname (legacy field name, dropped in v7 in favor of agent.hostname) |
+| beat.name	   	 | String | Host identifier as entered in the filebeat.yml cionfig file on the redir (legacy field name, dropped in v7 in favor of host.name) |
+| beat.version	 | String | Version of filebeat running on the redirector |
+| input.type	 | String | Type of the log as identified in the filebeat.yml config file |
+| log.file.path	 | String | File path of the log file on the redirector |
+| message	   	 | String | Full log message |
+| offset	   	 | Number | Number of bytes read |
+| prospector.type| String | Legacy naming of input.type, as defined in the filebeat.yml config file | 
+| source            | String | File path of the log file on the redirector - same as log.file.path |
+
+### RedELK introduced fields ###
+| Field name   | Type    | Description    |
+| --- | --- | --- |
+| attackscenario      | String | Name of the attackscenario this beacon belongs to, configured in filebeat.yml on teamserver |
+| beacon_arch         | String | The architecture of the beacon, x86 or x64. Only present on cslogtype:beacon_newbeacon log messages. |
+| beacon_id           | String | The Cobalt Strike ID of the beacon. |
+| beacon_linked       | String | Set to true if the beacon is linked to another beacon |
+| beacon_linkmode     | String | Type of linking, e.g. SMB or TCP |
+| beacon_linkparentid | String | Beacon ID of the parent beacon in case of linking |
+| beaconlogfile       | String | Clickable link to the full beacon log file. |
+| cstimestamp         | String | The timestamp of the log message as reported by Cobalt Strike |
+| target_hostname     | String | Hostname of the target |
+| target_ipext        | IP     | External IP of the target  |
+| target_ipint        | IP     | Internal IP of the target |
+| target_os           | String | OS of the target |
+| target_osversion    | String | OS version of the targert |
+| target_pid          | Number | Process ID we are running in on the target |
+| target_process      | String | Process name we are running in on the target |
+| target_user         | String | Username we are running in on the target |
+| type                | String | Set to beacondb |
