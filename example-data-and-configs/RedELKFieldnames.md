@@ -15,7 +15,7 @@ message	   	        String      : Full log message
 offset	   	        Number      : Number of bytes read
 prospector.type	   	String      : Legacy naming of input.type, as defined in the filebeat.yml config file
 
-# RedELK introducced fields
+# RedELK introduced fields
 attackscenario                      String  : Name of the attackscenario this redirector traffic belongs to, configured in filebeat.yml on redir
 geoip.as_org	   	                String  : AS name according to GeoIP lookup, source is redirtraffic.sourceip
 geoip.asn	   	                    String  : AS number according to GeoIP lookup, source is redirtraffic.sourceip
