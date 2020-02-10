@@ -102,6 +102,10 @@ class alarm():
         rAlarmed.append(ip)
         if ip['_source']['redirtraffic.sourceip'] not in UniqueIPs:
           UniqueIPs[ip['_source']['redirtraffic.sourceip']] = {}
+        if 'redirtraffic.httprequest' in line['_source']:
+          UniqueLINEs[line['_source']['redirtraffic.sourceip']]['redirtraffic.httprequest'] = line['_source']['redirtraffic.httprequest']
+        if 'redirtraffic.sourceip' in line['_source']:
+          UniqueLINEs[line['_source']['redirtraffic.sourceip']]['redirtraffic.sourceip'] = line['_source']['redirtraffic.sourceip']
         if 'timezone' in ip['_source']['geoip']:
           UniqueIPs[ip['_source']['redirtraffic.sourceip']]['timezone'] = ip['_source']['geoip']['timezone']
         if 'as_org' in ip['_source']['geoip']:
@@ -271,6 +275,10 @@ class alarm():
       rAlarmed.append(line)
       if line['_source']['redirtraffic.sourceip'] not in UniqueLINEs:
         UniqueLINEs[line['_source']['redirtraffic.sourceip']] = {}
+      if 'redirtraffic.httprequest' in line['_source']:
+        UniqueLINEs[line['_source']['redirtraffic.sourceip']]['redirtraffic.httprequest'] = line['_source']['redirtraffic.httprequest']
+      if 'redirtraffic.sourceip' in line['_source']:
+        UniqueLINEs[line['_source']['redirtraffic.sourceip']]['redirtraffic.sourceip'] = line['_source']['redirtraffic.sourceip']
       if 'timezone' in line['_source']['geoip']:
         UniqueLINEs[line['_source']['redirtraffic.sourceip']]['timezone'] = line['_source']['geoip']['timezone']
       if 'as_org' in line['_source']['geoip']:
@@ -296,7 +304,7 @@ class alarm():
 
 if __name__ == '__main__':
   a = alarm()
-  fontsize = 11
+  fontsize = 13
   mail = """
   <html><head><style type="text/css">
   #normal {
@@ -316,6 +324,10 @@ if __name__ == '__main__':
         count = count + 1
         mail = mail + "<p style=\"font-size:%spx\">Alarm on item %s while \"%s\"</p>\n"%(fontsize,item,v['name'])
         mail = mail + "<p style=\"color:#770000; font-size:%spx\">%s</p>\n"%(fontsize-3,pprint(itemData))
+        mail = mail + "<table>"
+        for itemDataK,ItemDataV in itemData.items():
+          mail = mail + "<tr><td style=\"font-size:%spx\">%s</td<><td style=\"font-size:%spx\">%s</td></tr>"%(fontsize-3,itemDataK,fontsize-3,ItemDataV)
+        mail = mail + "</table>"
         subjectPostPend = " | %s"%v['name']
   except:
     pass
