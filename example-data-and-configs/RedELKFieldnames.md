@@ -76,6 +76,8 @@
 | iplist_alarmed | Set when this event was already alarmed |
 
 
+
+
 ## Index rtops ##
 
 ### ELK stack / Filebeat default fields ###
@@ -126,6 +128,8 @@
 | target_process      | String  | Process name we are running in on the target |
 | target_user         | String  | Username we are running in on the target |
 
+
+### Tags set  by RedELK ### 
 | Tag name   | Description    |
 | --- | --- |
 | beats_input_codec_plain_applied | Filebeat native tag |
