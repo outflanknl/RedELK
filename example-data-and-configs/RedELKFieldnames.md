@@ -35,6 +35,7 @@
 | geoip.region_code	                | String  | Region code according to GeoIP lookup, source is redirtraffic.sourceip |
 | geoip.region_name	                | String  | Region name according to GeoIP lookup, source is redirtraffic.sourceip |
 | geoip.timezone	   	            | String  | Timezone name according to GeoIP lookup, source is redirtraffic.sourceip |
+| greynoise.*                       | Varying | Fields and data as set by Greynoise |
 | infralogtype                      | String  | identifier of the type of log that filebeat ships, configured in filebeat.yml on redir, default 'redirtraffic' |
 | syslogpid                         | Number  | Process ID of the redirector program, as reported by Syslog |
 | syslogprogram                     | String  | Name of the redirector program, as reported by Syslog |
