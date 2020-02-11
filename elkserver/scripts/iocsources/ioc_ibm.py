@@ -96,6 +96,7 @@ class IBM():
           else:
             #Unexpected out or 404 which means clean
             if V >= 1: print("[1] WEIRD OUTCOME from IBM on %s => %s"%(md5,json.dumps(report) ) )
+            self.hd[md5]['lasttested'] = now
             self.report[md5]['result'] = 'clean'
     else:
       if V > 8: print("[9] nothing to do")

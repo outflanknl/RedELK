@@ -60,8 +60,10 @@ class VT():
       if not self.hd[md5]['seenAtVT']:
         if not self.hd[md5]['lasttested']:
           qlist.append(md5)
+          if V > 1: print("[2]  adding %s to qlist"%(md5))
         elif self.hd[md5]['lasttested'] < now1h:
           #add to -1h list
+          if V > 1: print("[2]  adding %s to qlist1h"%(md5))
           qlist1h.append(md5)
       else:
         self.report[md5]['result'] = 'previousAlarm'
@@ -73,11 +75,9 @@ class VT():
       if V > 8: print("[9] %s files left which haven't been tested for an hour "%( len(qlist1h) ))
       r = self.virustotalReport(",".join((qlist+qlist1h)[:4]))
       res = r[1]
-      if type(res) != list: #might happen if only 1 result? DIE
-        res = []
       if V > 8: print("[9] status code %s"%r[0])
       if type(res) != type([]):
-        res = [] #dirty?
+        res = [res] #dirty?
         if V > 8: print("[9] just emties resultlist is was %s"%r[1])
       if len(res) > 0:  # yeah really bad, no time now
         for report in res:

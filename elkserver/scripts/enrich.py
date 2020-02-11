@@ -131,16 +131,19 @@ def setTags(tag,lst):
     #sys.stdout.write('.')
     #sys.stdout.flush()
 
-def buildQueryBIG_OR(array,field,index,prefix="",postfix=""):
+def buildQueryBIG_OR(array,field,index,prefix="",postfix="",fuzzy=False):
   sep = prefix
   query = ""
   for item in array:
-    query = query + " %s %s:%s" % (sep, field,item)
+    if fuzzy:
+      query = query + " %s %s:*%s*" % (sep, field,item)
+    else:
+      query = query + " %s %s:%s" % (sep, field,item)
     sep = "OR"
   query = query + postfix
   return(query)
 
-def setTagByQuery(query,tag,index="redirhaproxy-*"):
+def setTagByQuery(query,tag,index="redirtraffic-*"):
   q3 = {'query': {'query_string': {'query': query }}}
   q3['script'] = {"inline": "ctx._source.tags.add(params.tag)","lang": "painless","params":{"tag":tag}}
   #return(q3)
@@ -178,7 +181,7 @@ def readConfigLines(fname):
             out.append(line.strip())
     return(out)
 
-def findIPLines(fname,tag,field="src_ip"):
+def findIPLines(fname,tag,field="redirtraffic.sourceip",fuzzy=False):
   # We will dig trough ALL data finding specific IP related lines and tag them
   with open(fname) as f:
     content = f.readlines()
@@ -200,20 +203,20 @@ def findIPLines(fname,tag,field="src_ip"):
   ListCNT = 1
   for ipL in ipListList:
     if len(ipL) > 0:
-      print("[D] running a ip %s/%x"%(ListCNT,ListsCNT))
+      print("[D] running an ip %s/%x"%(ListCNT,ListsCNT))
       ListCNT = ListCNT + 1
-      query = buildQueryBIG_OR(ipL,field,"redirhaproxy-*","NOT tags:%s AND ("%tag,")")
+      query = buildQueryBIG_OR(ipL,field,"redirtraffic-*","NOT tags:%s AND ("%tag,")")
       r,rT = setTagByQuery(query,tag)
   return(r,rT)
 
 #section build for greynoise, in essence loop over all items in index that don't have tag X set
-def findUntaggedLines(tag,size=qSize,index="redirhaproxy-*"):
+def findUntaggedLines(tag,size=qSize,index="redirtraffic-*"):
   query = "NOT tags:%s"%tag
   q3 = {'query': {'query_string': {'query': 'FILLME'}}}
   q3['query']['query_string']['query'] = query
   r3 = es.search(index=index, body=q3, size=size)
-  #print("Query %s"%q3)
-  #print("items retreived %s"%len(r3['hits']['hits']))
+  print("Query %s"%q3)
+  print("items retreived %s"%len(r3['hits']['hits']))
   return(r3['hits']['hits'],r3['hits']['total'])
 
 def enrich_greynoiseSet(handler):
@@ -223,7 +226,7 @@ def enrich_greynoiseSet(handler):
   for l in Set:
     l["_source"]['tags'].append(tag)
     try:
-      ip = l["_source"]["src_ip"]
+      ip = l["_source"]["redirtraffic.sourceip"]
       l["_source"]["greynoise"] = handler.queryIp(ip)
     except:
       pass
@@ -250,14 +253,14 @@ def enrich_greynoise():
   return(nTotal,rTt)
 #end section
 
-def findTaggedLines(tag,size=qSize,index="redirhaproxy-*"):
+def findTaggedLines(tag,size=qSize,index="redirtraffic-*"):
   query = "tags:%s"%tag
   q3 = {'query': {'query_string': {'query': 'FILLME'}}}
   q3['query']['query_string']['query'] = query
   r3 = es.search(index=index, body=q3, size=size)
   return(r3['hits']['hits'],r3['hits']['total'])
 
-def deleteTag(tag,size=qSize,index="redirhaproxy-*"):
+def deleteTag(tag,size=qSize,index="redirtraffic-*"):
   run = True
   totals = 0
   while(run):

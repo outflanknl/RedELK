@@ -1,0 +1,46 @@
+[
+  {
+    "id": "0f8626d0-c6f4-11e8-a9c6-cd307b96b1ba",
+    "type": "dashboard",
+    "attributes": {
+      "title": "Traffic dashboard",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"gridData\":{\"x\":0,\"y\":0,\"w\":48,\"h\":16,\"i\":\"1\"},\"version\":\"6.4.1\",\"panelIndex\":\"1\",\"type\":\"visualization\",\"id\":\"e97f6f10-b982-11e8-94dd-171ae5c1fd1a\",\"embeddableConfig\":{\"mapCenter\":[29.53522956294847,3.5156250000000004],\"mapZoom\":2}},{\"gridData\":{\"x\":0,\"y\":16,\"w\":24,\"h\":15,\"i\":\"2\"},\"version\":\"6.4.1\",\"panelIndex\":\"2\",\"type\":\"visualization\",\"id\":\"10dd40f0-b983-11e8-94dd-171ae5c1fd1a\",\"embeddableConfig\":{\"mapCenter\":[37.16031654673677,11.601562500000002],\"mapZoom\":1}},{\"gridData\":{\"x\":24,\"y\":16,\"w\":24,\"h\":15,\"i\":\"3\"},\"version\":\"6.4.1\",\"panelIndex\":\"3\",\"type\":\"visualization\",\"id\":\"1d26da60-b983-11e8-94dd-171ae5c1fd1a\",\"embeddableConfig\":{\"mapCenter\":[36.06353184297193,-36.90032958984376],\"mapZoom\":1}}]",
+      "optionsJSON": "{\"darkTheme\":false,\"useMargins\":true,\"hidePanelTitles\":false}",
+      "version": 1,
+      "timeRestore": true,
+      "timeTo": "now",
+      "timeFrom": "now-1y",
+      "refreshInterval": {
+        "pause": false,
+        "value": 30000
+      },
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "id": "117dbba0-c6f5-11e8-a9c6-cd307b96b1ba",
+    "type": "dashboard",
+    "attributes": {
+      "title": "Beacon dashboard",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"gridData\":{\"x\":0,\"y\":0,\"w\":24,\"h\":15,\"i\":\"1\"},\"version\":\"6.4.1\",\"panelIndex\":\"1\",\"type\":\"visualization\",\"id\":\"e12434d0-b8e8-11e8-94dd-171ae5c1fd1a\",\"embeddableConfig\":{}},{\"gridData\":{\"x\":24,\"y\":0,\"w\":24,\"h\":15,\"i\":\"2\"},\"version\":\"6.4.1\",\"panelIndex\":\"2\",\"type\":\"visualization\",\"id\":\"88003df0-b8ec-11e8-94dd-171ae5c1fd1a\",\"embeddableConfig\":{}},{\"gridData\":{\"x\":0,\"y\":15,\"w\":24,\"h\":15,\"i\":\"3\"},\"version\":\"6.4.1\",\"panelIndex\":\"3\",\"type\":\"visualization\",\"id\":\"10dcc4a0-b8e7-11e8-94dd-171ae5c1fd1a\",\"embeddableConfig\":{}},{\"gridData\":{\"x\":0,\"y\":30,\"w\":48,\"h\":22,\"i\":\"4\"},\"version\":\"6.4.1\",\"panelIndex\":\"4\",\"type\":\"visualization\",\"id\":\"f0dcbda0-b8e5-11e8-94dd-171ae5c1fd1a\",\"embeddableConfig\":{}},{\"gridData\":{\"x\":24,\"y\":15,\"w\":24,\"h\":15,\"i\":\"5\"},\"version\":\"6.4.1\",\"panelIndex\":\"5\",\"type\":\"visualization\",\"id\":\"a1efc620-b8e4-11e8-94dd-171ae5c1fd1a\",\"embeddableConfig\":{}}]",
+      "optionsJSON": "{\"darkTheme\":false,\"useMargins\":true,\"hidePanelTitles\":false}",
+      "version": 1,
+      "timeRestore": true,
+      "timeTo": "now",
+      "timeFrom": "now-30d",
+      "refreshInterval": {
+        "pause": false,
+        "value": 30000
+      },
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[]}"
+      }
+    }
+  }
+]

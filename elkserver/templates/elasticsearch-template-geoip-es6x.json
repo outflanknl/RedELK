@@ -1,5 +1,5 @@
 {
-  "template" : "redirhaproxy-*",
+  "template" : "redirtraffic-*",
   "version" : 60002,
   "settings" : {
     "index.refresh_interval" : "5s"

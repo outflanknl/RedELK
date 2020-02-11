@@ -5,7 +5,16 @@ filebeat.prospectors:
   paths:
     - /var/log/haproxy.log
   fields:
-    infralogtype: redirhaproxy
+    infralogtype: redirtraffic
+    redirprogram: haproxy
+- type: log
+  enabled: true
+  fields_under_root: true
+  paths:
+    - /var/log/apache2/access-redelk.log
+  fields:
+    infralogtype: redirtraffic
+    redirprogram: apache
 
 filebeat.config.modules:
   path: ${path.config}/modules.d/*.yml

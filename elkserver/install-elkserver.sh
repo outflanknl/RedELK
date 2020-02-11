@@ -15,8 +15,8 @@ ELKVERSION="6.8.2"
 
 #set locale for current session and default locale
 export LC_ALL="en_US.UTF-8"
-echo -e 'LANG=en_US.UTF-8\nLC_ALL=en_US.UTF-8' > /etc/default/locale
-locale-gen
+printf 'LANG=en_US.UTF-8\nLC_ALL=en_US.UTF-8\n' > /etc/default/locale >> $LOGFILE 2>&1
+locale-gen >> $LOGFILE 2>&1
 
 echoerror() {
     printf "`date +'%b %e %R'` $INSTALLER - ${RC} * ERROR ${EC}: $@\n" >> $LOGFILE 2>&1
@@ -24,7 +24,16 @@ echoerror() {
 
 preinstallcheck() {
     echo "Starting pre installation checks"
+    
     SHOULDEXIT=false
+    
+    # Checking if OS is Debian / APT based
+    if [ ! -f  /etc/debian_version ]; then
+        echo "[X] This system does not seem to be Debian/APT-based. RedELK installer only supports Debian/APT based systems."
+        echoerror "System is not Debian/APT based. Not supported. Quitting."
+        SHOULDEXIT=true
+    fi
+ 
     # checking logstash version
     if [ -n "$(dpkg -s logstash 2>/dev/null| grep Status)" ]; then
         INSTALLEDVERSION=`dpkg -s logstash |grep Version|awk '{print $2}'|sed 's/^1\://g'|sed 's/\-1$//g'` >> $LOGFILE 2>&1
@@ -160,11 +169,11 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Coul not change auto boot settings (Error Code: $ERROR)."
 fi
 
-echo "Downloading GeoIP database files"
-mkdir -p /usr/share/logstash/GeoLite2-dbs >> $LOGFILE 2>&1 && cd /tmp && curl http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz -O >> $LOGFILE 2>&1 && curl http://geolite.maxmind.com/download/geoip/database/GeoLite2-ASN.tar.gz -O >> $LOGFILE 2>&1 && tar zxvf /tmp/GeoLite2-ASN.tar.gz >> $LOGFILE 2>&1 && tar zxvf /tmp/GeoLite2-City.tar.gz >> $LOGFILE 2>&1 && mv /tmp/Geo*/*.mmdb /usr/share/logstash/GeoLite2-dbs >> $LOGFILE 2>&1 && chown -R logstash:logstash /usr/share/logstash/GeoLite2-dbs >> $LOGFILE 2>&1
+echo "Copying GeoIP database files"
+mkdir -p /usr/share/logstash/GeoLite2-dbs >> $LOGFILE 2>&1 && mv logstash/*.mmdb /usr/share/logstash/GeoLite2-dbs >> $LOGFILE 2>&1 && chown -R logstash:logstash /usr/share/logstash/GeoLite2-dbs >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not download geoIP database files (Error Code: $ERROR)."
+    echoerror "Could not copy geoIP database files (Error Code: $ERROR)."
 fi
 cd $CWD
 
@@ -320,23 +329,45 @@ while [ "$RECHECK" = true ]; do
 done
 sleep 10 # just to give Kibana some extra time after systemd says Kibana is active.
 
-echo "Installing Kibana template"
-curl -X POST "http://localhost:5601/api/saved_objects/_bulk_create" -H 'kbn-xsrf: true' -H "Content-Type: application/json" -d @./templates/redelk_kibana_all.json >> $LOGFILE 2>&1
+echo "Installing Kibana template for indices"
+for i in ./templates/redelk_kibana_index*.json; do curl -X POST "http://localhost:5601/api/saved_objects/_bulk_create" -H 'kbn-xsrf: true' -H "Content-Type: application/json" -d @$i; done >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not install Kibana template (Error Code: $ERROR)."
+    echoerror "Could not install Kibana template for indices (Error Code: $ERROR)."
 fi
 
-# setting default index to rtops
+echo "Installing Kibana template for searches"
+curl -X POST "http://localhost:5601/api/saved_objects/_bulk_create" -H 'kbn-xsrf: true' -H "Content-Type: application/json" -d @./templates/redelk_kibana_searches.json >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Could not install Kibana template for searches (Error Code: $ERROR)."
+fi
+
+echo "Installing Kibana template for visuals"
+curl -X POST "http://localhost:5601/api/saved_objects/_bulk_create" -H 'kbn-xsrf: true' -H "Content-Type: application/json" -d @./templates/redelk_kibana_visuals.json >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Could not install Kibana template for visuals (Error Code: $ERROR)."
+fi
+
+echo "Installing Kibana template for dashboards"
+curl -X POST "http://localhost:5601/api/saved_objects/_bulk_create" -H 'kbn-xsrf: true' -H "Content-Type: application/json" -d @./templates/redelk_kibana_dashboards.json >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Could not install Kibana template for dashboards (Error Code: $ERROR)."
+fi
+
+
+# setting default index to redirtraffic
 echo "Setting the Kibana default index"
-curl -X POST "http://localhost:5601/api/kibana/settings/defaultIndex" -H "Content-Type: application/json" -H "kbn-xsrf: true" -d"{\"value\":\"rtops\"}" >> $LOGFILE 2>&1
+curl -X POST "http://localhost:5601/api/kibana/settings/defaultIndex" -H "Content-Type: application/json" -H "kbn-xsrf: true" -d"{\"value\":\"redirtraffic\"}" >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not set the default index for Kibana (Error Code: $ERROR)."
 fi
 
 echo "Installing GeoIP index template adjustment"
-curl -XPUT -H 'Content-Type: application/json' http://localhost:9200/_template/redirhaproxy- -d@./templates/elasticsearch-template-geoip-es6x.json >> $LOGFILE 2>&1
+curl -XPUT -H 'Content-Type: application/json' http://localhost:9200/_template/redirtraffic- -d@./templates/elasticsearch-template-geoip-es6x.json >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install GeoIP index template adjust (Error Code: $ERROR)."

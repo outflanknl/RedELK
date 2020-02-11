@@ -1,0 +1,182 @@
+[
+  {
+    "id": "0f7dcd70-b982-11e8-94dd-171ae5c1fd1a",
+    "type": "search",
+    "attributes": {
+      "title": "Redirector Traffic",
+      "columns": [
+        "attackscenario",
+        "redir.backendname",
+        "redirtraffic.sourceip",
+        "redirtraffic.sourcedns",
+        "geoip.as_org",
+        "redirtraffic.httprequest"
+      ],
+      "description": "",
+      "hits": 0,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"redirtraffic\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"\"},\"filter\":[]}"
+      },
+      "sort": [
+        "@timestamp",
+        "desc"
+      ],
+      "version": 1
+    }
+  },
+  {
+    "id": "1c580960-b6a9-11e8-bc1a-cf8fa3255855",
+    "type": "search",
+    "attributes": {
+      "title": "Red Team Operations",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "attackscenario",
+        "target_user",
+        "target_ipint",
+        "beacon_id",
+        "target_hostname",
+        "target_os",
+        "target_osversion",
+        "csmessage"
+      ],
+      "sort": [
+        "@timestamp",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"rtops\",\"highlightAll\":true,\"version\":true,\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[{\"meta\":{\"negate\":true,\"index\":\"rtops\",\"type\":\"phrase\",\"key\":\"cslogtype\",\"value\":\"events_joinleave\",\"params\":{\"query\":\"events_joinleave\",\"type\":\"phrase\"},\"disabled\":false,\"alias\":null},\"query\":{\"match\":{\"cslogtype\":{\"query\":\"events_joinleave\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}},{\"meta\":{\"negate\":true,\"index\":\"rtops\",\"type\":\"phrase\",\"key\":\"cslogtype\",\"value\":\"events_newbeacon\",\"params\":{\"query\":\"events_newbeacon\",\"type\":\"phrase\"},\"disabled\":false,\"alias\":null},\"query\":{\"match\":{\"cslogtype\":{\"query\":\"events_newbeacon\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}},{\"meta\":{\"index\":\"rtops\",\"negate\":true,\"disabled\":false,\"alias\":null,\"type\":\"phrase\",\"key\":\"cslogtype\",\"value\":\"weblog\",\"params\":{\"query\":\"weblog\",\"type\":\"phrase\"}},\"query\":{\"match\":{\"cslogtype\":{\"query\":\"weblog\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}},{\"meta\":{\"index\":\"rtops\",\"negate\":true,\"disabled\":false,\"alias\":null,\"type\":\"phrase\",\"key\":\"cslogtype\",\"value\":\"events\",\"params\":{\"query\":\"events\",\"type\":\"phrase\"}},\"query\":{\"match\":{\"cslogtype\":{\"query\":\"events\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}}]}"
+      }
+    }
+  },
+  {
+    "id": "26ba4cb0-0f73-11e9-8e1e-a16db980e11e",
+    "type": "search",
+    "attributes": {
+      "title": "CS Downloads",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "attackscenario",
+        "target_hostname",
+        "target_user",
+        "filename",
+        "pathremote",
+        "downloadsurl"
+      ],
+      "sort": [
+        "@timestamp",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"rtops\",\"highlightAll\":true,\"version\":true,\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[{\"meta\":{\"negate\":false,\"index\":\"rtops\",\"type\":\"phrase\",\"key\":\"cslogtype\",\"value\":\"downloads\",\"params\":{\"query\":\"downloads\",\"type\":\"phrase\"},\"disabled\":false,\"alias\":null},\"query\":{\"match\":{\"cslogtype\":{\"query\":\"downloads\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}}]}"
+      }
+    }
+  },
+  {
+    "id": "3afbdbc0-b6aa-11e8-bc1a-cf8fa3255855",
+    "type": "search",
+    "attributes": {
+      "title": "CS Keystrokes",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "attackscenario",
+        "target_hostname",
+        "target_user",
+        "csmessage",
+        "keystrokesfull"
+      ],
+      "sort": [
+        "@timestamp",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"rtops\",\"highlightAll\":true,\"version\":true,\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[{\"meta\":{\"index\":\"rtops\",\"negate\":false,\"disabled\":false,\"alias\":null,\"type\":\"phrase\",\"key\":\"cslogtype\",\"value\":\"keystrokes\",\"params\":{\"query\":\"keystrokes\",\"type\":\"phrase\"}},\"query\":{\"match\":{\"cslogtype\":{\"query\":\"keystrokes\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}}]}"
+      }
+    }
+  },
+  {
+    "id": "4c003e20-b6aa-11e8-bc1a-cf8fa3255855",
+    "type": "search",
+    "attributes": {
+      "title": "CS IOCs",
+      "columns": [
+        "attackscenario",
+        "target_user",
+        "target_ipint",
+        "ioc_type",
+        "ioc_hash",
+        "ioc_name",
+        "ioc_bytesize",
+        "csmessage"
+      ],
+      "description": "",
+      "hits": 0,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"rtops\",\"highlightAll\":true,\"version\":true,\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[{\"meta\":{\"index\":\"rtops\",\"negate\":false,\"disabled\":false,\"alias\":null,\"type\":\"phrase\",\"key\":\"cslogtype\",\"value\":\"ioc\",\"params\":{\"query\":\"ioc\",\"type\":\"phrase\"}},\"query\":{\"match\":{\"cslogtype\":{\"query\":\"ioc\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}}]}"
+      },
+      "sort": [
+        "@timestamp",
+        "desc"
+      ],
+      "version": 1
+    }
+  },
+  {
+    "id": "e8de79f0-b6aa-11e8-bc1a-cf8fa3255855",
+    "type": "search",
+    "attributes": {
+      "title": "CS Screenshots",
+      "columns": [
+        "attackscenario",
+        "target_hostname",
+        "target_user",
+        "screenshotfull",
+        "screenshotthumb"
+      ],
+      "description": "",
+      "hits": 0,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"rtops\",\"highlightAll\":true,\"version\":true,\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[{\"meta\":{\"index\":\"rtops\",\"negate\":false,\"disabled\":false,\"alias\":null,\"type\":\"phrase\",\"key\":\"beacon_output\",\"value\":\"\\\"received screenshot\\\"\",\"params\":{\"query\":\"\\\"received screenshot\\\"\",\"type\":\"phrase\"}},\"query\":{\"match\":{\"beacon_output\":{\"query\":\"\\\"received screenshot\\\"\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}}]}"
+      },
+      "sort": [
+        "@timestamp",
+        "desc"
+      ],
+      "version": 1
+    }
+  },
+  {
+    "id": "68e8e870-b6aa-11e8-bc1a-cf8fa3255855",
+    "type": "search",
+    "attributes": {
+      "title": "CS Beacons",
+      "columns": [
+        "beacon_id",
+        "attackscenario",
+        "target_hostname",
+        "target_user",
+        "target_ipint",
+        "beacon_arch",
+        "target_osversion",
+        "target_ipext",
+        "beacon_linkparentid"
+      ],
+      "description": "",
+      "hits": 0,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"beacondb\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"\"},\"filter\":[]}"
+      },
+      "sort": [
+        "@timestamp",
+        "desc"
+      ],
+      "version": 1
+    }
+  }
+]

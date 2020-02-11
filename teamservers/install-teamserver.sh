@@ -13,8 +13,8 @@ ELKVERSION="6.8.2"
 
 #set locale for current session and default locale
 export LC_ALL="en_US.UTF-8"
-echo -e 'LANG=en_US.UTF-8\nLC_ALL=en_US.UTF-8' > /etc/default/locale
-locale-gen
+printf 'LANG=en_US.UTF-8\nLC_ALL=en_US.UTF-8\n' > /etc/default/locale >> $LOGFILE 2>&1
+locale-gen >> $LOGFILE 2>&1
 
 echoerror() {
     printf "`date +'%b %e %R'` $INSTALLER - ${RC} * ERROR ${EC}: $@\n" >> $LOGFILE 2>&1
@@ -22,6 +22,14 @@ echoerror() {
 
 preinstallcheck() {
     echo "Starting pre installation checks"
+
+    # Checking if OS is Debian / APT based
+    if [ ! -f  /etc/debian_version ]; then
+        echo "[X] This system does not seem to be Debian/APT-based. RedELK installer only supports Debian/APT based systems."
+        echoerror "System is not Debian/APT based. Not supported. Quitting."
+        exit 1
+    fi
+
     if [ -n "$(dpkg -s filebeat 2>/dev/null| grep Status)" ]; then
         INSTALLEDVERSION=`dpkg -s filebeat |grep Version|awk '{print $2}'` >> $LOGFILE 2>&1
         if [ "$INSTALLEDVERSION" != "$ELKVERSION" ]; then
@@ -178,7 +186,7 @@ grep scponly /etc/passwd > /dev/null
 EXIT=$?
 if [ $EXIT -eq 0  ]; then
     mkdir -p /home/scponly/.ssh
-    mv -f /home/scponly/.ssh/authorized_keys /home/scponly/.ssh/authorized_keys_old || true
+    mv -f /home/scponly/.ssh/authorized_keys /home/scponly/.ssh/authorized_keys_old || true  >> $LOGFILE 2>&1
     cat ./ssh/id_rsa.pub >> /home/scponly/.ssh/authorized_keys && chown -R scponly /home/scponly/.ssh && chmod 700 /home/scponly/.ssh
 fi  >> $LOGFILE 2>&1
 ERROR=$?
