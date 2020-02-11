@@ -15,7 +15,7 @@ Longer: a Red Team's SIEM that serves two goals:
 
 Here's a conceptual overview of how RedELK works.
 
-![](./images/redelk_overview.png)
+![](./images/redelk_overview.jpg)
 
 
 
