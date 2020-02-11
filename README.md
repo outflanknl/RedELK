@@ -1,9 +1,9 @@
 Red Team's SIEM - tool for Red Teams used for tracking and alarming about Blue Team activities as well as better usability for the Red Team in long term operations.
 
-As presented and demonstrated at BruCON 2018, x33fcon 2019 and Hack in Paris 2019:
+As presented and demonstrated at BruCON, x33fcon and Hack in Paris:
 - Video BruCon 2018: https://www.youtube.com/watch?v=OjtftdPts4g
 - Slides BruCon 2018: https://github.com/outflanknl/Presentations/raw/master/MirrorOnTheWall_BruCon2018_UsingBlueTeamTechniquesinRedTeamOps_Bergman-Smeets_FINAL.pdf
-- Video x33fcon 2019: tbc
+- Video x33fcon 2019: https://www.youtube.com/watch?v=-CNMgh0yJag 
 - Slides x33fcon 2019: https://github.com/outflanknl/Presentations/raw/master/x33fcon2019_OutOfTheBlue-CatchingBlueTeamOPSECFailures_publicversion.pdf
 - Video Hack in Paris 2019: https://www.youtube.com/watch?v=ZezBCAUax6c
 - Slides Hack in Paris 2019: https://github.com/outflanknl/Presentations/raw/master/HackInParis2019_WhoWatchesTheWatchmen_Bergman-Smeetsfinal.pdf
@@ -34,8 +34,8 @@ We welcome contributions! Contributions can be both in code, as well as in ideas
 This project is still in beta phase. This means that it works on our machines and our environment, but no extended testing is performed on different setups. This also means that naming and structure of the code is still subject to change.
 
 We are working (and you are invited to contribute) on many things, amongst others:
-- **Support for Apache and Nginx redirectors**. Fully tested and working filebeat and logstash configuration files that support Apache and Nginx based redirectors.
-- **Solve rsyslog max log line issue**. Rsyslog (default syslog service on Ubuntu) breaks long syslog lines. Depending on the CS profile you use, this can become an issue. As a result, the parsing of some of the fields are properly parsed by logstash, and thus not properly included in elasticsearch.
+- **Support for other redirector applications**. E.g. Nginx. Fully tested and working filebeat and logstash configuration.
+- **Support for other C2 frameworks**. E.g. FactionC2, Covenant, Empire. Fully tested and working filebeat and logstash configurations please.
 - **Ingest manual IOC data**. When you are uploading a document, or something else, outside of Cobalt Strike, it will not be included in the IOC list. We want an easy way to have these manual IOCs also included. One way would be to enter the data manually in the activity log of Cobalt Strike and have a logstash filter to scrape the info from there.
 - **Ingest e-mails**. Create input and filter rules for IMAP mailboxes. This way, we can use the same easy ELK interface for having an overview of sent emails, and replies.
 - **DNS traffic analyses**. Ingest, filter and query for suspicious activities on the DNS level. This will take considerable work due to the large amount of noise/bogus DNS queries performed  by scanners and online DNS inventory services. 
