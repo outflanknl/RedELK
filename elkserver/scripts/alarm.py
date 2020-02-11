@@ -247,7 +247,7 @@ class alarm():
         uaList.append(line.strip())
     keywords = uaList
     # IF NO KEYWORDS EXIT
-    print(keywords)
+    #print(keywords)
     qSub = ""
     for keyword in keywords:
       if qSub == "":
@@ -258,7 +258,7 @@ class alarm():
     #q = "%s AND redir.backendname:c2* AND tags:enrich_* AND NOT tags:ALARMED_* "%qSub
     q = "%s AND redir.backendname:c2* AND NOT tags:ALARMED_* "%qSub
     i = countQuery(q)
-    print("[q] querying %s"%q)
+    #print("[q] querying %s"%q)
     if i >= 10000: i = 10000
     r = getQuery(q,i)
     report = {}
