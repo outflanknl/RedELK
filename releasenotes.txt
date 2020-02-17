@@ -1,6 +1,10 @@
 
 RedELK release notes
 
+### version 1.0.1
+* Fixed bug in logstash filter rule when Apache doesn't have a hostname configured
+* Tuned verbosity of Alarm.py 
+
 ### version 1.0
 * Support for Apache redirectors
 * Support for Cobalt Strike 4.0
