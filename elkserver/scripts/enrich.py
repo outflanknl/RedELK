@@ -344,6 +344,6 @@ if __name__ == '__main__':
   tagsSet,TotalNotTagged = enrichV1()
   print("Summary: date: %s, tagsSet: %s, Function:enrichV1 (total to tag is %s)"%(datetime.datetime.now(),tagsSet,TotalNotTagged))
 
-  #tagsSet = 0
-  #tagsSet,rT = enrich_greynoise()
-  #print("Summary: date: %s, tagsSet: %s, Function:enrich_greynoise (total to tag is %s)"%(datetime.datetime.now(),tagsSet,rT))
+  tagsSet = 0
+  tagsSet,rT = enrich_greynoise()
+  print("Summary: date: %s, tagsSet: %s, Function:enrich_greynoise (total to tag is %s)"%(datetime.datetime.now(),tagsSet,rT))
