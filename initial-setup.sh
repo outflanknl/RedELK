@@ -105,11 +105,12 @@ fi
 echo "Copying certificates to relevant redir and teamserver folders."
 cp -r ./certs ./elkserver/logstash/ >> $LOGFILE 2>&1
 cp ./certs/redelkCA.crt ./teamservers/filebeat/ >> $LOGFILE 2>&1
+cp ./certs/redelkCA.crt ./poshc2/filebeat/ >> $LOGFILE 2>&1
 cp ./certs/redelkCA.crt ./redirs/filebeat/ >> $LOGFILE 2>&1
 
 echo "Creating ssh directories if necessary"
-if [ ! -d "./sshkey" ] || [ ! -d "./elkserver/ssh" ] || [ ! -d "./teamservers/ssh" ]; then
-    mkdir -p ./sshkey && mkdir -p ./teamservers/ssh && mkdir -p ./elkserver/ssh
+if [ ! -d "./sshkey" ] || [ ! -d "./elkserver/ssh" ] || [ ! -d "./teamservers/ssh" ] || [ ! -d "./poshc2/ssh" ]; then
+    mkdir -p ./sshkey && mkdir -p ./teamservers/ssh && mkdir -p ./poshc2/ssh && mkdir -p ./elkserver/ssh
 fi >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
@@ -127,12 +128,14 @@ fi
 
 echo "Copying sshkeys to relevant folders."
 cp ./sshkey/id_rsa.pub ./teamservers/ssh/id_rsa.pub >> $LOGFILE 2>&1
+cp ./sshkey/id_rsa.pub ./poshc2/ssh/id_rsa.pub >> $LOGFILE 2>&1
 cp ./sshkey/id_rsa.pub ./elkserver/ssh/id_rsa.pub >> $LOGFILE 2>&1
 cp ./sshkey/id_rsa ./elkserver/ssh/id_rsa >> $LOGFILE 2>&1
 
 echo "Copying VERSION file to subfolders."
 if [ -f "./VERSION" ]; then
     cp ./VERSION teamservers/
+    cp ./VERSION poshc2/    
     cp ./VERSION elkserver/
     cp ./VERSION redirs/
 fi >> $LOGFILE 2>&1
@@ -162,6 +165,13 @@ fi >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not TGZ for teamserver directory (Error Code: $ERROR)."
+fi
+if [ ! -f "./poshc2.tgz" ]; then
+    tar zcvf poshc2.tgz poshc2/
+fi >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Could not TGZ for PoshC2 directory (Error Code: $ERROR)."
 fi
 
 grep -i error $LOGFILE 2>&1
