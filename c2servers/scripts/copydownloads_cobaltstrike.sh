@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Part of Red ELK
+# Part of RedELK
 # Script to copy downloaded files from the CobaltStrike teamserver's downloads folder to the homedir of the scponly user.
 # It also adds "_orginal file name" to the file name, e.g. 9ce6fbfb1 becomes 9ce6fbfb1_testdoc.txt
 #

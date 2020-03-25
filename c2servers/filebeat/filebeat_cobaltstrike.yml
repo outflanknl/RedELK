@@ -7,7 +7,8 @@ filebeat.prospectors:
     - /root/cobaltstrike/logs/*/events.log
   fields:
     infralogtype: rtops
-    cslogtype: events
+    c2program: cobaltstrike
+    c2logtype: events
 
 - type: log
   scan_frequency: 5s
@@ -17,7 +18,8 @@ filebeat.prospectors:
     - /root/cobaltstrike/logs/*/weblog.log
   fields:
     infralogtype: rtops
-    cslogtype: weblog
+    c2program: cobaltstrike    
+    c2logtype: weblog
 
 - type: log
   scan_frequency: 5s
@@ -27,7 +29,20 @@ filebeat.prospectors:
     - /root/cobaltstrike/logs/*/downloads.log
   fields:
     infralogtype: rtops
-    cslogtype: downloads
+    c2program: cobaltstrike
+    c2logtype: downloads
+
+- type: log
+  scan_frequency: 5s
+  enabled: true
+  fields_under_root: true
+  paths:
+    - /root/cobaltstrike/data/export_credentials.tsv
+  fields:
+    infralogtype: rtops
+    c2program: cobaltstrike
+    c2logtype: credentials
+
 
 - type: log
   scan_frequency: 5s
@@ -41,7 +56,8 @@ filebeat.prospectors:
   multiline.match: after
   fields:
     infralogtype: rtops
-    cslogtype: beacon
+    c2program: cobaltstrike
+    c2logtype: beacon
 
 - type: log
   scan_frequency: 5s
@@ -55,7 +71,8 @@ filebeat.prospectors:
   multiline.match: after
   fields:
     infralogtype: rtops
-    cslogtype: keystrokes
+    c2program: cobaltstrike
+    c2logtype: keystrokes
 
 filebeat.config.modules:
   path: ${path.config}/modules.d/*.yml

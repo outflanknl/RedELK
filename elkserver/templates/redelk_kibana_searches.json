@@ -35,11 +35,11 @@
         "attackscenario",
         "target_user",
         "target_ipint",
-        "beacon_id",
+        "implant_id",
         "target_hostname",
         "target_os",
         "target_osversion",
-        "csmessage"
+        "2smessage"
       ],
       "sort": [
         "@timestamp",
@@ -47,7 +47,7 @@
       ],
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"rtops\",\"highlightAll\":true,\"version\":true,\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[{\"meta\":{\"negate\":true,\"index\":\"rtops\",\"type\":\"phrase\",\"key\":\"cslogtype\",\"value\":\"events_joinleave\",\"params\":{\"query\":\"events_joinleave\",\"type\":\"phrase\"},\"disabled\":false,\"alias\":null},\"query\":{\"match\":{\"cslogtype\":{\"query\":\"events_joinleave\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}},{\"meta\":{\"negate\":true,\"index\":\"rtops\",\"type\":\"phrase\",\"key\":\"cslogtype\",\"value\":\"events_newbeacon\",\"params\":{\"query\":\"events_newbeacon\",\"type\":\"phrase\"},\"disabled\":false,\"alias\":null},\"query\":{\"match\":{\"cslogtype\":{\"query\":\"events_newbeacon\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}},{\"meta\":{\"index\":\"rtops\",\"negate\":true,\"disabled\":false,\"alias\":null,\"type\":\"phrase\",\"key\":\"cslogtype\",\"value\":\"weblog\",\"params\":{\"query\":\"weblog\",\"type\":\"phrase\"}},\"query\":{\"match\":{\"cslogtype\":{\"query\":\"weblog\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}},{\"meta\":{\"index\":\"rtops\",\"negate\":true,\"disabled\":false,\"alias\":null,\"type\":\"phrase\",\"key\":\"cslogtype\",\"value\":\"events\",\"params\":{\"query\":\"events\",\"type\":\"phrase\"}},\"query\":{\"match\":{\"cslogtype\":{\"query\":\"events\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}}]}"
+        "searchSourceJSON": "{\"index\":\"rtops\",\"highlightAll\":true,\"version\":true,\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[{\"meta\":{\"negate\":true,\"index\":\"rtops\",\"type\":\"phrase\",\"key\":\"c2logtype\",\"value\":\"events_joinleave\",\"params\":{\"query\":\"events_joinleave\",\"type\":\"phrase\"},\"disabled\":false,\"alias\":null},\"query\":{\"match\":{\"c2logtype\":{\"query\":\"events_joinleave\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}},{\"meta\":{\"negate\":true,\"index\":\"rtops\",\"type\":\"phrase\",\"key\":\"c2logtype\",\"value\":\"events_newimplant\",\"params\":{\"query\":\"events_newimplant\",\"type\":\"phrase\"},\"disabled\":false,\"alias\":null},\"query\":{\"match\":{\"c2logtype\":{\"query\":\"events_newimplant\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}},{\"meta\":{\"index\":\"rtops\",\"negate\":true,\"disabled\":false,\"alias\":null,\"type\":\"phrase\",\"key\":\"c2logtype\",\"value\":\"weblog\",\"params\":{\"query\":\"weblog\",\"type\":\"phrase\"}},\"query\":{\"match\":{\"c2logtype\":{\"query\":\"weblog\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}},{\"meta\":{\"index\":\"rtops\",\"negate\":true,\"disabled\":false,\"alias\":null,\"type\":\"phrase\",\"key\":\"c2logtype\",\"value\":\"events\",\"params\":{\"query\":\"events\",\"type\":\"phrase\"}},\"query\":{\"match\":{\"c2logtype\":{\"query\":\"events\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}}]}"
       }
     }
   },
@@ -55,7 +55,7 @@
     "id": "26ba4cb0-0f73-11e9-8e1e-a16db980e11e",
     "type": "search",
     "attributes": {
-      "title": "CS Downloads",
+      "title": "Cobalt Strike Downloads",
       "description": "",
       "hits": 0,
       "columns": [
@@ -72,7 +72,7 @@
       ],
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"rtops\",\"highlightAll\":true,\"version\":true,\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[{\"meta\":{\"negate\":false,\"index\":\"rtops\",\"type\":\"phrase\",\"key\":\"cslogtype\",\"value\":\"downloads\",\"params\":{\"query\":\"downloads\",\"type\":\"phrase\"},\"disabled\":false,\"alias\":null},\"query\":{\"match\":{\"cslogtype\":{\"query\":\"downloads\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}}]}"
+        "searchSourceJSON": "{\"index\":\"rtops\",\"highlightAll\":true,\"version\":true,\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[{\"meta\":{\"negate\":false,\"index\":\"rtops\",\"type\":\"phrase\",\"key\":\"c2logtype\",\"value\":\"downloads\",\"params\":{\"query\":\"downloads\",\"type\":\"phrase\"},\"disabled\":false,\"alias\":null},\"query\":{\"match\":{\"c2logtype\":{\"query\":\"downloads\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}}]}"
       }
     }
   },
@@ -80,14 +80,14 @@
     "id": "3afbdbc0-b6aa-11e8-bc1a-cf8fa3255855",
     "type": "search",
     "attributes": {
-      "title": "CS Keystrokes",
+      "title": "Cobalt Strike Keystrokes",
       "description": "",
       "hits": 0,
       "columns": [
         "attackscenario",
         "target_hostname",
         "target_user",
-        "csmessage",
+        "c2message",
         "keystrokesfull"
       ],
       "sort": [
@@ -96,7 +96,7 @@
       ],
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"rtops\",\"highlightAll\":true,\"version\":true,\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[{\"meta\":{\"index\":\"rtops\",\"negate\":false,\"disabled\":false,\"alias\":null,\"type\":\"phrase\",\"key\":\"cslogtype\",\"value\":\"keystrokes\",\"params\":{\"query\":\"keystrokes\",\"type\":\"phrase\"}},\"query\":{\"match\":{\"cslogtype\":{\"query\":\"keystrokes\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}}]}"
+        "searchSourceJSON": "{\"index\":\"rtops\",\"highlightAll\":true,\"version\":true,\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[{\"meta\":{\"index\":\"rtops\",\"negate\":false,\"disabled\":false,\"alias\":null,\"type\":\"phrase\",\"key\":\"c2logtype\",\"value\":\"keystrokes\",\"params\":{\"query\":\"keystrokes\",\"type\":\"phrase\"}},\"query\":{\"match\":{\"c2logtype\":{\"query\":\"keystrokes\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}}]}"
       }
     }
   },
@@ -104,7 +104,7 @@
     "id": "4c003e20-b6aa-11e8-bc1a-cf8fa3255855",
     "type": "search",
     "attributes": {
-      "title": "CS IOCs",
+      "title": "Cobalt Strike IOCs",
       "columns": [
         "attackscenario",
         "target_user",
@@ -113,12 +113,12 @@
         "ioc_hash",
         "ioc_name",
         "ioc_bytesize",
-        "csmessage"
+        "c2message"
       ],
       "description": "",
       "hits": 0,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"rtops\",\"highlightAll\":true,\"version\":true,\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[{\"meta\":{\"index\":\"rtops\",\"negate\":false,\"disabled\":false,\"alias\":null,\"type\":\"phrase\",\"key\":\"cslogtype\",\"value\":\"ioc\",\"params\":{\"query\":\"ioc\",\"type\":\"phrase\"}},\"query\":{\"match\":{\"cslogtype\":{\"query\":\"ioc\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}}]}"
+        "searchSourceJSON": "{\"index\":\"rtops\",\"highlightAll\":true,\"version\":true,\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[{\"meta\":{\"index\":\"rtops\",\"negate\":false,\"disabled\":false,\"alias\":null,\"type\":\"phrase\",\"key\":\"c2logtype\",\"value\":\"ioc\",\"params\":{\"query\":\"ioc\",\"type\":\"phrase\"}},\"query\":{\"match\":{\"c2logtype\":{\"query\":\"ioc\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}}]}"
       },
       "sort": [
         "@timestamp",
@@ -131,7 +131,7 @@
     "id": "e8de79f0-b6aa-11e8-bc1a-cf8fa3255855",
     "type": "search",
     "attributes": {
-      "title": "CS Screenshots",
+      "title": "Cobalt Strike Screenshots",
       "columns": [
         "attackscenario",
         "target_hostname",
@@ -142,7 +142,7 @@
       "description": "",
       "hits": 0,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"rtops\",\"highlightAll\":true,\"version\":true,\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[{\"meta\":{\"index\":\"rtops\",\"negate\":false,\"disabled\":false,\"alias\":null,\"type\":\"phrase\",\"key\":\"beacon_output\",\"value\":\"\\\"received screenshot\\\"\",\"params\":{\"query\":\"\\\"received screenshot\\\"\",\"type\":\"phrase\"}},\"query\":{\"match\":{\"beacon_output\":{\"query\":\"\\\"received screenshot\\\"\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}}]}"
+        "searchSourceJSON": "{\"index\":\"rtops\",\"highlightAll\":true,\"version\":true,\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[{\"meta\":{\"index\":\"rtops\",\"negate\":false,\"disabled\":false,\"alias\":null,\"type\":\"phrase\",\"key\":\"implant_output\",\"value\":\"\\\"received screenshot\\\"\",\"params\":{\"query\":\"\\\"received screenshot\\\"\",\"type\":\"phrase\"}},\"query\":{\"match\":{\"implant_output\":{\"query\":\"\\\"received screenshot\\\"\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}}]}"
       },
       "sort": [
         "@timestamp",
@@ -155,28 +155,52 @@
     "id": "68e8e870-b6aa-11e8-bc1a-cf8fa3255855",
     "type": "search",
     "attributes": {
-      "title": "CS Beacons",
+      "title": "C2 Implants overview",
       "columns": [
-        "beacon_id",
+        "implant_id",
         "attackscenario",
         "target_hostname",
         "target_user",
         "target_ipint",
-        "beacon_arch",
+        "implant_arch",
         "target_osversion",
         "target_ipext",
-        "beacon_linkparentid"
+        "implant_linkparentid"
       ],
       "description": "",
       "hits": 0,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"beacondb\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"\"},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"implantsdb\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"\"},\"filter\":[]}"
       },
       "sort": [
         "@timestamp",
         "desc"
       ],
       "version": 1
+    }
+  },
+  {
+    "_id": "3fabe620-6c38-11ea-97d6-55783aed877a",
+    "_type": "search",
+    "_source": {
+      "title": "Cobalt Strike Credentials",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "realm",
+        "username",
+        "credential",
+        "extracted_from",
+        "extracted_via"
+      ],
+      "sort": [
+        "@timestamp",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"5b6f3fc0-6c37-11ea-97d6-55783aed877a\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"\"},\"filter\":[]}"
+      }
     }
   }
 ]

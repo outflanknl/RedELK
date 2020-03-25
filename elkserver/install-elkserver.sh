@@ -220,7 +220,7 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "Copying nginx config files"
-cp ./nginx/htpasswd.users /etc/nginx/ && mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default_backup && cp ./nginx/sites-available/* /etc/nginx/sites-available >> $LOGFILE 2>&1
+cp ./nginx/htpasswd.users /etc/nginx/ && mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default_backup && cp ./nginx/sites-available/* /etc/nginx/sites-available && ln -s /etc/nginx/sites-available/jupyter /etc/nginx/sites-enabled/jupyter >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not copy nginx config (Error Code: $ERROR)."
@@ -381,13 +381,6 @@ fi
 #    echoerror "Could not install GeoIP elasticsearch plugin (Error Code: $ERROR)."
 #fi
 
-echo "Creating crontab for redelk user actions"
-cp ./cron.d/redelk /etc/cron.d/redelk >> $LOGFILE 2>&1
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echoerror "Could not create crontab for redelk user actions (Error Code: $ERROR)."
-fi
-
 echo "Creating RedELK log directory"
 mkdir -p /var/log/redelk >> $LOGFILE 2>&1 && chown -R redelk:redelk /var/log/redelk >> $LOGFILE 2>&1
 ERROR=$?
@@ -408,6 +401,30 @@ ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not adjust Kibana logo (Error Code: $ERROR)."
 fi
+
+# Jupyter things
+echo "Creating Jupyter working dir and copying notebooks"
+mkdir /usr/share/redelk/jupyter && cp ./jupyter/* /usr/share/redelk/jupyter/ >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Could not create Jupyter working dir or copy notebooks (Error Code: $ERROR)."
+fi
+
+echo "Installing Jupyter"
+apt-get install -y docker.io && docker pull --quiet jupyter/scipy-notebook >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Could not install Jupyter (Error Code: $ERROR)."
+fi
+
+echo "Creating crontab for redelk user actions"
+cp ./cron.d/redelk /etc/cron.d/redelk >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Could not create crontab for redelk user actions (Error Code: $ERROR)."
+fi
+
+
 
 grep -i error $LOGFILE 2>&1
 ERROR=$?

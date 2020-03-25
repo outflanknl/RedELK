@@ -25,7 +25,7 @@
     "id": "117dbba0-c6f5-11e8-a9c6-cd307b96b1ba",
     "type": "dashboard",
     "attributes": {
-      "title": "Beacon dashboard",
+      "title": "Implants dashboard",
       "hits": 0,
       "description": "",
       "panelsJSON": "[{\"gridData\":{\"x\":0,\"y\":0,\"w\":24,\"h\":15,\"i\":\"1\"},\"version\":\"6.4.1\",\"panelIndex\":\"1\",\"type\":\"visualization\",\"id\":\"e12434d0-b8e8-11e8-94dd-171ae5c1fd1a\",\"embeddableConfig\":{}},{\"gridData\":{\"x\":24,\"y\":0,\"w\":24,\"h\":15,\"i\":\"2\"},\"version\":\"6.4.1\",\"panelIndex\":\"2\",\"type\":\"visualization\",\"id\":\"88003df0-b8ec-11e8-94dd-171ae5c1fd1a\",\"embeddableConfig\":{}},{\"gridData\":{\"x\":0,\"y\":15,\"w\":24,\"h\":15,\"i\":\"3\"},\"version\":\"6.4.1\",\"panelIndex\":\"3\",\"type\":\"visualization\",\"id\":\"10dcc4a0-b8e7-11e8-94dd-171ae5c1fd1a\",\"embeddableConfig\":{}},{\"gridData\":{\"x\":0,\"y\":30,\"w\":48,\"h\":22,\"i\":\"4\"},\"version\":\"6.4.1\",\"panelIndex\":\"4\",\"type\":\"visualization\",\"id\":\"f0dcbda0-b8e5-11e8-94dd-171ae5c1fd1a\",\"embeddableConfig\":{}},{\"gridData\":{\"x\":24,\"y\":15,\"w\":24,\"h\":15,\"i\":\"5\"},\"version\":\"6.4.1\",\"panelIndex\":\"5\",\"type\":\"visualization\",\"id\":\"a1efc620-b8e4-11e8-94dd-171ae5c1fd1a\",\"embeddableConfig\":{}}]",

@@ -100,19 +100,19 @@
 ### RedELK introduced fields ###
 | Field name   | Type    | Description    |
 | --- | --- | --- |
-| attackscenario      | String  | Name of the attackscenario this beacon belongs to, configured in filebeat.yml on teamserver |
-| attack_technique    | String  | Array like list of T-numbers from MITRE ATT&CK framework. Only present on cslogtype:beacon_task log messages. |
-| beacon_arch         | String  | The architecture of the beacon, x86 or x64. Only present on cslogtype:beacon_newbeacon log messages. |
-| beacon_checkin      | String  | Message from the beacon while checking in. Only present on cslogtype:beacon_checkin log messages. |
-| beacon_id           | String  | The Cobalt Strike ID of the beacon. |
-| beacon_input        | String  | The input line as stated by the operator. Only present on cslogtype:beacon_input log messages. |
-| beacon_task         | String  | The task as acknowledged by Cobalt Strike. Only present on cslogtype:beacon_task log messages. |
-| beacon_output       | String  | The output as reported by Cobalt Strike. Basicly the same info as csmessage, with '[output]' stripped. |
-| beaconlogfile       | String  | Clickable link to the full beacon log file. |
-| cslogtype           | String  | Identifier of the type of Cobalt Strike logfile. Can be beacon_task, beacon_input, beacon_newbeacon, etc. |
-| csmessage           | String  | The entire log message from Cobalt Strike |
-| cstimestamp         | String  | The timestamp of the log message as reported by Cobalt Strike |
-| infralogtype	   	  | String  | Identifier of the type of log that filebeat ships, configured in filebeat.yml on redir, default 'redirtraffic' |
+| attackscenario      | String  | Name of the attackscenario this implant belongs to, configured in filebeat.yml on teamserver |
+| attack_technique    | String  | Array like list of T-numbers from MITRE ATT&CK framework. Not present in every C2 framework (Cobalt Strike picks this up from c2logtype:implant_task log messages). |
+| implant_arch (was beacon_arch)         | String  | The architecture of the implant, x86 or x64. |
+| implant_checkin (was beacon_checkin)      | String  | Message from the implant while checking in. |
+| implant_id (was beacon_id)           | String  | The ID of the implant. |
+| implant_input (was beacon_input)        | String  | The input line as stated by the operator. |
+| implant_task (was beacon_task)         | String  | The task as acknowledged by Cobalt Strike. |
+| implant_output (was beacon_output)       | String  | The output as reported by the implant. |
+| implantlogfile (was beaconlogfile)       | String  | Clickable link to the full log file of the implant. Not present in every C2 framework. |
+| c2logtype (was cslogtype)           | String  | Identifier of the type of implant logfile. Can be implant_task, implant_input, implant_newimplant, keystrokes, etc. |
+| c2message (was csmessage)           | String  | The entire log message from the C2 framework for that implant. |
+| c2timestamp (was cstimestamp)         | String  | The timestamp of the log message as reported by the implant. |
+| infralogtype	   	  | String  | Identifier of the type of log that filebeat ships, configured in filebeat.yml on c2server, default 'rtops' |
 | ioc_bytesize        | Number  | IOC size |
 | ioc_hash            | String  | IOC DM5 hash |
 | ioc_name            | String  | IOC name |
@@ -128,6 +128,8 @@
 | target_pid          | Number  | Process ID we are running in on the target |
 | target_process      | String  | Process name we are running in on the target |
 | target_user         | String  | Username we are running in on the target |
+| implant_sleep | String | Sleep value as reported by the implant. Not present in every C2 framework |
+| implant_url | String | URL as reported by the implant. Not present in every C2 framework |
 
 
 ### Tags set  by RedELK ### 
@@ -138,7 +140,8 @@
 | enriched_v01 | Indicator enrich.py ran successfully  |
 
 
-## Index beacondb ##
+## Index implantsdb ##
+Was called beacondb in the past
 
 ### ELK stack / Filebeat default fields ###
 | Field name   | Type    | Description    |
@@ -156,14 +159,17 @@
 ### RedELK introduced fields ###
 | Field name   | Type    | Description    |
 | --- | --- | --- |
-| attackscenario      | String | Name of the attackscenario this beacon belongs to, configured in filebeat.yml on teamserver |
-| beacon_arch         | String | The architecture of the beacon, x86 or x64. Only present on cslogtype:beacon_newbeacon log messages. |
-| beacon_id           | String | The Cobalt Strike ID of the beacon. |
-| beacon_linked       | String | Set to true if the beacon is linked to another beacon |
-| beacon_linkmode     | String | Type of linking, e.g. SMB or TCP |
-| beacon_linkparentid | String | Beacon ID of the parent beacon in case of linking |
-| beaconlogfile       | String | Clickable link to the full beacon log file. |
-| cstimestamp         | String | The timestamp of the log message as reported by Cobalt Strike |
+| attackscenario      | String | Name of the attackscenario this implant belongs to, configured in filebeat.yml on teamserver |
+| implant_arch (was beacon_arch)         | String  | The architecture of the implant, x86 or x64. |
+| implant_id (was beacon_id)           | String  | The ID of the implant. |
+| implant_input (was beacon_input)        | String  | The input line as stated by the operator. |
+| implant_task (was beacon_task)         | String  | The task as acknowledged by Cobalt Strike. |
+| implant_output (was beacon_output)       | String  | The output as reported by the implant. |
+| implantlogfile (was beaconlogfile)       | String  | Clickable link to the full log file of the implant. Not present in every C2 framework. |
+| implant_linked (was beacon_linked)       | String | Set to true if the implant is linked to another implant |
+| implant_linkmode (was beacon_linkmode)     | String | Type of linking, e.g. SMB or TCP |
+| implant_linkparentid (was beacon_linkparentid) | String | ID of the parent implant in case of linking |
+| c2timestamp (was cstimestamp)         | String  | The timestamp of the log message as reported by the implant. |
 | target_hostname     | String | Hostname of the target |
 | target_ipext        | IP     | External IP of the target  |
 | target_ipint        | IP     | Internal IP of the target |
@@ -172,4 +178,4 @@
 | target_pid          | Number | Process ID we are running in on the target |
 | target_process      | String | Process name we are running in on the target |
 | target_user         | String | Username we are running in on the target |
-| type                | String | Set to beacondb |
+| type                | String | Set to implantsdb |

@@ -102,14 +102,14 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not convert ELK server private key to PKCS8 format(Error Code: $ERROR)."
 fi
 
-echo "Copying certificates to relevant redir and teamserver folders."
+echo "Copying certificates to relevant redir and c2servers folders."
 cp -r ./certs ./elkserver/logstash/ >> $LOGFILE 2>&1
-cp ./certs/redelkCA.crt ./teamservers/filebeat/ >> $LOGFILE 2>&1
+cp ./certs/redelkCA.crt ./c2servers/filebeat/ >> $LOGFILE 2>&1
 cp ./certs/redelkCA.crt ./redirs/filebeat/ >> $LOGFILE 2>&1
 
 echo "Creating ssh directories if necessary"
-if [ ! -d "./sshkey" ] || [ ! -d "./elkserver/ssh" ] || [ ! -d "./teamservers/ssh" ]; then
-    mkdir -p ./sshkey && mkdir -p ./teamservers/ssh && mkdir -p ./elkserver/ssh
+if [ ! -d "./sshkey" ] || [ ! -d "./elkserver/ssh" ] || [ ! -d "./c2servers/ssh" ] ; then
+    mkdir -p ./sshkey && mkdir -p ./c2servers/ssh && mkdir -p ./elkserver/ssh
 fi >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
@@ -126,13 +126,13 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "Copying sshkeys to relevant folders."
-cp ./sshkey/id_rsa.pub ./teamservers/ssh/id_rsa.pub >> $LOGFILE 2>&1
+cp ./sshkey/id_rsa.pub ./c2servers/ssh/id_rsa.pub >> $LOGFILE 2>&1
 cp ./sshkey/id_rsa.pub ./elkserver/ssh/id_rsa.pub >> $LOGFILE 2>&1
 cp ./sshkey/id_rsa ./elkserver/ssh/id_rsa >> $LOGFILE 2>&1
 
 echo "Copying VERSION file to subfolders."
 if [ -f "./VERSION" ]; then
-    cp ./VERSION teamservers/
+    cp ./VERSION c2servers/  
     cp ./VERSION elkserver/
     cp ./VERSION redirs/
 fi >> $LOGFILE 2>&1
@@ -156,12 +156,12 @@ ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not TGZ for redirs directory (Error Code: $ERROR)."
 fi
-if [ ! -f "./teamservers.tgz" ]; then
-    tar zcvf teamservers.tgz teamservers/
+if [ ! -f "./c2servers.tgz" ]; then
+    tar zcvf c2servers.tgz c2servers/
 fi >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not TGZ for teamserver directory (Error Code: $ERROR)."
+    echoerror "Could not TGZ for c2servers directory (Error Code: $ERROR)."
 fi
 
 grep -i error $LOGFILE 2>&1
@@ -174,7 +174,7 @@ fi
 echo ""
 echo ""
 echo "Done with initial setup."
-echo "Copy the redir, teamserver or elkserver folders to every redirector, teamserver or ELK-server. Then run the relevant setup script there locally."
+echo "Copy the redir, c2servers or elkserver folders to every redirector, c2servers or ELK-server. Then run the relevant setup script there locally."
 echo ""
 
 

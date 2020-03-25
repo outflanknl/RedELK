@@ -127,7 +127,7 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "Copying new config file"
-cp ./filebeat/filebeat.yml /etc/filebeat/ >> $LOGFILE 2>&1
+cp ./filebeat/filebeat_cobaltstrike.yml /etc/filebeat/filebeat.yml >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not copy filebeat config (Error Code: $ERROR)."
@@ -218,8 +218,8 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "Creating crontab for local rscync of cobaltstrike logs"
-if [ ! -f /etc/cron.d/redelk ]; then
-    cp ./cron.d/redelk /etc/cron.d/redelk >> $LOGFILE 2>&1
+if [ ! -f /etc/cron.d/redelk_cobaltstrike ]; then
+    cp ./cron.d/redelk_cobaltstrike /etc/cron.d/redelk_cobaltstrike >> $LOGFILE 2>&1
 fi
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
@@ -238,6 +238,21 @@ mkdir -p /usr/share/redelk/bin && cp -r ./scripts/* /usr/share/redelk/bin/ && ch
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not copy background running scripts (Error Code: $ERROR)."
+fi
+
+# things for CS data parsing
+echo "Installing Python3 pip"
+apt-get install -y python3-pip >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Could not install Python3 pip (Error Code: $ERROR)."
+fi
+
+echo "Installing pip modules for CS .bin parsing"
+pip3 install javaobj-py3 >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Could not install pip modules for .bin parsing (Error Code: $ERROR)."
 fi
 
 grep -i error $LOGFILE 2>&1

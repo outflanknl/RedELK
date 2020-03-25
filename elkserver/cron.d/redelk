@@ -37,3 +37,6 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
 # Start the checks for alarms
 */5 * * * * redelk /usr/share/redelk/bin/run_alarm.sh
+
+# Run services watchdog script
+* * * * * root /usr/share/redelk/bin/watchdog_services.sh

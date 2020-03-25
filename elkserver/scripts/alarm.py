@@ -22,7 +22,6 @@ def pprint(r):
  return(s)
 
 def getQuery(query,size="5000",index="redirtraffic-*"):
-  #NOT tags:enriched_v01 AND NOT cslogtype:beacon_newbeacon AND cslogtype:beacon_*
   q3 = {'query': {'query_string': {'query': query }}}
   r3 = es.search(index=index, body=q3, size=size)
   if(r3['hits']['total'] == 0):
@@ -30,7 +29,6 @@ def getQuery(query,size="5000",index="redirtraffic-*"):
   return(r3['hits']['hits'])
 
 def countQuery(query,index="redirtraffic-*"):
-  #NOT tags:enriched_v01 AND NOT cslogtype:beacon_newbeacon AND cslogtype:beacon_*
   q3 = {'query': {'query_string': {'query': query }}}
   r3 = es.search(index=index, body=q3, size=0)
   return(r3['hits']['total'])
@@ -134,7 +132,7 @@ class alarm():
 
   def alarm_check2(self):
     ## This check queries public sources given a list of md5 hashes. If a hash was seen we set an alarm\n
-    q = "cslogtype:ioc AND NOT tags:ALARMED_*"
+    q = "c2logtype:ioc AND NOT tags:ALARMED_*"
     report = {}
     report['alarm'] = False
     report['fname'] = "alarm_check2"
@@ -148,21 +146,21 @@ class alarm():
     r = getQuery(q,i,index="rtops-*")
     if type(r) != type([]) : r = []
     for l in r:
-      if l['_source']['csmessage'].startswith("[indicator] file:"):
-        arr = l['_source']['csmessage'].split()
+      if l['_source']['c2message'].startswith("[indicator] file:"):
+        arr = l['_source']['c2message'].split()
         l['_source']['ioc_bytesize'] = arr[3]
         l['_source']['ioc_hash'] = arr[2]
         l['_source']['ioc_path'] = arr[5]
         l['_source']['ioc_type'] = arr[1][:-1]
         iocs.append(l)
     #THEN WE GET MANUALLY ADDED IOC's
-    q = "cslogtype:ioc AND NOT tags:ALARMED_*"
+    q = "c2logtype:ioc AND NOT tags:ALARMED_*"
     i = countQuery(q,index="rtops-*")
     r = getQuery(q,i,index="rtops-*")
     if type(r) != type([]) : r = []
     for l in r:
-      if l['_source']['csmessage'].startswith("[indicator] file:"):
-        arr = l['_source']['csmessage'].split()
+      if l['_source']['c2message'].startswith("[indicator] file:"):
+        arr = l['_source']['c2message'].split()
         l['_source']['ioc_bytesize'] = arr[3]
         l['_source']['ioc_hash'] = arr[2]
         l['_source']['ioc_path'] = arr[5]
@@ -226,7 +224,7 @@ class alarm():
     # before returning we might have to set an tag on our resultset so we alarm only once. (maybe a tag per alarm?  "ALARMED_%s"%report['fname'] migt do)
     alarmed_set = []
     for l in r:
-      if l['_source']['csmessage'].startswith("[indicator] file:"):
+      if l['_source']['c2message'].startswith("[indicator] file:"):
         if l['_source']['ioc_hash'] in alarmedHashes:
           alarmed_set.append(l)
     setTags("ALARMED_%s"%report['fname'],alarmed_set)
