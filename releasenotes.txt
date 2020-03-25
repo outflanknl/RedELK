@@ -1,6 +1,16 @@
 
 RedELK release notes
 
+@@@@@@@@@### version X.Y.Z
+* Renaming of many fields to be prepared for other C2 frameworks than Cobalt Strike. This concerns fields in the rtops index, the beacondb (now implantdb) and may other scripts. 
+* First step of support for PoshC2 C2 framework. Thanks @benpturner for the heavy lifting
+* Jupyter Notebooks is now installed on the RedELK server.
+* The credentials store of Cobalt Strike is periodically read, parsed and sent to the RedELK server where it is stored in a new index called credentials.
+* PS-Tools output is now parsed and stored in extra fields inside the rtops index
+* Fixed bug where HTTP status code reported by redir isn't a POSINT and made Logstash crash
+* Fixed bug with underscores in host names. Not allowed by RFC and Logstash %{HOSTNAME} crashes on this. But many operating systems allow for it and it's an easy fix for RedELK that will save users form troubleshooting.
+* Fixed double space bug in Apache catch-all Grok rule
+
 ### version 1.0.2
 * Fixed silly bug in enrich.py that disabled Greynoise enrichment
 
