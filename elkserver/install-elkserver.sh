@@ -443,6 +443,27 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not restart Elasticsearch (Error Code: $ERROR)."
 fi
 
+echo "Creating Neo4j/BloodHound working dir"
+mkdir -p /usr/share/redelk/neo4j/data && mkdir /usr/share/redelk/neo4j/logs && mkdir /usr/share/redelk/neo4j/import && mkdir /usr/share/redelk/neo4j/plugins && chown -R redelk:redelk /usr/share/redelk/neo4j >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Could not create Neo4j/BloodHound working dir or copy notebooks (Error Code: $ERROR)."
+fi
+
+echo "Installing Neo4j/BloodHound docker image"
+docker pull --quiet jupyter/scipy-notebook >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Could not install  Neo4j/BloodHound docker image (Error Code: $ERROR)."
+fi
+
+echo "Starting Neo4j/BloodHound docker image"
+docker run --restart unless-stopped --name bloodhound -p7474:7474 -p7687:7687 -d -v /usr/share/redelk/neo4j/data:/data -v /usr/share/redelk/neo4j/logs:/logs -v /usr/share/redelk/neo4j/import:/var/lib/neo4j/import -v /usr/share/redelk/neo4j/plugins:/plugins --env NEO4J_AUTH=neo4j/BloodHound specterops/bloodhound-neo4j >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Could not start Neo4j/BloodHound docker image (Error Code: $ERROR)."
+fi
+
 echo "Creating crontab for redelk user actions"
 cp ./cron.d/redelk /etc/cron.d/redelk >> $LOGFILE 2>&1
 ERROR=$?
