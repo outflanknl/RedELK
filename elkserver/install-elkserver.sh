@@ -402,19 +402,45 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not adjust Kibana logo (Error Code: $ERROR)."
 fi
 
-# Jupyter things
-echo "Creating Jupyter working dir and copying notebooks"
-mkdir /usr/share/redelk/jupyter && cp ./jupyter/* /usr/share/redelk/jupyter/ >> $LOGFILE 2>&1
+echo "Installing Docker.io"
+apt-get install -y docker.io >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Could not install Docker.io (Error Code: $ERROR)."
+fi
+echo "Creating Jupyter Notebooks working dir and copying notebooks"
+mkdir /usr/share/redelk/jupyter && cp ./jupyter/* /usr/share/redelk/jupyter/ && chown -R redelk:redelk /usr/share/redelk/jupyter >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not create Jupyter working dir or copy notebooks (Error Code: $ERROR)."
 fi
 
-echo "Installing Jupyter"
-apt-get install -y docker.io && docker pull --quiet jupyter/scipy-notebook >> $LOGFILE 2>&1
+echo "Installing Jupyter Notebooks docker image"
+docker pull --quiet jupyter/scipy-notebook >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not install Jupyter (Error Code: $ERROR)."
+    echoerror "Could not install Jupyter docker image (Error Code: $ERROR)."
+fi
+
+echo "Starting Jupyter Notebooks docker image"
+docker run --restart unless-stopped --name jupyter-notebook -d -p 127.0.0.1:8888:8888 -v /usr/share/redelk/jupyter:/home/jovyan/work  jupyter/scipy-notebook start-notebook.sh --NotebookApp.token='' --NotebookApp.password='' --NotebookApp.allow_remote_access='True' --NotebookApp.allow_origin='*' >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Could not start Jupyter docker image (Error Code: $ERROR)."
+fi
+
+echo "Modifying elasticsearch config file to include docker ip interface"
+DOCKERIP="$(ifconfig docker0|grep 'inet ' |awk '{print $2}')" && cp /etc/elasticsearch/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml.backup &&  echo 'network.bind_host: ["127.0.0.1","'$DOCKERIP'"]' >> /etc/elasticsearch/elasticsearch.yml >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Error with modifying elasticsaerch config file to include docker ip interface (Error Code: $ERROR)."
+fi
+
+echo "Restarting Elasticsearch with new config"
+systemctl restart elasticsearch >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Could not restart Elasticsearch (Error Code: $ERROR)."
 fi
 
 echo "Creating crontab for redelk user actions"
