@@ -40,7 +40,7 @@ You will also need to have the same offensive systems created - or be more exper
 
 Place files on systems as following:
 * On redira1: `redira1_access-redelk.log` as `/var/log/apache2/access-redelk.log`
-* On redirb1: `redirb1_haproxy.log` as /var/log/haproxy.log`
+* On redirb1: `redirb1_haproxy.log` as `/var/log/haproxy.log`
 * On c2server1: extract `c2server1_cobaltstrike.zip` to `/root/cobaltstrike`
 * On c2server2: extract `c2server2_cobaltstrike.zip` to `/root/cobaltstrike`
 * Run each RedELK installer script as would normally do
