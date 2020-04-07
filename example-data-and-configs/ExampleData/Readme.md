@@ -1,5 +1,5 @@
 # Example data #
-The files in this directory are the logs from the lab used in the blog post [RedELK Part 3](https://outflank.nl/blog/). 
+The files in this directory are the logs from the lab used in the blog post [RedELK Part 3](https://outflank.nl/blog/2020/04/07/redelk-part-3-achieving-operational-oversight/). 
 
 You can use the files in this directory to play along with the blog post, and to have some example data in your RedELK installation.
 
