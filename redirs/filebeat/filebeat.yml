@@ -15,6 +15,14 @@ filebeat.prospectors:
   fields:
     infralogtype: redirtraffic
     redirprogram: apache
+- type: log
+  enabled: true
+  fields_under_root: true
+  paths:
+    - /var/log/nginx/access-redelk.log
+  fields:
+    infralogtype: redirtraffic
+    redirprogram: nginx
 
 filebeat.config.modules:
   path: ${path.config}/modules.d/*.yml
