@@ -102,10 +102,10 @@ class alarm():
         rAlarmed.append(ip)
         if ip['_source']['redirtraffic.sourceip'] not in UniqueIPs:
           UniqueIPs[ip['_source']['redirtraffic.sourceip']] = {}
-        if 'redirtraffic.httprequest' in line['_source']:
-          UniqueLINEs[line['_source']['redirtraffic.sourceip']]['redirtraffic.httprequest'] = line['_source']['redirtraffic.httprequest']
-        if 'redirtraffic.sourceip' in line['_source']:
-          UniqueLINEs[line['_source']['redirtraffic.sourceip']]['redirtraffic.sourceip'] = line['_source']['redirtraffic.sourceip']
+        if 'redirtraffic.httprequest' in ip['_source']:
+          UniqueIPs[ip['_source']['redirtraffic.sourceip']]['redirtraffic.httprequest'] = ip['_source']['redirtraffic.httprequest']
+        if 'redirtraffic.sourceip' in ip['_source']:
+          UniqueIPs[ip['_source']['redirtraffic.sourceip']]['redirtraffic.sourceip'] = ip['_source']['redirtraffic.sourceip']
         if 'timezone' in ip['_source']['geoip']:
           UniqueIPs[ip['_source']['redirtraffic.sourceip']]['timezone'] = ip['_source']['geoip']['timezone']
         if 'as_org' in ip['_source']['geoip']:
@@ -125,9 +125,9 @@ class alarm():
         if 'times_seen' in UniqueIPs[ip['_source']['redirtraffic.sourceip']]: UniqueIPs[ip['_source']['redirtraffic.sourceip']]['times_seen'] += 1
         else: UniqueIPs[ip['_source']['redirtraffic.sourceip']]['times_seen'] = 1
     report['results'] = UniqueIPs
-    with open("/tmp/ALARMED_alarm_check1.ips","a") as f: 
+    with open("/tmp/ALARMED_alarm_check1.ips","a") as f:
       for ip in UniqueIPs:
-        f.write("%s\n"%ip) 
+        f.write("%s\n"%ip)
     # TODO before returning we might have to set an tag on our resultset so we alarm only once. (maybe a tag per alarm?  "ALARMED_%s"%report['fname'] migt do)
     setTags("ALARMED_%s"%report['fname'],rAlarmed)
     return(report)
