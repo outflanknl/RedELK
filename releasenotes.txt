@@ -2,7 +2,7 @@
 RedELK release notes
 
 ### version 1.0.2
-* Fixed silly bug in enrich.py that disabled Greynoise enrichment
+* Fixed silly bug in enrich.py that disabled Greynoise enrichment 
 
 ### version 1.0.1
 * Fixed bug in logstash filter rule when Apache doesn't have a hostname configured
