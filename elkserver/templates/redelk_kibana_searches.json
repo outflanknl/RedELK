@@ -180,9 +180,9 @@
     }
   },
   {
-    "_id": "3fabe620-6c38-11ea-97d6-55783aed877a",
-    "_type": "search",
-    "_source": {
+    "id": "3fabe620-6c38-11ea-97d6-55783aed877a",
+    "type": "search",
+    "attributes": {
       "title": "Cobalt Strike Credentials",
       "description": "",
       "hits": 0,
@@ -199,7 +199,7 @@
       ],
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"5b6f3fc0-6c37-11ea-97d6-55783aed877a\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"\"},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"credentials\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"\"},\"filter\":[]}"
       }
     }
   }
