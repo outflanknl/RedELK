@@ -17,7 +17,7 @@ def filter(event)
 	implant_id = event.get("implant_id")
 	temppath = logpath.split('/cobaltstrike')
 	temppath2 = temppath[1].split(/\/([^\/]*)$/)
-	keystrokespath = "/cslogs/" + "#{host}" + "#{temppath2[0]}" + "/keystrokes_" + "#{implant_id}" + ".txt"
+	keystrokespath = "/c2logs/" + "#{host}" + "#{temppath2[0]}" + "/keystrokes_" + "#{implant_id}" + ".txt"
 	event.tag("_rubyparseok")
     	event.set("keystrokesfull", keystrokespath)
 	return [event]

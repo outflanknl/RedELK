@@ -14,10 +14,10 @@ server {
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
         proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;        
+        proxy_cache_bypass $http_upgrade;
     }
 
-    location /cslogs {
+    location /c2logs {
         try_files $uri $uri/ =404;
         autoindex on;
         location ~* \.(txt)$ {
@@ -30,6 +30,6 @@ server {
         }
         location ~* \.(jpg)$ {
             add_header Content-Type image/jpeg;
-        } 
+        }
     }
 }

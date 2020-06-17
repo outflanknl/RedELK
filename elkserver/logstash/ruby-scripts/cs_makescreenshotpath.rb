@@ -20,8 +20,8 @@ def filter(event)
         timestring =  Time.parse(timefromcs).strftime("%I%M%S")
         temppath = logpath.split('/cobaltstrike')
         temppath2 = temppath[1].split(/\/([^\/]*)$/)
-        screenshoturl = "/cslogs/" + "#{host}" + "#{temppath2[0]}" + "/screenshots/screen_" + "#{timestring}" + "_" + "#{implant_id}" + ".jpg"
-        thumburl = "/cslogs/" + "#{host}" + "#{temppath2[0]}" + "/screenshots/screen_" + "#{timestring}" + "_" + "#{implant_id}" + ".jpg.thumb.jpg"
+        screenshoturl = "/c2logs/" + "#{host}" + "#{temppath2[0]}" + "/screenshots/screen_" + "#{timestring}" + "_" + "#{implant_id}" + ".jpg"
+        thumburl = "/c2logs/" + "#{host}" + "#{temppath2[0]}" + "/screenshots/screen_" + "#{timestring}" + "_" + "#{implant_id}" + ".jpg.thumb.jpg"
         event.tag("_rubyparseok")
         event.set("screenshotfull", screenshoturl)
         event.set("screenshotthumb", thumburl)

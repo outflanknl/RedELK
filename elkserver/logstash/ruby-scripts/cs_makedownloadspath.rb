@@ -20,7 +20,7 @@ def filter(event)
 	file_path = event.get("pathlocal")
 	file_patharray = file_path.split(/\/([^\/]*)$/)
 	file_id = file_patharray[-1]
-	downloadsurl = "/cslogs/" + "#{host}" + "/downloads/" + "#{file_id}" + "_" + "#{filename}" 
+	downloadsurl = "/c2logs/" + "#{host}" + "/downloads/" + "#{file_id}" + "_" + "#{filename}" 
 	event.tag("_rubyparseok")
     event.set("downloadsurl", downloadsurl)
 	return [event]
