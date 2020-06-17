@@ -426,7 +426,7 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "Starting Jupyter Notebooks docker image"
-docker run --restart unless-stopped --name jupyter-notebook -d -p 127.0.0.1:8888:8888 -v /usr/share/redelk/jupyter:/home/jovyan/work  jupyter/scipy-notebook start-notebook.sh --NotebookApp.token='' --NotebookApp.password='' --NotebookApp.allow_remote_access='True' --NotebookApp.allow_origin='*' >> $LOGFILE 2>&1
+docker run --restart unless-stopped --name jupyter-notebook -d -p8888:8888 -p 9200:9200 -v /usr/share/redelk/jupyter:/home/jovyan/work  jupyter/scipy-notebook start-notebook.sh --NotebookApp.token='' --NotebookApp.password='' --NotebookApp.allow_remote_access='True' --NotebookApp.allow_origin='*' >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not start Jupyter docker image (Error Code: $ERROR)."
