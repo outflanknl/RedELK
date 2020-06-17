@@ -13,6 +13,11 @@ TIMEZONE="Europe/Amsterdam"
 CWD=`pwd`
 ELKVERSION="6.8.2"
 
+echo ""
+echo "This script will install and configure necessary components for RedELK on ELK server"
+printf "`date +'%b %e %R'` $INSTALLER - Starting installer\n" > $LOGFILE 2>&1
+echo ""
+
 #set locale for current session and default locale
 export LC_ALL="en_US.UTF-8"
 printf 'LANG=en_US.UTF-8\nLC_ALL=en_US.UTF-8\n' > /etc/default/locale >> $LOGFILE 2>&1
@@ -71,8 +76,6 @@ preinstallcheck() {
    fi
 }
 
-echo "This script will install and configure necessary components for RedELK on ELK server"
-printf "`date +'%b %e %R'` $INSTALLER - Starting installer\n" > $LOGFILE 2>&1
 
 preinstallcheck
 
@@ -170,7 +173,7 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "Copying GeoIP database files"
-mkdir -p /usr/share/logstash/GeoLite2-dbs >> $LOGFILE 2>&1 && mv logstash/*.mmdb /usr/share/logstash/GeoLite2-dbs >> $LOGFILE 2>&1 && chown -R logstash:logstash /usr/share/logstash/GeoLite2-dbs >> $LOGFILE 2>&1
+mkdir -p /usr/share/logstash/GeoLite2-dbs >> $LOGFILE 2>&1 && cp logstash/*.mmdb /usr/share/logstash/GeoLite2-dbs >> $LOGFILE 2>&1 && chown -R logstash:logstash /usr/share/logstash/GeoLite2-dbs >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not copy geoIP database files (Error Code: $ERROR)."
@@ -220,14 +223,14 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "Copying nginx config files"
-cp ./nginx/htpasswd.users /etc/nginx/ && mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default_backup && cp ./nginx/sites-available/* /etc/nginx/sites-available && ln -s /etc/nginx/sites-available/jupyter /etc/nginx/sites-enabled/jupyter >> $LOGFILE 2>&1
+cp ./nginx/htpasswd.users /etc/nginx/ && cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default_backup && cp ./nginx/sites-available/* /etc/nginx/sites-available && ln -s /etc/nginx/sites-available/jupyter /etc/nginx/sites-enabled/jupyter >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not copy nginx config (Error Code: $ERROR)."
 fi
 
 echo "Creating www dirs and setting permissions"
-mkdir -p /var/www/html/cslogs && chown -R www-data:www-data /var/www/html/cslogs && chmod 775 /var/www/html/cslogs >> $LOGFILE 2>&1
+mkdir -p /var/www/html/c2logs && chown -R www-data:www-data /var/www/html/c2logs && chmod 775 /var/www/html/c2logs >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not create WWW dirs and set permissions (Error Code: $ERROR)."
