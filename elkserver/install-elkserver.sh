@@ -411,6 +411,14 @@ ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install Docker.io (Error Code: $ERROR)."
 fi
+
+echo "Creating Docker bridged network"
+docker network create -d bridge --subnet 192.168.254.0/24 --gateway 192.168.254.1 dockernetredelk >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Could not create Docker bridged network (Error Code: $ERROR)."
+fi
+
 echo "Creating Jupyter Notebooks working dir and copying notebooks"
 mkdir /usr/share/redelk/jupyter && cp ./jupyter/* /usr/share/redelk/jupyter/ && chown -R redelk:redelk /usr/share/redelk/jupyter >> $LOGFILE 2>&1
 ERROR=$?
@@ -426,14 +434,14 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "Starting Jupyter Notebooks docker image"
-docker run --restart unless-stopped --name jupyter-notebook -d -p8888:8888 -p 9200:9200 -v /usr/share/redelk/jupyter:/home/jovyan/work  jupyter/scipy-notebook start-notebook.sh --NotebookApp.token='' --NotebookApp.password='' --NotebookApp.allow_remote_access='True' --NotebookApp.allow_origin='*' >> $LOGFILE 2>&1
+docker run --restart unless-stopped --name jupyter-notebook -d --network dockernetredelk --ip 192.168.254.2 -p8888:8888 --add-host="elasticsearch:192.168.254.1" --add-host="bloodhound:192.168.254.3"  -v /usr/share/redelk/jupyter:/home/jovyan/work jupyter/scipy-notebook start-notebook.sh --NotebookApp.token='' --NotebookApp.password='' --NotebookApp.allow_remote_access='True' --NotebookApp.allow_origin='*' >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not start Jupyter docker image (Error Code: $ERROR)."
 fi
 
 echo "Modifying elasticsearch config file to include docker ip interface"
-DOCKERIP="$(ifconfig docker0|grep 'inet ' |awk '{print $2}')" && cp /etc/elasticsearch/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml.backup &&  echo 'network.bind_host: ["127.0.0.1","'$DOCKERIP'"]' >> /etc/elasticsearch/elasticsearch.yml >> $LOGFILE 2>&1
+DOCKERIP="192.168.254.1" && cp /etc/elasticsearch/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml.backup &&  echo 'network.bind_host: ["127.0.0.1","'$DOCKERIP'"]' >> /etc/elasticsearch/elasticsearch.yml >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Error with modifying elasticsaerch config file to include docker ip interface (Error Code: $ERROR)."
@@ -461,7 +469,7 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "Starting Neo4j/BloodHound docker image"
-docker run --restart unless-stopped --name bloodhound -p7474:7474 -p7687:7687 -d -v /usr/share/redelk/neo4j/data:/data -v /usr/share/redelk/neo4j/logs:/logs -v /usr/share/redelk/neo4j/import:/var/lib/neo4j/import -v /usr/share/redelk/neo4j/plugins:/plugins --env NEO4J_AUTH=neo4j/BloodHound specterops/bloodhound-neo4j >> $LOGFILE 2>&1
+docker run --restart unless-stopped --name bloodhound -d --network dockernetredelk --ip 192.168.254.3 -p7474:7474 -p7687:7687 --add-host="elasticsearch:192.168.254.1" --add-host="jupyter:192.168.254.2" -v /usr/share/redelk/neo4j/data:/data -v /usr/share/redelk/neo4j/logs:/logs -v /usr/share/redelk/neo4j/import:/var/lib/neo4j/import -v /usr/share/redelk/neo4j/plugins:/plugins --env NEO4J_AUTH=neo4j/BloodHound specterops/bloodhound-neo4j >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not start Neo4j/BloodHound docker image (Error Code: $ERROR)."
@@ -485,16 +493,23 @@ fi
 
 echo ""
 echo ""
-echo "Done with base setup of RedELK on ELK server"
-echo "You can now login to RedELK Kibana on this machine using redelk:redelk as credentials."
 echo ""
-echo "!!! WARNING - YOU ARE NOT DONE YET !!!"
+echo " Done with base setup of RedELK on ELK server"
+echo " You can now login with redelk:redelk on "
+echo "   - Main RedELK Kibana interface on port 80 (redelk:redelk)"
+echo "   - RedELK Jupyter notebook on port 88 (redelk:redelk)"
+echo "   - Neo4J using the Neo4J browser on port 7474"
+echo "   - Neo4J using the BloodHound app on bolt://$IP:7687 (neo4j:BloodHound)"
 echo ""
-echo "You are *REQUIRED* to:"
-echo " - adjust the /etc/cron.d/redelk file to include your teamservers"
-echo " - adjust all config files in /etc/redelk/ to include your specifics like VT API, email server details, etc"
 echo ""
-echo "You are *ADVISED* to:"
-echo " - reset default nginx credentials by adjusting the file /etc/nginx/htpasswd.users. You can use the htpasswd tool from apache2-utils package"
+echo ""
+echo " !!! WARNING"
+echo " !!! WARNING - IF YOU WANT FULL FUNCTIONALITY YOU ARE NOT DONE YET !!!"
+echo " !!! WARNING"
+echo ""
+echo " You should really:"
+echo "   - adjust the /etc/cron.d/redelk file to include your teamservers"
+echo "   - adjust all config files in /etc/redelk/ to include your specifics like VT API, email server details, etc"
+echo "   - reset default nginx credentials by adjusting the file /etc/nginx/htpasswd.users. You can use the htpasswd tool from apache2-utils package"
 echo ""
 echo ""
