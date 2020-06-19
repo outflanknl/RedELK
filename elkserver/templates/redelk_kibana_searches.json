@@ -55,7 +55,7 @@
     "id": "26ba4cb0-0f73-11e9-8e1e-a16db980e11e",
     "type": "search",
     "attributes": {
-      "title": "Cobalt Strike Downloads",
+      "title": "C2 Downloads",
       "description": "",
       "hits": 0,
       "columns": [
@@ -80,7 +80,7 @@
     "id": "3afbdbc0-b6aa-11e8-bc1a-cf8fa3255855",
     "type": "search",
     "attributes": {
-      "title": "Cobalt Strike Keystrokes",
+      "title": "C2 Keystrokes",
       "description": "",
       "hits": 0,
       "columns": [
@@ -104,7 +104,7 @@
     "id": "4c003e20-b6aa-11e8-bc1a-cf8fa3255855",
     "type": "search",
     "attributes": {
-      "title": "Cobalt Strike IOCs",
+      "title": "C2 IOCs",
       "columns": [
         "attackscenario",
         "target_user",
@@ -131,7 +131,7 @@
     "id": "e8de79f0-b6aa-11e8-bc1a-cf8fa3255855",
     "type": "search",
     "attributes": {
-      "title": "Cobalt Strike Screenshots",
+      "title": "C2 Screenshots",
       "columns": [
         "attackscenario",
         "target_hostname",
@@ -155,7 +155,7 @@
     "id": "68e8e870-b6aa-11e8-bc1a-cf8fa3255855",
     "type": "search",
     "attributes": {
-      "title": "C2 Implants overview",
+      "title": "C2 implants overview",
       "columns": [
         "implant_id",
         "attackscenario",
