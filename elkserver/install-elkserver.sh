@@ -18,17 +18,30 @@ echo "This script will install and configure necessary components for RedELK on 
 printf "`date +'%b %e %R'` $INSTALLER - Starting installer\n" > $LOGFILE 2>&1
 echo ""
 
-#set locale for current session and default locale
-export LC_ALL="en_US.UTF-8"
-printf 'LANG=en_US.UTF-8\nLC_ALL=en_US.UTF-8\n' > /etc/default/locale >> $LOGFILE 2>&1
-locale-gen >> $LOGFILE 2>&1
-
 echoerror() {
     printf "`date +'%b %e %R'` $INSTALLER - ${RC} * ERROR ${EC}: $@\n" >> $LOGFILE 2>&1
 }
 
 preinstallcheck() {
-    echo "Starting pre installation checks"
+    if [ $# -eq 0 ] || [ $# != "limited" ] ; then
+        echo "No 'limited' parameter found. Going for the full RedELK installation including: "
+        echo " - Jupyter notebooks"
+        echo " - BloodHound / Neo4j"
+        echo ""
+        echo "5 Seconds to abort"
+        echo ""
+        sleep 5
+        WHATTOINSTALL=full
+    else
+        echo "Parameter 'limited' found. Going for the limited RedELK experience."
+        echo ""
+        echo "5 Seconds to abort"
+        echo ""
+        sleep 5
+        WHATTOINSTALL=limited
+    fi
+    
+    echo "Starting pre installation checks"    
     
     SHOULDEXIT=false
     
@@ -137,7 +150,6 @@ preinstallcheck() {
 
 
 preinstallcheck
-
 #set locale for current session and default locale
 echo "Setting locale"
 export LC_ALL="en_US.UTF-8"
