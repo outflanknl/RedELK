@@ -3,7 +3,7 @@
 # Part of RedELK
 # Script to install RedELK on ELK server
 #
-# Author: Outflank B.V. / Marc Smeets 
+# Author: Outflank B.V. / Marc Smeets
 #
 
 
@@ -18,27 +18,40 @@ echo "This script will install and configure necessary components for RedELK on 
 printf "`date +'%b %e %R'` $INSTALLER - Starting installer\n" > $LOGFILE 2>&1
 echo ""
 
-#set locale for current session and default locale
-export LC_ALL="en_US.UTF-8"
-printf 'LANG=en_US.UTF-8\nLC_ALL=en_US.UTF-8\n' > /etc/default/locale >> $LOGFILE 2>&1
-locale-gen >> $LOGFILE 2>&1
-
 echoerror() {
     printf "`date +'%b %e %R'` $INSTALLER - ${RC} * ERROR ${EC}: $@\n" >> $LOGFILE 2>&1
 }
 
 preinstallcheck() {
+    if [ $# -eq 0 ] || [ $# != "limited" ] ; then
+        echo "No 'limited' parameter found. Going for the full RedELK installation including: "
+        echo " - Jupyter notebooks"
+        echo " - BloodHound / Neo4j"
+        echo ""
+        echo "5 Seconds to abort"
+        echo ""
+        sleep 5
+        WHATTOINSTALL=full
+    else
+        echo "Parameter 'limited' found. Going for the limited RedELK experience."
+        echo ""
+        echo "5 Seconds to abort"
+        echo ""
+        sleep 5
+        WHATTOINSTALL=limited
+    fi
+
     echo "Starting pre installation checks"
-    
+
     SHOULDEXIT=false
-    
+
     # Checking if OS is Debian / APT based
     if [ ! -f  /etc/debian_version ]; then
         echo "[X] This system does not seem to be Debian/APT-based. RedELK installer only supports Debian/APT based systems."
         echoerror "System is not Debian/APT based. Not supported. Quitting."
         SHOULDEXIT=true
     fi
- 
+
     # checking logstash version
     if [ -n "$(dpkg -s logstash 2>/dev/null| grep Status)" ]; then
         INSTALLEDVERSION=`dpkg -s logstash |grep Version|awk '{print $2}'|sed 's/^1\://g'|sed 's/\-1$//g'` >> $LOGFILE 2>&1
@@ -70,14 +83,79 @@ preinstallcheck() {
                 echoerror "Could not stop elasticsearch (Error Code: $ERROR)."
             fi
         fi
-   fi
-   if [ "$SHOULDEXIT" = true ]; then
-       exit 1
-   fi
-}
+    fi
+
+    # checking system memory and setting variables
+    AVAILABLE_MEMORY=$(awk '/MemAvailable/{printf "%.f", $2/1024}' /proc/meminfo)
+    
+    # check for full or limited install
+    if [ ${WHATTOINSTALL} = "limited" ]; then
+        if [ ${AVAILABLE_MEMORY} -le 3999 ]; then
+            echo "less than recommended 8GB memory found - yolo continuing"
+            ES_MEMORY=1g
+        elif [ ${AVAILABLE_MEMORY} -ge 4000 -a ${AVAILABLE_MEMORY} -le 7999 ]; then
+            echo "less than recommended 8GB memory found - yolo continuing"
+            ES_MEMORY=2g
+        elif [ ${AVAILABLE_MEMORY} -ge 8000 ]; then
+            echo "8GB or more memory found"
+            ES_MEMORY=4g
+        fi
+    else # going for full install means in check in determine how much memory NEO4J and ES get
+        if [ ${AVAILABLE_MEMORY} -le 7999 ]; then
+            echoerror "[X] Not enough memory for full install (less than 8GB). Quitting."
+            SHOULDEXIT=true
+        elif [ ${AVAILABLE_MEMORY} -ge 8000 ] &&  [ ${AVAILABLE_MEMORY} -le 8999 ]; then
+            echo "8-9GB memory found"
+            ES_MEMORY=1g
+            NEO4J_MEMORY=2G
+        elif [ ${AVAILABLE_MEMORY} -ge 9000 ] && [ ${AVAILABLE_MEMORY} -le 9999 ]; then
+            echo "9-10GB memory found"
+            ES_MEMORY=1g
+            NEO4J_MEMORY=3G
+        elif [ ${AVAILABLE_MEMORY} -ge 10000 ] && [ ${AVAILABLE_MEMORY} -le 10999 ]; then
+            echo "10-11GB memory found"
+            ES_MEMORY=2g
+            NEO4J_MEMORY=3G
+        elif [ ${AVAILABLE_MEMORY} -ge 11000 ] && [ ${AVAILABLE_MEMORY} -le 11999 ]; then
+            echo "11-12GB memory found"
+            ES_MEMORY=2g
+            NEO4J_MEMORY=4G
+        elif [ ${AVAILABLE_MEMORY} -ge 12000 ] && [ ${AVAILABLE_MEMORY} -le 12999 ]; then
+            echo "12-13GB memory found"
+            ES_MEMORY=3g
+            NEO4J_MEMORY=4G
+        elif [ ${AVAILABLE_MEMORY} -ge 13000 ] && [ ${AVAILABLE_MEMORY} -le 13999 ]; then
+            echo "13-14GB memory found"
+            ES_MEMORY=3g
+            NEO4J_MEMORY=4500M
+        elif [ ${AVAILABLE_MEMORY} -ge 14000 ] && [ ${AVAILABLE_MEMORY} -le 14999 ]; then
+            echo "14-15GB memory found"
+            ES_MEMORY=3g
+            NEO4J_MEMORY=5G
+        elif [ ${AVAILABLE_MEMORY} -ge 15000 ] && [ ${AVAILABLE_MEMORY} -le 15999 ]; then
+            echo "15-16GB memory found"
+            ES_MEMORY=4g
+            NEO4J_MEMORY=5G
+        elif [ ${AVAILABLE_MEMORY} -ge 16000 ]; then
+            echo "16GB or more memory found"
+            ES_MEMORY=5g
+            NEO4J_MEMORY=5G
+        fi
+    fi 
+
+    if [ "$SHOULDEXIT" = true ]; then
+        exit 1
+    fi
+}   
 
 
 preinstallcheck
+
+#set locale for current session and default locale
+echo "Setting locale"
+export LC_ALL="en_US.UTF-8"
+printf 'LANG=en_US.UTF-8\nLC_ALL=en_US.UTF-8\n' > /etc/default/locale >> $LOGFILE 2>&1
+locale-gen >> $LOGFILE 2>&1
 
 echo "Setting timezone"
 timedatectl set-timezone $TIMEZONE  >> $LOGFILE 2>&1
@@ -192,6 +270,13 @@ systemctl enable elasticsearch >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Coul not change auto boot settings (Error Code: $ERROR)."
+fi
+
+echo "Adjusting memory settings for ES"
+sed -E -i.bak "s/Xms1g/Xms${ES_MEMORY}/g" /etc/elasticsearch/jvm.options && sed -E -i.bak2 "s/Xmx1g/Xmx${ES_MEMORY}/g" /etc/elasticsearch/jvm.options
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Coul not adjust ES memory settings (Error Code: $ERROR)."
 fi
 
 echo "Installing Kibana"
@@ -360,8 +445,6 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not install Kibana template for dashboards (Error Code: $ERROR)."
 fi
 
-
-# setting default index to redirtraffic
 echo "Setting the Kibana default index"
 curl -X POST "http://localhost:5601/api/kibana/settings/defaultIndex" -H "Content-Type: application/json" -H "kbn-xsrf: true" -d"{\"value\":\"redirtraffic\"}" >> $LOGFILE 2>&1
 ERROR=$?
@@ -376,13 +459,12 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not install GeoIP index template adjust (Error Code: $ERROR)."
 fi
 
-# GeoIP is built-in since version 6.7 - no longer required to install
-#echo "Installing GeoIP elasticsearch plugin"
-#echo Y | /usr/share/elasticsearch/bin/elasticsearch-plugin -s install ingest-geoip >> $LOGFILE 2>&1
-#ERROR=$?
-#if [ $ERROR -ne 0 ]; then
-#    echoerror "Could not install GeoIP elasticsearch plugin (Error Code: $ERROR)."
-#fi
+echo "Setting elasticsearch to single shards"
+curl -XPUT http://localhost:9200/_template/default -H 'Content-Type: application/json' -d '{"index_patterns": ["*"],"order": -1,"settings": {"number_of_shards": "1","number_of_replicas": "0"}}' 
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Could not set single shards in ES (Error Code: $ERROR)."
+fi
 
 echo "Creating RedELK log directory"
 mkdir -p /var/log/redelk >> $LOGFILE 2>&1 && chown -R redelk:redelk /var/log/redelk >> $LOGFILE 2>&1
@@ -482,8 +564,6 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not create crontab for redelk user actions (Error Code: $ERROR)."
 fi
 
-
-
 grep -i error $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -eq 0 ]; then
@@ -497,9 +577,11 @@ echo ""
 echo " Done with base setup of RedELK on ELK server"
 echo " You can now login with redelk:redelk on "
 echo "   - Main RedELK Kibana interface on port 80 (redelk:redelk)"
-echo "   - RedELK Jupyter notebook on port 88 (redelk:redelk)"
-echo "   - Neo4J using the Neo4J browser on port 7474"
-echo "   - Neo4J using the BloodHound app on bolt://$IP:7687 (neo4j:BloodHound)"
+if [ ${WHATTOINSTALL} != "limited" ]; then
+    echo "   - RedELK Jupyter notebook on port 88 (redelk:redelk)"
+    echo "   - Neo4J using the Neo4J browser on port 7474"
+    echo "   - Neo4J using the BloodHound app on bolt://$IP:7687 (neo4j:BloodHound)"
+fi
 echo ""
 echo ""
 echo ""
