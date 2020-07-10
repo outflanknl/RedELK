@@ -3,7 +3,7 @@
 # Part of RedELK
 # Script to install RedELK on ELK server
 #
-# Author: Outflank B.V. / Marc Smeets
+# Author: Outflank B.V. / Marc Smeets 
 #
 
 
@@ -18,40 +18,27 @@ echo "This script will install and configure necessary components for RedELK on 
 printf "`date +'%b %e %R'` $INSTALLER - Starting installer\n" > $LOGFILE 2>&1
 echo ""
 
+#set locale for current session and default locale
+export LC_ALL="en_US.UTF-8"
+printf 'LANG=en_US.UTF-8\nLC_ALL=en_US.UTF-8\n' > /etc/default/locale >> $LOGFILE 2>&1
+locale-gen >> $LOGFILE 2>&1
+
 echoerror() {
     printf "`date +'%b %e %R'` $INSTALLER - ${RC} * ERROR ${EC}: $@\n" >> $LOGFILE 2>&1
 }
 
 preinstallcheck() {
-    if [ $# -eq 0 ] || [ $# != "limited" ] ; then
-        echo "No 'limited' parameter found. Going for the full RedELK installation including: "
-        echo " - Jupyter notebooks"
-        echo " - BloodHound / Neo4j"
-        echo ""
-        echo "5 Seconds to abort"
-        echo ""
-        sleep 5
-        WHATTOINSTALL=full
-    else
-        echo "Parameter 'limited' found. Going for the limited RedELK experience."
-        echo ""
-        echo "5 Seconds to abort"
-        echo ""
-        sleep 5
-        WHATTOINSTALL=limited
-    fi
-
     echo "Starting pre installation checks"
-
+    
     SHOULDEXIT=false
-
+    
     # Checking if OS is Debian / APT based
     if [ ! -f  /etc/debian_version ]; then
         echo "[X] This system does not seem to be Debian/APT-based. RedELK installer only supports Debian/APT based systems."
         echoerror "System is not Debian/APT based. Not supported. Quitting."
         SHOULDEXIT=true
     fi
-
+ 
     # checking logstash version
     if [ -n "$(dpkg -s logstash 2>/dev/null| grep Status)" ]; then
         INSTALLEDVERSION=`dpkg -s logstash |grep Version|awk '{print $2}'|sed 's/^1\://g'|sed 's/\-1$//g'` >> $LOGFILE 2>&1
@@ -495,7 +482,8 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "Creating Docker bridged network"
-docker network create -d bridge --subnet 192.168.254.0/24 --gateway 192.168.254.1 dockernetredelk >> $LOGFILE 2>&1
+# checking of network is already there
+if [ ! "docker network ls|grep dockernetredelk" ]; then docker network create -d bridge --subnet 192.168.254.0/24 --gateway 192.168.254.1 dockernetredelk >> $LOGFILE 2>&1 ; fi
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not create Docker bridged network (Error Code: $ERROR)."
@@ -544,14 +532,14 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "Installing Neo4j/BloodHound docker image"
-docker pull --quiet jupyter/scipy-notebook >> $LOGFILE 2>&1
+docker pull --quiet specterops/bloodhound-neo4j >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install  Neo4j/BloodHound docker image (Error Code: $ERROR)."
 fi
 
 echo "Starting Neo4j/BloodHound docker image"
-docker run --restart unless-stopped --name bloodhound -d --network dockernetredelk --ip 192.168.254.3 -p7474:7474 -p7687:7687 --add-host="elasticsearch:192.168.254.1" --add-host="jupyter:192.168.254.2" -v /usr/share/redelk/neo4j/data:/data -v /usr/share/redelk/neo4j/logs:/logs -v /usr/share/redelk/neo4j/import:/var/lib/neo4j/import -v /usr/share/redelk/neo4j/plugins:/plugins --env NEO4J_AUTH=neo4j/BloodHound specterops/bloodhound-neo4j >> $LOGFILE 2>&1
+docker run --restart unless-stopped --name bloodhound -d --network dockernetredelk --ip 192.168.254.3 -p7474:7474 -p7687:7687 --add-host="elasticsearch:192.168.254.1" --add-host="jupyter:192.168.254.2" -v /usr/share/redelk/neo4j/data:/data -v /usr/share/redelk/neo4j/logs:/logs -v /usr/share/redelk/neo4j/import:/var/lib/neo4j/import -v /usr/share/redelk/neo4j/plugins:/plugins --env NEO4J_AUTH=neo4j/BloodHound --env NEO4J_dbms_memory_heap_initial__size=${NEO4J_MEMORY} --env NEO4J_dbms_memory_heap_max__size=${NEO4J_MEMORY} --env NEO4J_dbms_memory_pagecache_size=${NEO4J_MEMORY} specterops/bloodhound-neo4j >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not start Neo4j/BloodHound docker image (Error Code: $ERROR)."
