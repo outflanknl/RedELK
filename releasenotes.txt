@@ -1,6 +1,11 @@
 
 RedELK release notes
 
+### version 1.1
+* Added support for Cobalt Strike 4.1. Thanks to @fastlorenzo
+* HTTP status code parsing improved to better handle non-RFC approved logging by some redir programs
+* Fix for supporting underscores in hostnames, although not allowed by RFC. Thanks to @jaredhaight 
+
 ### version 1.0.3
 * Added support for Nginx redirectors thanks to @sunnyneo
 
