@@ -35,6 +35,8 @@ def getInitialBeaconLine(l1):
   q2 = {'query': {'query_string': {'query': 'FILLME'}}}
   q2['query']['query_string']['query'] = "implant_id:\"%s\" AND c2logtype:implant_newimplant AND beat.name:%s"%(l1['_source']['implant_id'],l1["_source"]['beat']['name'])
   r2 = es.search(index="rtops-*", size=qSize,body=q2)
+  print(r2)
+  print("when looking for %s"%l1['_source']['implant_id'])
   b = r2['hits']['hits'][0]
   #now we have a beacon
   return(b)
@@ -56,15 +58,15 @@ def enrichAllLinesWithBeacon(l1,b):
     tagsSet = tagsSet + 1
     #sys.stdout.write('.')
     #sys.stdout.flush()
-  return(tagsSet,r3['hits']['total'])
+  return(tagsSet,r3['hits']['total']['value'])
 
 def getSet():
   #NOT tags:enriched_v01 AND NOT c2logtype:implant_newimplant AND c2logtype:implant_*
   q3 = {'query': {'query_string': {'query': 'NOT tags:enriched_v01 AND NOT c2logtype:implant_newimplant AND (c2logtype:implant_* OR c2logtype:ioc) AND NOT source:*unknown*'}}}
   r3 = es.search(index="rtops-*", size=qSize, body=q3)
-  if(r3['hits']['total'] == 0):
+  if(r3['hits']['total']['value'] == 0):
     return(None,0)
-  return(r3['hits']['hits'],r3['hits']['total'])
+  return(r3['hits']['hits'],r3['hits']['total']['value'])
 
 def enrichV1():
   tagsSet = 0
@@ -84,12 +86,17 @@ def enrichV1():
         except:
           break
         if line['_source']['implant_id'] not in doneList:
-          b = getInitialBeaconLine(line)
-          #sys.stdout.write('\n %s :'%b['_source']['implant_id'])
-          #sys.stdout.flush()
-          newTags,rT2  = enrichAllLinesWithBeacon(line,b)
-          tagsSet = tagsSet + newTags
-          doneList.append(b['_source']['implant_id'])
+          print("[i] looking for %s"% line['_source']['implant_id'])
+          try:
+            b = getInitialBeaconLine(line)
+          except:
+            b = None
+          if b:
+            sys.stdout.write('\n %s :'%b['_source']['implant_id'])
+            sys.stdout.flush()
+            newTags,rT2  = enrichAllLinesWithBeacon(line,b)
+            tagsSet = tagsSet + newTags
+            doneList.append(b['_source']['implant_id'])
       #we might need a sleep here in order to allow ES to solve it's stuff. We could also just stop running as we would be restarted in a minute...
       #sleep(60)
       run = False # decided to never loop, cron will restart anyhows
@@ -107,7 +114,7 @@ def queryFromConfig(line,index="implantsdb"):
  #print(query)
  r3 = es.search(index=index, size=qSize, body=q3)
  #print("found %s items"%len(r3['hits']['hits']))
- return(r3['hits']['hits'],r3['hits']['total'])
+ return(r3['hits']['hits'],r3['hits']['total']['value'])
 
 def queryBIG_OR(array,field,index,prefix="",postfix=""):
   sep = prefix
@@ -122,7 +129,7 @@ def queryBIG_OR(array,field,index,prefix="",postfix=""):
   q3['query']['query_string']['query'] = query
   #print(query)
   r3 = es.search(index=index, size=qSize, body=q3)
-  return(r3['hits']['hits'],r3['hits']['total'])
+  return(r3['hits']['hits'],r3['hits']['total']['value'])
 
 def setTags(tag,lst):
   for l in lst:
@@ -217,7 +224,7 @@ def findUntaggedLines(tag,size=qSize,index="redirtraffic-*"):
   r3 = es.search(index=index, body=q3, size=size)
   print("Query %s"%q3)
   print("items retreived %s"%len(r3['hits']['hits']))
-  return(r3['hits']['hits'],r3['hits']['total'])
+  return(r3['hits']['hits'],r3['hits']['total']['value'])
 
 def enrich_greynoiseSet(handler):
   tag = "enrich_greynoise"
@@ -258,7 +265,7 @@ def findTaggedLines(tag,size=qSize,index="redirtraffic-*"):
   q3 = {'query': {'query_string': {'query': 'FILLME'}}}
   q3['query']['query_string']['query'] = query
   r3 = es.search(index=index, body=q3, size=size)
-  return(r3['hits']['hits'],r3['hits']['total'])
+  return(r3['hits']['hits'],r3['hits']['total']['value'])
 
 def deleteTag(tag,size=qSize,index="redirtraffic-*"):
   run = True
