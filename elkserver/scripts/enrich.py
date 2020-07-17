@@ -47,7 +47,7 @@ def enrichAllLinesWithBeacon(l1,b):
   r3 = es.search(index="rtops-*", size=qSize, body=q3)
   for l1 in r3['hits']['hits']:
     l1["_source"]['tags'].append("enriched_v01")
-    for field in ["target_hostname","target_ipext","target_os","target_osversion","target_pid","target_user"]:
+    for field in ["target_hostname","target_ipext","target_os","target_osversion","target_osbuild","target_pid","target_user"]:
       try:
         l1["_source"][field] = b["_source"][field]
       except:
@@ -163,7 +163,7 @@ def setTagByQuery(query,tag,index="redirtraffic-*"):
   else:
   	return(None)
   r = 0
-  if 'response' in taskStatus:   
+  if 'response' in taskStatus:
     if 'updated' in taskStatus['response']:
       r =  taskStatus['response']['updated']
   return(r,r)
@@ -244,12 +244,12 @@ def enrich_greynoise():
     nRes,rT = enrich_greynoiseSet(g)
     nTotal = nRes + nTotal
     rTt = rTt + rT
-    if nRes == 0: 
+    if nRes == 0:
       run = False
     else:
       #we might need a sleep here in order to allow ES to solve it's stuff. We could also just stop running as we would be restarted in a minute...
       #sleep(60)
-      run = False # decided to never loop, cron will restart anyhows 
+      run = False # decided to never loop, cron will restart anyhows
   return(nTotal,rTt)
 #end section
 
@@ -266,12 +266,12 @@ def deleteTag(tag,size=qSize,index="redirtraffic-*"):
   while(run):
     Set,rT = findTaggedLines(tag,size,index)
     cRes = len(Set)
-    if cRes == 0: 
+    if cRes == 0:
       run = False
     else:
       #we might need a sleep here in order to allow ES to solve it's stuff. We could also just stop running as we would be restarted in a minute...
       #sleep(60)
-      run = False # decided to never loop, cron will restart anyhows 
+      run = False # decided to never loop, cron will restart anyhows
     for l in Set:
       newSet = []
       for t in l["_source"]['tags']:
