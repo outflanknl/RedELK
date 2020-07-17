@@ -460,7 +460,7 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "Setting elasticsearch to single shards"
-curl -XPUT http://localhost:9200/_template/default -H 'Content-Type: application/json' -d '{"index_patterns": ["*"],"order": -1,"settings": {"number_of_shards": "1","number_of_replicas": "0"}}' 
+curl -XPUT http://localhost:9200/_template/default -H 'Content-Type: application/json' -d '{"index_patterns": ["*"],"order": -1,"settings": {"number_of_shards": "1","number_of_replicas": "0"}}'  >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not set single shards in ES (Error Code: $ERROR)."
