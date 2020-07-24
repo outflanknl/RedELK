@@ -11,14 +11,14 @@ LOGFILE="redelk-install.log"
 INSTALLER="RedELK elkserver installer"
 TIMEZONE="Europe/Amsterdam"
 CWD=`pwd`
-ELKVERSION="7.8.0"
+ELKVERSION="7.1.0"
 
 echo ""
 echo "This script will install and configure necessary components for RedELK on ELK server"
 printf "`date +'%b %e %R'` $INSTALLER - Starting installer\n" > $LOGFILE 2>&1
 echo ""
 
-if [ $1 = "limited" ] ; then
+if [ ${1} = "limited" ]; then
     echo "Parameter 'limited' found. Going for the limited RedELK experience."
     echo ""
     echo "5 Seconds to abort"
@@ -480,7 +480,7 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not start logstash (Error Code: $ERROR)."
 fi
 
-echo "Inserting the superawesomesauce RedELK logo into Kibana"
+#echo "Inserting the superawesomesauce RedELK logo into Kibana"
 #cp /usr/share/kibana/optimize/bundles/commons.style.css /usr/share/kibana/optimize/bundles/commons.style.css.ori && cp ./kibana/* /usr/share/kibana/optimize/bundles/ >> $LOGFILE 2>&1
 #ERROR=$?
 #if [ $ERROR -ne 0 ]; then
@@ -528,7 +528,7 @@ if [ ${WHATTOINSTALL} = "full" ]; then
     DOCKERIP="192.168.254.1" && cp /etc/elasticsearch/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml.backup &&  echo 'network.bind_host: ["127.0.0.1","'$DOCKERIP'"]' >> /etc/elasticsearch/elasticsearch.yml >> $LOGFILE 2>&1
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
-        echoerror "Error with modifying elasticsaerch config file to include docker ip interface (Error Code: $ERROR)."
+        echoerror "Error with modifying elasticsearch config file to include docker ip interface (Error Code: $ERROR)."
     fi
 
     echo "Restarting Elasticsearch with new config"

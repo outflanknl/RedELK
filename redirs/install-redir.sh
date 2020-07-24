@@ -9,7 +9,7 @@
 LOGFILE="redelk-install.log"
 INSTALLER="RedELK redirector installer"
 TIMEZONE="Europe/Amsterdam"
-ELKVERSION="6.8.2"
+ELKVERSION="7.1.0"
 
 #set default locale
 export LC_ALL="en_US.UTF-8"
