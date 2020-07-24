@@ -90,8 +90,8 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "Adding Elastic APT repository"
-if [ ! -f  /etc/apt/sources.list.d/elastic-6.x.list ]; then
-    echo "deb https://artifacts.elastic.co/packages/6.x/apt stable main" | tee -a /etc/apt/sources.list.d/elastic-6.x.list >> $LOGFILE 2>&1
+if [ ! -f  /etc/apt/sources.list.d/elastic-7.x.list ]; then
+    echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | tee -a /etc/apt/sources.list.d/elastic-7.x.list >> $LOGFILE 2>&1
 fi
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
