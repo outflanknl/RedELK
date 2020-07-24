@@ -33,7 +33,7 @@ def isIP(addr):
 #### code for enrich_V1 tags
 def getInitialBeaconLine(l1):
   q2 = {'query': {'query_string': {'query': 'FILLME'}}}
-  q2['query']['query_string']['query'] = "implant_id:\"%s\" AND c2logtype:implant_newimplant AND beat.name:%s"%(l1['_source']['implant_id'],l1["_source"]['beat']['name'])
+  q2['query']['query_string']['query'] = "implant_id:\"%s\" AND c2logtype:implant_newimplant AND agent.hostname:%s"%(l1['_source']['implant_id'],l1["_source"]['agent']['hostname'])
   r2 = es.search(index="rtops-*", size=qSize,body=q2)
   print(r2)
   print("when looking for %s"%l1['_source']['implant_id'])
@@ -45,7 +45,7 @@ def enrichAllLinesWithBeacon(l1,b):
   tagsSet = 0
   #query for all not enriched lines make new L1 lines
   q3 = {'query': {'query_string': {'query': 'FILLME'}}}
-  q3['query']['query_string']['query'] = "implant_id:\"%s\" AND beat.name:%s AND NOT tags:enriched_v01"%(l1['_source']['implant_id'],l1["_source"]['beat']['name'])
+  q3['query']['query_string']['query'] = "implant_id:\"%s\" AND agent.hostname:%s AND NOT tags:enriched_v01"%(l1['_source']['implant_id'],l1["_source"]['agent']['hostname'])
   r3 = es.search(index="rtops-*", size=qSize, body=q3)
   for l1 in r3['hits']['hits']:
     l1["_source"]['tags'].append("enriched_v01")
