@@ -34,11 +34,8 @@
       "columns": [
         "attackscenario",
         "target_user",
-        "target_ipint",
-        "implant_id",
         "target_hostname",
         "target_os",
-        "target_osversion",
         "c2message"
       ],
       "sort": [
