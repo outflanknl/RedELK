@@ -5,18 +5,12 @@
 # Author: Outflank B.V. / Marc Smeets
 #
 
-def register(params)
-#        @timestamp = params["timestamp"]
-#        @source = param["source"]
-#       @implant_id = param["implant_id"]
-end
-
 def filter(event)
         require 'time'
-        host = event.get("[beat][name]")
-        logpath = event.get("source")
+        host = event.get("[agent][hostname]")
+	logpath = event.get("[log][file][path]")
         implant_id = event.get("implant_id")
-        timefromcs = event.get("cstimestamp") + " UTC"
+        timefromcs = event.get("c2timestamp") + " UTC"
         timestring =  Time.parse(timefromcs).strftime("%I%M%S")
         temppath = logpath.split('/cobaltstrike')
         temppath2 = temppath[1].split(/\/([^\/]*)$/)
