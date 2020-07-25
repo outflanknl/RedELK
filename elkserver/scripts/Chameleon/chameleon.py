@@ -58,7 +58,7 @@ class Chameleon:
                 if re.search(args.domain, line):
                     words = re.split('#', line)
                     print("\033[1;31m[-] Known malware according to RedELK roguedomains.conf\033[0;0m")
-                    fileout.write(datetime.now(timezone.utc).strftime("%Y/%m/%d, %H:%M:%S") + " Domain: " + args.domain  + " Source: RedELK roguedomains.conf Results: malware according to " + words[1].strip() + "\n")
+                    fileout.write(datetime.now(timezone.utc).strftime("%Y/%m/%d, %H:%M:%S") + " Domain: " + args.domain  + " Source: RedELK wizardry Results: malware according to " + words[1].strip() + "\n")
         
         if args.proxy == 'm' or args.proxy == 'a':
             print("\033[1;34m[-] Targeting McAfee Trustedsource\033[0;0m")
@@ -111,7 +111,7 @@ if __name__ == "__main__":
     if args.redelk:
         with open("/etc/redelk/redteamdomains.conf","r") as filein:
             for line in filein:
-                if not line[0] == "#":
+                if not line[0] == "#" and line.strip():
                     args.domain = line.rstrip()
                     args.check = True
                     c.run(args)
