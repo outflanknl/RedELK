@@ -480,12 +480,12 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not start logstash (Error Code: $ERROR)."
 fi
 
-#echo "Inserting the superawesomesauce RedELK logo into Kibana"
-#cp /usr/share/kibana/optimize/bundles/commons.style.css /usr/share/kibana/optimize/bundles/commons.style.css.ori && cp ./kibana/* /usr/share/kibana/optimize/bundles/ >> $LOGFILE 2>&1
-#ERROR=$?
-#if [ $ERROR -ne 0 ]; then
-#    echoerror "Could not adjust Kibana logo (Error Code: $ERROR)."
-#fi
+echo "Inserting the superawesomesauce RedELK logo into Kibana"
+curl 'http://localhost:5601/api/spaces/space/default?overwrite=true' -H 'kbn-xsrf: true' -X PUT -H 'Content-Type: application/json' -d @./kibana/redelklogo.json >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Could not adjust Kibana logo (Error Code: $ERROR)."
+fi
 
 if [ ${WHATTOINSTALL} = "full" ]; then
     echo "Installing Docker.io"
