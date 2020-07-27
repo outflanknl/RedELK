@@ -11,7 +11,7 @@ LOGFILE="redelk-install.log"
 INSTALLER="RedELK elkserver installer"
 TIMEZONE="Europe/Amsterdam"
 CWD=`pwd`
-ELKVERSION="7.1.0"
+ELKVERSION="7.8.0"
 
 echo ""
 echo "This script will install and configure necessary components for RedELK on ELK server"
