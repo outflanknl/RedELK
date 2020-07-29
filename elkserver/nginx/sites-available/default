@@ -32,4 +32,7 @@ server {
             add_header Content-Type image/jpeg;
         }
     }
+
+    location /attack-navigator {
+    }
 }

@@ -3,7 +3,7 @@
 # Part of RedELK
 # Script to install RedELK on ELK server
 #
-# Author: Outflank B.V. / Marc Smeets 
+# Author: Outflank B.V. / Marc Smeets
 #
 
 
@@ -41,18 +41,18 @@ echoerror() {
     printf "`date +'%b %e %R'` $INSTALLER - ${RC} * ERROR ${EC}: $@\n" >> $LOGFILE 2>&1
 }
 
-preinstallcheck() {    
-    echo "Starting pre installation checks"    
-    
+preinstallcheck() {
+    echo "Starting pre installation checks"
+
     SHOULDEXIT=false
-    
+
     # Checking if OS is Debian / APT based
     if [ ! -f  /etc/debian_version ]; then
         echo "[X] This system does not seem to be Debian/APT-based. RedELK installer only supports Debian/APT based systems."
         echoerror "System is not Debian/APT based. Not supported. Quitting."
         SHOULDEXIT=true
     fi
- 
+
     # checking logstash version
     if [ -n "$(dpkg -s logstash 2>/dev/null| grep Status)" ]; then
         INSTALLEDVERSION=`dpkg -s logstash |grep Version|awk '{print $2}'|sed 's/^1\://g'|sed 's/\-1$//g'` >> $LOGFILE 2>&1
@@ -88,7 +88,7 @@ preinstallcheck() {
 
     # checking system memory and setting variables
     AVAILABLE_MEMORY=$(awk '/MemAvailable/{printf "%.f", $2/1024}' /proc/meminfo)
-    
+
     # check for full or limited install
     if [ ${WHATTOINSTALL} = "limited" ]; then
         if [ ${AVAILABLE_MEMORY} -le 3999 ]; then
@@ -142,15 +142,15 @@ preinstallcheck() {
             ES_MEMORY=5g
             NEO4J_MEMORY=5G
         fi
-    fi 
+    fi
 
     if [ "$SHOULDEXIT" = true ]; then
         exit 1
     fi
-}   
+}
 
 
-preinstallcheck 
+preinstallcheck
 #set locale for current session and default locale
 echo "Setting locale"
 export LC_ALL="en_US.UTF-8"
@@ -319,6 +319,13 @@ mkdir -p /var/www/html/c2logs && chown -R www-data:www-data /var/www/html/c2logs
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not create WWW dirs and set permissions (Error Code: $ERROR)."
+fi
+
+echo "Copying attack-navigator files"
+cp ./attack-navigator /var/html/ -R && chown -R www-data:www-data /var/www/html/attack-navigator && chmod u+rwX,g+rwX,o-rwx /var/www/html/attack-navigator >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Could not copy attack-navigator files (Error Code: $ERROR)."
 fi
 
 echo "Starting elasticsearch"
