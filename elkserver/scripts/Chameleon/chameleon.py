@@ -64,7 +64,7 @@ class Chameleon:
             print("\033[1;34m[-] Targeting McAfee Trustedsource\033[0;0m")
             ts = trustedsource.TrustedSource(args.domain)
             if args.check:
-                checkresults = ts.check_category(False)
+                checkresults = ts.check_category(False).strip("- ")
                 if args.redelk:
                     fileout.write(datetime.now(timezone.utc).strftime("%Y/%m/%d, %H:%M:%S") + " Domain: " + args.domain  + " Source: McAfee Trustedsource Results: " + checkresults + "\n")
             elif args.submit:
