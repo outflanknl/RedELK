@@ -5,7 +5,7 @@
 #
 # Author: Outflank B.V. / Marc Smeets
 # Shameless copy-paste-modify from original script "export_TSv.py" from Alyssa @ramen0x3f (https://github.com/ramen0x3f/AggressorScripts/blob/master/export_TSv.py)
-#
+# 
 
 from argparse import ArgumentParser,RawTextHelpFormatter
 from javaobj import loads 

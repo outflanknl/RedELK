@@ -46,3 +46,9 @@ if [ $LINECOUNT -ge 10 ]; then
     echo "$LINECOUNT lines added">> $LOGFILE
     printf "`date +'%b %e %R'` rogue domain name update script ran \n" >> $LOGFILE 2>&1
 fi
+
+printf "`date +'%b %e %R'` Now running chameleon.py for checking classifications of our domains\n" >> $LOGFILE 2>&1
+
+# Now run chameleon.py to check if our domains 
+cd /usr/share/redelk/bin/Chameleon/
+python3 chameleon.py --redelk --proxy a >> $LOGFILE 2>&1

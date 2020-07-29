@@ -300,6 +300,14 @@ class alarm():
     setTags("ALARMED_%s"%report['fname'],rAlarmed)
     return(report)
 
+  #def alarm_check4(self):
+    # TODO check domains in index bluecheck- and report when any of following categories are found:
+    # abortion, adult, adware, alcohol, anonym, botnet, c2, command and control, compromised, controlled, copyright, crime, criminal, cryptocurrency, discrimination, early warning, extreme, file sharing, freeware, gambling, gore, gruesome, hacking, hate, illegal, intolerance, keyloggers, lottery, malicious, malnets, malware, marijuana, mature, military, moderated, nudity, p2p, phishing, piracy, placeholders, political, pornography, proxy, questionable, scam, sects, sex, shareware, spam, spyware, suspicious, tabacco, unwanted, usenet, violence, warez, weapons
+
+  #def alarm_check5(self):
+    # todo check ips in /etc/redelk/iplist_blueteams.conf and see if they appear anywhere in our trafficlogs
+
+
 if __name__ == '__main__':
   a = alarm()
   fontsize = 13

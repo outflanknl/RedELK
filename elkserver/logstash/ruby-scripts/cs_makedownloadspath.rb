@@ -5,16 +5,9 @@
 # Author: Outflank B.V. / Marc Smeets 
 #
 
-
-def register(params)
-#        @timestamp = params["timestamp"]
-#        @source = param["source"]
-#	@implant_id = param["implant_id"]
-end
-
 def filter(event)
-	host = event.get("[beat][name]")
-	logpath = event.get("source")
+	host = event.get("[agent][hostname]")
+	logpath = event.get("[log][file][path]")
 	implant_id = event.get("implant_id")
     filename = event.get("filename")
 	file_path = event.get("pathlocal")

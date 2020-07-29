@@ -34,12 +34,9 @@
       "columns": [
         "attackscenario",
         "target_user",
-        "target_ipint",
-        "implant_id",
         "target_hostname",
         "target_os",
-        "target_osversion",
-        "2smessage"
+        "c2message"
       ],
       "sort": [
         "@timestamp",
@@ -202,5 +199,38 @@
         "searchSourceJSON": "{\"index\":\"credentials\",\"highlightAll\":true,\"version\":true,\"query\":{\"language\":\"lucene\",\"query\":\"\"},\"filter\":[]}"
       }
     }
+  },
+  {
+    "id": "a4757c90-ce50-11ea-a580-918d4757c08d",
+    "type": "search",
+    "attributes": {
+      "title": "BlueCheck Domain Classification",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "domain",
+        "bluechecktype",
+        "classifier",
+        "results"
+      ],
+      "sort": [
+        "@timestamp",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"highlightAll\":true,\"version\":true,\"query\":{\"query\":\"\",\"language\":\"kuery\"},\"filter\":[],\"indexRefName\":\"kibanaSavedObjectMeta.searchSourceJSON.index\"}"
+      }
+    },
+    "migrationVersion": {
+      "search": "7.0.0"
+    },
+    "references": [
+      {
+        "name": "kibanaSavedObjectMeta.searchSourceJSON.index",
+        "type": "index-pattern",
+        "id": "bluecheck"
+      }
+    ]
   }
 ]

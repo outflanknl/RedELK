@@ -1,4 +1,4 @@
-filebeat.prospectors:
+filebeat.inputs:
 - type: log
   scan_frequency: 5s
   enabled: true

@@ -11,24 +11,38 @@ LOGFILE="redelk-install.log"
 INSTALLER="RedELK elkserver installer"
 TIMEZONE="Europe/Amsterdam"
 CWD=`pwd`
-ELKVERSION="6.8.2"
+ELKVERSION="7.8.0"
 
 echo ""
 echo "This script will install and configure necessary components for RedELK on ELK server"
 printf "`date +'%b %e %R'` $INSTALLER - Starting installer\n" > $LOGFILE 2>&1
 echo ""
 
-#set locale for current session and default locale
-export LC_ALL="en_US.UTF-8"
-printf 'LANG=en_US.UTF-8\nLC_ALL=en_US.UTF-8\n' > /etc/default/locale >> $LOGFILE 2>&1
-locale-gen >> $LOGFILE 2>&1
+if [ ${1} = "limited" ]; then
+    echo "Parameter 'limited' found. Going for the limited RedELK experience."
+    echo ""
+    echo "5 Seconds to abort"
+    echo ""
+    sleep 5
+    WHATTOINSTALL=limited
+else
+    echo "No 'limited' parameter found. Going for the full RedELK installation including: "
+    echo " - RedELK"
+    echo " - Jupyter notebooks"
+    echo " - BloodHound / Neo4j"
+    echo ""
+    echo "5 Seconds to abort"
+    echo ""
+    sleep 5
+    WHATTOINSTALL=full
+fi
 
 echoerror() {
     printf "`date +'%b %e %R'` $INSTALLER - ${RC} * ERROR ${EC}: $@\n" >> $LOGFILE 2>&1
 }
 
-preinstallcheck() {
-    echo "Starting pre installation checks"
+preinstallcheck() {    
+    echo "Starting pre installation checks"    
     
     SHOULDEXIT=false
     
@@ -70,14 +84,78 @@ preinstallcheck() {
                 echoerror "Could not stop elasticsearch (Error Code: $ERROR)."
             fi
         fi
-   fi
-   if [ "$SHOULDEXIT" = true ]; then
-       exit 1
-   fi
-}
+    fi
+
+    # checking system memory and setting variables
+    AVAILABLE_MEMORY=$(awk '/MemAvailable/{printf "%.f", $2/1024}' /proc/meminfo)
+    
+    # check for full or limited install
+    if [ ${WHATTOINSTALL} = "limited" ]; then
+        if [ ${AVAILABLE_MEMORY} -le 3999 ]; then
+            echo "less than recommended 8GB memory found - yolo continuing"
+            ES_MEMORY=1g
+        elif [ ${AVAILABLE_MEMORY} -ge 4000 -a ${AVAILABLE_MEMORY} -le 7999 ]; then
+            echo "less than recommended 8GB memory found - yolo continuing"
+            ES_MEMORY=2g
+        elif [ ${AVAILABLE_MEMORY} -ge 8000 ]; then
+            echo "8GB or more memory found"
+            ES_MEMORY=4g
+        fi
+    else # going for full install means in check in determine how much memory NEO4J and ES get
+        if [ ${AVAILABLE_MEMORY} -le 7999 ]; then
+            echoerror "[X] Not enough memory for full install (less than 8GB). Quitting."
+            SHOULDEXIT=true
+        elif [ ${AVAILABLE_MEMORY} -ge 8000 ] &&  [ ${AVAILABLE_MEMORY} -le 8999 ]; then
+            echo "8-9GB memory found"
+            ES_MEMORY=1g
+            NEO4J_MEMORY=2G
+        elif [ ${AVAILABLE_MEMORY} -ge 9000 ] && [ ${AVAILABLE_MEMORY} -le 9999 ]; then
+            echo "9-10GB memory found"
+            ES_MEMORY=1g
+            NEO4J_MEMORY=3G
+        elif [ ${AVAILABLE_MEMORY} -ge 10000 ] && [ ${AVAILABLE_MEMORY} -le 10999 ]; then
+            echo "10-11GB memory found"
+            ES_MEMORY=2g
+            NEO4J_MEMORY=3G
+        elif [ ${AVAILABLE_MEMORY} -ge 11000 ] && [ ${AVAILABLE_MEMORY} -le 11999 ]; then
+            echo "11-12GB memory found"
+            ES_MEMORY=2g
+            NEO4J_MEMORY=4G
+        elif [ ${AVAILABLE_MEMORY} -ge 12000 ] && [ ${AVAILABLE_MEMORY} -le 12999 ]; then
+            echo "12-13GB memory found"
+            ES_MEMORY=3g
+            NEO4J_MEMORY=4G
+        elif [ ${AVAILABLE_MEMORY} -ge 13000 ] && [ ${AVAILABLE_MEMORY} -le 13999 ]; then
+            echo "13-14GB memory found"
+            ES_MEMORY=3g
+            NEO4J_MEMORY=4500M
+        elif [ ${AVAILABLE_MEMORY} -ge 14000 ] && [ ${AVAILABLE_MEMORY} -le 14999 ]; then
+            echo "14-15GB memory found"
+            ES_MEMORY=3g
+            NEO4J_MEMORY=5G
+        elif [ ${AVAILABLE_MEMORY} -ge 15000 ] && [ ${AVAILABLE_MEMORY} -le 15999 ]; then
+            echo "15-16GB memory found"
+            ES_MEMORY=4g
+            NEO4J_MEMORY=5G
+        elif [ ${AVAILABLE_MEMORY} -ge 16000 ]; then
+            echo "16GB or more memory found"
+            ES_MEMORY=5g
+            NEO4J_MEMORY=5G
+        fi
+    fi 
+
+    if [ "$SHOULDEXIT" = true ]; then
+        exit 1
+    fi
+}   
 
 
-preinstallcheck
+preinstallcheck 
+#set locale for current session and default locale
+echo "Setting locale"
+export LC_ALL="en_US.UTF-8"
+printf 'LANG=en_US.UTF-8\nLC_ALL=en_US.UTF-8\n' > /etc/default/locale >> $LOGFILE 2>&1
+locale-gen >> $LOGFILE 2>&1
 
 echo "Setting timezone"
 timedatectl set-timezone $TIMEZONE  >> $LOGFILE 2>&1
@@ -108,8 +186,8 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "Adding Elastic APT repository"
-if [ ! -f  /etc/apt/sources.list.d/elastic-6.x.list ]; then
-    echo "deb https://artifacts.elastic.co/packages/6.x/apt stable main" | tee -a /etc/apt/sources.list.d/elastic-6.x.list >> $LOGFILE 2>&1
+if [ ! -f  /etc/apt/sources.list.d/elastic-7.x.list ]; then
+    echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | tee -a /etc/apt/sources.list.d/elastic-7.x.list >> $LOGFILE 2>&1
 fi
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
@@ -131,7 +209,7 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "Installing logstash"
-apt-get install -y logstash=1:$ELKVERSION-1 > $LOGFILE 2>&1
+apt-get install -y logstash=1:$ELKVERSION-1 >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install logstash (Error Code: $ERROR)."
@@ -181,7 +259,7 @@ fi
 cd $CWD
 
 echo "Installing elasticsearch"
-apt-get install -y elasticsearch=$ELKVERSION > $LOGFILE 2>&1
+apt-get install -y elasticsearch=$ELKVERSION >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install elasticsearch (Error Code: $ERROR)."
@@ -194,8 +272,15 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Coul not change auto boot settings (Error Code: $ERROR)."
 fi
 
+echo "Adjusting memory settings for ES"
+sed -E -i.bak "s/Xms1g/Xms${ES_MEMORY}/g" /etc/elasticsearch/jvm.options && sed -E -i.bak2 "s/Xmx1g/Xmx${ES_MEMORY}/g" /etc/elasticsearch/jvm.options  && sed -E -i.bak "s/#bootstrap.memory_lock: true/bootstrap.memory_lock: true/g" /etc/elasticsearch/elasticsearch.yml >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Coul not adjust ES memory settings (Error Code: $ERROR)."
+fi
+
 echo "Installing Kibana"
-apt-get install -y kibana=$ELKVERSION > $LOGFILE 2>&1
+apt-get install -y kibana=$ELKVERSION >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install Kibana (Error Code: $ERROR)."
@@ -209,7 +294,7 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "Installing nginx"
-apt-get install -y nginx > $LOGFILE 2>&1
+apt-get install -y nginx >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install nginx (Error Code: $ERROR)."
@@ -277,7 +362,7 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "Copying RedELK background running scripts (remote logs, thumbnails, enrichment, alarms, etc)"
-mkdir -p /usr/share/redelk/bin && cp -r ./scripts/* /usr/share/redelk/bin/ && chmod -R 775 /usr/share/redelk/bin/*>> $LOGFILE 2>&1
+mkdir -p /usr/share/redelk/bin && cp -r ./scripts/* /usr/share/redelk/bin/ && chmod -R 775 /usr/share/redelk/bin/* >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not copy background running scripts (Error Code: $ERROR)."
@@ -360,8 +445,6 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not install Kibana template for dashboards (Error Code: $ERROR)."
 fi
 
-
-# setting default index to redirtraffic
 echo "Setting the Kibana default index"
 curl -X POST "http://localhost:5601/api/kibana/settings/defaultIndex" -H "Content-Type: application/json" -H "kbn-xsrf: true" -d"{\"value\":\"redirtraffic\"}" >> $LOGFILE 2>&1
 ERROR=$?
@@ -370,19 +453,18 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "Installing GeoIP index template adjustment"
-curl -XPUT -H 'Content-Type: application/json' http://localhost:9200/_template/redirtraffic- -d@./templates/elasticsearch-template-geoip-es6x.json >> $LOGFILE 2>&1
+curl -XPUT -H 'Content-Type: application/json' http://localhost:9200/_template/redirtraffic- -d@./templates/elasticsearch-template-geoip-es7x.json >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install GeoIP index template adjust (Error Code: $ERROR)."
 fi
 
-# GeoIP is built-in since version 6.7 - no longer required to install
-#echo "Installing GeoIP elasticsearch plugin"
-#echo Y | /usr/share/elasticsearch/bin/elasticsearch-plugin -s install ingest-geoip >> $LOGFILE 2>&1
-#ERROR=$?
-#if [ $ERROR -ne 0 ]; then
-#    echoerror "Could not install GeoIP elasticsearch plugin (Error Code: $ERROR)."
-#fi
+echo "Setting elasticsearch to single shards"
+curl -XPUT http://localhost:9200/_template/default -H 'Content-Type: application/json' -d '{"index_patterns": ["*"],"order": -1,"settings": {"number_of_shards": "1","number_of_replicas": "0"}}'  >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Could not set single shards in ES (Error Code: $ERROR)."
+fi
 
 echo "Creating RedELK log directory"
 mkdir -p /var/log/redelk >> $LOGFILE 2>&1 && chown -R redelk:redelk /var/log/redelk >> $LOGFILE 2>&1
@@ -399,80 +481,83 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "Inserting the superawesomesauce RedELK logo into Kibana"
-cp /usr/share/kibana/optimize/bundles/commons.style.css /usr/share/kibana/optimize/bundles/commons.style.css.ori && cp ./kibana/* /usr/share/kibana/optimize/bundles/ >> $LOGFILE 2>&1
+curl 'http://localhost:5601/api/spaces/space/default?overwrite=true' -H 'kbn-xsrf: true' -X PUT -H 'Content-Type: application/json' -d @./kibana/redelklogo.json >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not adjust Kibana logo (Error Code: $ERROR)."
 fi
 
-echo "Installing Docker.io"
-apt-get install -y docker.io >> $LOGFILE 2>&1
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echoerror "Could not install Docker.io (Error Code: $ERROR)."
-fi
+if [ ${WHATTOINSTALL} = "full" ]; then
+    echo "Installing Docker.io"
+    apt-get install -y docker.io >> $LOGFILE 2>&1
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echoerror "Could not install Docker.io (Error Code: $ERROR)."
+    fi
 
-echo "Creating Docker bridged network"
-docker network create -d bridge --subnet 192.168.254.0/24 --gateway 192.168.254.1 dockernetredelk >> $LOGFILE 2>&1
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echoerror "Could not create Docker bridged network (Error Code: $ERROR)."
-fi
+    echo "Creating Docker bridged network"
+    # checking of network is already there
+    if [ ! "docker network ls|grep dockernetredelk" ]; then docker network create -d bridge --subnet 192.168.254.0/24 --gateway 192.168.254.1 dockernetredelk >> $LOGFILE 2>&1 ; fi
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echoerror "Could not create Docker bridged network (Error Code: $ERROR)."
+    fi
 
-echo "Creating Jupyter Notebooks working dir and copying notebooks"
-mkdir /usr/share/redelk/jupyter && cp ./jupyter/* /usr/share/redelk/jupyter/ && chown -R redelk:redelk /usr/share/redelk/jupyter >> $LOGFILE 2>&1
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echoerror "Could not create Jupyter working dir or copy notebooks (Error Code: $ERROR)."
-fi
+    echo "Creating Jupyter Notebooks working dir and copying notebooks"
+    mkdir /usr/share/redelk/jupyter && cp ./jupyter/* /usr/share/redelk/jupyter/ && chown -R redelk:redelk /usr/share/redelk/jupyter >> $LOGFILE 2>&1
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echoerror "Could not create Jupyter working dir or copy notebooks (Error Code: $ERROR)."
+    fi
 
-echo "Installing Jupyter Notebooks docker image"
-docker pull --quiet jupyter/scipy-notebook >> $LOGFILE 2>&1
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echoerror "Could not install Jupyter docker image (Error Code: $ERROR)."
-fi
+    echo "Installing Jupyter Notebooks docker image"
+    docker pull --quiet jupyter/scipy-notebook >> $LOGFILE 2>&1
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echoerror "Could not install Jupyter docker image (Error Code: $ERROR)."
+    fi
 
-echo "Starting Jupyter Notebooks docker image"
-docker run --restart unless-stopped --name jupyter-notebook -d --network dockernetredelk --ip 192.168.254.2 -p8888:8888 --add-host="elasticsearch:192.168.254.1" --add-host="bloodhound:192.168.254.3"  -v /usr/share/redelk/jupyter:/home/jovyan/work jupyter/scipy-notebook start-notebook.sh --NotebookApp.token='' --NotebookApp.password='' --NotebookApp.allow_remote_access='True' --NotebookApp.allow_origin='*' >> $LOGFILE 2>&1
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echoerror "Could not start Jupyter docker image (Error Code: $ERROR)."
-fi
+    echo "Starting Jupyter Notebooks docker image"
+    docker run --restart unless-stopped --name jupyter-notebook -d --network dockernetredelk --ip 192.168.254.2 -p8888:8888 --add-host="elasticsearch:192.168.254.1" --add-host="bloodhound:192.168.254.3"  -v /usr/share/redelk/jupyter:/home/jovyan/work jupyter/scipy-notebook start-notebook.sh --NotebookApp.token='' --NotebookApp.password='' --NotebookApp.allow_remote_access='True' --NotebookApp.allow_origin='*' >> $LOGFILE 2>&1
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echoerror "Could not start Jupyter docker image (Error Code: $ERROR)."
+    fi
 
-echo "Modifying elasticsearch config file to include docker ip interface"
-DOCKERIP="192.168.254.1" && cp /etc/elasticsearch/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml.backup &&  echo 'network.bind_host: ["127.0.0.1","'$DOCKERIP'"]' >> /etc/elasticsearch/elasticsearch.yml >> $LOGFILE 2>&1
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echoerror "Error with modifying elasticsaerch config file to include docker ip interface (Error Code: $ERROR)."
-fi
+    echo "Modifying elasticsearch config file to include docker ip interface"
+    DOCKERIP="192.168.254.1" && cp /etc/elasticsearch/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml.backup &&  echo 'network.bind_host: ["127.0.0.1","'$DOCKERIP'"]' >> /etc/elasticsearch/elasticsearch.yml >> $LOGFILE 2>&1
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echoerror "Error with modifying elasticsearch config file to include docker ip interface (Error Code: $ERROR)."
+    fi
 
-echo "Restarting Elasticsearch with new config"
-systemctl restart elasticsearch >> $LOGFILE 2>&1
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echoerror "Could not restart Elasticsearch (Error Code: $ERROR)."
-fi
+    echo "Restarting Elasticsearch with new config"
+    systemctl restart elasticsearch >> $LOGFILE 2>&1
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echoerror "Could not restart Elasticsearch (Error Code: $ERROR)."
+    fi
 
-echo "Creating Neo4j/BloodHound working dir"
-mkdir -p /usr/share/redelk/neo4j/data && mkdir /usr/share/redelk/neo4j/logs && mkdir /usr/share/redelk/neo4j/import && mkdir /usr/share/redelk/neo4j/plugins && chown -R redelk:redelk /usr/share/redelk/neo4j >> $LOGFILE 2>&1
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echoerror "Could not create Neo4j/BloodHound working dir or copy notebooks (Error Code: $ERROR)."
-fi
+    echo "Creating Neo4j/BloodHound working dir"
+    mkdir -p /usr/share/redelk/neo4j/data && mkdir /usr/share/redelk/neo4j/logs && mkdir /usr/share/redelk/neo4j/import && mkdir /usr/share/redelk/neo4j/plugins && chown -R redelk:redelk /usr/share/redelk/neo4j >> $LOGFILE 2>&1
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echoerror "Could not create Neo4j/BloodHound working dir or copy notebooks (Error Code: $ERROR)."
+    fi
 
-echo "Installing Neo4j/BloodHound docker image"
-docker pull --quiet jupyter/scipy-notebook >> $LOGFILE 2>&1
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echoerror "Could not install  Neo4j/BloodHound docker image (Error Code: $ERROR)."
-fi
+    echo "Installing Neo4j/BloodHound docker image"
+    docker pull --quiet specterops/bloodhound-neo4j >> $LOGFILE 2>&1
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echoerror "Could not install  Neo4j/BloodHound docker image (Error Code: $ERROR)."
+    fi
 
-echo "Starting Neo4j/BloodHound docker image"
-docker run --restart unless-stopped --name bloodhound -d --network dockernetredelk --ip 192.168.254.3 -p7474:7474 -p7687:7687 --add-host="elasticsearch:192.168.254.1" --add-host="jupyter:192.168.254.2" -v /usr/share/redelk/neo4j/data:/data -v /usr/share/redelk/neo4j/logs:/logs -v /usr/share/redelk/neo4j/import:/var/lib/neo4j/import -v /usr/share/redelk/neo4j/plugins:/plugins --env NEO4J_AUTH=neo4j/BloodHound specterops/bloodhound-neo4j >> $LOGFILE 2>&1
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echoerror "Could not start Neo4j/BloodHound docker image (Error Code: $ERROR)."
+    echo "Starting Neo4j/BloodHound docker image"
+    docker run --restart unless-stopped --name bloodhound -d --network dockernetredelk --ip 192.168.254.3 -p7474:7474 -p7687:7687 --add-host="elasticsearch:192.168.254.1" --add-host="jupyter:192.168.254.2" -v /usr/share/redelk/neo4j/data:/data -v /usr/share/redelk/neo4j/logs:/logs -v /usr/share/redelk/neo4j/import:/var/lib/neo4j/import -v /usr/share/redelk/neo4j/plugins:/plugins --env NEO4J_AUTH=neo4j/BloodHound --env NEO4J_dbms_memory_heap_initial__size=${NEO4J_MEMORY} --env NEO4J_dbms_memory_heap_max__size=${NEO4J_MEMORY} --env NEO4J_dbms_memory_pagecache_size=${NEO4J_MEMORY} specterops/bloodhound-neo4j >> $LOGFILE 2>&1
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echoerror "Could not start Neo4j/BloodHound docker image (Error Code: $ERROR)."
+    fi
 fi
 
 echo "Creating crontab for redelk user actions"
@@ -481,8 +566,6 @@ ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not create crontab for redelk user actions (Error Code: $ERROR)."
 fi
-
-
 
 grep -i error $LOGFILE 2>&1
 ERROR=$?
@@ -497,9 +580,11 @@ echo ""
 echo " Done with base setup of RedELK on ELK server"
 echo " You can now login with redelk:redelk on "
 echo "   - Main RedELK Kibana interface on port 80 (redelk:redelk)"
-echo "   - RedELK Jupyter notebook on port 88 (redelk:redelk)"
-echo "   - Neo4J using the Neo4J browser on port 7474"
-echo "   - Neo4J using the BloodHound app on bolt://$IP:7687 (neo4j:BloodHound)"
+if [ ${WHATTOINSTALL} != "limited" ]; then
+    echo "   - RedELK Jupyter notebook on port 88 (redelk:redelk)"
+    echo "   - Neo4J using the Neo4J browser on port 7474"
+    echo "   - Neo4J using the BloodHound app on bolt://$IP:7687 (neo4j:BloodHound)"
+fi
 echo ""
 echo ""
 echo ""
