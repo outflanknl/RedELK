@@ -153,6 +153,11 @@
 | c2program                            | String  | c2.program            | keyword       | C2 program used (e.g. cobaltstrike)                                                                                                                                 |     |
 | downloadsurl                         | String  | file.url              | keyword       | RedELK URL to download the file                                                                                                                                     |     |
 | keystrokesfull                       | String  | keystrokes.url        | keyword       | RedELK URL to download the full keystorkes output                                                                                                                   |     |
+| -                                    | -       | creds.host            | keyword       | Host where the credentials have been harvested                                                                                                                      |     |
+| -                                    | -       | creds.credential      | keyword       | Credential (password, hash, ...)                                                                                                                                    |     |
+| -                                    | -       | creds.username        | keyword       | User name                                                                                                                                                           |     |
+| -                                    | -       | creds.source          | keyword       | How the credentials have been harvested (e.g. mimikatz, manual, ...)                                                                                                |     |
+| -                                    | -       | creds.realm           | keyword       | Where the credentials are valid (e.g. AD Domain, host, ...)                                                                                                         |     |
 
 ### Tags set  by RedELK
 
