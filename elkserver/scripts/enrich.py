@@ -33,10 +33,8 @@ def isIP(addr):
 #### code for enrich_V1 tags
 def getInitialBeaconLine(l1):
   q2 = {'query': {'query_string': {'query': 'FILLME'}}}
-  q2['query']['query_string']['query'] = "implant_id:\"%s\" AND c2logtype:implant_newimplant AND agent.hostname:%s"%(l1['_source']['implant_id'],l1["_source"]['agent']['hostname'])
+  q2['query']['query_string']['query'] = "implant.id:\"%s\" AND c2.log.type:implant_newimplant AND agent.hostname:%s"%(l1['_source']['implant']['id'],l1["_source"]['agent']['hostname'])
   r2 = es.search(index="rtops-*", size=qSize,body=q2)
-  print(r2)
-  print("when looking for %s"%l1['_source']['implant_id'])
   b = r2['hits']['hits'][0]
   #now we have a beacon
   return(b)
@@ -45,11 +43,11 @@ def enrichAllLinesWithBeacon(l1,b):
   tagsSet = 0
   #query for all not enriched lines make new L1 lines
   q3 = {'query': {'query_string': {'query': 'FILLME'}}}
-  q3['query']['query_string']['query'] = "implant_id:\"%s\" AND agent.hostname:%s AND NOT tags:enriched_v01"%(l1['_source']['implant_id'],l1["_source"]['agent']['hostname'])
+  q3['query']['query_string']['query'] = "implant.id:\"%s\" AND agent.hostname:%s AND NOT tags:enriched_v01"%(l1['_source']['implant']['id'],l1["_source"]['agent']['hostname'])
   r3 = es.search(index="rtops-*", size=qSize, body=q3)
   for l1 in r3['hits']['hits']:
     l1["_source"]['tags'].append("enriched_v01")
-    for field in ["target_hostname","target_ipext","target_os","target_osversion","target_osbuild","target_pid","target_user"]:
+    for field in ["host","user","process"]:
       try:
         l1["_source"][field] = b["_source"][field]
       except:
@@ -61,8 +59,8 @@ def enrichAllLinesWithBeacon(l1,b):
   return(tagsSet,r3['hits']['total']['value'])
 
 def getSet():
-  #NOT tags:enriched_v01 AND NOT c2logtype:implant_newimplant AND c2logtype:implant_*
-  q3 = {'query': {'query_string': {'query': 'NOT tags:enriched_v01 AND NOT c2logtype:implant_newimplant AND (c2logtype:implant_* OR c2logtype:ioc) AND NOT source:*unknown*'}}}
+  #NOT tags:enriched_v01 AND NOT cslogtype:beacon_newbeacon AND cslogtype:beacon_*
+  q3 = {'query': {'query_string': {'query': 'NOT tags:enriched_v01 AND NOT c2.log.type:implant_newimplant AND (c2.log.type:implant_* OR c2.log.type:ioc) AND NOT source:*unknown*'}}}
   r3 = es.search(index="rtops-*", size=qSize, body=q3)
   if(r3['hits']['total']['value'] == 0):
     return(None,0)
@@ -82,21 +80,22 @@ def enrichV1():
       #we have some rtop-* lines that should be enriched.
       for line in Set:
         try:
-          id = line['_source']['implant_id']
+          id = line['_source']['implant']['id']
         except:
           break
-        if line['_source']['implant_id'] not in doneList:
-          print("[i] looking for %s"% line['_source']['implant_id'])
+        if line['_source']['implant']['id'] not in doneList:
+          print("[i] looking for %s"% line['_source']['implant']['id'])
           try:
             b = getInitialBeaconLine(line)
           except:
             b = None
           if b:
-            sys.stdout.write('\n %s :'%b['_source']['implant_id'])
+            sys.stdout.write('\n %s :'%b['_source']['implant']['id'])
             sys.stdout.flush()
             newTags,rT2  = enrichAllLinesWithBeacon(line,b)
             tagsSet = tagsSet + newTags
-            doneList.append(b['_source']['implant_id'])
+            doneList.append(b['_source']['implant']['id'])
+
       #we might need a sleep here in order to allow ES to solve it's stuff. We could also just stop running as we would be restarted in a minute...
       #sleep(60)
       run = False # decided to never loop, cron will restart anyhows
@@ -109,12 +108,12 @@ def queryFromConfig(line,index="implantsdb"):
  f2 = lineA[2]
  f3 = lineA[3]
  q3 = {'query': {'query_string': {'query': 'FILLME'}}}
- query =  "NOT (tags:sandboxes_v01 OR tags:testsystems_v01) AND (target_user:%s %s target_hostname:%s %s target_ipint:%s)"%(f1,q,f2,q,f3)
+ query =  "NOT (tags:sandboxes_v01 OR tags:testsystems_v01) AND (user.name:%s %s host.name:%s %s host.ip:%s)"%(f1,q,f2,q,f3)
  q3['query']['query_string']['query'] = query
  #print(query)
  r3 = es.search(index=index, size=qSize, body=q3)
  #print("found %s items"%len(r3['hits']['hits']))
- return(r3['hits']['hits'],r3['hits']['total']['value'])
+ return(r3['hits']['hits'],r3['hits']['total'])
 
 def queryBIG_OR(array,field,index,prefix="",postfix=""):
   sep = prefix
@@ -233,7 +232,7 @@ def enrich_greynoiseSet(handler):
   for l in Set:
     l["_source"]['tags'].append(tag)
     try:
-      ip = l["_source"]["redirtraffic.sourceip"]
+      ip = l["_source"]["source"]["ip"]
       l["_source"]["greynoise"] = handler.queryIp(ip)
     except:
       pass
