@@ -11149,7 +11149,7 @@ var TabsComponent = /** @class */ (function () {
                     "aggs": {
                         "2": {
                             "terms": {
-                                "field": "attack_technique",
+                                "field": "threat.technique.id",
                                 "order": {
                                     "_count": "desc"
                                 },
@@ -11158,7 +11158,7 @@ var TabsComponent = /** @class */ (function () {
                             "aggs": {
                                 "3": {
                                     "terms": {
-                                        "field": "target_hostname",
+                                        "field": "host.name",
                                         "order": {
                                             "_count": "desc"
                                         },
@@ -11181,21 +11181,19 @@ var TabsComponent = /** @class */ (function () {
                     "query": {
                         "bool": {
                             "must": [],
-                            "filter": [{
+                            "filter": [
+                                {
                                     "match_all": {}
-                                }, {
+                                },
+                                {
                                     "match_phrase": {
-                                        "cslogtype": "beacon_task"
+                                        "c2.log.type": "implant_task"
                                     }
-                                }, {
-                                    "range": {
-                                        "@timestamp": {
-                                            "gte": "2020-06-29T09:43:08.380Z",
-                                            "lte": "2020-07-29T09:43:08.380Z",
-                                            "format": "strict_date_optional_time"
-                                        }
-                                    }
-                                }],
+                                },
+                                {
+                                    "match_all": {}
+                                }
+                            ],
                             "should": [],
                             "must_not": []
                         }
