@@ -322,7 +322,7 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "Copying attack-navigator files"
-cp ./attack-navigator /var/html/ -R && chown -R www-data:www-data /var/www/html/attack-navigator && chmod u+rwX,g+rwX,o-rwx /var/www/html/attack-navigator >> $LOGFILE 2>&1
+cp -r ./attack-navigator /var/www/html/ && chown -R www-data:www-data /var/www/html/attack-navigator && chmod u+rwX,g+rwX,o-rwx /var/www/html/attack-navigator >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not copy attack-navigator files (Error Code: $ERROR)."
@@ -425,7 +425,10 @@ done
 sleep 10 # just to give Kibana some extra time after systemd says Kibana is active.
 
 echo "Installing Kibana index patterns"
-for i in ./templates/redelk_kibana_index-pattern*.ndjson; do curl -X POST "http://localhost:5601/api/saved_objects/_import?overwrite=true" -H 'kbn-xsrf: true' -H "Content-Type: application/json" -d @$i; done >> $LOGFILE 2>&1
+for i in ./templates/redelk_kibana_index-pattern*.ndjson; do 
+    curl -X POST "http://localhost:5601/api/saved_objects/_import?overwrite=true" -H 'kbn-xsrf: true' -F file=@$i
+    sleep 1
+done >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install Kibana index patterns (Error Code: $ERROR)."
@@ -437,6 +440,7 @@ ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install Kibana searches (Error Code: $ERROR)."
 fi
+sleep 1
 
 echo "Installing Kibana visualizations"
 curl -X POST "http://localhost:5601/api/saved_objects/_import?overwrite=true" -H 'kbn-xsrf: true' -H "Content-Type: application/json" -d @./templates/redelk_kibana_visualization.ndjson >> $LOGFILE 2>&1
@@ -444,6 +448,7 @@ ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install Kibana visualizations (Error Code: $ERROR)."
 fi
+sleep 1
 
 echo "Installing Kibana dashboards"
 curl -X POST "http://localhost:5601/api/saved_objects/_import?overwrite=true" -H 'kbn-xsrf: true' -H "Content-Type: application/json" -d @./templates/redelk_kibana_dashboard.ndjson >> $LOGFILE 2>&1
@@ -451,6 +456,7 @@ ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install Kibana dashboards (Error Code: $ERROR)."
 fi
+sleep 1
 
 echo "Setting the Kibana default index"
 curl -X POST "http://localhost:5601/api/kibana/settings/defaultIndex" -H "Content-Type: application/json" -H "kbn-xsrf: true" -d"{\"value\":\"redirtraffic\"}" >> $LOGFILE 2>&1
