@@ -172,7 +172,7 @@ echo "Creating scponly user"
 grep scponly /etc/passwd > /dev/null
 EXIT=$?
 if [ $EXIT -ne 0  ]; then
-    useradd -m -p $(openssl passwd -1 `head /dev/urandom | tr -dc A-Za-z0-9 | head -c20`) scponly
+    useradd -m -p $(openssl passwd -1 `head /dev/urandom | tr -dc A-Za-z0-9 | head -c20`) -s /usr/sbin/rush scponly
 else
     echo "User scponly already exists"
 fi  >> $LOGFILE 2>&1
@@ -194,27 +194,33 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not set ssh key authentication for scponly user (Error Code: $ERROR)."
 fi
 
-echo "Installing rssh"
-apt-get install -y rssh >> $LOGFILE 2>&1
+echo "Installing rush"
+apt-get install -y rush >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not install rssh (Error Code: $ERROR)."
+    echoerror "Could not install rush (Error Code: $ERROR)."
 fi
 
-echo "Configuring rssh"
+echo "Configuring rush"
 grep scponly /etc/rssh.conf > /dev/null
 EXIT=$?
 if [ $EXIT -ne 0 ]; then
-    cat << EOF >> /etc/rssh.conf
-allowscp
-allowsftp
-allowrsync
-user = scponly:011:100110:
+    cat << EOF >> /etc/rush.conf
+debug 1
+rule rsync
+  command ^rsync --server --sender
+  uid >= 1000
+  set[0] /usr/bin/rsync
+  match[$] ^~/.*
+  match[$] ! \.\.
+  transform[$] s,^~/,./,
+  umask 002
+  chdir ~
 EOF
 fi >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not configure rssh (Error Code: $ERROR)."
+    echoerror "Could not configure rush (Error Code: $ERROR)."
 fi
 
 echo "Creating crontab for local rscync of cobaltstrike logs"
