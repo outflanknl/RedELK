@@ -70,6 +70,7 @@ filebeat.inputs:
   multiline.pattern: '(^\d\d\/\d\d\s\d\d\:\d\d\:\d\d\sUTC\s\[)|(^\d\d\/\d\d\s\d\d\:\d\d\:\d\d\s\[)' # match "06/19 12:32:56 UTC [" or "06/19 12:32:56 ["
   multiline.negate: true
   multiline.match: after
+  multiline.max_lines: 100000
   fields:
     infra:
       log:
@@ -89,6 +90,7 @@ filebeat.inputs:
   multiline.pattern: '(^\d\d\/\d\d\s\d\d\:\d\d\:\d\d\sUTC\s\[)|(^\d\d\/\d\d\s\d\d\:\d\d\:\d\d\s\[)' # match "06/19 12:32:56 UTC [" or "06/19 12:32:56 ["
   multiline.negate: true
   multiline.match: after
+  multiline.max_lines: 100000
   fields:
     infra:
       log:
