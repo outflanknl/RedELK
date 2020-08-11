@@ -191,7 +191,7 @@ Was called beacondb in the past
 
 | Field name                                     | Type   | New field name        | New type    | Description                                                                                  |
 | ---------------------------------------------- | ------ | --------------------- | ----------- | -------------------------------------------------------------------------------------------- |
-| attackscenario                                 | String | redelk.attackscenario | keyword     | Name of the attackscenario this implant belongs to, configured in filebeat.yml on teamserver |
+| attackscenario                                 | String | infra.attack_scenario | keyword     | Name of the attackscenario this implant belongs to, configured in filebeat.yml on teamserver |
 | implant_arch (was beacon_arch)                 | String | implant.arch          | keyword     | The architecture of the implant, x86 or x64.                                                 |
 | implant_checkin (was beacon_checkin)           | String | implant.checkin       | text        | Message from the implant while checking in.                                                  |
 | implant_id (was beacon_id)                     | String | implant.id            | keyword     | The ID of the implant.                                                                       |
