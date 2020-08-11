@@ -458,12 +458,21 @@ if [ $ERROR -ne 0 ]; then
 fi
 sleep 1
 
-echo "Setting the Kibana default index"
-curl -X POST "http://localhost:5601/api/kibana/settings/defaultIndex" -H "Content-Type: application/json" -H "kbn-xsrf: true" -d"{\"value\":\"redirtraffic\"}" >> $LOGFILE 2>&1
+# Default index is now set as part of Kibana advanced settings, below
+#echo "Setting the Kibana default index"
+#curl -X POST "http://localhost:5601/api/kibana/settings/defaultIndex" -H "Content-Type: application/json" -H "kbn-xsrf: true" -d"{\"value\":\"redirtraffic\"}" >> $LOGFILE 2>&1
+#ERROR=$?
+#if [ $ERROR -ne 0 ]; then
+#    echoerror "Could not set the default index for Kibana (Error Code: $ERROR)."
+#fi
+
+echo "Installing Kibana advanced settings"
+curl -X POST "http://localhost:5601/api/kibana/settings" -H 'kbn-xsrf: true' -F file=@./templates/redelk_kibana_advanced_settings.ndjson >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not set the default index for Kibana (Error Code: $ERROR)."
+    echoerror "Could not install Kibana advanced settings (Error Code: $ERROR)."
 fi
+sleep 1
 
 echo "Installing Elasticsearch ILM policy"
 curl -X PUT "http://localhost:9200/_ilm/policy/redelk" -H "Content-Type: application/json" -d @./templates/redelk_elasticsearch_ilm.json >> $LOGFILE 2>&1
