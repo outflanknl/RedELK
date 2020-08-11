@@ -474,6 +474,14 @@ if [ $ERROR -ne 0 ]; then
 fi
 sleep 1
 
+echo "Installing Kibana SIEM detection rules (for MITRE ATT&CK mapping)"
+curl -X POST "http://localhost:5601/api/detection_engine/rules/_import?overwrite=true" -H 'kbn-xsrf: true' -F file=@./templates/redelk_siem_detection_rules.ndjson >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Could not install Kibana SIEM detection rules (Error Code: $ERROR)."
+fi
+sleep 1
+
 echo "Installing Elasticsearch ILM policy"
 curl -X PUT "http://localhost:9200/_ilm/policy/redelk" -H "Content-Type: application/json" -d @./templates/redelk_elasticsearch_ilm.json >> $LOGFILE 2>&1
 ERROR=$?
