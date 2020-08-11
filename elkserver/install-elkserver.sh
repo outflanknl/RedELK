@@ -435,7 +435,7 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "Installing Kibana searches"
-curl -X POST "http://localhost:5601/api/saved_objects/_import?overwrite=true" -H 'kbn-xsrf: true' -H "Content-Type: application/json" -d @./templates/redelk_kibana_search.ndjson >> $LOGFILE 2>&1
+curl -X POST "http://localhost:5601/api/saved_objects/_import?overwrite=true" -H 'kbn-xsrf: true' -F file=@./templates/redelk_kibana_search.ndjson >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install Kibana searches (Error Code: $ERROR)."
@@ -443,7 +443,7 @@ fi
 sleep 1
 
 echo "Installing Kibana visualizations"
-curl -X POST "http://localhost:5601/api/saved_objects/_import?overwrite=true" -H 'kbn-xsrf: true' -H "Content-Type: application/json" -d @./templates/redelk_kibana_visualization.ndjson >> $LOGFILE 2>&1
+curl -X POST "http://localhost:5601/api/saved_objects/_import?overwrite=true" -H 'kbn-xsrf: true' -F file=@./templates/redelk_kibana_visualization.ndjson >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install Kibana visualizations (Error Code: $ERROR)."
@@ -451,7 +451,7 @@ fi
 sleep 1
 
 echo "Installing Kibana dashboards"
-curl -X POST "http://localhost:5601/api/saved_objects/_import?overwrite=true" -H 'kbn-xsrf: true' -H "Content-Type: application/json" -d @./templates/redelk_kibana_dashboard.ndjson >> $LOGFILE 2>&1
+curl -X POST "http://localhost:5601/api/saved_objects/_import?overwrite=true" -H 'kbn-xsrf: true' -F file=@./templates/redelk_kibana_dashboard.ndjson >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install Kibana dashboards (Error Code: $ERROR)."
@@ -466,7 +466,7 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "Installing Elasticsearch ILM policy"
-curl -X PUT "http://localhost:9200/_ilm/policy/redelk" -H "Content-Type: application/json" -d @./templates/redelk_elasticsearch_ilm.ndjson; done >> $LOGFILE 2>&1
+curl -X PUT "http://localhost:9200/_ilm/policy/redelk" -H "Content-Type: application/json" -d @./templates/redelk_elasticsearch_ilm.ndjson >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install Elasticsearch ILM policy (Error Code: $ERROR)."
