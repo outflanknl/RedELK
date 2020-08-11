@@ -6,9 +6,13 @@ filebeat.inputs:
   paths:
     - /root/cobaltstrike/logs/*/events.log
   fields:
-    infralogtype: rtops
-    c2program: cobaltstrike
-    c2logtype: events
+    infra:
+      log:
+        type: rtops
+    c2:
+      program: cobaltstrike
+      log:
+        type: events
 
 - type: log
   scan_frequency: 5s
@@ -17,9 +21,13 @@ filebeat.inputs:
   paths:
     - /root/cobaltstrike/logs/*/weblog.log
   fields:
-    infralogtype: rtops
-    c2program: cobaltstrike    
-    c2logtype: weblog
+    infra:
+      log:
+        type: rtops
+    c2:
+      program: cobaltstrike
+      log:
+        type: weblog
 
 - type: log
   scan_frequency: 5s
@@ -28,9 +36,13 @@ filebeat.inputs:
   paths:
     - /root/cobaltstrike/logs/*/downloads.log
   fields:
-    infralogtype: rtops
-    c2program: cobaltstrike
-    c2logtype: downloads
+    infra:
+      log:
+        type: rtops
+    c2:
+      program: cobaltstrike
+      log:
+        type: downloads
 
 - type: log
   scan_frequency: 5s
@@ -39,9 +51,13 @@ filebeat.inputs:
   paths:
     - /root/cobaltstrike/data/export_credentials.tsv
   fields:
-    infralogtype: rtops
-    c2program: cobaltstrike
-    c2logtype: credentials
+    infra:
+      log:
+        type: rtops
+    c2:
+      program: cobaltstrike
+      log:
+        type: credentials
 
 
 - type: log
@@ -55,9 +71,13 @@ filebeat.inputs:
   multiline.negate: true
   multiline.match: after
   fields:
-    infralogtype: rtops
-    c2program: cobaltstrike
-    c2logtype: beacon
+    infra:
+      log:
+        type: rtops
+    c2:
+      program: cobaltstrike
+      log:
+        type: beacon
 
 - type: log
   scan_frequency: 5s
@@ -70,9 +90,13 @@ filebeat.inputs:
   multiline.negate: true
   multiline.match: after
   fields:
-    infralogtype: rtops
-    c2program: cobaltstrike
-    c2logtype: keystrokes
+    infra:
+      log:
+        type: rtops
+    c2:
+      program: cobaltstrike
+      log:
+        type: keystrokes
 
 filebeat.config.modules:
   path: ${path.config}/modules.d/*.yml
@@ -84,7 +108,8 @@ setup.template.settings:
 name: "@@HOSTNAME@@"
 fields_under_root: true
 fields:
-  attackscenario: @@ATTACKSCENARIO@@
+  infra:
+    attack_scenario: @@ATTACKSCENARIO@@
 harvester.limit: 1
 
 output.logstash:

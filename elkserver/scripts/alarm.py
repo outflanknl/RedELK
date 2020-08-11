@@ -12,6 +12,7 @@ import sys
 import datetime
 import config
 import socket
+import traceback
 es  = Elasticsearch()
 
 from datetime import datetime
@@ -21,21 +22,34 @@ def pprint(r):
  s = json.dumps(r, indent=2, sort_keys=True)
  return(s)
 
+def getValue(path, source):
+    p = path.split('.')
+    if p[0] in source:
+        if len(p) > 1:
+            return getValue('.'.join(p[1:]), source[p[0]])
+        else:
+            if p[0] == 'ip':
+                return source[p[0]][0]
+            else:
+                return source[p[0]]
+    else:
+        return None
+
 def getQuery(query,size="5000",index="redirtraffic-*"):
   q3 = {'query': {'query_string': {'query': query }}}
   r3 = es.search(index=index, body=q3, size=size)
-  if(r3['hits']['total'] == 0):
+  if(r3['hits']['total']['value'] == 0):
     return(None)
   return(r3['hits']['hits'])
 
 def countQuery(query,index="redirtraffic-*"):
   q3 = {'query': {'query_string': {'query': query }}}
   r3 = es.search(index=index, body=q3, size=0)
-  return(r3['hits']['total'])
+  return(r3['hits']['total']['value'])
 
 def setTags(tag,lst):
   for l in lst:
-    l["_source"]['tags'].append(tag)
+    l['_source']['tags'].append(tag)
     r = es.update(index=l['_index'],doc_type=l['_type'],id=l['_id'],body={'doc':l['_source']})
     #sys.stdout.write('.')
     #sys.stdout.flush()
@@ -50,30 +64,33 @@ class alarm():
       self.checkDict['alarm_check1'] = self.alarm_check1()
       if self.checkDict['alarm_check1']['alarm'] == True:
         self.alarm = True
-    except:
-      print("error in 1")
+    except Exception as e:
+      print("error in 1: %s" % e)
+      traceback.print_exc()
       self.checkDict['alarm_check1'] = {'error','oops, something went south....'}
       self.alarm = True
     try:
       self.checkDict['alarm_check2'] = self.alarm_check2()
       if self.checkDict['alarm_check2']['alarm'] == True:
         self.alarm = True
-    except:
-      print("error in 2")
+    except Exception as e:
+      print("error in 2: %s" % e)
+      traceback.print_exc()
       self.checkDict['alarm_check2'] = {'error','oops, something went south....'}
       self.alarm = True
     try:
       self.checkDict['alarm_check3'] = self.alarm_check3()
       if self.checkDict['alarm_check3']['alarm'] == True:
         self.alarm = True
-    except:
-      print("error in 3")
+    except Exception as e:
+      print("error in 3: %s" % e)
+      traceback.print_exc()
       self.checkDict['alarm_check3'] = {'error','oops, something went south....'}
       self.alarm = True
 
   def alarm_check1(self):
     ## This check queries for IP's that aren't listed in any iplist* but do talk to c2* paths on redirectors\n
-    q = "NOT tags:iplist_* AND redir.backendname:c2* AND NOT tags:ALARMED_* AND tags:enrich_*"
+    q = "NOT tags:iplist_* AND redir.backend.name:c2* AND NOT tags:ALARMED_* AND tags:enrich_*"
     i = countQuery(q)
     if i >= 10000: i = 10000
     r = getQuery(q,i)
@@ -98,30 +115,24 @@ class alarm():
         #print("[D] %s < %s"%(timestamp,nowDelayed))
         #print("[D]%s"% ip['_id'])
         rAlarmed.append(ip)
-        if ip['_source']['redirtraffic.sourceip'] not in UniqueIPs:
-          UniqueIPs[ip['_source']['redirtraffic.sourceip']] = {}
-        if 'redirtraffic.httprequest' in ip['_source']:
-          UniqueIPs[ip['_source']['redirtraffic.sourceip']]['redirtraffic.httprequest'] = ip['_source']['redirtraffic.httprequest']
-        if 'redirtraffic.sourceip' in ip['_source']:
-          UniqueIPs[ip['_source']['redirtraffic.sourceip']]['redirtraffic.sourceip'] = ip['_source']['redirtraffic.sourceip']
-        if 'timezone' in ip['_source']['geoip']:
-          UniqueIPs[ip['_source']['redirtraffic.sourceip']]['timezone'] = ip['_source']['geoip']['timezone']
-        if 'as_org' in ip['_source']['geoip']:
-          UniqueIPs[ip['_source']['redirtraffic.sourceip']]['ISP'] = ip['_source']['geoip']['as_org']
-        if 'redir.frontendname' in ip['_source']:
-          UniqueIPs[ip['_source']['redirtraffic.sourceip']]['redir.frontendname'] = ip['_source']['redir.frontendname']
-        if 'redirtraffic.request' in ip['_source']:
-          UniqueIPs[ip['_source']['redirtraffic.sourceip']]['redirtraffic.request'] = ip['_source']['redirtraffic.request']
-        if 'attackscenario' in ip['_source']:
-          UniqueIPs[ip['_source']['redirtraffic.sourceip']]['attackscenario'] = ip['_source']['attackscenario']
-        if 'tags' in ip['_source']:
-          UniqueIPs[ip['_source']['redirtraffic.sourceip']]['tags'] = ip['_source']['tags']
-        if 'redirtraffic.timestamp' in ip['_source']:
-          UniqueIPs[ip['_source']['redirtraffic.sourceip']]['redirtraffic.timestamp'] = ip['_source']['redirtraffic.timestamp']
+        sip = getValue('_source.source.ip', ip)
+        if sip not in UniqueIPs:
+          UniqueIPs[sip] = {}
+
+        UniqueIPs[sip]['http.request.body.content'] = getValue('_source.http.request.body.content', ip)
+        UniqueIPs[sip]['source.ip'] = sip
+        UniqueIPs[sip]['source.nat.ip'] = getValue('_source.source.nat.ip', ip)
+        UniqueIPs[sip]['country_name'] = getValue('_source.source.geo.country_name', ip)
+        UniqueIPs[sip]['ISP'] = getValue('_source.source.as.organization.name', ip)
+        UniqueIPs[sip]['redir.frontend.name'] = getValue('_source.redir.frontend.name', ip)
+        UniqueIPs[sip]['redir.backend.name'] = getValue('_source.redir.backend.name', ip)
+        UniqueIPs[sip]['infra.attack_scenario'] = getValue('_source.infra.attack_scenario', ip)
+        UniqueIPs[sip]['tags'] = getValue('_source.tags', ip)
+        UniqueIPs[sip]['redir.timestamp'] = getValue('_source.redir.timestamp', ip)
         report['alarm'] = True
         print("[A] alarm set in %s"%report['fname'])
-        if 'times_seen' in UniqueIPs[ip['_source']['redirtraffic.sourceip']]: UniqueIPs[ip['_source']['redirtraffic.sourceip']]['times_seen'] += 1
-        else: UniqueIPs[ip['_source']['redirtraffic.sourceip']]['times_seen'] = 1
+        if 'times_seen' in UniqueIPs[sip]: UniqueIPs[sip]['times_seen'] += 1
+        else: UniqueIPs[sip]['times_seen'] = 1
     report['results'] = UniqueIPs
     with open("/tmp/ALARMED_alarm_check1.ips","a") as f:
       for ip in UniqueIPs:
@@ -132,7 +143,7 @@ class alarm():
 
   def alarm_check2(self):
     ## This check queries public sources given a list of md5 hashes. If a hash was seen we set an alarm\n
-    q = "c2logtype:ioc AND NOT tags:ALARMED_*"
+    q = "c2.log.type:ioc AND NOT tags:ALARMED_*"
     report = {}
     report['alarm'] = False
     report['fname'] = "alarm_check2"
@@ -146,34 +157,36 @@ class alarm():
     r = getQuery(q,i,index="rtops-*")
     if type(r) != type([]) : r = []
     for l in r:
-      if l['_source']['c2message'].startswith("[indicator] file:"):
-        arr = l['_source']['c2message'].split()
-        l['_source']['ioc_bytesize'] = arr[3]
-        l['_source']['ioc_hash'] = arr[2]
-        l['_source']['ioc_path'] = arr[5]
-        l['_source']['ioc_type'] = arr[1][:-1]
+      if getValue('_source.ioc.type', l) == 'file':
+        # arr = l['_source']['c2message'].split()
+        # l['_source']['ioc_bytesize'] = arr[3]
+        # l['_source']['ioc_hash'] = arr[2]
+        # l['_source']['ioc_path'] = arr[5]
+        # l['_source']['ioc_type'] = arr[1][:-1]
         iocs.append(l)
-    #THEN WE GET MANUALLY ADDED IOC's
-    q = "c2logtype:ioc AND NOT tags:ALARMED_*"
-    i = countQuery(q,index="rtops-*")
-    r = getQuery(q,i,index="rtops-*")
-    if type(r) != type([]) : r = []
-    for l in r:
-      if l['_source']['c2message'].startswith("[indicator] file:"):
-        arr = l['_source']['c2message'].split()
-        l['_source']['ioc_bytesize'] = arr[3]
-        l['_source']['ioc_hash'] = arr[2]
-        l['_source']['ioc_path'] = arr[5]
-        l['_source']['ioc_type'] = arr[1][:-1]
-        iocs.append(l)
+    # #THEN WE GET MANUALLY ADDED IOC's
+    # #Looks like a duplicate from above
+    # q = "c2.log.type:ioc AND NOT tags:ALARMED_*"
+    # i = countQuery(q,index="rtops-*")
+    # r = getQuery(q,i,index="rtops-*")
+    # if type(r) != type([]) : r = []
+    # for l in r:
+    #   if l['_source']['c2message'].startswith("[indicator] file:"):
+    #     arr = l['_source']['c2message'].split()
+    #     l['_source']['ioc_bytesize'] = arr[3]
+    #     l['_source']['ioc_hash'] = arr[2]
+    #     l['_source']['ioc_path'] = arr[5]
+    #     l['_source']['ioc_type'] = arr[1][:-1]
+    #     iocs.append(l)
     #we now have an array with all IOCs
     md5d = {}
     md5s = []
     for ioc in iocs:
-      if ioc['_source']['ioc_hash'] in md5d:
-        md5d[ioc['_source']['ioc_hash']].append(ioc)
+      h = getValue('_source.file.hash.md5', ioc)
+      if h in md5d:
+        md5d[h].append(ioc)
       else:
-        md5d[ioc['_source']['ioc_hash']] = [ioc]
+        md5d[h] = [ioc]
     for key in md5d:
       md5s.append(key)
     #we now have an aray with unique md5's to go test
@@ -189,12 +202,12 @@ class alarm():
     i = ibm.IBM()
     i.test(md5s)
     reportI['IBM X-Force'] = i.report
-    ### ioc_vt
+    ### ioc Hybrid Analysis
     from iocsources import ioc_hybridanalysis as ha
     h = ha.HA()
     h.test(md5s)
     reportI['Hybrid Analysis'] = h.report
-    #print(pprint(report))
+    # print(pprint(report))
     alarm = False
     report['results'] = {}
     alarmedHashes = []
@@ -216,7 +229,7 @@ class alarm():
             #find all filenames
             fnameList = []
             for fileI in md5d[hash]:
-              fnameList.append(fileI['_source']['ioc_name'])
+              fnameList.append(getValue('_source.file.hash.md5', fileI))
             report['results'][hash]['fileNames'] = fnameList
             #print("[newAlarm] - %s reports %s"%(engine,hash))
     #TODO ### REBUILD REPORT  #### TODO
@@ -224,10 +237,11 @@ class alarm():
     # before returning we might have to set an tag on our resultset so we alarm only once. (maybe a tag per alarm?  "ALARMED_%s"%report['fname'] migt do)
     alarmed_set = []
     for l in r:
-      if l['_source']['c2message'].startswith("[indicator] file:"):
-        if l['_source']['ioc_hash'] in alarmedHashes:
+      if getValue('_source.ioc.type', l) == 'file':
+        h = getValue('_source.file.hash.md5', l)
+        if h in alarmedHashes:
           alarmed_set.append(l)
-    setTags("ALARMED_%s"%report['fname'],alarmed_set)
+    setTags("ALARMED_%s" % report['fname'], alarmed_set)
     return(report)
 
   def alarm_check3(self):
@@ -249,12 +263,12 @@ class alarm():
     qSub = ""
     for keyword in keywords:
       if qSub == "":
-        qSub = "(redirtraffic.headeruseragent:%s"%keyword
+        qSub = "(http.headers.useragent:%s"%keyword
       else:
-        qSub = qSub + " OR redirtraffic.headeruseragent:%s"%keyword
+        qSub = qSub + " OR http.headers.useragent:%s"%keyword
     qSub = qSub + ") "
     #q = "%s AND redir.backendname:c2* AND tags:enrich_* AND NOT tags:ALARMED_* "%qSub
-    q = "%s AND redir.backendname:c2* AND NOT tags:ALARMED_* "%qSub
+    q = "%s AND redir.backend.name:c2* AND NOT tags:ALARMED_* "%qSub
     i = countQuery(q)
     #print("[q] querying %s"%q)
     if i >= 10000: i = 10000
@@ -271,30 +285,24 @@ class alarm():
     rAlarmed = []
     for line in r:
       rAlarmed.append(line)
-      if line['_source']['redirtraffic.sourceip'] not in UniqueLINEs:
-        UniqueLINEs[line['_source']['redirtraffic.sourceip']] = {}
-      if 'redirtraffic.httprequest' in line['_source']:
-        UniqueLINEs[line['_source']['redirtraffic.sourceip']]['redirtraffic.httprequest'] = line['_source']['redirtraffic.httprequest']
-      if 'redirtraffic.sourceip' in line['_source']:
-        UniqueLINEs[line['_source']['redirtraffic.sourceip']]['redirtraffic.sourceip'] = line['_source']['redirtraffic.sourceip']
-      if 'timezone' in line['_source']['geoip']:
-        UniqueLINEs[line['_source']['redirtraffic.sourceip']]['timezone'] = line['_source']['geoip']['timezone']
-      if 'as_org' in line['_source']['geoip']:
-        UniqueLINEs[line['_source']['redirtraffic.sourceip']]['ISP'] = line['_source']['geoip']['as_org']
-      if 'redir.frontendname' in line['_source']:
-        UniqueLINEs[line['_source']['redirtraffic.sourceip']]['redir.frontendname'] = line['_source']['redir.frontendname']
-      if 'redirtraffic.request' in line['_source']:
-        UniqueLINEs[line['_source']['redirtraffic.sourceip']]['redirtraffic.request'] = line['_source']['redirtraffic.request']
-      if 'attackscenario' in line['_source']:
-        UniqueLINEs[line['_source']['redirtraffic.sourceip']]['attackscenario'] = line['_source']['attackscenario']
-      if 'tags' in line['_source']:
-        UniqueLINEs[line['_source']['redirtraffic.sourceip']]['tags'] = line['_source']['tags']
-      if 'redirtraffic.timestamp' in line['_source']:
-        UniqueLINEs[line['_source']['redirtraffic.sourceip']]['redirtraffic.timestamp'] = line['_source']['redirtraffic.timestamp']
+      l = getValue('_source.source.ip', line)
+      if getValue('_source.source.ip', line) not in UniqueLINEs:
+        UniqueLINEs[l] = {}
+
+      UniqueLINEs[l]['http.request.body.content'] = getValue('_source.http.request.body.content', line)
+      UniqueLINEs[l]['source.ip'] = getValue('_source.source.ip', line)
+      UniqueLINEs[l]['source.nat.ip'] = getValue('_source.source.nat.ip', line)
+      UniqueLINEs[l]['country_name'] = getValue('_source.source.geo.country_name', line)
+      UniqueLINEs[l]['ISP'] = getValue('_source.source.as.organization.name', line)
+      UniqueLINEs[l]['redir.frontend.name'] = getValue('_source.redir.frontend.name', line)
+      UniqueLINEs[l]['redir.backend.name'] = getValue('_source.redir.backend.name', line)
+      UniqueLINEs[l]['infra.attack_scenario'] = getValue('_source.infra.attack_scenario', line)
+      UniqueLINEs[l]['tags'] = getValue('_source.tags', line)
+      UniqueLINEs[l]['redir.timestamp'] = getValue('_source.redir.timestamp', line)
       report['alarm'] = True
       print("[A] alarm set in %s"%report['fname'])
-      if 'times_seen' in UniqueLINEs[line['_source']['redirtraffic.sourceip']]: UniqueLINEs[line['_source']['redirtraffic.sourceip']]['times_seen'] += 1
-      else: UniqueLINEs[line['_source']['redirtraffic.sourceip']]['times_seen'] = 1
+      if 'times_seen' in UniqueLINEs[l]: UniqueLINEs[l]['times_seen'] += 1
+      else: UniqueLINEs[l]['times_seen'] = 1
     report['results'] = UniqueLINEs
     # TODO before returning we might have to set an tag on our resultset so we alarm only once. (maybe a tag per alarm?  "ALARMED_%s"%report['fname'] migt do)
     setTags("ALARMED_%s"%report['fname'],rAlarmed)

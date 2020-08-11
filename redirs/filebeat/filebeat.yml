@@ -5,24 +5,33 @@ filebeat.inputs:
   paths:
     - /var/log/haproxy.log
   fields:
-    infralogtype: redirtraffic
-    redirprogram: haproxy
+    infra:
+      log:
+        type: redirtraffic
+    redir:
+      program: haproxy
 - type: log
   enabled: true
   fields_under_root: true
   paths:
     - /var/log/apache2/access-redelk.log
   fields:
-    infralogtype: redirtraffic
-    redirprogram: apache
+    infra:
+      log:
+        type: redirtraffic
+    redir:
+      program: apache
 - type: log
   enabled: true
   fields_under_root: true
   paths:
     - /var/log/nginx/access-redelk.log
   fields:
-    infralogtype: redirtraffic
-    redirprogram: nginx
+    infra:
+      log:
+        type: redirtraffic
+    redir:
+      program: nginx
 
 filebeat.config.modules:
   path: ${path.config}/modules.d/*.yml
@@ -34,7 +43,8 @@ setup.template.settings:
 name: "@@HOSTNAME@@"
 fields_under_root: true
 fields:
-  attackscenario: @@ATTACKSCENARIO@@
+  infra:
+    attack_scenario: @@ATTACKSCENARIO@@
 
 output.logstash:
   hosts: ["@@HOSTANDPORT@@"]

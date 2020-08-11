@@ -3,7 +3,7 @@
 # Part of RedELK
 # Script to install RedELK on ELK server
 #
-# Author: Outflank B.V. / Marc Smeets 
+# Author: Outflank B.V. / Marc Smeets
 #
 
 
@@ -41,18 +41,18 @@ echoerror() {
     printf "`date +'%b %e %R'` $INSTALLER - ${RC} * ERROR ${EC}: $@\n" >> $LOGFILE 2>&1
 }
 
-preinstallcheck() {    
-    echo "Starting pre installation checks"    
-    
+preinstallcheck() {
+    echo "Starting pre installation checks"
+
     SHOULDEXIT=false
-    
+
     # Checking if OS is Debian / APT based
     if [ ! -f  /etc/debian_version ]; then
         echo "[X] This system does not seem to be Debian/APT-based. RedELK installer only supports Debian/APT based systems."
         echoerror "System is not Debian/APT based. Not supported. Quitting."
         SHOULDEXIT=true
     fi
- 
+
     # checking logstash version
     if [ -n "$(dpkg -s logstash 2>/dev/null| grep Status)" ]; then
         INSTALLEDVERSION=`dpkg -s logstash |grep Version|awk '{print $2}'|sed 's/^1\://g'|sed 's/\-1$//g'` >> $LOGFILE 2>&1
@@ -88,7 +88,7 @@ preinstallcheck() {
 
     # checking system memory and setting variables
     AVAILABLE_MEMORY=$(awk '/MemAvailable/{printf "%.f", $2/1024}' /proc/meminfo)
-    
+
     # check for full or limited install
     if [ ${WHATTOINSTALL} = "limited" ]; then
         if [ ${AVAILABLE_MEMORY} -le 3999 ]; then
@@ -142,15 +142,15 @@ preinstallcheck() {
             ES_MEMORY=5g
             NEO4J_MEMORY=5G
         fi
-    fi 
+    fi
 
     if [ "$SHOULDEXIT" = true ]; then
         exit 1
     fi
-}   
+}
 
 
-preinstallcheck 
+preinstallcheck
 #set locale for current session and default locale
 echo "Setting locale"
 export LC_ALL="en_US.UTF-8"
@@ -321,6 +321,13 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not create WWW dirs and set permissions (Error Code: $ERROR)."
 fi
 
+echo "Copying attack-navigator files"
+cp ./attack-navigator /var/html/ -R && chown -R www-data:www-data /var/www/html/attack-navigator && chmod u+rwX,g+rwX,o-rwx /var/www/html/attack-navigator >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Could not copy attack-navigator files (Error Code: $ERROR)."
+fi
+
 echo "Starting elasticsearch"
 systemctl start elasticsearch >> $LOGFILE 2>&1
 ERROR=$?
@@ -417,32 +424,32 @@ while [ "$RECHECK" = true ]; do
 done
 sleep 10 # just to give Kibana some extra time after systemd says Kibana is active.
 
-echo "Installing Kibana template for indices"
-for i in ./templates/redelk_kibana_index*.json; do curl -X POST "http://localhost:5601/api/saved_objects/_bulk_create" -H 'kbn-xsrf: true' -H "Content-Type: application/json" -d @$i; done >> $LOGFILE 2>&1
+echo "Installing Kibana index patterns"
+for i in ./templates/redelk_kibana_index-pattern*.ndjson; do curl -X POST "http://localhost:5601/api/saved_objects/_import?overwrite=true" -H 'kbn-xsrf: true' -H "Content-Type: application/json" -d @$i; done >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not install Kibana template for indices (Error Code: $ERROR)."
+    echoerror "Could not install Kibana index patterns (Error Code: $ERROR)."
 fi
 
-echo "Installing Kibana template for searches"
-curl -X POST "http://localhost:5601/api/saved_objects/_bulk_create" -H 'kbn-xsrf: true' -H "Content-Type: application/json" -d @./templates/redelk_kibana_searches.json >> $LOGFILE 2>&1
+echo "Installing Kibana searches"
+curl -X POST "http://localhost:5601/api/saved_objects/_import?overwrite=true" -H 'kbn-xsrf: true' -H "Content-Type: application/json" -d @./templates/redelk_kibana_search.ndjson >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not install Kibana template for searches (Error Code: $ERROR)."
+    echoerror "Could not install Kibana searches (Error Code: $ERROR)."
 fi
 
-echo "Installing Kibana template for visuals"
-curl -X POST "http://localhost:5601/api/saved_objects/_bulk_create" -H 'kbn-xsrf: true' -H "Content-Type: application/json" -d @./templates/redelk_kibana_visuals.json >> $LOGFILE 2>&1
+echo "Installing Kibana visualizations"
+curl -X POST "http://localhost:5601/api/saved_objects/_import?overwrite=true" -H 'kbn-xsrf: true' -H "Content-Type: application/json" -d @./templates/redelk_kibana_visualization.ndjson >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not install Kibana template for visuals (Error Code: $ERROR)."
+    echoerror "Could not install Kibana visualizations (Error Code: $ERROR)."
 fi
 
-echo "Installing Kibana template for dashboards"
-curl -X POST "http://localhost:5601/api/saved_objects/_bulk_create" -H 'kbn-xsrf: true' -H "Content-Type: application/json" -d @./templates/redelk_kibana_dashboards.json >> $LOGFILE 2>&1
+echo "Installing Kibana dashboards"
+curl -X POST "http://localhost:5601/api/saved_objects/_import?overwrite=true" -H 'kbn-xsrf: true' -H "Content-Type: application/json" -d @./templates/redelk_kibana_dashboard.ndjson >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not install Kibana template for dashboards (Error Code: $ERROR)."
+    echoerror "Could not install Kibana dashboards (Error Code: $ERROR)."
 fi
 
 echo "Setting the Kibana default index"
@@ -452,18 +459,18 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not set the default index for Kibana (Error Code: $ERROR)."
 fi
 
-echo "Installing GeoIP index template adjustment"
-curl -XPUT -H 'Content-Type: application/json' http://localhost:9200/_template/redirtraffic- -d@./templates/elasticsearch-template-geoip-es7x.json >> $LOGFILE 2>&1
+echo "Installing Elasticsearch ILM policy"
+curl -X PUT "http://localhost:9200/_ilm/policy/redelk" -H "Content-Type: application/json" -d @./templates/redelk_elasticsearch_ilm.ndjson; done >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not install GeoIP index template adjust (Error Code: $ERROR)."
+    echoerror "Could not install Elasticsearch ILM policy (Error Code: $ERROR)."
 fi
 
-echo "Setting elasticsearch to single shards"
-curl -XPUT http://localhost:9200/_template/default -H 'Content-Type: application/json' -d '{"index_patterns": ["*"],"order": -1,"settings": {"number_of_shards": "1","number_of_replicas": "0"}}'  >> $LOGFILE 2>&1
+echo "Installing Elasticsearch index templates"
+for i in implantsdb rtops redirtraffic; do curl -X POST "http://localhost:9200/_template/$i" -H "Content-Type: application/json" -d @./templates/redelk_elasticsearch_template_$i.ndjson; done >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not set single shards in ES (Error Code: $ERROR)."
+    echoerror "Could not install Elasticsearch index templates (Error Code: $ERROR)."
 fi
 
 echo "Creating RedELK log directory"
