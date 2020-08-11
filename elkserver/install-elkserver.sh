@@ -425,7 +425,7 @@ done
 sleep 10 # just to give Kibana some extra time after systemd says Kibana is active.
 
 echo "Installing Kibana index patterns"
-for i in ./templates/redelk_kibana_index-pattern*.ndjson; do 
+for i in ./templates/redelk_kibana_index-pattern*.ndjson; do
     curl -X POST "http://localhost:5601/api/saved_objects/_import?overwrite=true" -H 'kbn-xsrf: true' -F file=@$i
     sleep 1
 done >> $LOGFILE 2>&1
@@ -466,14 +466,14 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "Installing Elasticsearch ILM policy"
-curl -X PUT "http://localhost:9200/_ilm/policy/redelk" -H "Content-Type: application/json" -d @./templates/redelk_elasticsearch_ilm.ndjson >> $LOGFILE 2>&1
+curl -X PUT "http://localhost:9200/_ilm/policy/redelk" -H "Content-Type: application/json" -d @./templates/redelk_elasticsearch_ilm.json >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install Elasticsearch ILM policy (Error Code: $ERROR)."
 fi
 
 echo "Installing Elasticsearch index templates"
-for i in implantsdb rtops redirtraffic; do curl -X POST "http://localhost:9200/_template/$i" -H "Content-Type: application/json" -d @./templates/redelk_elasticsearch_template_$i.ndjson; done >> $LOGFILE 2>&1
+for i in implantsdb rtops redirtraffic; do curl -X POST "http://localhost:9200/_template/$i" -H "Content-Type: application/json" -d @./templates/redelk_elasticsearch_template_$i.json; done >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install Elasticsearch index templates (Error Code: $ERROR)."
