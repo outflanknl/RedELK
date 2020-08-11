@@ -1,15 +1,32 @@
 
 RedELK release notes
 
-@@@@@@@@@### version X.Y.Z
+### version 2.0-BETA
+* ES stack upgraded to version 7.8
 * Renaming of many fields to be prepared for other C2 frameworks than Cobalt Strike. This concerns fields in the rtops index, the beacondb (now implantdb) and may other scripts. 
+* Adjusted legacy field names to adhere to ECS
 * First step of support for PoshC2 C2 framework. Thanks @benpturner for the heavy lifting
+* Neo4J is now installed on the RedELK server.
 * Jupyter Notebooks is now installed on the RedELK server.
+* Made an installer switch for the elkserver installer to decide what to install (full experience incl Jupyter and Neo4J, or not)
+* Elkserver installer is now aware of amount of memory and adjusts memory settings of NEO4j and ES to optimized values.
 * The credentials store of Cobalt Strike is periodically read, parsed and sent to the RedELK server where it is stored in a new index called credentials.
 * PS-Tools output is now parsed and stored in extra fields inside the rtops index
-* Fixed bug where HTTP status code reported by redir isn't a POSINT and made Logstash crash
-* Fixed bug with underscores in host names. Not allowed by RFC and Logstash %{HOSTNAME} crashes on this. But many operating systems allow for it and it's an easy fix for RedELK that will save users form troubleshooting.
 * Fixed double space bug in Apache catch-all Grok rule
+* Integrated and adjusted chameleon.py (thanks @DomChell) for performing domain classification checks
+* Fix for incorrect GeoIP ASN lookup when using an CDN
+* Emails from IMAP mailboxes can now be ingested and dispalyed in RedELK
+
+
+
+
+### version 1.1
+* Added support for Cobalt Strike 4.1. Thanks to @fastlorenzo
+* HTTP status code parsing improved to better handle non-RFC approved logging by some redir programs
+* Fix for supporting underscores in hostnames, although not allowed by RFC. Thanks to @jaredhaight 
+
+### version 1.0.3
+* Added support for Nginx redirectors thanks to @sunnyneo
 
 ### version 1.0.2
 * Fixed silly bug in enrich.py that disabled Greynoise enrichment 
