@@ -202,10 +202,11 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "Configuring rush"
-grep scponly /etc/rssh.conf > /dev/null
-EXIT=$?
-if [ $EXIT -ne 0 ]; then
-    cat << EOF >> /etc/rush.conf
+if [ -f "/etc/rush.rc" ]; then
+    cp /etc/rush.rc /etc/rush.rc.old && cat << EOF > /etc/rush.rc
+# Modifications made by RedELK installer. 
+# Previous config is still available at /etc/rush.rc.old
+#
 debug 1
 rule rsync
   command ^rsync --server --sender
