@@ -425,7 +425,7 @@ done
 sleep 10 # just to give Kibana some extra time after systemd says Kibana is active.
 
 echo "Installing Kibana index patterns"
-for i in ./templates/redelk_kibana_index-pattern*.ndjson; do 
+for i in ./templates/redelk_kibana_index-pattern*.ndjson; do
     curl -X POST "http://localhost:5601/api/saved_objects/_import?overwrite=true" -H 'kbn-xsrf: true' -F file=@$i
     sleep 1
 done >> $LOGFILE 2>&1
@@ -471,6 +471,14 @@ curl -X POST "http://localhost:5601/api/kibana/settings" -H 'kbn-xsrf: true' -F 
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install Kibana advanced settings (Error Code: $ERROR)."
+fi
+sleep 1
+
+echo "Installing Kibana SIEM detection rules (for MITRE ATT&CK mapping)"
+curl -X POST "http://localhost:5601/api/detection_engine/rules/_import?overwrite=true" -H 'kbn-xsrf: true' -F file=@./templates/redelk_siem_detection_rules.ndjson >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Could not install Kibana SIEM detection rules (Error Code: $ERROR)."
 fi
 sleep 1
 
