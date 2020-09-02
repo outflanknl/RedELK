@@ -103,7 +103,7 @@ preinstallcheck() {
         fi
     else # going for full install means in check in determine how much memory NEO4J and ES get
         if [ ${AVAILABLE_MEMORY} -le 7999 ]; then
-            echoerror "[X] Not enough memory for full install (less than 8GB). Quitting."
+            echo "[X] Not enough memory for full install (less than 8GB). Quitting."
             SHOULDEXIT=true
         elif [ ${AVAILABLE_MEMORY} -ge 8000 ] &&  [ ${AVAILABLE_MEMORY} -le 8999 ]; then
             echo "8-9GB memory found"
