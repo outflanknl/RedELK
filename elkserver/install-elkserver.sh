@@ -18,7 +18,7 @@ echo "This script will install and configure necessary components for RedELK on 
 printf "`date +'%b %e %R'` $INSTALLER - Starting installer\n" > $LOGFILE 2>&1
 echo ""
 
-if [ ${1} = "limited" ]; then
+if [ ${#} -ne 0 ] && [ ${1} = "limited" ]; then
     echo "Parameter 'limited' found. Going for the limited RedELK experience."
     echo ""
     echo "5 Seconds to abort"
