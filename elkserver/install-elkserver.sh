@@ -18,7 +18,7 @@ echo "This script will install and configure necessary components for RedELK on 
 printf "`date +'%b %e %R'` $INSTALLER - Starting installer\n" > $LOGFILE 2>&1
 echo ""
 
-if [ ${1} = "limited" ]; then
+if [ ${#} -ne 0 ] && [ ${1} = "limited" ]; then
     echo "Parameter 'limited' found. Going for the limited RedELK experience."
     echo ""
     echo "5 Seconds to abort"
@@ -103,7 +103,7 @@ preinstallcheck() {
         fi
     else # going for full install means in check in determine how much memory NEO4J and ES get
         if [ ${AVAILABLE_MEMORY} -le 7999 ]; then
-            echoerror "[X] Not enough memory for full install (less than 8GB). Quitting."
+            echo "[X] Not enough memory for full install (less than 8GB). Quitting."
             SHOULDEXIT=true
         elif [ ${AVAILABLE_MEMORY} -ge 8000 ] &&  [ ${AVAILABLE_MEMORY} -le 8999 ]; then
             echo "8-9GB memory found"
