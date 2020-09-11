@@ -25,6 +25,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 */30 * * * * redelk /usr/share/redelk/bin/run_abusechsslcertupdate.sh
 
 # Run update script for rogue domain list
+# And run Chameleon.py for remote checking of domain classification
 # m h dom mon dow user  command
 */30 * * * * redelk /usr/share/redelk/bin/run_roguedomainsupdate.sh
 

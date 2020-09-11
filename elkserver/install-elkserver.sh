@@ -382,6 +382,13 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not install script dependencies (Error Code: $ERROR)."
 fi
 
+echo "Installing Chameloen.py dependencies"
+pip3 install -r /usr/share/redelk/bin/Chameleon/requirements.txt >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Could not install Chameloen.py dependencies (Error Code: $ERROR)."
+fi
+
 echo "Installing python elasticsearch library"
 pip3 install elasticsearch >> $LOGFILE 2>&1
 ERROR=$?
