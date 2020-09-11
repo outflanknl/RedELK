@@ -50,6 +50,7 @@ def enrichAllLinesWithBeacon(l1,b):
     for field in ["host","user","process"]:
       try:
         l1["_source"][field] = b["_source"][field]
+        l1["_source"]['event']['enriched_from'] = b["_id"]
       except:
         pass
     es.update(index=l1['_index'],doc_type=l1['_type'],id=l1['_id'],body={'doc':l1['_source']})
