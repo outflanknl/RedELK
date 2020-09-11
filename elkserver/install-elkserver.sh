@@ -555,7 +555,7 @@ if [ ${WHATTOINSTALL} = "full" ]; then
     fi
 
     echo "Modifying elasticsearch config file to include docker ip interface"
-    DOCKERIP="192.168.254.1" && cp /etc/elasticsearch/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml.backup &&  echo 'network.bind_host: ["127.0.0.1","'$DOCKERIP'"]' >> /etc/elasticsearch/elasticsearch.yml >> $LOGFILE 2>&1
+    DOCKERIP="192.168.254.1" && cp /etc/elasticsearch/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml.backup && echo 'network.bind_host: ["127.0.0.1","'$DOCKERIP'"]' >> /etc/elasticsearch/elasticsearch.yml && echo 'discovery.type: single-node' >> /etc/elasticsearch/elasticsearch.yml >> $LOGFILE 2>&1
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echoerror "Error with modifying elasticsearch config file to include docker ip interface (Error Code: $ERROR)."

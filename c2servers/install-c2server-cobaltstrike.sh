@@ -262,6 +262,14 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not install pip modules for .bin parsing (Error Code: $ERROR)."
 fi
 
+echo "Restarting filebeat"
+service filebeat restart >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Could not restart filebeat (Error Code: $ERROR)."
+fi
+
+
 grep -i error $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -eq 0 ]; then
