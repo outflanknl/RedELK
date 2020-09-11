@@ -41,9 +41,9 @@ def getInitialBeaconLine(l1):
 
 def enrichAllLinesWithBeacon(l1,b):
   tagsSet = 0
-  #query for all not enriched lines make new L1 lines
+  #query for all not enriched lines (excluding implant_newimplant) make new L1 lines
   q3 = {'query': {'query_string': {'query': 'FILLME'}}}
-  q3['query']['query_string']['query'] = "implant.id:\"%s\" AND agent.hostname:%s AND NOT tags:enriched_v01"%(l1['_source']['implant']['id'],l1["_source"]['agent']['hostname'])
+  q3['query']['query_string']['query'] = "implant.id:\"%s\" AND NOT c2.log.type:implant_newimplant AND agent.hostname:%s AND NOT tags:enriched_v01"%(l1['_source']['implant']['id'],l1["_source"]['agent']['hostname'])
   r3 = es.search(index="rtops-*", size=qSize, body=q3)
   for l1 in r3['hits']['hits']:
     l1["_source"]['tags'].append("enriched_v01")
