@@ -250,12 +250,6 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Coul not change auto boot settings (Error Code: $ERROR)."
 fi
 
-echo "Copying GeoIP database files"
-mkdir -p /usr/share/logstash/GeoLite2-dbs >> $LOGFILE 2>&1 && cp logstash/*.mmdb /usr/share/logstash/GeoLite2-dbs >> $LOGFILE 2>&1 && chown -R logstash:logstash /usr/share/logstash/GeoLite2-dbs >> $LOGFILE 2>&1
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echoerror "Could not copy geoIP database files (Error Code: $ERROR)."
-fi
 cd $CWD
 
 echo "Installing elasticsearch"
