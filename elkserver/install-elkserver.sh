@@ -267,7 +267,7 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "Adjusting memory settings for ES"
-sed -E -i.bak "s/Xms1g/Xms${ES_MEMORY}/g" /etc/elasticsearch/jvm.options && sed -E -i.bak2 "s/Xmx1g/Xmx${ES_MEMORY}/g" /etc/elasticsearch/jvm.options  && sed -E -i.bak "s/#bootstrap.memory_lock: true/bootstrap.memory_lock: true/g" /etc/elasticsearch/elasticsearch.yml >> $LOGFILE 2>&1
+sed -E -i.bak "s/Xms1g/Xms${ES_MEMORY}/g" /etc/elasticsearch/jvm.options && sed -E -i.bak2 "s/Xmx1g/Xmx${ES_MEMORY}/g" /etc/elasticsearch/jvm.options >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Coul not adjust ES memory settings (Error Code: $ERROR)."
@@ -376,7 +376,7 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not install script dependencies (Error Code: $ERROR)."
 fi
 
-echo "Installing Chameloen.py dependencies"
+echo "Installing Chameleon.py dependencies"
 pip3 install -r /usr/share/redelk/bin/Chameleon/requirements.txt >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
@@ -402,6 +402,48 @@ cp -r ./etc/redelk/* /etc/redelk/ && chown redelk /etc/redelk/* >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not copy RedELK config files (Error Code: $ERROR)."
+fi
+
+echo "Checking if Elasticsearch is up before continuing"
+COUNTER=0
+RECHECK=true
+while [ "$RECHECK" = true ]; do
+    touch /tmp/esupcheck.txt
+    curl -XGET 'http://localhost:9200/' -I -o /tmp/esupcheck.txt >> $LOGFILE 2>&1
+    sleep 3
+    if [ -n "$(grep 'name' /tmp/kibanaupcheck.txt)" ]; then
+        RECHECK=false
+    fi
+    echo "Elasticsearch not up yet, sleeping another few seconds."
+    sleep 3
+    COUNTER=$((COUNTER+1))
+    if [ $COUNTER -eq "20" ]; then
+        echoerror "Elasticsearch still not up, waited for way too long. Continuing and hoping for the best."
+        RECHECK=false
+    fi
+done
+sleep 10 # just to give Elasticsearch some extra time.
+
+echo "Quick fix - create SIEM signals index"
+curl -X PUT "localhost:9200/.siem-signals-default?pretty" >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Could not install SIEM signals index (Error Code: $ERROR)."
+fi
+sleep 1
+
+echo "Installing Elasticsearch ILM policy"
+curl -X PUT "http://localhost:9200/_ilm/policy/redelk" -H "Content-Type: application/json" -d @./templates/redelk_elasticsearch_ilm.json >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Could not install Elasticsearch ILM policy (Error Code: $ERROR)."
+fi
+
+echo "Installing Elasticsearch index templates"
+for i in implantsdb rtops redirtraffic; do curl -X POST "http://localhost:9200/_template/$i" -H "Content-Type: application/json" -d @./templates/redelk_elasticsearch_template_$i.json; done >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Could not install Elasticsearch index templates (Error Code: $ERROR)."
 fi
 
 echo "Checking if Kibana is up before continuing"
@@ -459,16 +501,17 @@ if [ $ERROR -ne 0 ]; then
 fi
 sleep 1
 
-# Default index is now set as part of Kibana advanced settings, below
-#echo "Setting the Kibana default index"
-#curl -X POST "http://localhost:5601/api/kibana/settings/defaultIndex" -H "Content-Type: application/json" -H "kbn-xsrf: true" -d"{\"value\":\"redirtraffic\"}" >> $LOGFILE 2>&1
+# TODO: properly export the Kibana advanced settings instead of the API calls below
+#echo "Installing Kibana advanced settings"
+#curl -X POST "http://localhost:5601/api/saved_objects/config/7.8.0" -H 'kbn-xsrf: true' -F file=@./templates/redelk_kibana_advanced_settings.ndjson >> $LOGFILE 2>&1
 #ERROR=$?
 #if [ $ERROR -ne 0 ]; then
-#    echoerror "Could not set the default index for Kibana (Error Code: $ERROR)."
+#    echoerror "Could not install Kibana advanced settings (Error Code: $ERROR)."
 #fi
-
-echo "Installing Kibana advanced settings"
-curl -X POST "http://localhost:5601/api/kibana/settings" -H 'kbn-xsrf: true' -F file=@./templates/redelk_kibana_advanced_settings.ndjson >> $LOGFILE 2>&1
+#sleep 1
+# Begin quick fix for Kibana advanced settings
+echo "Setting Kibana advanced settings"
+curl -XPUT 'http://localhost:5601/api/saved_objects/config/7.8.0' -H 'kbn-xsrf: true' -H 'Content-Type: application/json' -d '{"attributes":{"buildNum":31997,"dateFormat:dow":"Monday","defaultIndex":"redirtraffic","discover:sampleSize":5000,"savedObjects:listingLimit":5000,"savedObjects:perPage":50,"siem:defaultIndex":["apm-*-transaction*","auditbeat-*","endgame-*","filebeat-*","packetbeat-*","winlogbeat-*","rtops-*","redirtraffic-*"],"siem:enableNewsFeed":false,"theme:darkMode":true,"shortDots:enable": true,"telemetry:enabled": false,"telemetry:optIn": false}}' >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install Kibana advanced settings (Error Code: $ERROR)."
@@ -482,20 +525,6 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not install Kibana SIEM detection rules (Error Code: $ERROR)."
 fi
 sleep 1
-
-echo "Installing Elasticsearch ILM policy"
-curl -X PUT "http://localhost:9200/_ilm/policy/redelk" -H "Content-Type: application/json" -d @./templates/redelk_elasticsearch_ilm.json >> $LOGFILE 2>&1
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echoerror "Could not install Elasticsearch ILM policy (Error Code: $ERROR)."
-fi
-
-echo "Installing Elasticsearch index templates"
-for i in implantsdb rtops redirtraffic; do curl -X POST "http://localhost:9200/_template/$i" -H "Content-Type: application/json" -d @./templates/redelk_elasticsearch_template_$i.json; done >> $LOGFILE 2>&1
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echoerror "Could not install Elasticsearch index templates (Error Code: $ERROR)."
-fi
 
 echo "Creating RedELK log directory"
 mkdir -p /var/log/redelk >> $LOGFILE 2>&1 && chown -R redelk:redelk /var/log/redelk >> $LOGFILE 2>&1
@@ -556,10 +585,17 @@ if [ ${WHATTOINSTALL} = "full" ]; then
     fi
 
     echo "Modifying elasticsearch config file to include docker ip interface"
-    DOCKERIP="192.168.254.1" && cp /etc/elasticsearch/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml.backup && echo 'network.bind_host: ["127.0.0.1","'$DOCKERIP'"]' >> /etc/elasticsearch/elasticsearch.yml && echo 'discovery.type: single-node' >> /etc/elasticsearch/elasticsearch.yml >> $LOGFILE 2>&1
+    DOCKERIP="192.168.254.1" && cp /etc/elasticsearch/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml.backup && echo 'network.bind_host: ["127.0.0.1","'$DOCKERIP'"]' >> /etc/elasticsearch/elasticsearch.yml >> $LOGFILE 2>&1
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echoerror "Error with modifying elasticsearch config file to include docker ip interface (Error Code: $ERROR)."
+    fi
+
+    echo "Modifying elasticsearch config file to allow external access from docker interface"
+    sed -E -i.bak "s/#bootstrap.memory_lock: true/bootstrap.memory_lock: true/g" /etc/elasticsearch/elasticsearch.yml >> $LOGFILE 2>&1 && echo 'discovery.type: "single-node"' >> /etc/elasticsearch/elasticsearch.yml >> $LOGFILE 2>&1 
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echoerror "Error with modifying elasticsearch config file to allow external access from docker interface (Error Code: $ERROR)."
     fi
 
     echo "Restarting Elasticsearch with new config"
@@ -598,7 +634,7 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not create crontab for redelk user actions (Error Code: $ERROR)."
 fi
 
-grep -i error $LOGFILE 2>&1
+grep -i error redelk-install.log |grep -v '"errors":\[\]}' $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -eq 0 ]; then
     echo "[X] There were errors while running this installer. Manually check the log file $LOGFILE. Exiting now."
