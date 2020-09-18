@@ -13,6 +13,6 @@ def filter(event)
 	temppath2 = temppath[1].split(/\/([^\/]*)$/)
 	implantlogpath = "/c2logs/" + "#{host}" + "#{temppath[1]}"
 	event.tag("_rubyparseok")
-  event.set("[implant][log_file]", implantlogpath)
+  	event.set("[implant][log_file]", implantlogpath)
 	return [event]
 end
