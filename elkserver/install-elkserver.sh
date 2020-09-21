@@ -564,7 +564,7 @@ if [ ${WHATTOINSTALL} = "full" ]; then
     fi
 
     echo "Creating Jupyter Notebooks working dir and copying notebooks"
-    mkdir /usr/share/redelk/jupyter && cp ./jupyter/* /usr/share/redelk/jupyter/ && chown -R redelk:redelk /usr/share/redelk/jupyter >> $LOGFILE 2>&1
+    mkdir /usr/share/redelk/jupyter && cp ./jupyter/* /usr/share/redelk/jupyter/ && chown -R redelk:redelk /usr/share/redelk/jupyter && chmod 777 /usr/share/redelk/jupyter >> $LOGFILE 2>&1
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echoerror "Could not create Jupyter working dir or copy notebooks (Error Code: $ERROR)."
