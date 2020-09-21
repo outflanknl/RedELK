@@ -53,7 +53,7 @@ def enrichAllLinesWithBeacon(l1,b):
         l1["_source"]['event']['enriched_from'] = b["_id"]
       except:
         pass
-    es.update(index=l1['_index'],doc_type=l1['_type'],id=l1['_id'],body={'doc':l1['_source']})
+    es.update(index=l1['_index'],doc_type=l1['_type'],id=l1['_id'],body={'_doc':l1['_source']})
     tagsSet = tagsSet + 1
     #sys.stdout.write('.')
     #sys.stdout.flush()
@@ -80,11 +80,14 @@ def enrichV1():
     else:
       #we have some rtop-* lines that should be enriched.
       for line in Set:
+        process = True
         try:
           id = line['_source']['implant']['id']
         except:
-          break
-        if line['_source']['implant']['id'] not in doneList:
+          #break # do not break here, breaks enrichments once lines exists without implant id
+          process = False
+          pass
+        if process and line['_source']['implant']['id'] not in doneList:
           print("[i] looking for %s"% line['_source']['implant']['id'])
           try:
             b = getInitialBeaconLine(line)
@@ -134,7 +137,7 @@ def queryBIG_OR(array,field,index,prefix="",postfix=""):
 def setTags(tag,lst):
   for l in lst:
     l["_source"]['tags'].append(tag)
-    r = es.update(index=l['_index'],doc_type =l['_type'],id=l['_id'],body={'doc':l['_source']})
+    r = es.update(index=l['_index'],doc_type =l['_type'],id=l['_id'],body={'_doc':l['_source']})
     #sys.stdout.write('.')
     #sys.stdout.flush()
 
@@ -237,7 +240,7 @@ def enrich_greynoiseSet(handler):
       l["_source"]["greynoise"] = handler.queryIp(ip)
     except:
       pass
-    r = es.update(index=l['_index'],doc_type=l['_type'],id=l['_id'],body={'doc':l['_source']})
+    r = es.update(index=l['_index'],doc_type=l['_type'],id=l['_id'],body={'_doc':l['_source']})
     cRes += 1
   return(cRes,rT)
 
@@ -284,7 +287,7 @@ def deleteTag(tag,size=qSize,index="redirtraffic-*"):
       for t in l["_source"]['tags']:
         if t != tag: newSet.append(t)
       l["_source"]['tags'] = newSet
-      r = es.update(index=l['_index'],doc_type =l['_type'],id=l['_id'],body={'doc':l['_source']})
+      r = es.update(index=l['_index'],doc_type =l['_type'],id=l['_id'],body={'_doc':l['_source']})
       totals = totals + 1
   return(totals)
 
@@ -354,3 +357,83 @@ if __name__ == '__main__':
   tagsSet = 0
   tagsSet,rT = enrich_greynoise()
   print("Summary: date: %s, tagsSet: %s, Function:enrich_greynoise (total to tag is %s)"%(datetime.datetime.now(),tagsSet,rT))
+
+
+ ####### test addition for IOC recording
+
+def guiQueryWindow(q,start,end):
+    q = {
+  "query": {
+    "bool": {
+      "filter": [
+        {
+          "query_string": {
+            "query": "%s"%q
+          }
+        },
+        {
+          "range": {
+            "@timestamp": {
+              "from": "%s"%start,
+              "to": "%s"%end
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+    return(q)
+
+
+import urllib.parse as urlparse
+from urllib.parse import parse_qs
+from elasticsearch.helpers import scan
+#relies on es object beiing there
+#relies on guiQueryWindow and setTags function
+
+def insertIOC(es,line):
+  ESindex = "rtops-%s"%datetime.datetime.now().strftime("%Y.%m.%d")
+  iocmd5 = parse_qs(urlparse.urlparse(line['_source']['redirtraffic.httprequest'].split(' ')[-2]).query)['md5'][0]
+  iocfilename = parse_qs(urlparse.urlparse(line['_source']['redirtraffic.httprequest'].split(' ')[-2]).query)['filename'][0]
+
+  ioc = {'csmessage': "ioc insert from SMUGGLE %s %s on %s"%(iocfilename,iocmd5,datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%fZ")),
+         '@version': '1',
+         'infralogtype': 'rtops',
+         'input': {'type': 'manual'},
+         'prospector': {'type': 'log'},
+         'tags': ['manual insert'],
+         'ioc_type': 'file',
+         'ioc_name' : iocfilename,
+         #'@timestamp': datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
+         '@timestamp':line['_source']['@timestamp'],
+         'message': "ioc insert from SMUGGLE %s %s"%(iocfilename,iocmd5),
+         'cslogtype': 'ioc',
+         'ioc_hash': iocmd5,
+          }
+  ESindex = "rtops-%s"%datetime.datetime.now().strftime("%Y.%m.%d")
+  r = es.index(index=ESindex, ignore=400,  doc_type='doc', body=ioc)
+  print(r)
+
+QUERY = """redirtraffic.httprequest:*smugglelogmd5* AND NOT tags:ioc_added"""
+INDEX = "redirtraffic-*"
+
+
+queryFrom = 0
+
+py_timestamp = datetime.datetime.now()
+fromtime =  (py_timestamp - datetime.timedelta(days=2)).strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+totime   =  (py_timestamp - datetime.timedelta(hours=0)).strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+jsonQuery = guiQueryWindow(QUERY,fromtime,totime)
+
+cnt = 0
+iocLines = []
+
+
+for line in scan(es,query=jsonQuery,index=INDEX):
+  iocLines.append(line)
+  insertIOC(es,line)
+  cnt += 1
+
+setTags('ioc_added',iocLines)
+print("\n[ ] Found %s ioc lines"%cnt)
