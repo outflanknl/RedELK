@@ -9,7 +9,6 @@
 
 LOGFILE="redelk-install.log"
 INSTALLER="RedELK elkserver installer"
-TIMEZONE="Europe/Amsterdam"
 CWD=`pwd`
 ELKVERSION="7.8.0"
 
@@ -156,20 +155,6 @@ echo "Setting locale"
 export LC_ALL="en_US.UTF-8"
 printf 'LANG=en_US.UTF-8\nLC_ALL=en_US.UTF-8\n' > /etc/default/locale >> $LOGFILE 2>&1
 locale-gen >> $LOGFILE 2>&1
-
-echo "Setting timezone"
-timedatectl set-timezone $TIMEZONE  >> $LOGFILE 2>&1
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echoerror "Could not set timezone (Error Code: $ERROR)."
-fi
-
-echo "Restarting rsyslog deamon for new timezone to take effect"
-service rsyslog restart >> $LOGFILE 2>&1
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echoerror "Could not restart rsyslog deamon (Error Code: $ERROR)."
-fi
 
 echo "Adding GPG key of Elastic"
 wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add - >> $LOGFILE 2>&1
