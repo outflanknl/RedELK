@@ -395,7 +395,7 @@ COUNTER=0
 RECHECK=true
 while [ "$RECHECK" = true ]; do
     touch /tmp/esupcheck.txt
-    curl -XGET 'http://localhost:9200/' -o /tmp/esupcheck2.txt >> $LOGFILE 2>&1
+    curl -XGET 'http://localhost:9200/' -o /tmp/esupcheck.txt >> $LOGFILE 2>&1
     sleep 3
     if [ -n "$(grep 'name' /tmp/esupcheck.txt)" ]; then
         RECHECK=false
@@ -408,6 +408,7 @@ while [ "$RECHECK" = true ]; do
         RECHECK=false
     fi
 done
+rm /tmp/esupcheck.txt
 sleep 10 # just to give Elasticsearch some extra time.
 
 echo "Quick fix - create SIEM signals index"
@@ -451,6 +452,7 @@ while [ "$RECHECK" = true ]; do
         RECHECK=false
     fi
 done
+rm /tmp/kibanaupcheck.txt
 sleep 10 # just to give Kibana some extra time after systemd says Kibana is active.
 
 echo "Installing Kibana index patterns"
