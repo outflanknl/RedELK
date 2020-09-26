@@ -395,7 +395,7 @@ COUNTER=0
 RECHECK=true
 while [ "$RECHECK" = true ]; do
     touch /tmp/esupcheck.txt
-    curl -XGET 'http://localhost:9200/' -I -o /tmp/esupcheck.txt >> $LOGFILE 2>&1
+    curl -XGET 'http://localhost:9200/' -o /tmp/esupcheck2.txt >> $LOGFILE 2>&1
     sleep 3
     if [ -n "$(grep 'name' /tmp/esupcheck.txt)" ]; then
         RECHECK=false
