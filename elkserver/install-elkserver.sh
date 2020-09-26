@@ -14,6 +14,7 @@ ELKVERSION="7.8.0"
 
 echo ""
 echo "This script will install and configure necessary components for RedELK on ELK server"
+echo "`date +'%b %e %R'` $INSTALLER - Starting installer"
 printf "`date +'%b %e %R'` $INSTALLER - Starting installer\n" > $LOGFILE 2>&1
 echo ""
 
@@ -396,7 +397,7 @@ while [ "$RECHECK" = true ]; do
     touch /tmp/esupcheck.txt
     curl -XGET 'http://localhost:9200/' -I -o /tmp/esupcheck.txt >> $LOGFILE 2>&1
     sleep 3
-    if [ -n "$(grep 'name' /tmp/kibanaupcheck.txt)" ]; then
+    if [ -n "$(grep 'name' /tmp/esupcheck.txt)" ]; then
         RECHECK=false
     fi
     echo "Elasticsearch not up yet, sleeping another few seconds."
