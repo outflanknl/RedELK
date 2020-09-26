@@ -2,8 +2,11 @@
 # Field names, types and description
 
 [Index redirtraffic](#Index-redirtraffic)
+
 [Index rtops](#rtops)
+
 [Index credentials](#Index-credentials)
+
 [Index implantsdb](#Index-implantsdb)
 
 ### Only relevant fields are listed here ###
@@ -108,7 +111,7 @@ The indices in RedELK have more fields than listed below. Only the most relevant
 | agent.hostname                | keyword       | string        | Hostname of system where filebeat is running      |
 | agent.name                    | keyword       | string        | Custom name of the agent as as entered in the filebeat.yml config file       |
 | c2.listener.bind_port         | long          | number        | C2 server listener info on port number for the bind listener       |
-| c2.listener.domains           | keyword       | string        | C2 server listener info on valid domains      |
+| c2.listener.domains           | keyword&string| string        | C2 server listener info on valid domains      |
 | c2.listener.host              | keyword       | string        | C2 server listener info on host       |
 | c2.listener.name              | keyword       | string        | C2 server listener name       |
 | c2.listener.port              | long          | number        | C2 server listener info on port number       |
@@ -141,11 +144,11 @@ The indices in RedELK have more fields than listed below. Only the most relevant
 | file.path_local               | text          | string        | Local path of the file       |
 | file.size                     | long          | number        | Size of the file       |
 | host.ip                       | ip            | ip            | Collection of IP addresses of multiple sources       |
-| host.ip_ext                   | keyword       | ip            | External IP address of the target where the implant is running       |
-| host.ip_int                   | keyword       | ip            | Inernal IP address of the target where the implant is running       |
+| host.ip_ext                   | ip            | ip            | External IP address of the target where the implant is running       |
+| host.ip_int                   | ip            | ip            | Inernal IP address of the target where the implant is running       |
 | host.name                     | keyword       | string        | Name of the host       |
 | host.os.family                | keyword       | string        | Same as host.name.os       |
-| host.os.full                  | keyword       | string        | Same as host.os.family + host.os.version + host.os.kernel       |
+| host.os.full                  | keyword&string| string        | Same as host.os.family + host.os.version + host.os.kernel       |
 | host.os.kernel                | keyword       | string        | Kernel info on the host       |
 | host.os.name                  | keyword       | string        | OS name of the host       |
 | host.os.platform              | keyword       | string        | Same as host.name.os       |
@@ -158,11 +161,11 @@ The indices in RedELK have more fields than listed below. Only the most relevant
 | implant.link_mode             | keyword       | string        | In case of linked implants, the mode of linking       |
 | implant.linked                | boolean       | boolean       | Boolean indicator to see if this implant is linked       |
 | implant.log_file              | keyword       | string        | Name of the C2 implant's log file       |
+| implant.operator              | text          | string        | Name of the operator taht issued the C2 command       |
 | implant.output                | text          | string        | Output received from the implant       |
 | implant.parent_id             | keyword       | string        | In case of linked implants, the implant ID of the parent       |
 | implant.task                  | keyword       | string        | The task sent to the implant       |
 | implant.url                   | keyword       | string        | URL as reported by the implant.      |
-| implant.operator              | text          | string        | Name of the operator taht issued the C2 command       |
 | infra.attack_scenario         | keyword       | string        | Name of the attack scenario/campaign this event belongs to. Defined in filebeat config       |
 | infra.log.type                | keyword       | string        | Type of log event. Defined in filebeat config        |
 | input.type                    | keyword       | string        | Way how the log event was ingeste, e.g. log, manual.        |

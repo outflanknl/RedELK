@@ -13,8 +13,9 @@ CWD=`pwd`
 ELKVERSION="7.8.0"
 
 echo ""
-echo "This script will install and configure necessary components for RedELK on ELK server"
+echo "`date +'%b %e %R'` $INSTALLER - Starting installer"
 printf "`date +'%b %e %R'` $INSTALLER - Starting installer\n" > $LOGFILE 2>&1
+echo "This script will install and configure necessary components for RedELK on ELK server"
 echo ""
 
 if [ ${#} -ne 0 ] && [ ${1} = "limited" ]; then
@@ -394,9 +395,9 @@ COUNTER=0
 RECHECK=true
 while [ "$RECHECK" = true ]; do
     touch /tmp/esupcheck.txt
-    curl -XGET 'http://localhost:9200/' -I -o /tmp/esupcheck.txt >> $LOGFILE 2>&1
+    curl -XGET 'http://localhost:9200/' -o /tmp/esupcheck.txt >> $LOGFILE 2>&1
     sleep 3
-    if [ -n "$(grep 'name' /tmp/kibanaupcheck.txt)" ]; then
+    if [ -n "$(grep 'name' /tmp/esupcheck.txt)" ]; then
         RECHECK=false
     fi
     echo "Elasticsearch not up yet, sleeping another few seconds."
@@ -407,6 +408,7 @@ while [ "$RECHECK" = true ]; do
         RECHECK=false
     fi
 done
+rm /tmp/esupcheck.txt
 sleep 10 # just to give Elasticsearch some extra time.
 
 echo "Quick fix - create SIEM signals index"
@@ -450,6 +452,7 @@ while [ "$RECHECK" = true ]; do
         RECHECK=false
     fi
 done
+rm /tmp/kibanaupcheck.txt
 sleep 10 # just to give Kibana some extra time after systemd says Kibana is active.
 
 echo "Installing Kibana index patterns"
@@ -619,7 +622,7 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not create crontab for redelk user actions (Error Code: $ERROR)."
 fi
 
-grep -i error redelk-install.log |grep -v '"errors":\[\]}' $LOGFILE 2>&1
+grep "* ERROR " redelk-install.log
 ERROR=$?
 if [ $ERROR -eq 0 ]; then
     echo "[X] There were errors while running this installer. Manually check the log file $LOGFILE. Exiting now."
