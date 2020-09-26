@@ -13,9 +13,9 @@ CWD=`pwd`
 ELKVERSION="7.8.0"
 
 echo ""
-echo "This script will install and configure necessary components for RedELK on ELK server"
 echo "`date +'%b %e %R'` $INSTALLER - Starting installer"
 printf "`date +'%b %e %R'` $INSTALLER - Starting installer\n" > $LOGFILE 2>&1
+echo "This script will install and configure necessary components for RedELK on ELK server"
 echo ""
 
 if [ ${#} -ne 0 ] && [ ${1} = "limited" ]; then
@@ -622,7 +622,7 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not create crontab for redelk user actions (Error Code: $ERROR)."
 fi
 
-grep -i error redelk-install.log |grep -v '"errors":\[\]}' $LOGFILE 2>&1
+grep "* ERROR " redelk-install.log
 ERROR=$?
 if [ $ERROR -eq 0 ]; then
     echo "[X] There were errors while running this installer. Manually check the log file $LOGFILE. Exiting now."
