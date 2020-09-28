@@ -117,7 +117,7 @@ def queryFromConfig(line,index="implantsdb"):
  #print(query)
  r3 = es.search(index=index, size=qSize, body=q3)
  #print("found %s items"%len(r3['hits']['hits']))
- return(r3['hits']['hits'],r3['hits']['total'])
+ return(r3['hits']['hits'],r3['hits']['total']['value'])
 
 def queryBIG_OR(array,field,index,prefix="",postfix=""):
   sep = prefix
@@ -191,7 +191,7 @@ def readConfigLines(fname):
             out.append(line.strip())
     return(out)
 
-def findIPLines(fname,tag,field="redirtraffic.sourceip",fuzzy=False):
+def findIPLines(fname,tag,field="source.ip",fuzzy=False):
   # We will dig trough ALL data finding specific IP related lines and tag them
   with open(fname) as f:
     content = f.readlines()
