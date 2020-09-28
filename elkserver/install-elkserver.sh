@@ -490,21 +490,21 @@ fi
 sleep 1
 
 # TODO: properly export the Kibana advanced settings instead of the API calls below
-#echo "Installing Kibana advanced settings"
-#curl -X POST "http://localhost:5601/api/saved_objects/config/7.8.0" -H 'kbn-xsrf: true' -F file=@./templates/redelk_kibana_advanced_settings.ndjson >> $LOGFILE 2>&1
-#ERROR=$?
-#if [ $ERROR -ne 0 ]; then
-#    echoerror "Could not install Kibana advanced settings (Error Code: $ERROR)."
-#fi
-#sleep 1
-# Begin quick fix for Kibana advanced settings
-echo "Setting Kibana advanced settings"
-curl -XPUT 'http://localhost:5601/api/saved_objects/config/7.8.0' -H 'kbn-xsrf: true' -H 'Content-Type: application/json' -d '{"attributes":{"buildNum":31997,"dateFormat:dow":"Monday","defaultIndex":"redirtraffic","discover:sampleSize":5000,"savedObjects:listingLimit":5000,"savedObjects:perPage":50,"siem:defaultIndex":["apm-*-transaction*","auditbeat-*","endgame-*","filebeat-*","packetbeat-*","winlogbeat-*","rtops-*","redirtraffic-*"],"siem:enableNewsFeed":false,"theme:darkMode":true,"shortDots:enable": true,"telemetry:enabled": false,"telemetry:optIn": false}}' >> $LOGFILE 2>&1
+echo "Installing Kibana advanced settings"
+curl -X POST "https://localhost:5601/api/kibana/settings" -H 'kbn-xsrf: true' -H 'Content-Type: application/json' -F file=@./templates/redelk_kibana_settings.json >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not install Kibana advanced settings (Error Code: $ERROR)."
+   echoerror "Could not install Kibana advanced settings (Error Code: $ERROR)."
 fi
 sleep 1
+# Begin quick fix for Kibana advanced settings
+# echo "Setting Kibana advanced settings"
+# curl -XPUT 'http://localhost:5601/api/saved_objects/config/7.8.0' -H 'kbn-xsrf: true' -H 'Content-Type: application/json' -d '{"attributes":{"buildNum":31997,"dateFormat:dow":"Monday","defaultIndex":"redirtraffic","discover:sampleSize":5000,"savedObjects:listingLimit":5000,"savedObjects:perPage":50,"siem:defaultIndex":["apm-*-transaction*","auditbeat-*","endgame-*","filebeat-*","packetbeat-*","winlogbeat-*","rtops-*","redirtraffic-*"],"siem:enableNewsFeed":false,"theme:darkMode":true,"shortDots:enable": true,"telemetry:enabled": false,"telemetry:optIn": false}}' >> $LOGFILE 2>&1
+# ERROR=$?
+# if [ $ERROR -ne 0 ]; then
+#     echoerror "Could not install Kibana advanced settings (Error Code: $ERROR)."
+# fi
+# sleep 1
 
 echo "Installing Kibana SIEM detection rules (for MITRE ATT&CK mapping)"
 curl -X POST "http://localhost:5601/api/detection_engine/rules/_import?overwrite=true" -H 'kbn-xsrf: true' -F file=@./templates/redelk_siem_detection_rules.ndjson >> $LOGFILE 2>&1
@@ -566,7 +566,7 @@ if [ ${WHATTOINSTALL} = "full" ]; then
     fi
 
     echo "Starting Jupyter Notebooks docker image"
-    docker run --restart unless-stopped --name jupyter-notebook -d --network dockernetredelk --ip 192.168.254.2 -p8888:8888 --add-host="elasticsearch:192.168.254.1" --add-host="bloodhound:192.168.254.3"  -v /usr/share/redelk/jupyter:/home/jovyan/work jupyter/scipy-notebook start-notebook.sh --NotebookApp.token='' --NotebookApp.password='' --NotebookApp.allow_remote_access='True' --NotebookApp.allow_origin='*' >> $LOGFILE 2>&1
+    docker run --restart unless-stopped --name jupyter-notebook -d --network dockernetredelk --ip 192.168.254.2 -p8888:8888 --add-host="elasticsearch:192.168.254.1" --add-host="bloodhound:192.168.254.3"  -v /usr/share/redelk/jupyter:/home/jovyan/work jupyter/scipy-notebook start-notebook.sh --NotebookApp.token='' --NotebookApp.password='' --NotebookApp.allow_remote_access='True' --NotebookApp.allow_origin='*' --NotebookApp.base_url='/jupyter/' >> $LOGFILE 2>&1
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echoerror "Could not start Jupyter docker image (Error Code: $ERROR)."
@@ -580,7 +580,7 @@ if [ ${WHATTOINSTALL} = "full" ]; then
     fi
 
     echo "Modifying elasticsearch config file to allow external access from docker interface"
-    sed -E -i.bak "s/#bootstrap.memory_lock: true/bootstrap.memory_lock: true/g" /etc/elasticsearch/elasticsearch.yml >> $LOGFILE 2>&1 && echo 'discovery.type: "single-node"' >> /etc/elasticsearch/elasticsearch.yml >> $LOGFILE 2>&1 
+    sed -E -i.bak "s/#bootstrap.memory_lock: true/bootstrap.memory_lock: true/g" /etc/elasticsearch/elasticsearch.yml >> $LOGFILE 2>&1 && echo 'discovery.type: "single-node"' >> /etc/elasticsearch/elasticsearch.yml >> $LOGFILE 2>&1
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echoerror "Error with modifying elasticsearch config file to allow external access from docker interface (Error Code: $ERROR)."
