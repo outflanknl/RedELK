@@ -53,7 +53,7 @@ def enrichAllLinesWithBeacon(l1,b):
         l1["_source"]['event']['enriched_from'] = b["_id"]
       except:
         pass
-    es.update(index=l1['_index'],doc_type=l1['_type'],id=l1['_id'],body={'_doc':l1['_source']})
+    es.update(index=l1['_index'],doc_type=l1['_type'],id=l1['_id'],body={'doc':l1['_source']})
     tagsSet = tagsSet + 1
     #sys.stdout.write('.')
     #sys.stdout.flush()
@@ -137,7 +137,7 @@ def queryBIG_OR(array,field,index,prefix="",postfix=""):
 def setTags(tag,lst):
   for l in lst:
     l["_source"]['tags'].append(tag)
-    r = es.update(index=l['_index'],doc_type =l['_type'],id=l['_id'],body={'_doc':l['_source']})
+    r = es.update(index=l['_index'],doc_type =l['_type'],id=l['_id'],body={'doc':l['_source']})
     #sys.stdout.write('.')
     #sys.stdout.flush()
 
@@ -240,7 +240,7 @@ def enrich_greynoiseSet(handler):
       l["_source"]["greynoise"] = handler.queryIp(ip)
     except:
       pass
-    r = es.update(index=l['_index'],doc_type=l['_type'],id=l['_id'],body={'_doc':l['_source']})
+    r = es.update(index=l['_index'],doc_type=l['_type'],id=l['_id'],body={'doc':l['_source']})
     cRes += 1
   return(cRes,rT)
 
@@ -287,7 +287,7 @@ def deleteTag(tag,size=qSize,index="redirtraffic-*"):
       for t in l["_source"]['tags']:
         if t != tag: newSet.append(t)
       l["_source"]['tags'] = newSet
-      r = es.update(index=l['_index'],doc_type =l['_type'],id=l['_id'],body={'_doc':l['_source']})
+      r = es.update(index=l['_index'],doc_type =l['_type'],id=l['_id'],body={'doc':l['_source']})
       totals = totals + 1
   return(totals)
 
