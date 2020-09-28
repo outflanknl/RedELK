@@ -74,26 +74,26 @@ def process_kibana_object(obj_type, exportpath, indexpattern=None):
         else:
             src_file = '%s%s_%s' % (EXPORT_FILES_PREFIX_KIBANA, obj_type, indexpattern)
 
-        print('Opening %s: %s%s.ndjson' % (obj_type, exportpath, src_file))
-        with open('%s%s.ndjson' % (exportpath, src_file), 'r') as f:
-            src_ndjson = ndjson.load(f)
+    print('Opening %s: %s%s.ndjson' % (obj_type, exportpath, src_file))
+    with open('%s%s.ndjson' % (exportpath, src_file), 'r') as f:
+        src_ndjson = ndjson.load(f)
 
-        for s in src_ndjson:
-            if obj_type == 'index-pattern':
-                s['attributes']['fields'] = sorted(json.loads(s['attributes']['fields']), key=lambda x : x['name'])
-            elif obj_type == 'search':
-                s['attributes']['kibanaSavedObjectMeta']['searchSourceJSON'] = json.loads(s['attributes']['kibanaSavedObjectMeta']['searchSourceJSON'])
-            elif obj_type == 'visualization':
-                s['attributes']['kibanaSavedObjectMeta']['searchSourceJSON'] = json.loads(s['attributes']['kibanaSavedObjectMeta']['searchSourceJSON'])
-                s['attributes']['visState'] = json.loads(s['attributes']['visState'])
-            elif obj_type == 'dashboard':
-                s['attributes']['kibanaSavedObjectMeta']['searchSourceJSON'] = json.loads(s['attributes']['kibanaSavedObjectMeta']['searchSourceJSON'])
-                s['attributes']['optionsJSON'] = json.loads(s['attributes']['optionsJSON'])
-                s['attributes']['panelsJSON'] = json.loads(s['attributes']['panelsJSON'])
+    for s in src_ndjson:
+        if obj_type == 'index-pattern':
+            s['attributes']['fields'] = sorted(json.loads(s['attributes']['fields']), key=lambda x : x['name'])
+        elif obj_type == 'search':
+            s['attributes']['kibanaSavedObjectMeta']['searchSourceJSON'] = json.loads(s['attributes']['kibanaSavedObjectMeta']['searchSourceJSON'])
+        elif obj_type == 'visualization':
+            s['attributes']['kibanaSavedObjectMeta']['searchSourceJSON'] = json.loads(s['attributes']['kibanaSavedObjectMeta']['searchSourceJSON'])
+            s['attributes']['visState'] = json.loads(s['attributes']['visState'])
+        elif obj_type == 'dashboard':
+            s['attributes']['kibanaSavedObjectMeta']['searchSourceJSON'] = json.loads(s['attributes']['kibanaSavedObjectMeta']['searchSourceJSON'])
+            s['attributes']['optionsJSON'] = json.loads(s['attributes']['optionsJSON'])
+            s['attributes']['panelsJSON'] = json.loads(s['attributes']['panelsJSON'])
 
-        print('Writing output to: %s%s%s.json' % (exportpath, DIFF_PATH, src_file))
-        with open('%s%s%s.json' % (exportpath, DIFF_PATH, src_file), 'w') as f:
-            json.dump(src_ndjson, f, indent=4, sort_keys=True)
+    print('Writing output to: %s%s%s.json' % (exportpath, DIFF_PATH, src_file))
+    with open('%s%s%s.json' % (exportpath, DIFF_PATH, src_file), 'w') as f:
+        json.dump(src_ndjson, f, indent=4, sort_keys=True)
 
 def check_args():
     parser = argparse.ArgumentParser(description="")
