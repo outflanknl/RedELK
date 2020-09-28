@@ -1,0 +1,12 @@
+{
+  "changes": {
+    "theme:darkMode": true,
+    "telemetry:optIn": false,
+    "siem:enableNewsFeed":false,
+    "siem:defaultIndex": ["apm-*-transaction*","auditbeat-*","endgame-*","filebeat-*","packetbeat-*","winlogbeat-*","rtops-*","redirtraffic-*"],
+    "defaultIndex": "195a3f00-d04f-11ea-9301-a30a04251ae9",
+    "defaultRoute": "/app/kibana#/dashboard/02486040-d355-11ea-9301-a30a04251ae9",
+    "shortDots:enable": true,
+    "telemetry:enabled": false
+  }
+}

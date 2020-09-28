@@ -566,7 +566,7 @@ if [ ${WHATTOINSTALL} = "full" ]; then
     fi
 
     echo "Starting Jupyter Notebooks docker image"
-    docker run --restart unless-stopped --name jupyter-notebook -d --network dockernetredelk --ip 192.168.254.2 -p8888:8888 --add-host="elasticsearch:192.168.254.1" --add-host="bloodhound:192.168.254.3"  -v /usr/share/redelk/jupyter:/home/jovyan/work jupyter/scipy-notebook start-notebook.sh --NotebookApp.token='' --NotebookApp.password='' --NotebookApp.allow_remote_access='True' --NotebookApp.allow_origin='*' >> $LOGFILE 2>&1
+    docker run --restart unless-stopped --name jupyter-notebook -d --network dockernetredelk --ip 192.168.254.2 -p8888:8888 --add-host="elasticsearch:192.168.254.1" --add-host="bloodhound:192.168.254.3"  -v /usr/share/redelk/jupyter:/home/jovyan/work jupyter/scipy-notebook start-notebook.sh --NotebookApp.token='' --NotebookApp.password='' --NotebookApp.allow_remote_access='True' --NotebookApp.allow_origin='*' --NotebookApp.base_url='/jupyter/' >> $LOGFILE 2>&1
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echoerror "Could not start Jupyter docker image (Error Code: $ERROR)."
@@ -580,7 +580,11 @@ if [ ${WHATTOINSTALL} = "full" ]; then
     fi
 
     echo "Modifying elasticsearch config file to allow external access from docker interface"
+<<<<<<< HEAD
     sed -E -i.bak "s/#bootstrap.memory_lock: true/bootstrap.memory_lock: true/g" /etc/elasticsearch/elasticsearch.yml && echo 'discovery.type: "single-node"' >> /etc/elasticsearch/elasticsearch.yml
+=======
+    sed -E -i.bak "s/#bootstrap.memory_lock: true/bootstrap.memory_lock: true/g" /etc/elasticsearch/elasticsearch.yml >> $LOGFILE 2>&1 && echo 'discovery.type: "single-node"' >> /etc/elasticsearch/elasticsearch.yml >> $LOGFILE 2>&1
+>>>>>>> 47da580dd4e9aa922a45809bc315eb13a08f3134
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echoerror "Error with modifying elasticsearch config file to allow external access from docker interface (Error Code: $ERROR)."
