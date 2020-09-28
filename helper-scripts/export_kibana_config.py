@@ -102,7 +102,7 @@ def check_args():
     parser.add_argument("--search", action='store_true', help="Export Kibana searches")
     parser.add_argument("--visualization", action='store_true', help="Export Kibana visualizations")
     parser.add_argument("--dashboard", action='store_true', help="Export Kibana dashboards")
-    parser.add_argument("--all", action='store_true', help="Export all Kibana objects (similar to --indexpattern --search --visualizations --dashboards)")
+    parser.add_argument("--all", action='store_true', help="Export all Kibana objects (similar to --indexpattern --search --visualizations --dashboards --estemplate)")
     parser.add_argument("--estemplate", action='store_true', help="Export Elasticsearch templates")
     parser.add_argument("--export", action='store_true', help="Export data")
     parser.add_argument("--process", action='store_true', help="Process NDJSON data (save files for easy diff)")
