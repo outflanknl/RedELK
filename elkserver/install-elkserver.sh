@@ -490,15 +490,10 @@ fi
 sleep 1
 
 echo "Installing Kibana advanced settings"
-# API thing not working with json file
-# curl -X POST "http://localhost:5601/api/kibana/settings" -H 'kbn-xsrf: true' -H 'Content-Type: application/json' -F file=@./templates/redelk_kibana_settings.json >> $LOGFILE 2>&1
-# Quick fix:
-# Begin quick fix for Kibana advanced settings
-echo "Setting Kibana advanced settings"
-curl -XPUT 'http://localhost:5601/api/saved_objects/config/7.8.0' -H 'kbn-xsrf: true' -H 'Content-Type: application/json' -d '{"attributes":{"buildNum":31997,"dateFormat:dow":"Monday","defaultIndex":"redirtraffic","discover:sampleSize":5000,"savedObjects:listingLimit":5000,"savedObjects:perPage":50,"siem:defaultIndex":["apm-*-transaction*","auditbeat-*","endgame-*","filebeat-*","packetbeat-*","winlogbeat-*","rtops-*","redirtraffic-*"],"siem:enableNewsFeed":false,"theme:darkMode":true,"shortDots:enable": true,"telemetry:enabled": false,"telemetry:optIn": false}}' >> $LOGFILE 2>&1
+curl -X POST "http://localhost:5601/api/kibana/settings" -H 'kbn-xsrf: true' -H 'Content-Type: application/json' --data @./templates/redelk_kibana_settings.json >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not install Kibana advanced settings (Error Code: $ERROR)."
+   echoerror "Could not install Kibana advanced settings (Error Code: $ERROR)."
 fi
 sleep 1
 
