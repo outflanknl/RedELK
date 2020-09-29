@@ -4,6 +4,7 @@
 # Script to check if there are alarms to be sent
 #
 # Author: Outflank B.V. / Mark Bergman / @xychix
+# Contributor: Lorenzo Bernardi / @fastlorenzo
 #
 
 from elasticsearch import Elasticsearch

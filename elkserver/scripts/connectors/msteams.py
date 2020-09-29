@@ -1,4 +1,11 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
+#
+# Part of RedELK
+# Script to check emit alarms via Microsoft Teams webhooks
+#
+# Author: Lorenzo Bernardi / @fastlorenzo
+#
+
 import config
 import pymsteams
 import socket

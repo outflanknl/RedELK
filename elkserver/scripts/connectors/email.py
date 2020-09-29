@@ -1,4 +1,12 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
+#
+# Part of RedELK
+# Script to check if there are alarms to be sent
+#
+# Author: Outflank B.V. / Mark Bergman / @xychix
+# Contributor: Lorenzo Bernardi / @fastlorenzo
+#
+
 import config
 import socket
 import json

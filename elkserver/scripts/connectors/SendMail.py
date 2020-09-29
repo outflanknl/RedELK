@@ -1,9 +1,10 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 #
 # Part of RedELK
 # Script to email events as alarms
 #
 # Author: Outflank B.V. / Mark Bergman / @xychix
+# Contributor: Lorenzo Bernardi / @fastlorenzo
 #
 
 import argparse
