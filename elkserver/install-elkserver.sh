@@ -491,7 +491,7 @@ sleep 1
 
 # TODO: properly export the Kibana advanced settings instead of the API calls below
 echo "Installing Kibana advanced settings"
-curl -X POST "https://localhost:5601/api/kibana/settings" -H 'kbn-xsrf: true' -H 'Content-Type: application/json' -F file=@./templates/redelk_kibana_settings.json >> $LOGFILE 2>&1
+curl -X POST "http://localhost:5601/api/kibana/settings" -H 'kbn-xsrf: true' -H 'Content-Type: application/json' --data @./templates/redelk_kibana_settings.json >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
    echoerror "Could not install Kibana advanced settings (Error Code: $ERROR)."
