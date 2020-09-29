@@ -50,7 +50,7 @@ def countQuery(query,index="redirtraffic-*"):
 def setTags(tag,lst):
   for l in lst:
     l['_source']['tags'].append(tag)
-    r = es.update(index=l['_index'],doc_type=l['_type'],id=l['_id'],body={'doc':l['_source']})
+    r = es.update(index=l['_index'],id=l['_id'],body={'doc':l['_source']})
     #sys.stdout.write('.')
     #sys.stdout.flush()
 
@@ -98,7 +98,7 @@ class alarm():
     report['alarm'] = False
     #if i > 0: report['alarm'] = True #if the query gives 'new ip's we hit on them
     report['fname'] = "alarm_check1"
-    report['name'] = "Unkown IP to C2"
+    report['name'] = "Unknown IP to C2"
     report['description'] = "This check queries for IP's that aren't listed in any iplist* but do talk to c2* paths on redirectors\n"
     report['query'] = q
     UniqueIPs = {}
@@ -119,16 +119,21 @@ class alarm():
         if sip not in UniqueIPs:
           UniqueIPs[sip] = {}
 
-        UniqueIPs[sip]['http.request.body.content'] = getValue('_source.http.request.body.content', ip)
-        UniqueIPs[sip]['source.ip'] = sip
-        UniqueIPs[sip]['source.nat.ip'] = getValue('_source.source.nat.ip', ip)
-        UniqueIPs[sip]['country_name'] = getValue('_source.source.geo.country_name', ip)
-        UniqueIPs[sip]['ISP'] = getValue('_source.source.as.organization.name', ip)
-        UniqueIPs[sip]['redir.frontend.name'] = getValue('_source.redir.frontend.name', ip)
-        UniqueIPs[sip]['redir.backend.name'] = getValue('_source.redir.backend.name', ip)
-        UniqueIPs[sip]['infra.attack_scenario'] = getValue('_source.infra.attack_scenario', ip)
-        UniqueIPs[sip]['tags'] = getValue('_source.tags', ip)
-        UniqueIPs[sip]['redir.timestamp'] = getValue('_source.redir.timestamp', ip)
+        UniqueIPs[sip]['HTTP Query'] = getValue('_source.http.request.body.content', ip)
+        UniqueIPs[sip]['Source IP'] = sip
+        UniqueIPs[sip]['CDN IP'] = getValue('_source.source.nat.ip', ip)
+        UniqueIPs[sip]['Source domain name'] = getValue('_source.source.domain', ip)
+        UniqueIPs[sip]['ISP'] = getValue('_source.source.geo.as.organization.name', ip)
+        UniqueIPs[sip]['Country'] = getValue('_source.source.geo.country_iso_code', ip)
+        UniqueIPs[sip]['Region'] = getValue('_source.source.geo.region_name', ip)
+        UniqueIPs[sip]['City'] = getValue('_source.source.geo.city_name', ip)
+        UniqueIPs[sip]['Redirector frontend'] = getValue('_source.redir.frontend.name', ip)
+        UniqueIPs[sip]['Redirector backend'] = getValue('_source.redir.backend.name', ip)
+        UniqueIPs[sip]['Redirector timestamp'] = getValue('_source.redir.timestamp', ip)
+        UniqueIPs[sip]['User-Agent'] = getValue('_source.useragent', ip)
+        UniqueIPs[sip]['HTTP Host header'] = getValue('_source.http.headers.host', ip)
+        UniqueIPs[sip]['Attack scenario'] = getValue('_source.infra.attack_scenario', ip)
+        UniqueIPs[sip]['Tags'] = getValue('_source.tags', ip)
         report['alarm'] = True
         print("[A] alarm set in %s"%report['fname'])
         if 'times_seen' in UniqueIPs[sip]: UniqueIPs[sip]['times_seen'] += 1
@@ -228,8 +233,14 @@ class alarm():
             report['results'][hash]['engine'].append(engine)
             #find all filenames
             fnameList = []
+            count = 0
             for fileI in md5d[hash]:
-              fnameList.append(getValue('_source.file.hash.md5', fileI))
+              report['results'][hash]['%d file name' % count] = getValue('_source.file.name', fileI)
+              report['results'][hash]['%d host name' % count] = getValue('_source.host.name', fileI)
+              report['results'][hash]['%d host IP' % count] = getValue('_source.host.ip', fileI)
+              report['results'][hash]['%d user name' % count] = getValue('_source.user.name', fileI)
+              count += 1
+              fnameList.append(getValue('_source.file.name', fileI))
             report['results'][hash]['fileNames'] = fnameList
             #print("[newAlarm] - %s reports %s"%(engine,hash))
     #TODO ### REBUILD REPORT  #### TODO
