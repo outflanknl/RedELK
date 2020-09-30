@@ -5,7 +5,7 @@ import datetime
 import config
 import socket
 import traceback
-es  = Elasticsearch()
+es  = Elasticsearch(config.es_connection)
 
 from datetime import datetime
 from datetime import timedelta

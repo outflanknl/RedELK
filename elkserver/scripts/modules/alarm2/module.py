@@ -1,3 +1,10 @@
+#!/usr/bin/python3
+#
+# Part of RedELK
+#
+# Author: Outflank B.V. / Mark Bergman / @xychix
+# Contributor: Lorenzo Bernardi / @fastlorenzo
+#
 from modules.helpers import *
 from iocsources import ioc_vt as vt
 from iocsources import ioc_ibm as ibm
@@ -19,6 +26,7 @@ class Module():
 
     def run(self):
         ret = {}
+        alarmLines = []
         try:
             report = self.alarm_check2()
             alarmLines = report.get('alarmLines',[])
@@ -35,7 +43,7 @@ class Module():
         print("[m] finished running module. result:")
         print(ret)
         return(ret)
-    
+
     def alarm_check2(self):
         ## This check queries public sources given a list of md5 hashes. If a hash was seen we set an alarm\n
         q = "c2.log.type:ioc AND NOT tags:ALARMED_*"

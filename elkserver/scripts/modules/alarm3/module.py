@@ -1,3 +1,10 @@
+#!/usr/bin/python3
+#
+# Part of RedELK
+#
+# Author: Outflank B.V. / Mark Bergman / @xychix
+# Contributor: Lorenzo Bernardi / @fastlorenzo
+#
 from modules.helpers import *
 import traceback
 
@@ -16,6 +23,7 @@ class Module():
 
     def run(self):
         ret = {}
+        alarmLines = []
         try:
             report = self.alarm_check3()
             alarmLines = report.get('alarmLines',[])

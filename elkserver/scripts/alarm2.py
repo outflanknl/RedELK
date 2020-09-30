@@ -4,6 +4,7 @@
 # Script to check if there are alarms to be sent
 #
 # Author: Outflank B.V. / Mark Bergman / @xychix
+# Contributor: Lorenzo Bernardi / @fastlorenzo
 #
 import os
 from modules.helpers import *
@@ -19,19 +20,21 @@ if __name__ == '__main__':
     mD = {}
 
     for module in module_folders:
-        try:
-            m  = importlib.import_module('modules.%s.%s'%(module,'module'))
-            if ( hasattr(m,'info') and hasattr(m,'Module') ):
-                module_type = m.info.get('type',None)
-                print(module_type)
-                if module_type == 'redelk_alarm':
-                    mD[module] = {}
-                    mD[module]['info'] = m.info
-                    mD[module]['m'] = m
-        except Exception as e:
-            print("error in 1: %s" % e)
-            stackTrace = traceback.format_exc()
-            pass
+        # only take folders and not '__pycache__'
+        if os.path.isdir(os.path.join(path, module)) and module != '__pycache__':
+            try:
+                m  = importlib.import_module('modules.%s.%s'%(module,'module'))
+                if ( hasattr(m,'info') and hasattr(m,'Module') ):
+                    module_type = m.info.get('type',None)
+                    print(module_type)
+                    if module_type == 'redelk_alarm':
+                        mD[module] = {}
+                        mD[module]['info'] = m.info
+                        mD[module]['m'] = m
+            except Exception as e:
+                print("error in 1: %s" % e)
+                stackTrace = traceback.format_exc()
+                pass
     print('[i] looping module dict')
     # this means we've loaded the modules and will now loop over those one by one
     for m in mD:
