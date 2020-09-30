@@ -46,5 +46,8 @@ if "toAddrs" in d: toAddrs = d['toAddrs']
 tempDir="/tmp"
 if "tempDir" in d: tempDir = d['tempDir']
 
+msTeamsWebhookURL = ""
+if "msTeamsWebhookURL" in d: msTeamsWebhookURL = d['msTeamsWebhookURL']
+
 es_connection = ["http://localhost:9200"]
 if "es_connection" in d: es_connection = d['es_connection']
