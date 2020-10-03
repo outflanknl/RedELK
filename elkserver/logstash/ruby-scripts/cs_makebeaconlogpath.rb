@@ -6,7 +6,7 @@
 #
 
 def filter(event)
-	host = event.get("[agent][hostname]")
+	host = event.get("[agent][name]")
 	logpath = event.get("[log][file][path]")
 	implant_id = event.get("[implant][id]")
 	temppath = logpath.split('/cobaltstrike')
