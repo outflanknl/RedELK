@@ -143,6 +143,7 @@ The indices in RedELK have more fields than listed below. Only the most relevant
 | file.path                     | text          | string        | Path of the file, in case of downloaded or IOC       |
 | file.path_local               | text          | string        | Local path of the file       |
 | file.size                     | long          | number        | Size of the file       |
+| host.domain_ext               | keyword       | string        | Reverse DNS lookup result of host.ip_ext       |
 | host.ip                       | ip            | ip            | Collection of IP addresses of multiple sources       |
 | host.ip_ext                   | ip            | ip            | External IP address of the target where the implant is running       |
 | host.ip_int                   | ip            | ip            | Inernal IP address of the target where the implant is running       |
@@ -158,6 +159,7 @@ The indices in RedELK have more fields than listed below. Only the most relevant
 | implant.child_id              | keyword       | string        | In case of linked implants, the implant ID of the child       |
 | implant.id                    | keyword       | string        | The ID of the implant       |
 | implant.input                 | text          | string        | Input message for the implant       |
+| implant.kill_date             | keyword       | string        | Kill date of the implant - not recorded by every C2 framework       |
 | implant.link_mode             | keyword       | string        | In case of linked implants, the mode of linking       |
 | implant.linked                | boolean       | boolean       | Boolean indicator to see if this implant is linked       |
 | implant.log_file              | keyword       | string        | Name of the C2 implant's log file       |
@@ -165,6 +167,8 @@ The indices in RedELK have more fields than listed below. Only the most relevant
 | implant.output                | text          | string        | Output received from the implant       |
 | implant.parent_id             | keyword       | string        | In case of linked implants, the implant ID of the parent       |
 | implant.task                  | keyword       | string        | The task sent to the implant       |
+| implant.task_id               | keyword       | string        | Unique ID of the task sent to the implant       |
+| implant.parameters            | keyword       | string        | Parameters sent to the implant      |
 | implant.url                   | keyword       | string        | URL as reported by the implant.      |
 | infra.attack_scenario         | keyword       | string        | Name of the attack scenario/campaign this event belongs to. Defined in filebeat config       |
 | infra.log.type                | keyword       | string        | Type of log event. Defined in filebeat config        |
