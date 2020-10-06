@@ -44,8 +44,8 @@ class Module():
         ret['hits']['hits'] = alarmLines
         ret['hits']['total'] = len(alarmLines)
         ret['results'] = results
-        print("[m] finished running module. result:")
-        print(ret)
+        print("[a] finished running module %s . result: %s hits"%(ret['info']['name'],ret['hits']['total']))
+        #print(ret)
         return(ret)
 
     def alarm_check2(self):

@@ -34,6 +34,6 @@ class Module():
                 'key': 'val'
             }
         }
-        print("[m] finished running module. result:")
-        print(ret)
+        print("[a] finished running module %s . result: %s hits"%(ret['info']['name'],ret['hits']['hits']))
+        #print(ret)
         return(ret)

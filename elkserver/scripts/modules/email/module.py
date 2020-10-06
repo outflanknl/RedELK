@@ -56,7 +56,7 @@ class Module():
         s.starttls()
         s.login(smtpName, smtpPass)
         resp = s.sendmail(fromaddr, to, msg.as_string())
-        print("smtpd response: %s" % (resp))
+        print("[c] smtpd response: %s" % (resp))
         s.close()
 
 

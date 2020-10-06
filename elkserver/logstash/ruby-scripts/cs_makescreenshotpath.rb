@@ -7,7 +7,7 @@
 
 def filter(event)
   require 'time'
-  host = event.get("[agent][hostname]")
+  host = event.get("[agent][name]")
   logpath = event.get("[log][file][path]")
   implant_id = event.get("[implant][id]")
   timefromcs = event.get("[c2][timestamp]") + " UTC"

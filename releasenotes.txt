@@ -1,24 +1,36 @@
 
 RedELK release notes
 
-### version 2.0-BETA
-* ES stack upgraded to version 7.8
-* Renaming of many fields to be prepared for other C2 frameworks than Cobalt Strike. This concerns fields in the rtops index, the beacondb (now implantdb) and may other scripts. 
-* Adjusted legacy field names to adhere to ECS
+### version 2.0 BETA1
+* Elastic stack upgraded to version 7.8
+* Use Elasticsearch ILM to manage indices
+* Elastich stack field naming overhaul:
+   - Indices rtops and beacondb (now implantsbd) are now C2 framework agnostic instead of Cobalt Strike terms specific
+   - Field names adhere to ECS naming standard as much as possible
+   - Field names and their types are now defined in ES templates and Kibana index patterns
+   - Documented all field in names and types
 * First step of support for PoshC2 C2 framework. Thanks @benpturner for the heavy lifting
-* Neo4J can now be installed on the RedELK server.
-* Jupyter Notebooks can now be installed on the RedELK server.
-* Made an installer switch 'limited' for the elkserver installer to decide what to install (full experience incl Jupyter and Neo4J, or not)
-* Elkserver installer is now aware of amount of memory and adjusts memory settings of NEO4j and ES to optimized values.
-* The credentials store of Cobalt Strike is periodically read, parsed and sent to the RedELK server where it is stored in a new index called credentials.
-* Outflank PS-Tools output is now parsed and stored in extra fields inside the rtops index
-* Fixed double space bug in Apache catch-all Grok rule
-* Integrated and adjusted chameleon.py (thanks @DomChell) for performing domain classification checks
-* Fix for incorrect GeoIP ASN lookup when using an CDN
-* Emails from IMAP mailboxes can now be ingested and dispalyed in RedELK
-* Added several dashboards, vizualisations and searches
-* Use ILM to manage indices
-* added Useragent info to incoming traffic on redirectors
+* Offensive hunting tools are now installed on the RedELK server
+    - Neo4J for BloodHound integration
+    - Jupyter notenbooks for custom searching and data handling
+    - These two are installed by default unless you pass the 'limited' parameter to the elkserver installer
+    - Elkserver installer is now aware of amount of memory and adjusts memory settings of ES, NEO4j and ES to optimized values.
+* Cobalt Strike specific changes:
+    - Support for Cobalt Strike 4.1
+    - Credentials store is periodically read, parsed and sent to the RedELK server where it is stored in a new index called credentials.
+    - Ssh beacon logs are now also ingested
+    - CS listener info is also parsed and stored
+Other:
+    - Outflank PS-Tools output is now parsed and stored in extra fields inside the rtops index
+    - Integrated and adjusted chameleon.py (thanks @DomChell) for performing domain classification checks
+    - Emails from IMAP mailboxes can now be ingested and dispalyed in RedELK
+    - Added several dashboards, vizualisations and searches
+    - added Useragent info to incoming traffic on redirectors
+Bugfixes:
+    - Fixed double space bug in Apache catch-all Grok rule
+    - Fix for incorrect GeoIP ASN lookup when using an CDN
+    - Fixed several parsing bugs for CS
+    - Fixed several parsing bugs for HAProxy
 
 
 ### version 1.1
