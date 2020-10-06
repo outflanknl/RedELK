@@ -14,6 +14,7 @@ import traceback
 info = {
     'version': 0.1,
     'name': 'alarm2 module',
+    'alarmmsg': 'MD5 HASH SEEN ONLINE',
     'description': 'This check queries public sources given a list of md5 hashes.',
     'type': 'redelk_alarm',   # Could also contain redelk_enrich if it was an enrichment module
     'submodule': 'alarm2'
