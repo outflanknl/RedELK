@@ -44,7 +44,7 @@ class Module():
         ret['hits']['hits'] = alarmLines
         ret['hits']['total'] = len(alarmLines)
         ret['results'] = results
-        print("[a] finished running module %s . result: %s hits"%(ret['info']['name'],ret['hits']['hits']))
+        print("[a] finished running module %s . result: %s hits"%(ret['info']['name'],ret['hits']['total']))
         #print(ret)
         return(ret)
 
