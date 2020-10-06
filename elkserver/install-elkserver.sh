@@ -376,6 +376,13 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not install python elasticsearch library (Error Code: $ERROR)."
 fi
 
+echo "Installing python dependencies for alarm connectors, i.e. MS Teams"
+pip3 install pymsteams >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Could not install  dependencies for alarm connectors (Error Code: $ERROR)."
+fi
+
 echo "Creating RedELK config directory"
 mkdir -p /etc/redelk >> $LOGFILE 2>&1
 ERROR=$?
