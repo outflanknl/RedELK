@@ -1,23 +1,25 @@
+#!/usr/bin/python3
 import ndjson
 import json
 import requests
 import re
 import argparse
 import sys
+import os
 from pprint import pprint
 
 # Quick hack to disable invalid cert warning
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-KIBANA_URL = 'https://localhost:5601'
+KIBANA_URL = 'http://localhost:5601'
 KIBANA_USER = 'redelk'
 KIBANA_PASS = 'redelk'
 KIBANA_OBJECTS_EXPORT_URL = KIBANA_URL + '/api/saved_objects/_export'
 REDELK_OBJ_FILTER = 'RedELK'
 INDEX_PATTERNS_FILTER = 'rtops|redirtraffic|implantsdb|bluecheck|credentials|email|.siem-signals'
 EXPORT_FILES_PREFIX_KIBANA = 'redelk_kibana_'
-ES_URL = 'https://localhost:9200'
+ES_URL = 'http://localhost:9200'
 ES_TEMPLATES_LIST = [ 'rtops', 'redirtraffic', 'implantsdb' ]
 EXPORT_FILES_PREFIX_ES = 'redelk_elasticsearch_'
 DIFF_PATH = 'diff/' # path is relative to exportpath
@@ -104,12 +106,16 @@ def check_args():
     parser.add_argument("--dashboard", action='store_true', help="Export Kibana dashboards")
     parser.add_argument("--all", action='store_true', help="Export all Kibana objects (similar to --indexpattern --search --visualizations --dashboards --estemplate)")
     parser.add_argument("--estemplate", action='store_true', help="Export Elasticsearch templates")
-    parser.add_argument("--export", action='store_true', help="Export data")
-    parser.add_argument("--process", action='store_true', help="Process NDJSON data (save files for easy diff)")
+    parser.add_argument("--export", action='store_true', help="Export data   (either --export of --process required)")
+    parser.add_argument("--process", action='store_true', help="Process locally saved NDJSON files for easy diff   (either --export of --process required)")
     args = parser.parse_args()
 
     if not args.indexpattern and not args.search and not args.visualization and not args.dashboard and not args.all and not args.estemplate and not (args.export or args.process):
-        print("[-] Missing argument")
+        print("[X] Missing argument")
+        sys.exit(-1)
+
+    if not args.export and not args.process:
+        print("[X] Either --export of --process argument required")
         sys.exit(-1)
 
     return args
@@ -120,6 +126,8 @@ if __name__ == '__main__':
 
     exportpath = args.exportpath if args.exportpath else './'
     diff_exportpath = exportpath + DIFF_PATH
+    if not os.path.exists(DIFF_PATH):
+        os.makedirs(DIFF_PATH)
 
     if (args.indexpattern or args.all):
         if args.export:
