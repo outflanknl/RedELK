@@ -11,6 +11,7 @@ import traceback
 info = {
     'version': 0.1,
     'name': 'alarm3 module',
+    'alarmmsg': 'VISIT FROM BLACKLISTED USERAGENT TO C2_*',
     'description': 'This check queries for UA\'s that are listed in any blacklist_useragents.conf and do talk to c2* paths on redirectors',
     'type': 'redelk_alarm',   # Could also contain redelk_enrich if it was an enrichment module
     'submodule': 'alarm3'

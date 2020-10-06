@@ -7,6 +7,9 @@ with open('/etc/redelk/alarm.json.conf') as json_data:
 Verbosity = 0 #Verbosity
 if "Verbosity" in d: Verbosity = int(d['Verbosity'])
 
+DEBUG = 0 #Debug 1 or 0
+if "DEBUG" in d: DEBUG = int(d['DEBUG'])
+
 interval = 3600 #interval for rechecking IOC's
 if "interval" in d: interval = int(d['interval'])
 
