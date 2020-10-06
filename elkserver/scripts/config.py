@@ -52,5 +52,32 @@ if "tempDir" in d: tempDir = d['tempDir']
 msTeamsWebhookURL = ""
 if "msTeamsWebhookURL" in d: msTeamsWebhookURL = d['msTeamsWebhookURL']
 
-es_connection = ["http://localhost:9200"]
-if "es_connection" in d: es_connection = d['es_connection']
+#### Notifications
+notifications = {
+    'email': {
+        'enabled': False,
+        'smtp': {
+            'host': 'localhost',
+            'port': 25,
+            'login': '',
+            'pass': ''
+        },
+        'from': '',
+        'to': []
+    },
+    'msteams': {
+        'enabled': False,
+        'webhook_url': ''
+    },
+    'slack': {
+        'enabled': False,
+        'webhook_url': ''
+    }
+}
+if 'notifications' in d:
+    for n in notifications:
+        if n in d['notifications']:
+            notifications[n] = d['notifications'][n]
+
+es_connection = ['http://localhost:9200']
+if 'es_connection' in d: es_connection = d['es_connection']
