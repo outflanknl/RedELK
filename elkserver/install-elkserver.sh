@@ -557,7 +557,7 @@ if [ ${WHATTOINSTALL} = "full" ]; then
     fi
 
     echo "Installing Jupyter Notebooks docker image"
-    docker pull --quiet jupyter/scipy-notebook >> $LOGFILE 2>&1
+    docker pull --quiet jupyter/scipy-notebook:4a112c0f11eb >> $LOGFILE 2>&1
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echoerror "Could not install Jupyter docker image (Error Code: $ERROR)."
