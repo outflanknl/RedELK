@@ -17,11 +17,11 @@ if __name__ == '__main__':
     module_folders = os.listdir(path)
     print(module_folders)
 
-    connectors_path = './connectors/'
+    connectors_path = './modules/'
     connectors_folders = os.listdir(connectors_path)
 
-    mD = {}
-    cD = {}
+    aD = {} #aD alarm Dict
+    cD = {} #cD connector Dict
 
     for module in module_folders:
         # only take folders and not '__pycache__'
@@ -33,9 +33,9 @@ if __name__ == '__main__':
                     module_type = m.info.get('type', None)
                     print(module_type)
                     if module_type == 'redelk_alarm':
-                        mD[module] = {}
-                        mD[module]['info'] = m.info
-                        mD[module]['m'] = m
+                        aD[module] = {}
+                        aD[module]['info'] = m.info
+                        aD[module]['m'] = m
                     elif module_type == 'redelk_connector':
                         cD[module] = {}
                         cD[module]['info'] = m.info
@@ -47,19 +47,19 @@ if __name__ == '__main__':
 
     print('[i] looping module dict')
     # this means we've loaded the modules and will now loop over those one by one
-    for m in mD:
-        print('[i] initiating class Module() in %s' % m)
-        moduleClass = mD[m]['m'].Module()
-        print('[i] Running Run() from the Module class in %s' % m)
-        mD[m]['result'] = moduleClass.run()
+    for a in aD:
+        print('[a] initiating class Module() in %s' % a)
+        moduleClass = aD[a]['m'].Module()
+        print('[a] Running Run() from the Module class in %s' % a)
+        aD[a]['result'] = moduleClass.run()
 
     # now we can loop over the modules once again and log the lines
-    for m in mD:
-        r = mD[m]['result']
+    for a in aD:
+        r = aD[a]['result']
         for rHit in r['hits']['hits']:
             # loop over alarmed lines
             alarm = {}
-            alarm['info'] = mD[m]['info']
+            alarm['info'] = aD[a]['info']
             alarm['line'] = rHit
             alarm['@timstamp'] = datetime.datetime.utcnow().isoformat()
             ESindex = 'alarms-%s' % datetime.datetime.utcnow().strftime('%Y.%m.%d')
@@ -67,7 +67,7 @@ if __name__ == '__main__':
                          doc_type='_doc', body=alarm)
         for c in cD:
             connector = cD[c]['m'].Module()
-            print(pprint(r))
+            #print(pprint(r))
             if r['hits']['total'] > 0:
                 connector.send_alarm(r)
             pass
