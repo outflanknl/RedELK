@@ -418,11 +418,11 @@ done
 rm /tmp/esupcheck.txt
 sleep 10 # just to give Elasticsearch some extra time.
 
-echo "Quick fix - create SIEM signals index"
+echo "Preparing the SIEM signals index"
 curl -X PUT "localhost:9200/.siem-signals-default?pretty" >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not install SIEM signals index (Error Code: $ERROR)."
+    echoerror "Could not prepare the SIEM signals index (Error Code: $ERROR)."
 fi
 sleep 1
 
@@ -542,11 +542,15 @@ if [ ${WHATTOINSTALL} = "full" ]; then
     fi
 
     echo "Creating Docker bridged network"
-    # checking of network is already there
-    if [ ! "docker network ls|grep dockernetredelk" ]; then docker network create -d bridge --subnet 192.168.254.0/24 --gateway 192.168.254.1 dockernetredelk >> $LOGFILE 2>&1 ; fi
+    # checking of network is already there, perhaps due to aborted/crashed/previous install
+    docker network ls 2> /dev/null | grep dockernetredelk > /dev/null
     ERROR=$?
-    if [ $ERROR -ne 0 ]; then
-        echoerror "Could not create Docker bridged network (Error Code: $ERROR)."
+    if [ $ERROR -ne 0 ]; then 
+        docker network create -d bridge --subnet 192.168.254.0/24 --gateway 192.168.254.1 dockernetredelk >> $LOGFILE 2>&1
+        ERROR=$?
+        if [ $ERROR -ne 0 ]; then
+            echoerror "Could not create Docker bridged network (Error Code: $ERROR)."
+        fi
     fi
 
     echo "Creating Jupyter Notebooks working dir and copying notebooks"
