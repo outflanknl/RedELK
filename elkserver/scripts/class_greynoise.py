@@ -59,7 +59,7 @@ class greynoise():
          r['Name_list'] = list(tempName.copy().keys())
         r['ip'] = ip
         r['query_timestamp'] = int(time())
-        r['status'] = r['full_data']['status']
+        r['status'] = r['full_data'].get('status',None)
         self.debug.append(r)
         x = r.copy()
         n = x.pop('full_data')
