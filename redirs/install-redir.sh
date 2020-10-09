@@ -3,12 +3,12 @@
 # Part of RedELK
 # Script to install RedELK on redirector
 #
-# Author: Outflank B.V. / Marc Smeets 
+# Author: Outflank B.V. / Marc Smeets
 #
 
 LOGFILE="redelk-install.log"
 INSTALLER="RedELK redirector installer"
-ELKVERSION="7.8.0"
+ELKVERSION="7.9.2"
 
 #set default locale
 export LC_ALL="en_US.UTF-8"

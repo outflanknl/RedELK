@@ -10,7 +10,7 @@
 LOGFILE="redelk-install.log"
 INSTALLER="RedELK elkserver installer"
 CWD=`pwd`
-ELKVERSION="7.8.0"
+ELKVERSION="7.9.2"
 
 echo ""
 echo "`date +'%b %e %R'` $INSTALLER - Starting installer"
@@ -545,7 +545,7 @@ if [ ${WHATTOINSTALL} = "full" ]; then
     # checking of network is already there, perhaps due to aborted/crashed/previous install
     docker network ls 2> /dev/null | grep dockernetredelk > /dev/null
     ERROR=$?
-    if [ $ERROR -ne 0 ]; then 
+    if [ $ERROR -ne 0 ]; then
         docker network create -d bridge --subnet 192.168.254.0/24 --gateway 192.168.254.1 dockernetredelk >> $LOGFILE 2>&1
         ERROR=$?
         if [ $ERROR -ne 0 ]; then

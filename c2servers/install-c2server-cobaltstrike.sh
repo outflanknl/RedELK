@@ -3,12 +3,12 @@
 # Part of RedELK
 # Script to install RedELK on Cobalt Strike teamservers
 #
-# Author: Outflank B.V. / Marc Smeets 
+# Author: Outflank B.V. / Marc Smeets
 #
 
 LOGFILE="redelk-install.log"
 INSTALLER="RedELK teamserver installer"
-ELKVERSION="7.8.0"
+ELKVERSION="7.9.2"
 
 #set locale for current session and default locale
 export LC_ALL="en_US.UTF-8"
@@ -189,7 +189,7 @@ fi
 echo "Configuring rush"
 if [ -f "/etc/rush.rc" ]; then
     cp /etc/rush.rc /etc/rush.rc.old && cat << EOF > /etc/rush.rc
-# Modifications made by RedELK installer. 
+# Modifications made by RedELK installer.
 # Previous config is still available at /etc/rush.rc.old
 #
 debug 1
