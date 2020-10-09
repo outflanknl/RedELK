@@ -12,6 +12,7 @@ import json
 import sys
 import datetime
 import time
+import traceback
 from time import sleep
 es  = Elasticsearch()
 
@@ -27,6 +28,8 @@ def isIP(addr):
     # legal
     return(True)
   except socket.error:
+    #stackTrace = traceback.format_exc()
+    #print(stackTrace)
     # Not legal
     return(False)
 
@@ -52,8 +55,10 @@ def enrichAllLinesWithBeacon(l1,b):
         l1["_source"][field] = b["_source"][field]
         l1["_source"]['event']['enriched_from'] = b["_id"]
       except:
-        pass
-    es.update(index=l1['_index'],doc_type=l1['_type'],id=l1['_id'],body={'doc':l1['_source']})
+        stackTrace = traceback.format_exc()
+        print(stackTrace)
+    #es.update(index=l1['_index'],doc_type=l1['_type'],id=l1['_id'],body={'doc':l1['_source']})
+    es.update(index=l1['_index'],id=l1['_id'],body={'doc':l1['_source']})
     tagsSet = tagsSet + 1
     #sys.stdout.write('.')
     #sys.stdout.flush()
@@ -84,6 +89,8 @@ def enrichV1():
         try:
           id = line['_source']['implant']['id']
         except:
+          stackTrace = traceback.format_exc()
+          print(stackTrace)
           #break # do not break here, breaks enrichments once lines exists without implant id
           process = False
           pass
@@ -137,7 +144,8 @@ def queryBIG_OR(array,field,index,prefix="",postfix=""):
 def setTags(tag,lst):
   for l in lst:
     l["_source"]['tags'].append(tag)
-    r = es.update(index=l['_index'],doc_type =l['_type'],id=l['_id'],body={'doc':l['_source']})
+    #r = es.update(index=l['_index'],doc_type =l['_type'],id=l['_id'],body={'doc':l['_source']})
+    r = es.update(index=l['_index'],id=l['_id'],body={'doc':l['_source']})
     #sys.stdout.write('.')
     #sys.stdout.flush()
 
@@ -155,7 +163,8 @@ def buildQueryBIG_OR(array,field,index,prefix="",postfix="",fuzzy=False):
 
 def setTagByQuery(query,tag,index="redirtraffic-*"):
   q3 = {'query': {'query_string': {'query': query }}}
-  q3['script'] = {"inline": "ctx._source.tags.add(params.tag)","lang": "painless","params":{"tag":tag}}
+  #q3['script'] = {"inline": "ctx._source.tags.add(params.tag)","lang": "painless","params":{"tag":tag}}
+  q3['script'] = {"source": "ctx._source.tags.add(params.tag)","lang": "painless","params":{"tag":tag}}
   #return(q3)
   #pprint(q3)
   r3 = es.update_by_query(index=index, body=q3, size=-1, timeout="10m", wait_for_completion="false")
@@ -185,7 +194,7 @@ def readConfigLines(fname):
     out = []
     for line in content:
       if not line.startswith('#'):
-        if line.count(';') is 3:
+        if line.count(';') == 3:
           ip = line.strip()
           if isIP(ip):
             out.append(line.strip())
@@ -239,8 +248,11 @@ def enrich_greynoiseSet(handler):
       ip = l["_source"]["source"]["ip"]
       l["_source"]["greynoise"] = handler.queryIp(ip)
     except:
+      stackTrace = traceback.format_exc()
+      print(stackTrace)
       pass
-    r = es.update(index=l['_index'],doc_type=l['_type'],id=l['_id'],body={'doc':l['_source']})
+    #r = es.update(index=l['_index'],doc_type=l['_type'],id=l['_id'],body={'doc':l['_source']})
+    r = es.update(index=l['_index'],id=l['_id'],body={'doc':l['_source']})
     cRes += 1
   return(cRes,rT)
 
@@ -287,7 +299,8 @@ def deleteTag(tag,size=qSize,index="redirtraffic-*"):
       for t in l["_source"]['tags']:
         if t != tag: newSet.append(t)
       l["_source"]['tags'] = newSet
-      r = es.update(index=l['_index'],doc_type =l['_type'],id=l['_id'],body={'doc':l['_source']})
+      #r = es.update(index=l['_index'],doc_type =l['_type'],id=l['_id'],body={'doc':l['_source']})
+      r = es.update(index=l['_index'],id=l['_id'],body={'doc':l['_source']})
       totals = totals + 1
   return(totals)
 

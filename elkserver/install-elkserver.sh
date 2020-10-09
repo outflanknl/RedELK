@@ -376,6 +376,13 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not install python elasticsearch library (Error Code: $ERROR)."
 fi
 
+echo "Installing python dependencies for alarm connectors, i.e. MS Teams"
+pip3 install pymsteams >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Could not install  dependencies for alarm connectors (Error Code: $ERROR)."
+fi
+
 echo "Creating RedELK config directory"
 mkdir -p /etc/redelk >> $LOGFILE 2>&1
 ERROR=$?
@@ -411,11 +418,11 @@ done
 rm /tmp/esupcheck.txt
 sleep 10 # just to give Elasticsearch some extra time.
 
-echo "Quick fix - create SIEM signals index"
+echo "Preparing the SIEM signals index"
 curl -X PUT "localhost:9200/.siem-signals-default?pretty" >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not install SIEM signals index (Error Code: $ERROR)."
+    echoerror "Could not prepare the SIEM signals index (Error Code: $ERROR)."
 fi
 sleep 1
 
@@ -427,7 +434,7 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "Installing Elasticsearch index templates"
-for i in implantsdb rtops redirtraffic; do curl -X POST "http://localhost:9200/_template/$i" -H "Content-Type: application/json" -d @./templates/redelk_elasticsearch_template_$i.json; done >> $LOGFILE 2>&1
+for i in implantsdb rtops redirtraffic bluecheck; do curl -X POST "http://localhost:9200/_template/$i" -H "Content-Type: application/json" -d @./templates/redelk_elasticsearch_template_$i.json; done >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install Elasticsearch index templates (Error Code: $ERROR)."
@@ -535,11 +542,15 @@ if [ ${WHATTOINSTALL} = "full" ]; then
     fi
 
     echo "Creating Docker bridged network"
-    # checking of network is already there
-    if [ ! "docker network ls|grep dockernetredelk" ]; then docker network create -d bridge --subnet 192.168.254.0/24 --gateway 192.168.254.1 dockernetredelk >> $LOGFILE 2>&1 ; fi
+    # checking of network is already there, perhaps due to aborted/crashed/previous install
+    docker network ls 2> /dev/null | grep dockernetredelk > /dev/null
     ERROR=$?
-    if [ $ERROR -ne 0 ]; then
-        echoerror "Could not create Docker bridged network (Error Code: $ERROR)."
+    if [ $ERROR -ne 0 ]; then 
+        docker network create -d bridge --subnet 192.168.254.0/24 --gateway 192.168.254.1 dockernetredelk >> $LOGFILE 2>&1
+        ERROR=$?
+        if [ $ERROR -ne 0 ]; then
+            echoerror "Could not create Docker bridged network (Error Code: $ERROR)."
+        fi
     fi
 
     echo "Creating Jupyter Notebooks working dir and copying notebooks"
@@ -550,7 +561,7 @@ if [ ${WHATTOINSTALL} = "full" ]; then
     fi
 
     echo "Installing Jupyter Notebooks docker image"
-    docker pull --quiet jupyter/scipy-notebook >> $LOGFILE 2>&1
+    docker pull --quiet jupyter/scipy-notebook:4a112c0f11eb >> $LOGFILE 2>&1
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echoerror "Could not install Jupyter docker image (Error Code: $ERROR)."
