@@ -561,7 +561,7 @@ if [ ${WHATTOINSTALL} = "full" ]; then
     fi
 
     echo "Installing Jupyter Notebooks docker image"
-    docker pull --quiet jupyter/scipy-notebook:4a112c0f11eb >> $LOGFILE 2>&1
+    docker pull jupyter/scipy-notebook:4a112c0f11eb >> $LOGFILE 2>&1
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echoerror "Could not install Jupyter docker image (Error Code: $ERROR)."
@@ -603,7 +603,7 @@ if [ ${WHATTOINSTALL} = "full" ]; then
     fi
 
     echo "Installing Neo4j/BloodHound docker image"
-    docker pull --quiet specterops/bloodhound-neo4j >> $LOGFILE 2>&1
+    docker pull specterops/bloodhound-neo4j >> $LOGFILE 2>&1
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echoerror "Could not install  Neo4j/BloodHound docker image (Error Code: $ERROR)."
