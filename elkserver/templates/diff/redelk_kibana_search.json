@@ -688,10 +688,8 @@
     {
         "attributes": {
             "columns": [
-                "domain",
                 "bluechecktype",
-                "classifier",
-                "results"
+                "message"
             ],
             "description": "",
             "hits": 0,
@@ -713,7 +711,7 @@
                     "desc"
                 ]
             ],
-            "title": "RedELK - BlueCheck Domain Classification",
+            "title": "RedELK - BlueCheck",
             "version": 1
         },
         "id": "a4757c90-ce50-11ea-a580-918d4757c08d",

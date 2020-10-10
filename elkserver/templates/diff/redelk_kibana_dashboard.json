@@ -37,14 +37,29 @@
                         "title": ""
                     },
                     "gridData": {
+                        "h": 2,
+                        "i": "66e33663-63c3-4e78-aa5d-725e33754c02",
+                        "w": 48,
+                        "x": 0,
+                        "y": 2
+                    },
+                    "panelIndex": "66e33663-63c3-4e78-aa5d-725e33754c02",
+                    "panelRefName": "panel_1",
+                    "version": "7.8.0"
+                },
+                {
+                    "embeddableConfig": {
+                        "title": ""
+                    },
+                    "gridData": {
                         "h": 9,
                         "i": "800e8be4-f7c9-46b8-8a7b-e9f229aeb1a3",
                         "w": 8,
                         "x": 0,
-                        "y": 2
+                        "y": 4
                     },
                     "panelIndex": "800e8be4-f7c9-46b8-8a7b-e9f229aeb1a3",
-                    "panelRefName": "panel_1",
+                    "panelRefName": "panel_2",
                     "version": "7.8.0"
                 },
                 {
@@ -56,10 +71,10 @@
                         "i": "86117a55-669e-4d4d-a4d6-436da4f1a930",
                         "w": 8,
                         "x": 8,
-                        "y": 2
+                        "y": 4
                     },
                     "panelIndex": "86117a55-669e-4d4d-a4d6-436da4f1a930",
-                    "panelRefName": "panel_2",
+                    "panelRefName": "panel_3",
                     "version": "7.8.0"
                 },
                 {
@@ -71,10 +86,10 @@
                         "i": "ab07bed8-9d4e-409c-b3db-d15124eb5467",
                         "w": 8,
                         "x": 16,
-                        "y": 2
+                        "y": 4
                     },
                     "panelIndex": "ab07bed8-9d4e-409c-b3db-d15124eb5467",
-                    "panelRefName": "panel_3",
+                    "panelRefName": "panel_4",
                     "version": "7.8.0"
                 },
                 {
@@ -86,10 +101,10 @@
                         "i": "019655aa-c9de-444a-a4af-619b7297572b",
                         "w": 8,
                         "x": 24,
-                        "y": 2
+                        "y": 4
                     },
                     "panelIndex": "019655aa-c9de-444a-a4af-619b7297572b",
-                    "panelRefName": "panel_4",
+                    "panelRefName": "panel_5",
                     "version": "7.8.0"
                 },
                 {
@@ -101,10 +116,10 @@
                         "i": "43a0761e-49bc-4846-9956-04a604b063ec",
                         "w": 16,
                         "x": 32,
-                        "y": 2
+                        "y": 4
                     },
                     "panelIndex": "43a0761e-49bc-4846-9956-04a604b063ec",
-                    "panelRefName": "panel_5",
+                    "panelRefName": "panel_6",
                     "version": "7.8.0"
                 },
                 {
@@ -116,10 +131,10 @@
                         "i": "eab2038d-128a-4b5b-8a72-701fd3f53bd8",
                         "w": 8,
                         "x": 0,
-                        "y": 11
+                        "y": 13
                     },
                     "panelIndex": "eab2038d-128a-4b5b-8a72-701fd3f53bd8",
-                    "panelRefName": "panel_6",
+                    "panelRefName": "panel_7",
                     "version": "7.8.0"
                 },
                 {
@@ -131,10 +146,10 @@
                         "i": "e18544fe-ac30-43cf-891c-4448ffea6bbd",
                         "w": 8,
                         "x": 8,
-                        "y": 11
+                        "y": 13
                     },
                     "panelIndex": "e18544fe-ac30-43cf-891c-4448ffea6bbd",
-                    "panelRefName": "panel_7",
+                    "panelRefName": "panel_8",
                     "version": "7.8.0"
                 },
                 {
@@ -146,10 +161,10 @@
                         "i": "6eb4c88f-1f04-42e1-9300-2fad1e3f6c9d",
                         "w": 16,
                         "x": 16,
-                        "y": 11
+                        "y": 13
                     },
                     "panelIndex": "6eb4c88f-1f04-42e1-9300-2fad1e3f6c9d",
-                    "panelRefName": "panel_8",
+                    "panelRefName": "panel_9",
                     "title": "Compromised realms",
                     "version": "7.8.0"
                 },
@@ -162,10 +177,10 @@
                         "i": "223951c1-7fe0-40f9-9a89-0c91aedd7fce",
                         "w": 8,
                         "x": 32,
-                        "y": 11
+                        "y": 13
                     },
                     "panelIndex": "223951c1-7fe0-40f9-9a89-0c91aedd7fce",
-                    "panelRefName": "panel_9",
+                    "panelRefName": "panel_10",
                     "version": "7.8.0"
                 },
                 {
@@ -177,10 +192,10 @@
                         "i": "c15dc2cd-fad3-44a3-b127-1cd47d837740",
                         "w": 8,
                         "x": 40,
-                        "y": 11
+                        "y": 13
                     },
                     "panelIndex": "c15dc2cd-fad3-44a3-b127-1cd47d837740",
-                    "panelRefName": "panel_10",
+                    "panelRefName": "panel_11",
                     "version": "7.8.0"
                 }
             ],
@@ -205,53 +220,58 @@
                 "type": "visualization"
             },
             {
-                "id": "b19d4790-d35f-11ea-9301-a30a04251ae9",
+                "id": "45491770-0886-11eb-a2d2-171dc8941414",
                 "name": "panel_1",
                 "type": "visualization"
             },
             {
-                "id": "dcf86190-d319-11ea-9301-a30a04251ae9",
+                "id": "b19d4790-d35f-11ea-9301-a30a04251ae9",
                 "name": "panel_2",
                 "type": "visualization"
             },
             {
-                "id": "b5beb3c0-d04b-11ea-9301-a30a04251ae9",
+                "id": "dcf86190-d319-11ea-9301-a30a04251ae9",
                 "name": "panel_3",
                 "type": "visualization"
             },
             {
-                "id": "389dddc0-d317-11ea-9301-a30a04251ae9",
+                "id": "b5beb3c0-d04b-11ea-9301-a30a04251ae9",
                 "name": "panel_4",
                 "type": "visualization"
             },
             {
-                "id": "ce581930-d361-11ea-9301-a30a04251ae9",
+                "id": "389dddc0-d317-11ea-9301-a30a04251ae9",
                 "name": "panel_5",
                 "type": "visualization"
             },
             {
-                "id": "57626ad0-d355-11ea-9301-a30a04251ae9",
+                "id": "ce581930-d361-11ea-9301-a30a04251ae9",
                 "name": "panel_6",
                 "type": "visualization"
             },
             {
-                "id": "464660c0-d360-11ea-9301-a30a04251ae9",
+                "id": "57626ad0-d355-11ea-9301-a30a04251ae9",
                 "name": "panel_7",
                 "type": "visualization"
             },
             {
-                "id": "ff4497f0-d319-11ea-9301-a30a04251ae9",
+                "id": "464660c0-d360-11ea-9301-a30a04251ae9",
                 "name": "panel_8",
                 "type": "visualization"
             },
             {
-                "id": "62b61920-d4e2-11ea-9301-a30a04251ae9",
+                "id": "ff4497f0-d319-11ea-9301-a30a04251ae9",
                 "name": "panel_9",
                 "type": "visualization"
             },
             {
-                "id": "7d850b30-d4e2-11ea-9301-a30a04251ae9",
+                "id": "62b61920-d4e2-11ea-9301-a30a04251ae9",
                 "name": "panel_10",
+                "type": "visualization"
+            },
+            {
+                "id": "7d850b30-d4e2-11ea-9301-a30a04251ae9",
+                "name": "panel_11",
                 "type": "visualization"
             }
         ],
@@ -278,6 +298,21 @@
             "panelsJSON": [
                 {
                     "embeddableConfig": {
+                        "title": ""
+                    },
+                    "gridData": {
+                        "h": 2,
+                        "i": "9af964d0-b9c5-4fa0-81d7-6e7cf9657757",
+                        "w": 48,
+                        "x": 0,
+                        "y": 0
+                    },
+                    "panelIndex": "9af964d0-b9c5-4fa0-81d7-6e7cf9657757",
+                    "panelRefName": "panel_0",
+                    "version": "7.8.0"
+                },
+                {
+                    "embeddableConfig": {
                         "title": "Target host(s) and user(s) filter"
                     },
                     "gridData": {
@@ -288,7 +323,7 @@
                         "y": 2
                     },
                     "panelIndex": "09cb7bd6-8162-4141-8a0c-807ee57a4603",
-                    "panelRefName": "panel_0",
+                    "panelRefName": "panel_1",
                     "title": "Target host(s) and user(s) filter",
                     "version": "7.8.0"
                 },
@@ -304,7 +339,7 @@
                         "y": 2
                     },
                     "panelIndex": "fcd3a5bc-91d9-46a2-b08c-92958c5b6089",
-                    "panelRefName": "panel_1",
+                    "panelRefName": "panel_2",
                     "title": "Implants per host",
                     "version": "7.8.0"
                 },
@@ -320,7 +355,7 @@
                         "y": 2
                     },
                     "panelIndex": "47710d04-18f9-4563-bf0d-73b4dc24f9e5",
-                    "panelRefName": "panel_2",
+                    "panelRefName": "panel_3",
                     "title": "Implants per user",
                     "version": "7.8.0"
                 },
@@ -334,21 +369,6 @@
                         "y": 8
                     },
                     "panelIndex": "30674424-d470-4b93-80c1-260d16f987ab",
-                    "panelRefName": "panel_3",
-                    "version": "7.8.0"
-                },
-                {
-                    "embeddableConfig": {
-                        "title": ""
-                    },
-                    "gridData": {
-                        "h": 2,
-                        "i": "9af964d0-b9c5-4fa0-81d7-6e7cf9657757",
-                        "w": 48,
-                        "x": 0,
-                        "y": 0
-                    },
-                    "panelIndex": "9af964d0-b9c5-4fa0-81d7-6e7cf9657757",
                     "panelRefName": "panel_4",
                     "version": "7.8.0"
                 }
@@ -363,29 +383,29 @@
         },
         "references": [
             {
-                "id": "d2c7b720-d026-11ea-9301-a30a04251ae9",
+                "id": "0f82b540-d237-11ea-9301-a30a04251ae9",
                 "name": "panel_0",
                 "type": "visualization"
             },
             {
-                "id": "632081a0-d02a-11ea-9301-a30a04251ae9",
+                "id": "d2c7b720-d026-11ea-9301-a30a04251ae9",
                 "name": "panel_1",
                 "type": "visualization"
             },
             {
-                "id": "6fcf1e70-d02a-11ea-9301-a30a04251ae9",
+                "id": "632081a0-d02a-11ea-9301-a30a04251ae9",
                 "name": "panel_2",
                 "type": "visualization"
             },
             {
-                "id": "1c580960-b6a9-11e8-bc1a-cf8fa3255855",
+                "id": "6fcf1e70-d02a-11ea-9301-a30a04251ae9",
                 "name": "panel_3",
-                "type": "search"
+                "type": "visualization"
             },
             {
-                "id": "0f82b540-d237-11ea-9301-a30a04251ae9",
+                "id": "1c580960-b6a9-11e8-bc1a-cf8fa3255855",
                 "name": "panel_4",
-                "type": "visualization"
+                "type": "search"
             }
         ],
         "type": "dashboard",
@@ -411,6 +431,21 @@
             "panelsJSON": [
                 {
                     "embeddableConfig": {
+                        "title": ""
+                    },
+                    "gridData": {
+                        "h": 2,
+                        "i": "8f1a6a90-4b7e-47ef-aa74-a6037b7461e1",
+                        "w": 48,
+                        "x": 0,
+                        "y": 0
+                    },
+                    "panelIndex": "8f1a6a90-4b7e-47ef-aa74-a6037b7461e1",
+                    "panelRefName": "panel_0",
+                    "version": "7.8.0"
+                },
+                {
+                    "embeddableConfig": {
                         "title": "Techniques, Tactics and Procedures"
                     },
                     "gridData": {
@@ -421,7 +456,7 @@
                         "y": 2
                     },
                     "panelIndex": "ecf77ead-e22f-4708-addf-0cbaaeb6fced",
-                    "panelRefName": "panel_0",
+                    "panelRefName": "panel_1",
                     "title": "Techniques, Tactics and Procedures",
                     "version": "7.8.0"
                 },
@@ -437,8 +472,8 @@
                         "y": 2
                     },
                     "panelIndex": "ff3f84bc-6c84-43fd-aa0f-19e5a91be826",
-                    "panelRefName": "panel_1",
-                    "title": "C2 per host and user",
+                    "panelRefName": "panel_2",
+                    "title": "C2 tasks per host and user",
                     "version": "7.8.0"
                 },
                 {
@@ -453,8 +488,8 @@
                         "y": 11
                     },
                     "panelIndex": "23d6ee17-d74f-4a5b-88e4-d286c4b5dd2e",
-                    "panelRefName": "panel_2",
-                    "title": "C2 tasks per operator",
+                    "panelRefName": "panel_3",
+                    "title": "Cobalt Strike tasks per operator",
                     "version": "7.8.0"
                 },
                 {
@@ -469,23 +504,8 @@
                         "y": 20
                     },
                     "panelIndex": "b038a84c-9db0-4266-af43-c8023da4781a",
-                    "panelRefName": "panel_3",
-                    "title": "C2 tasks",
-                    "version": "7.8.0"
-                },
-                {
-                    "embeddableConfig": {
-                        "title": ""
-                    },
-                    "gridData": {
-                        "h": 2,
-                        "i": "8f1a6a90-4b7e-47ef-aa74-a6037b7461e1",
-                        "w": 48,
-                        "x": 0,
-                        "y": 0
-                    },
-                    "panelIndex": "8f1a6a90-4b7e-47ef-aa74-a6037b7461e1",
                     "panelRefName": "panel_4",
+                    "title": "C2 tasks",
                     "version": "7.8.0"
                 }
             ],
@@ -499,29 +519,29 @@
         },
         "references": [
             {
-                "id": "88db1280-d024-11ea-9301-a30a04251ae9",
+                "id": "0f82b540-d237-11ea-9301-a30a04251ae9",
                 "name": "panel_0",
                 "type": "visualization"
             },
             {
-                "id": "a5554e20-d025-11ea-9301-a30a04251ae9",
+                "id": "88db1280-d024-11ea-9301-a30a04251ae9",
                 "name": "panel_1",
                 "type": "visualization"
             },
             {
-                "id": "afb6ce00-d022-11ea-9301-a30a04251ae9",
+                "id": "a5554e20-d025-11ea-9301-a30a04251ae9",
                 "name": "panel_2",
                 "type": "visualization"
             },
             {
-                "id": "cc523820-d021-11ea-9301-a30a04251ae9",
+                "id": "afb6ce00-d022-11ea-9301-a30a04251ae9",
                 "name": "panel_3",
-                "type": "search"
+                "type": "visualization"
             },
             {
-                "id": "0f82b540-d237-11ea-9301-a30a04251ae9",
+                "id": "cc523820-d021-11ea-9301-a30a04251ae9",
                 "name": "panel_4",
-                "type": "visualization"
+                "type": "search"
             }
         ],
         "type": "dashboard",
