@@ -434,7 +434,7 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "Installing Elasticsearch index templates"
-for i in implantsdb rtops redirtraffic bluecheck; do curl -X POST "http://localhost:9200/_template/$i" -H "Content-Type: application/json" -d @./templates/redelk_elasticsearch_template_$i.json; done >> $LOGFILE 2>&1
+for i in implantsdb rtops redirtraffic; do curl -X POST "http://localhost:9200/_template/$i" -H "Content-Type: application/json" -d @./templates/redelk_elasticsearch_template_$i.json; done >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install Elasticsearch index templates (Error Code: $ERROR)."
