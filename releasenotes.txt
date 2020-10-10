@@ -1,6 +1,19 @@
 
 RedELK release notes
 
+### version 2.0 BETA2
+* Elastic stack upgraded to version 7.9.2
+* Added nginx availability of Neo4J Browser
+* Dashboard overview now has seperate list of 'external' tools, i.e. ATT&CK Navigator, Jupyter Notebooks and Neo4J Browser
+* Restructuring of python scripts for alarming; now has a modular setup
+* Added support for Alarms via Microsoft Teams
+* Overall python scripts clean up
+* Removed Docker 19.x specific commands to support ao Debian 10
+* More settings configurable via alarm.json.config file, e.g. ES connections tring
+* elkinstaller script bugfixes
+
+
+
 ### version 2.0 BETA1
 * Elastic stack upgraded to version 7.8
 * Use Elasticsearch ILM to manage indices
