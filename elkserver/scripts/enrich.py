@@ -13,8 +13,9 @@ import sys
 import datetime
 import time
 import traceback
+import config
 from time import sleep
-es  = Elasticsearch()
+es  = Elasticsearch(config.es_connection)
 
 qSize = 10000
 
