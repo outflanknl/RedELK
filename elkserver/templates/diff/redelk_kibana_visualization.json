@@ -310,17 +310,17 @@
                     }
                 }
             },
-            "title": "RedELK - Dashboard links",
+            "title": "RedELK - Dashboard links internal",
             "uiStateJSON": "{}",
             "version": 1,
             "visState": {
                 "aggs": [],
                 "params": {
                     "fontSize": 12,
-                    "markdown": "[Summary](/app/kibana#/dashboard/02486040-d355-11ea-9301-a30a04251ae9) | [Alarms](/app/kibana#/dashboard/53b69200-d4e3-11ea-9301-a30a04251ae9) | [Traffic](/app/kibana#/dashboard/0f8626d0-c6f4-11e8-a9c6-cd307b96b1ba) | [Implants](/app/kibana#/dashboard/117dbba0-c6f5-11e8-a9c6-cd307b96b1ba) | [Red Team Operations](/app/kibana#/dashboard/04b87c50-d028-11ea-9301-a30a04251ae9) | [Tasks](/app/kibana#/dashboard/0523c8a0-d025-11ea-9301-a30a04251ae9) | [Downloads](/app/kibana#/dashboard/643de010-d04c-11ea-9301-a30a04251ae9) | [Credentials](/app/kibana#/dashboard/82b865a0-d318-11ea-9301-a30a04251ae9) | [Screenshots](/app/kibana#/dashboard/a2dcebf0-d316-11ea-9301-a30a04251ae9) | [IOC](/app/kibana#/dashboard/86643e90-d4e4-11ea-9301-a30a04251ae9) | [TTP](/app/kibana#/dashboard/3ed7a630-d051-11ea-9301-a30a04251ae9) |  [MITRE ATT&CK Navigator](/attack-navigator/) | [Jupyter Notebook](/jupyter/) ",
+                    "markdown": "**Dashboards** : [Summary](/app/kibana#/dashboard/02486040-d355-11ea-9301-a30a04251ae9) | [Alarms](/app/kibana#/dashboard/53b69200-d4e3-11ea-9301-a30a04251ae9) | [Traffic](/app/kibana#/dashboard/0f8626d0-c6f4-11e8-a9c6-cd307b96b1ba) | [Implants](/app/kibana#/dashboard/117dbba0-c6f5-11e8-a9c6-cd307b96b1ba) | [Red Team Operations](/app/kibana#/dashboard/04b87c50-d028-11ea-9301-a30a04251ae9) | [Tasks](/app/kibana#/dashboard/0523c8a0-d025-11ea-9301-a30a04251ae9) | [Downloads](/app/kibana#/dashboard/643de010-d04c-11ea-9301-a30a04251ae9) | [Credentials](/app/kibana#/dashboard/82b865a0-d318-11ea-9301-a30a04251ae9) | [Screenshots](/app/kibana#/dashboard/a2dcebf0-d316-11ea-9301-a30a04251ae9) | [IOC](/app/kibana#/dashboard/86643e90-d4e4-11ea-9301-a30a04251ae9) | [TTP](/app/kibana#/dashboard/3ed7a630-d051-11ea-9301-a30a04251ae9)",
                     "openLinksInNewTab": false
                 },
-                "title": "RedELK - Dashboard links",
+                "title": "RedELK - Dashboard links internal",
                 "type": "markdown"
             }
         },
@@ -1315,6 +1315,40 @@
                 "type": "search"
             }
         ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "title": "RedELK - Dashboard links external",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [],
+                "params": {
+                    "fontSize": 12,
+                    "markdown": "**External tools** : [MITRE ATT&CK Navigator](/attack-navigator/) | [Jupyter Notebook](/jupyter/) | [Neo4j Browser](/neo4jbrowser/) ",
+                    "openLinksInNewTab": true
+                },
+                "title": "RedELK - Dashboard links external",
+                "type": "markdown"
+            }
+        },
+        "id": "45491770-0886-11eb-a2d2-171dc8941414",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [],
         "type": "visualization",
         "version": "1"
     },

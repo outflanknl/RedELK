@@ -8,7 +8,7 @@
 
 LOGFILE="redelk-install.log"
 INSTALLER="RedELK PoshC2 installer"
-ELKVERSION="7.8.0"
+ELKVERSION="7.9.2"
 
 #set locale for current session and default locale
 export LC_ALL="en_US.UTF-8"
