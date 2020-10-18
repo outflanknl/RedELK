@@ -10,11 +10,6 @@ LOGFILE="redelk-install.log"
 INSTALLER="RedELK teamserver installer"
 ELKVERSION="7.9.2"
 
-#set locale for current session and default locale
-export LC_ALL="en_US.UTF-8"
-printf 'LANG=en_US.UTF-8\nLC_ALL=en_US.UTF-8\n' > /etc/default/locale >> $LOGFILE 2>&1
-locale-gen >> $LOGFILE 2>&1
-
 echoerror() {
     printf "`date +'%b %e %R'` $INSTALLER - ${RC} * ERROR ${EC}: $@\n" >> $LOGFILE 2>&1
 }
@@ -46,7 +41,19 @@ preinstallcheck() {
     fi
 }
 
+echo ""
+echo ""
+echo ""
+echo "    ____            _  _____  _      _  __"
+echo "   |  _ \  ___   __| || ____|| |    | |/ /"
+echo "   | |_) |/ _ \ / _\` ||  _|  | |    | ' / "
+echo "   |  _ <|  __/| (_| || |___ | |___ | . \ "
+echo "   |_| \__\___| \____||_____||_____||_|\_\\"
+echo ""
+echo ""
+echo ""   
 echo "This script will install and configure necessary components for RedELK on Cobalt Strike teamservers"
+echo "`date +'%b %e %R'` $INSTALLER - Starting installer" | tee $LOGFILE
 printf "`date +'%b %e %R'` $INSTALLER - Starting installer\n" > $LOGFILE 2>&1
 
 if ! [ $# -eq 3 ] ; then
@@ -60,21 +67,27 @@ fi
 
 preinstallcheck
 
-echo "Adding GPG key of Elastic"
+#set locale for current session and default locale
+echo "[*] Setting locale" | tee -a $LOGFILE
+export LC_ALL="en_US.UTF-8"
+printf 'LANG=en_US.UTF-8\nLC_ALL=en_US.UTF-8\n' > /etc/default/locale >> $LOGFILE 2>&1
+locale-gen >> $LOGFILE 2>&1
+
+echo "[*] Adding GPG key of Elastic" | tee -a $LOGFILE
 wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add - >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not add GPG key (Error Code: $ERROR)."
 fi
 
-echo "Installing apt-transport-https"
+echo "[*] Installing apt-transport-https" | tee -a $LOGFILE
 apt-get install -y apt-transport-https >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install apt-transport-https (Error Code: $ERROR)."
 fi
 
-echo "Adding Elastic APT repository"
+echo "[*] Adding Elastic APT repository" | tee -a $LOGFILE
 if [ ! -f  /etc/apt/sources.list.d/elastic-7.x.list ]; then
     echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | tee -a /etc/apt/sources.list.d/elastic-7.x.list >> $LOGFILE 2>&1
 fi
@@ -83,90 +96,90 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not add APT repository (Error Code: $ERROR)."
 fi
 
-echo "Updating APT"
+echo "[*] Updating APT" | tee -a $LOGFILE
 apt-get update  >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not update APT (Error Code: $ERROR)."
 fi
 
-echo "Installing filebeat ..."
+echo "[*] Installing filebeat" | tee -a $LOGFILE
 apt-get install -y filebeat=$ELKVERSION >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install filebeat (Error Code: $ERROR)."
 fi
 
-echo "Setting filebeat to auto start after reboot"
+echo "[*] Setting filebeat to auto start after reboot" | tee -a $LOGFILE
 systemctl enable filebeat >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not change auto boot settings (Error Code: $ERROR)."
 fi
 
-echo "Making backup of original filebeat config"
+echo "[*] Making backup of original filebeat config" | tee -a $LOGFILE
 mv /etc/filebeat/filebeat.yml /etc/filebeat/filebeat.yml.ori >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not make backup (Error Code: $ERROR)."
 fi
 
-echo "Copying new config file"
+echo "[*] Copying new config file" | tee -a $LOGFILE
 cp ./filebeat/filebeat_cobaltstrike.yml /etc/filebeat/filebeat.yml >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not copy filebeat config (Error Code: $ERROR)."
 fi
 
-echo "Copying ca file "
+echo "[*] Copying ca file" | tee -a $LOGFILE
 cp ./filebeat/redelkCA.crt /etc/filebeat/ >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not copy ca file (Error Code: $ERROR)."
 fi
 
-echo "Altering hostname field in filebeat config"
+echo "[*] Altering hostname field in filebeat config" | tee -a $LOGFILE
 sed -i s/'@@HOSTNAME@@'/$1/g /etc/filebeat/filebeat.yml  >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not change hostname field in filebeat config (Error Code: $ERROR)."
 fi
 
-echo "Altering attackscenario field in filebeat config "
+echo "[*] Altering attackscenario field in filebeat config" | tee -a $LOGFILE
 sed -i s/'@@ATTACKSCENARIO@@'/$2/g /etc/filebeat/filebeat.yml >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not change attackscenario field in filebeat config (Error Code: $ERROR)."
 fi
 
-echo "Altering log destination field in filebeat config "
+echo "[*] Altering log destination field in filebeat config" | tee -a $LOGFILE
 sed -i s/'@@HOSTANDPORT@@'/$3/g /etc/filebeat/filebeat.yml >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not change log destination field in filebeat config (Error Code: $ERROR)."
 fi
 
-echo "Starting filebeat"
+echo "[*] Starting filebeat" | tee -a $LOGFILE
 service filebeat start >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not start filebeat (Error Code: $ERROR)."
 fi
 
-echo "Creating scponly user"
+echo "[*] Creating scponly user" | tee -a $LOGFILE
 grep scponly /etc/passwd > /dev/null
 EXIT=$?
 if [ $EXIT -ne 0  ]; then
     useradd -m -p $(openssl passwd -1 `head /dev/urandom | tr -dc A-Za-z0-9 | head -c20`) -s /usr/sbin/rush scponly
 else
-    echo "User scponly already exists"
+    echo "[*] User scponly already exists" | tee -a $LOGFILE
 fi  >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not create scponly user (Error Code: $ERROR)."
 fi
 
-echo "Setting ssh key authentication for scponly user"
+echo "[*] Setting ssh key authentication for scponly user" | tee -a $LOGFILE
 grep scponly /etc/passwd > /dev/null
 EXIT=$?
 if [ $EXIT -eq 0  ]; then
@@ -179,14 +192,14 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not set ssh key authentication for scponly user (Error Code: $ERROR)."
 fi
 
-echo "Installing rush"
+echo "[*] Installing rush" | tee -a $LOGFILE
 apt-get install -y rush >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install rush (Error Code: $ERROR)."
 fi
 
-echo "Configuring rush"
+echo "[*] Configuring rush" | tee -a $LOGFILE
 if [ -f "/etc/rush.rc" ]; then
     cp /etc/rush.rc /etc/rush.rc.old && cat << EOF > /etc/rush.rc
 # Modifications made by RedELK installer.
@@ -209,7 +222,7 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not configure rush (Error Code: $ERROR)."
 fi
 
-echo "Creating crontab for local rscync of cobaltstrike logs"
+echo "[*] Creating crontab for local rscync of cobaltstrike logs" | tee -a $LOGFILE
 if [ ! -f /etc/cron.d/redelk_cobaltstrike ]; then
     cp ./cron.d/redelk_cobaltstrike /etc/cron.d/redelk_cobaltstrike >> $LOGFILE 2>&1
 fi
@@ -218,36 +231,35 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not create crontab for local rsync of cobaltstrike logs (Error Code: $ERROR)."
 fi
 
-echo "Creating RedELK log directory"
+echo "[*] Creating RedELK log directory" | tee -a $LOGFILE
 mkdir -p /var/log/redelk >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not create RedELK log directory (Error Code: $ERROR)."
 fi
 
-echo "Copying RedELK background running scripts"
+echo "[*] Copying RedELK background running scripts" | tee -a $LOGFILE
 mkdir -p /usr/share/redelk/bin && cp -r ./scripts/* /usr/share/redelk/bin/ && chmod -R 775 /usr/share/redelk/bin/* >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not copy background running scripts (Error Code: $ERROR)."
 fi
 
-# things for CS data parsing
-echo "Installing Python3 pip"
+echo "[*] Installing Python3 pip" | tee -a $LOGFILE
 apt-get install -y python3-pip >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install Python3 pip (Error Code: $ERROR)."
 fi
 
-echo "Installing pip modules for CS .bin parsing"
+echo "[*] Installing pip modules for CS .bin parsing" | tee -a $LOGFILE
 pip3 install javaobj-py3 >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install pip modules for .bin parsing (Error Code: $ERROR)."
 fi
 
-echo "Restarting filebeat"
+echo "[*] Restarting filebeat" | tee -a $LOGFILE
 service filebeat restart >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
@@ -263,6 +275,6 @@ if [ $ERROR -eq 0 ]; then
 fi
 
 echo ""
-echo ""
-echo "Done with setup of RedELK on teamserver."
-echo ""
+echo "" | tee -a $LOGFILE
+echo "[*] Done with setup of RedELK on teamserver." | tee -a $LOGFILE
+echo "" | tee -a $LOGFILE

@@ -13,23 +13,34 @@ CWD=`pwd`
 ELKVERSION="7.9.2"
 
 echo ""
-echo "`date +'%b %e %R'` $INSTALLER - Starting installer"
+echo ""
+echo ""
+echo "    ____            _  _____  _      _  __"
+echo "   |  _ \  ___   __| || ____|| |    | |/ /"
+echo "   | |_) |/ _ \ / _\` ||  _|  | |    | ' / "
+echo "   |  _ <|  __/| (_| || |___ | |___ | . \ "
+echo "   |_| \__\___| \____||_____||_____||_|\_\\"
+echo ""
+echo ""
+echo ""   
+echo "`date +'%b %e %R'` $INSTALLER - Starting installer" | tee $LOGFILE
 printf "`date +'%b %e %R'` $INSTALLER - Starting installer\n" > $LOGFILE 2>&1
 echo "This script will install and configure necessary components for RedELK on ELK server"
 echo ""
+echo ""
 
 if [ ${#} -ne 0 ] && [ ${1} = "limited" ]; then
-    echo "Parameter 'limited' found. Going for the limited RedELK experience."
+    echo "Parameter 'limited' found. Going for the limited RedELK experience." | tee -a $LOGFILE
     echo ""
     echo "5 Seconds to abort"
     echo ""
     sleep 5
     WHATTOINSTALL=limited
 else
-    echo "No 'limited' parameter found. Going for the full RedELK installation including: "
-    echo " - RedELK"
-    echo " - Jupyter notebooks"
-    echo " - BloodHound / Neo4j"
+    echo "No 'limited' parameter found. Going for the full RedELK installation including: " | tee -a $LOGFILE
+    echo "- RedELK"
+    echo "- Jupyter notebooks"
+    echo "- BloodHound / Neo4j"
     echo ""
     echo "5 Seconds to abort"
     echo ""
@@ -42,13 +53,13 @@ echoerror() {
 }
 
 preinstallcheck() {
-    echo "Starting pre installation checks"
+    echo "[*] Starting pre installation checks" | tee -a $LOGFILE
 
     SHOULDEXIT=false
 
     # Checking if OS is Debian / APT based
     if [ ! -f  /etc/debian_version ]; then
-        echo "[X] This system does not seem to be Debian/APT-based. RedELK installer only supports Debian/APT based systems."
+        echo "[X] This system does not seem to be Debian/APT-based. RedELK installer only supports Debian/APT based systems."  | tee -a $LOGFILE
         echoerror "System is not Debian/APT based. Not supported. Quitting."
         SHOULDEXIT=true
     fi
@@ -57,11 +68,11 @@ preinstallcheck() {
     if [ -n "$(dpkg -s logstash 2>/dev/null| grep Status)" ]; then
         INSTALLEDVERSION=`dpkg -s logstash |grep Version|awk '{print $2}'|sed 's/^1\://g'|sed 's/\-1$//g'` >> $LOGFILE 2>&1
         if [ "$INSTALLEDVERSION" != "$ELKVERSION" ]; then
-            echo "[X] Logstash: installed version $INSTALLEDVERSION, required version $ELKVERSION. Please fix manually."
+            echo "[X] Logstash: installed version $INSTALLEDVERSION, required version $ELKVERSION. Please fix manually."  | tee -a $LOGFILE
             echoerror "Logstash version mismatch. Please fix manually."
             SHOULDEXIT=true
         else
-            echo "[!] Logstash: required version is installed ($INSTALLEDVERSION). Should be good. Stopping now before continuing installation."
+            echo "[!] Logstash: required version is installed ($INSTALLEDVERSION). Should be good. Stopping now before continuing installation." | tee -a $LOGFILE
             service logstash stop
             ERROR=$?
             if [ $ERROR -ne 0 ]; then
@@ -73,11 +84,11 @@ preinstallcheck() {
     if [ -n "$(dpkg -s elasticsearch 2>/dev/null| grep Status)" ]; then
         INSTALLEDVERSION=`dpkg -s elasticsearch |grep Version|awk '{print $2}'` >> $LOGFILE 2>&1
         if [ "$INSTALLEDVERSION" != "$ELKVERSION" ]; then
-            echo "[X] Elasticsearch: installed version $INSTALLEDVERSION, required version $ELKVERSION. Please fix manually."
+            echo "[X] Elasticsearch: installed version $INSTALLEDVERSION, required version $ELKVERSION. Please fix manually." | tee -a $LOGFILE
             echoerror "Elasticsearch version mismatch. Please fix manually."
             SHOULDEXIT=true
         else
-            echo "[!] Elasticsearch: required version is installed ($INSTALLEDVERSION). Should be good. Stopping now before continuing installation."
+            echo "[!] Elasticsearch: required version is installed ($INSTALLEDVERSION). Should be good. Stopping now before continuing installation." | tee -a $LOGFILE 
             service elasticsearch stop
             ERROR=$?
             if [ $ERROR -ne 0 ]; then
@@ -92,53 +103,53 @@ preinstallcheck() {
     # check for full or limited install
     if [ ${WHATTOINSTALL} = "limited" ]; then
         if [ ${AVAILABLE_MEMORY} -le 3999 ]; then
-            echo "less than recommended 8GB memory found - yolo continuing"
+            echo "[!] Less than recommended 8GB memory found - yolo continuing" | tee -a $LOGFILE
             ES_MEMORY=1g
         elif [ ${AVAILABLE_MEMORY} -ge 4000 -a ${AVAILABLE_MEMORY} -le 7999 ]; then
-            echo "less than recommended 8GB memory found - yolo continuing"
+            echo "[!] Less than recommended 8GB memory found - yolo continuing" | tee -a $LOGFILE
             ES_MEMORY=2g
         elif [ ${AVAILABLE_MEMORY} -ge 8000 ]; then
-            echo "8GB or more memory found"
+            echo "[*] 8GB or more memory found" | tee -a $LOGFILE
             ES_MEMORY=4g
         fi
     else # going for full install means in check in determine how much memory NEO4J and ES get
         if [ ${AVAILABLE_MEMORY} -le 7999 ]; then
-            echo "[X] Not enough memory for full install (less than 8GB). Quitting."
+            echo "[X] Not enough memory for full install (less than 8GB). Quitting." | tee -a $LOGFILE
             SHOULDEXIT=true
         elif [ ${AVAILABLE_MEMORY} -ge 8000 ] &&  [ ${AVAILABLE_MEMORY} -le 8999 ]; then
-            echo "8-9GB memory found"
+            echo "[*] 8-9GB memory found" | tee -a $LOGFILE
             ES_MEMORY=1g
             NEO4J_MEMORY=2G
         elif [ ${AVAILABLE_MEMORY} -ge 9000 ] && [ ${AVAILABLE_MEMORY} -le 9999 ]; then
-            echo "9-10GB memory found"
+            echo "[*] 9-10GB memory found" | tee -a $LOGFILE
             ES_MEMORY=1g
             NEO4J_MEMORY=3G
         elif [ ${AVAILABLE_MEMORY} -ge 10000 ] && [ ${AVAILABLE_MEMORY} -le 10999 ]; then
-            echo "10-11GB memory found"
+            echo "[*] 10-11GB memory found" | tee -a $LOGFILE
             ES_MEMORY=2g
             NEO4J_MEMORY=3G
         elif [ ${AVAILABLE_MEMORY} -ge 11000 ] && [ ${AVAILABLE_MEMORY} -le 11999 ]; then
-            echo "11-12GB memory found"
+            echo "[*] 11-12GB memory found" | tee -a $LOGFILE
             ES_MEMORY=2g
             NEO4J_MEMORY=4G
         elif [ ${AVAILABLE_MEMORY} -ge 12000 ] && [ ${AVAILABLE_MEMORY} -le 12999 ]; then
-            echo "12-13GB memory found"
+            echo "[*] 12-13GB memory found" | tee -a $LOGFILE
             ES_MEMORY=3g
             NEO4J_MEMORY=4G
         elif [ ${AVAILABLE_MEMORY} -ge 13000 ] && [ ${AVAILABLE_MEMORY} -le 13999 ]; then
-            echo "13-14GB memory found"
+            echo "[*] 13-14GB memory found" | tee -a $LOGFILE
             ES_MEMORY=3g
             NEO4J_MEMORY=4500M
         elif [ ${AVAILABLE_MEMORY} -ge 14000 ] && [ ${AVAILABLE_MEMORY} -le 14999 ]; then
-            echo "14-15GB memory found"
+            echo "[*] 14-15GB memory found" | tee -a $LOGFILE
             ES_MEMORY=3g
             NEO4J_MEMORY=5G
         elif [ ${AVAILABLE_MEMORY} -ge 15000 ] && [ ${AVAILABLE_MEMORY} -le 15999 ]; then
-            echo "15-16GB memory found"
+            echo "[*] 15-16GB memory found" | tee -a $LOGFILE
             ES_MEMORY=4g
             NEO4J_MEMORY=5G
         elif [ ${AVAILABLE_MEMORY} -ge 16000 ]; then
-            echo "16GB or more memory found"
+            echo "[*] 16GB or more memory found" | tee -a $LOGFILE
             ES_MEMORY=5g
             NEO4J_MEMORY=5G
         fi
@@ -149,29 +160,72 @@ preinstallcheck() {
     fi
 }
 
+upcheck_elasticsearch() {
+    COUNTER=0
+    RECHECK=true
+    while [ "$RECHECK" = true ]; do
+        touch /tmp/esupcheck.txt
+        curl -XGET 'http://localhost:9200/' -o /tmp/esupcheck.txt >> $LOGFILE 2>&1
+        if [ -n "$(grep 'name' /tmp/esupcheck.txt)" ]; then
+            RECHECK=false
+        else
+            echo "[!] Elasticsearch not up, sleeping another few seconds." | tee -a $LOGFILE
+            sleep 5
+            COUNTER=$((COUNTER+1))
+            if [ $COUNTER -eq "20" ]; then
+                echo "[!] Elasticsearch still not up, waited for way too long. Continuing and hoping for the best."  | tee -a $LOGFILE
+                RECHECK=false
+            fi
+        fi
+        rm /tmp/esupcheck.txt
+    done
+}
+
+upcheck_kibana() {
+    COUNTER=0
+    RECHECK=true
+    while [ "$RECHECK" = true ]; do
+        touch /tmp/kibanaupcheck.txt
+        curl -XGET 'http://localhost:5601/status' -I -o /tmp/kibanaupcheck.txt >> $LOGFILE 2>&1
+        if [ -n "$(grep '200 OK' /tmp/kibanaupcheck.txt)" ]; then
+            RECHECK=false
+        else
+            echo "[!] Kibana not up yet, sleeping another few seconds." | tee -a $LOGFILE
+            sleep 5
+            COUNTER=$((COUNTER+1))
+            if [ $COUNTER -eq "20" ]; then
+                echo "[!] Kibana still not up, waited for way too long. Continuing and hoping for the best."  | tee -a $LOGFILE
+                RECHECK=false
+            fi
+        fi
+        rm /tmp/kibanaupcheck.txt
+    done
+}
+
+
 
 preinstallcheck
 #set locale for current session and default locale
-echo "Setting locale"
+echo "[*] Setting locale" | tee -a $LOGFILE
 export LC_ALL="en_US.UTF-8"
 printf 'LANG=en_US.UTF-8\nLC_ALL=en_US.UTF-8\n' > /etc/default/locale >> $LOGFILE 2>&1
 locale-gen >> $LOGFILE 2>&1
 
-echo "Adding GPG key of Elastic"
+echo "[*] Adding GPG key of Elastic" | tee -a $LOGFILE
 wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add - >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not add GPG key (Error Code: $ERROR)."
 fi
 
-echo "Installing apt-transport-https"
+echo "[*] Installing apt-transport-https" | tee -a $LOGFILE
 apt-get install -y apt-transport-https >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install apt-transport-https (Error Code: $ERROR)."
 fi
 
-echo "Adding Elastic APT repository"
+echo "[*] Adding Elastic APT repository" | tee -a $LOGFILE
 if [ ! -f  /etc/apt/sources.list.d/elastic-7.x.list ]; then
     echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | tee -a /etc/apt/sources.list.d/elastic-7.x.list >> $LOGFILE 2>&1
 fi
@@ -180,56 +234,56 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not add APT repository (Error Code: $ERROR)."
 fi
 
-echo "Updating APT"
+echo "[*] Updating APT" | tee -a $LOGFILE
 apt-get update  >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not update APT (Error Code: $ERROR)."
 fi
 
-echo "Installing openjdk-11-jre-headless"
+echo "[*] Installing openjdk-11-jre-headless" | tee -a $LOGFILE
 apt-get install -y openjdk-11-jre-headless >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install openjdk-11-jre-headless (Error Code: $ERROR)."
 fi
 
-echo "Installing logstash"
+echo "[*] Installing logstash" | tee -a $LOGFILE
 apt-get install -y logstash=1:$ELKVERSION-1 >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install logstash (Error Code: $ERROR)."
 fi
 
-echo "Copying new logstach config files"
+echo "[*] Copying new logstach config files" | tee -a $LOGFILE
 cp ./logstash/conf.d/* /etc/logstash/conf.d/ >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not copy logstash config (Error Code: $ERROR)."
 fi
 
-echo "Copying Logstash certificate files"
+echo "[*] Copying Logstash certificate files" | tee -a $LOGFILE
 cp -r ./logstash/certs /etc/logstash/ >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not copy Logstash certificate files (Error Code: $ERROR)."
 fi
 
-echo "Setting ownership of Logstash certificate files"
+echo "[*] Setting ownership of Logstash certificate files" | tee -a $LOGFILE
 chown logstash /etc/logstash/certs/* >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Error with setting ownership of Logstach cert files (Error Code: $ERROR)."
 fi
 
-echo "Copying logstash Ruby scripts"
+echo "[*] Copying logstash Ruby scripts" | tee -a $LOGFILE
 cp -r ./logstash/ruby-scripts /etc/logstash/ >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not copy logstash Ruby scripts (Error Code: $ERROR)."
 fi
 
-echo "Setting logstash to auto start after reboot"
+echo "[*] Setting logstash to auto start after reboot" | tee -a $LOGFILE
 systemctl enable logstash >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
@@ -238,77 +292,77 @@ fi
 
 cd $CWD
 
-echo "Installing elasticsearch"
+echo "[*] Installing elasticsearch" | tee -a $LOGFILE
 apt-get install -y elasticsearch=$ELKVERSION >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install elasticsearch (Error Code: $ERROR)."
 fi
 
-echo "Setting elasticsearch to auto start after reboot"
+echo "[*] Setting elasticsearch to auto start after reboot" | tee -a $LOGFILE
 systemctl enable elasticsearch >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Coul not change auto boot settings (Error Code: $ERROR)."
 fi
 
-echo "Adjusting memory settings for ES"
+echo "[*] Adjusting memory settings for ES" | tee -a $LOGFILE
 sed -E -i.bak "s/Xms1g/Xms${ES_MEMORY}/g" /etc/elasticsearch/jvm.options && sed -E -i.bak2 "s/Xmx1g/Xmx${ES_MEMORY}/g" /etc/elasticsearch/jvm.options >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Coul not adjust ES memory settings (Error Code: $ERROR)."
 fi
 
-echo "Installing Kibana"
+echo "[*] Installing Kibana" | tee -a $LOGFILE
 apt-get install -y kibana=$ELKVERSION >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install Kibana (Error Code: $ERROR)."
 fi
 
-echo "Setting Kibana to auto start after reboot"
+echo "[*] Setting Kibana to auto start after reboot" | tee -a $LOGFILE
 systemctl enable kibana >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Coul not change auto boot settings (Error Code: $ERROR)."
 fi
 
-echo "Installing nginx"
+echo "[*] Installing nginx" | tee -a $LOGFILE
 apt-get install -y nginx >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install nginx (Error Code: $ERROR)."
 fi
 
-echo "Setting nginx to auto start after reboot"
+echo "[*] Setting nginx to auto start after reboot" | tee -a $LOGFILE
 systemctl enable nginx >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Coul not change auto boot settings (Error Code: $ERROR)."
 fi
 
-echo "Copying nginx config files"
+echo "[*] Copying nginx config files" | tee -a $LOGFILE
 cp ./nginx/htpasswd.users /etc/nginx/ && cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default_backup && cp ./nginx/sites-available/* /etc/nginx/sites-available && ln -s /etc/nginx/sites-available/jupyter /etc/nginx/sites-enabled/jupyter >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not copy nginx config (Error Code: $ERROR)."
 fi
 
-echo "Creating www dirs and setting permissions"
+echo "[*] Creating www dirs and setting permissions" | tee -a $LOGFILE
 mkdir -p /var/www/html/c2logs && chown -R www-data:www-data /var/www/html/c2logs && chmod 775 /var/www/html/c2logs >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not create WWW dirs and set permissions (Error Code: $ERROR)."
 fi
 
-echo "Copying attack-navigator files"
+echo "[*] Copying attack-navigator files" | tee -a $LOGFILE
 cp -r ./attack-navigator /var/www/html/ && chown -R www-data:www-data /var/www/html/attack-navigator && chmod u+rwX,g+rwX,o-rwx /var/www/html/attack-navigator >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not copy attack-navigator files (Error Code: $ERROR)."
 fi
 
-echo "Starting elasticsearch"
+echo "[*] Starting elasticsearch" | tee -a $LOGFILE
 systemctl start elasticsearch >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
@@ -316,21 +370,21 @@ if [ $ERROR -ne 0 ]; then
 fi
 sleep 10
 
-echo "Starting Kibana"
+echo "[*] Starting Kibana" | tee -a $LOGFILE
 systemctl start kibana >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not start Kibana (Error Code: $ERROR)."
 fi
 
-echo "Restarting nginx"
+echo "[*] Restarting nginx" | tee -a $LOGFILE
 service nginx restart >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not start nginx (Error Code: $ERROR)."
 fi
 
-echo "Creating redelk user"
+echo "[*] Creating redelk user" | tee -a $LOGFILE
 grep redelk /etc/passwd > /dev/null
 EXIT=$?
 if [ $EXIT -ne 0  ]; then
@@ -341,84 +395,64 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not create redelk user (Error Code: $ERROR)."
 fi
 
-echo "Setting up ssh keys for redelk user"
+echo "[*] Setting up ssh keys for redelk user" | tee -a $LOGFILE
 mkdir -p /home/redelk/.ssh && cp ./ssh/id* /home/redelk/.ssh/ && chown -R redelk:redelk /home/redelk/.ssh && chmod 700 /home/redelk/.ssh && chmod 600 /home/redelk/.ssh/id* >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not setup ssh keys for redelk user (Error Code: $ERROR)."
 fi
 
-echo "Copying RedELK background running scripts (remote logs, thumbnails, enrichment, alarms, etc)"
+echo "[*] Copying RedELK background running scripts (remote logs, thumbnails, enrichment, alarms, etc)" | tee -a $LOGFILE
 mkdir -p /usr/share/redelk/bin && cp -r ./scripts/* /usr/share/redelk/bin/ && chmod -R 775 /usr/share/redelk/bin/* >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not copy background running scripts (Error Code: $ERROR)."
 fi
 
-echo "Installing script dependencies"
+echo "[*] Installing script dependencies" | tee -a $LOGFILE
 apt-get install -y python3-pil python3-pip >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install script dependencies (Error Code: $ERROR)."
 fi
 
-echo "Installing Chameleon.py dependencies"
+echo "[*] Installing Chameleon.py dependencies" | tee -a $LOGFILE
 pip3 install -r /usr/share/redelk/bin/Chameleon/requirements.txt >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install Chameloen.py dependencies (Error Code: $ERROR)."
 fi
 
-echo "Installing python elasticsearch library"
+echo "[*] Installing python elasticsearch library" | tee -a $LOGFILE
 pip3 install elasticsearch >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install python elasticsearch library (Error Code: $ERROR)."
 fi
 
-echo "Installing python dependencies for alarm connectors, i.e. MS Teams"
+echo "[*] Installing python dependencies for alarm connectors, i.e. MS Teams" | tee -a $LOGFILE
 pip3 install pymsteams >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install  dependencies for alarm connectors (Error Code: $ERROR)."
 fi
 
-echo "Creating RedELK config directory"
+echo "[*] Creating RedELK config directory" | tee -a $LOGFILE
 mkdir -p /etc/redelk >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not create RedELK config directory (Error Code: $ERROR)."
 fi
 
-echo "Copying RedELK config files"
+echo "[*] Copying RedELK config files" | tee -a $LOGFILE
 cp -r ./etc/redelk/* /etc/redelk/ && chown redelk /etc/redelk/* >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not copy RedELK config files (Error Code: $ERROR)."
 fi
 
-echo "Checking if Elasticsearch is up before continuing"
-COUNTER=0
-RECHECK=true
-while [ "$RECHECK" = true ]; do
-    touch /tmp/esupcheck.txt
-    curl -XGET 'http://localhost:9200/' -o /tmp/esupcheck.txt >> $LOGFILE 2>&1
-    sleep 3
-    if [ -n "$(grep 'name' /tmp/esupcheck.txt)" ]; then
-        RECHECK=false
-    fi
-    echo "Elasticsearch not up yet, sleeping another few seconds."
-    sleep 3
-    COUNTER=$((COUNTER+1))
-    if [ $COUNTER -eq "20" ]; then
-        echoerror "Elasticsearch still not up, waited for way too long. Continuing and hoping for the best."
-        RECHECK=false
-    fi
-done
-rm /tmp/esupcheck.txt
-sleep 10 # just to give Elasticsearch some extra time.
-
-echo "Preparing the SIEM signals index"
+echo "[*] Preparing the SIEM signals index" | tee -a $LOGFILE
+upcheck_elasticsearch
 curl -X PUT "localhost:9200/.siem-signals-default?pretty" >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
@@ -426,43 +460,27 @@ if [ $ERROR -ne 0 ]; then
 fi
 sleep 1
 
-echo "Installing Elasticsearch ILM policy"
+echo "[*] Installing Elasticsearch ILM policy" | tee -a $LOGFILE
+upcheck_elasticsearch
 curl -X PUT "http://localhost:9200/_ilm/policy/redelk" -H "Content-Type: application/json" -d @./templates/redelk_elasticsearch_ilm.json >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install Elasticsearch ILM policy (Error Code: $ERROR)."
 fi
 
-echo "Installing Elasticsearch index templates"
-for i in implantsdb rtops redirtraffic bluecheck; do curl -X POST "http://localhost:9200/_template/$i" -H "Content-Type: application/json" -d @./templates/redelk_elasticsearch_template_$i.json; done >> $LOGFILE 2>&1
+echo "[*] Installing Elasticsearch index templates" | tee -a $LOGFILE
+upcheck_elasticsearch
+for i in implantsdb rtops redirtraffic; do curl -X POST "http://localhost:9200/_template/$i" -H "Content-Type: application/json" -d @./templates/redelk_elasticsearch_template_$i.json; done >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install Elasticsearch index templates (Error Code: $ERROR)."
 fi
 
-echo "Checking if Kibana is up before continuing"
-sleep 30
-COUNTER=0
-RECHECK=true
-while [ "$RECHECK" = true ]; do
-    touch /tmp/kibanaupcheck.txt
-    curl -XGET 'http://localhost:5601/status' -I -o /tmp/kibanaupcheck.txt >> $LOGFILE 2>&1
-    sleep 3
-    if [ -n "$(grep '200 OK' /tmp/kibanaupcheck.txt)" ]; then
-        RECHECK=false
-    fi
-    echo "Kibana not up yet, sleeping another few seconds."
-    sleep 3
-    COUNTER=$((COUNTER+1))
-    if [ $COUNTER -eq "20" ]; then
-        echoerror "Kibana still not up, waited for way too long. Continuing and hoping for the best."
-        RECHECK=false
-    fi
-done
-rm /tmp/kibanaupcheck.txt
-sleep 10 # just to give Kibana some extra time after systemd says Kibana is active.
+# Extra sleep seconds as Kibana often is slower in startup
+sleep 15
 
-echo "Installing Kibana index patterns"
+echo "[*] Installing Kibana index patterns" | tee -a $LOGFILE
+upcheck_kibana
 for i in ./templates/redelk_kibana_index-pattern*.ndjson; do
     curl -X POST "http://localhost:5601/api/saved_objects/_import?overwrite=true" -H 'kbn-xsrf: true' -F file=@$i
     sleep 1
@@ -472,7 +490,8 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not install Kibana index patterns (Error Code: $ERROR)."
 fi
 
-echo "Installing Kibana searches"
+echo "[*] Installing Kibana searches" | tee -a $LOGFILE
+upcheck_kibana
 curl -X POST "http://localhost:5601/api/saved_objects/_import?overwrite=true" -H 'kbn-xsrf: true' -F file=@./templates/redelk_kibana_search.ndjson >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
@@ -480,7 +499,8 @@ if [ $ERROR -ne 0 ]; then
 fi
 sleep 1
 
-echo "Installing Kibana visualizations"
+echo "[*] Installing Kibana visualizations" | tee -a $LOGFILE
+upcheck_kibana
 curl -X POST "http://localhost:5601/api/saved_objects/_import?overwrite=true" -H 'kbn-xsrf: true' -F file=@./templates/redelk_kibana_visualization.ndjson >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
@@ -488,7 +508,8 @@ if [ $ERROR -ne 0 ]; then
 fi
 sleep 1
 
-echo "Installing Kibana dashboards"
+echo "[*] Installing Kibana dashboards" | tee -a $LOGFILE
+upcheck_kibana
 curl -X POST "http://localhost:5601/api/saved_objects/_import?overwrite=true" -H 'kbn-xsrf: true' -F file=@./templates/redelk_kibana_dashboard.ndjson >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
@@ -496,7 +517,8 @@ if [ $ERROR -ne 0 ]; then
 fi
 sleep 1
 
-echo "Installing Kibana advanced settings"
+echo "[*] Installing Kibana advanced settings" | tee -a $LOGFILE
+upcheck_kibana
 curl -X POST "http://localhost:5601/api/kibana/settings" -H 'kbn-xsrf: true' -H 'Content-Type: application/json' --data @./templates/redelk_kibana_settings.json >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
@@ -504,7 +526,8 @@ if [ $ERROR -ne 0 ]; then
 fi
 sleep 1
 
-echo "Installing Kibana SIEM detection rules (for MITRE ATT&CK mapping)"
+echo "[*] Installing Kibana SIEM detection rules (for MITRE ATT&CK mapping)" | tee -a $LOGFILE
+upcheck_kibana
 curl -X POST "http://localhost:5601/api/detection_engine/rules/_import?overwrite=true" -H 'kbn-xsrf: true' -F file=@./templates/redelk_siem_detection_rules.ndjson >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
@@ -512,21 +535,22 @@ if [ $ERROR -ne 0 ]; then
 fi
 sleep 1
 
-echo "Creating RedELK log directory"
+echo "[*] Creating RedELK log directory" | tee -a $LOGFILE
 mkdir -p /var/log/redelk >> $LOGFILE 2>&1 && chown -R redelk:redelk /var/log/redelk >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not create RedELK log directory (Error Code: $ERROR)."
 fi
 
-echo "Starting logstash"
+echo "[*] Starting logstash" | tee -a $LOGFILE
 systemctl start logstash >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not start logstash (Error Code: $ERROR)."
 fi
 
-echo "Inserting the superawesomesauce RedELK logo into Kibana"
+echo "[*] Inserting the superawesomesauce RedELK logo into Kibana" | tee -a $LOGFILE
+upcheck_kibana
 curl 'http://localhost:5601/api/spaces/space/default?overwrite=true' -H 'kbn-xsrf: true' -X PUT -H 'Content-Type: application/json' -d @./kibana/redelklogo.json >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
@@ -534,14 +558,14 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 if [ ${WHATTOINSTALL} = "full" ]; then
-    echo "Installing Docker.io"
+    echo "[*] Installing Docker.io" | tee -a $LOGFILE
     apt-get install -y docker.io >> $LOGFILE 2>&1
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echoerror "Could not install Docker.io (Error Code: $ERROR)."
     fi
 
-    echo "Creating Docker bridged network"
+    echo "[*] Creating Docker bridged network" | tee -a $LOGFILE
     # checking of network is already there, perhaps due to aborted/crashed/previous install
     docker network ls 2> /dev/null | grep dockernetredelk > /dev/null
     ERROR=$?
@@ -553,63 +577,63 @@ if [ ${WHATTOINSTALL} = "full" ]; then
         fi
     fi
 
-    echo "Creating Jupyter Notebooks working dir and copying notebooks"
+    echo "[*] Creating Jupyter Notebooks working dir and copying notebooks" | tee -a $LOGFILE
     mkdir /usr/share/redelk/jupyter && cp ./jupyter/* /usr/share/redelk/jupyter/ && chown -R redelk:redelk /usr/share/redelk/jupyter && chmod 777 /usr/share/redelk/jupyter >> $LOGFILE 2>&1
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echoerror "Could not create Jupyter working dir or copy notebooks (Error Code: $ERROR)."
     fi
 
-    echo "Installing Jupyter Notebooks docker image"
-    docker pull --quiet jupyter/scipy-notebook:4a112c0f11eb >> $LOGFILE 2>&1
+    echo "[*] Installing Jupyter Notebooks docker image" | tee -a $LOGFILE
+    docker pull jupyter/scipy-notebook:4a112c0f11eb >> $LOGFILE 2>&1
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echoerror "Could not install Jupyter docker image (Error Code: $ERROR)."
     fi
 
-    echo "Starting Jupyter Notebooks docker image"
+    echo "[*] Starting Jupyter Notebooks docker image" | tee -a $LOGFILE
     docker run --restart unless-stopped --name jupyter-notebook -d --network dockernetredelk --ip 192.168.254.2 -p8888:8888 --add-host="elasticsearch:192.168.254.1" --add-host="bloodhound:192.168.254.3"  -v /usr/share/redelk/jupyter:/home/jovyan/work jupyter/scipy-notebook start-notebook.sh --NotebookApp.token='' --NotebookApp.password='' --NotebookApp.allow_remote_access='True' --NotebookApp.allow_origin='*' --NotebookApp.base_url='/jupyter/' >> $LOGFILE 2>&1
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echoerror "Could not start Jupyter docker image (Error Code: $ERROR)."
     fi
 
-    echo "Modifying elasticsearch config file to include docker ip interface"
+    echo "[*] Modifying elasticsearch config file to include docker ip interface" | tee -a $LOGFILE
     DOCKERIP="192.168.254.1" && cp /etc/elasticsearch/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml.backup && echo 'network.bind_host: ["127.0.0.1","'$DOCKERIP'"]' >> /etc/elasticsearch/elasticsearch.yml
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echoerror "Error with modifying elasticsearch config file to include docker ip interface (Error Code: $ERROR)."
     fi
 
-    echo "Modifying elasticsearch config file to allow external access from docker interface"
+    echo "[*] Modifying elasticsearch config file to allow external access from docker interface" | tee -a $LOGFILE
     sed -E -i.bak "s/#bootstrap.memory_lock: true/bootstrap.memory_lock: true/g" /etc/elasticsearch/elasticsearch.yml && echo 'discovery.type: "single-node"' >> /etc/elasticsearch/elasticsearch.yml
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echoerror "Error with modifying elasticsearch config file to allow external access from docker interface (Error Code: $ERROR)."
     fi
 
-    echo "Restarting Elasticsearch with new config"
+    echo "[*] Restarting Elasticsearch with new config" | tee -a $LOGFILE
     systemctl restart elasticsearch >> $LOGFILE 2>&1
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echoerror "Could not restart Elasticsearch (Error Code: $ERROR)."
     fi
 
-    echo "Creating Neo4j/BloodHound working dir"
+    echo "[*] Creating Neo4j/BloodHound working dir" | tee -a $LOGFILE
     mkdir -p /usr/share/redelk/neo4j/data && mkdir /usr/share/redelk/neo4j/logs && mkdir /usr/share/redelk/neo4j/import && mkdir /usr/share/redelk/neo4j/plugins && chown -R redelk:redelk /usr/share/redelk/neo4j >> $LOGFILE 2>&1
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echoerror "Could not create Neo4j/BloodHound working dir or copy notebooks (Error Code: $ERROR)."
     fi
 
-    echo "Installing Neo4j/BloodHound docker image"
-    docker pull --quiet specterops/bloodhound-neo4j >> $LOGFILE 2>&1
+    echo "[*] Installing Neo4j/BloodHound docker image" | tee -a $LOGFILE
+    docker pull specterops/bloodhound-neo4j >> $LOGFILE 2>&1
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echoerror "Could not install  Neo4j/BloodHound docker image (Error Code: $ERROR)."
     fi
 
-    echo "Starting Neo4j/BloodHound docker image"
+    echo "[*] Starting Neo4j/BloodHound docker image" | tee -a $LOGFILE
     docker run --restart unless-stopped --name bloodhound -d --network dockernetredelk --ip 192.168.254.3 -p7474:7474 -p7687:7687 --add-host="elasticsearch:192.168.254.1" --add-host="jupyter:192.168.254.2" -v /usr/share/redelk/neo4j/data:/data -v /usr/share/redelk/neo4j/logs:/logs -v /usr/share/redelk/neo4j/import:/var/lib/neo4j/import -v /usr/share/redelk/neo4j/plugins:/plugins --env NEO4J_AUTH=neo4j/BloodHound --env NEO4J_dbms_memory_heap_initial__size=${NEO4J_MEMORY} --env NEO4J_dbms_memory_heap_max__size=${NEO4J_MEMORY} --env NEO4J_dbms_memory_pagecache_size=${NEO4J_MEMORY} specterops/bloodhound-neo4j >> $LOGFILE 2>&1
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
@@ -617,7 +641,7 @@ if [ ${WHATTOINSTALL} = "full" ]; then
     fi
 fi
 
-echo "Creating crontab for redelk user actions"
+echo "[*] Creating crontab for redelk user actions" | tee -a $LOGFILE
 cp ./cron.d/redelk /etc/cron.d/redelk >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
@@ -629,29 +653,29 @@ ERROR=$?
 if [ $ERROR -eq 0 ]; then
     echo "[X] There were errors while running this installer. Manually check the log file $LOGFILE. Exiting now."
     exit
-fi
 
-echo ""
-echo ""
-echo ""
-echo " Done with base setup of RedELK on ELK server"
-echo " You can now login with redelk:redelk on "
-echo "   - Main RedELK Kibana interface on port 80 (redelk:redelk)"
+
+echo "" | tee -a $LOGFILE
+echo "" | tee -a $LOGFILE
+echo "" | tee -a $LOGFILE
+echo " Done with base setup of RedELK on ELK server" | tee -a $LOGFILE
+echo " You can now login with redelk:redelk on " | tee -a $LOGFILE
+echo "   - Main RedELK Kibana interface on port 80 (redelk:redelk)" | tee -a $LOGFILE
 if [ ${WHATTOINSTALL} != "limited" ]; then
-    echo "   - RedELK Jupyter notebook on port 88 (redelk:redelk)"
-    echo "   - Neo4J using the Neo4J browser on port 7474"
-    echo "   - Neo4J using the BloodHound app on bolt://$IP:7687 (neo4j:BloodHound)"
+    echo "   - RedELK Jupyter notebook on port 88 (redelk:redelk)" | tee -a $LOGFILE
+    echo "   - Neo4J using the Neo4J browser on port 7474" | tee -a $LOGFILE
+    echo "   - Neo4J using the BloodHound app on bolt://$IP:7687 (neo4j:BloodHound)" | tee -a $LOGFILE
 fi
+echo "" | tee -a $LOGFILE
+echo "" | tee -a $LOGFILE
+echo "" | tee -a $LOGFILE
+echo " !!! WARNING" | tee -a $LOGFILE
+echo " !!! WARNING - IF YOU WANT FULL FUNCTIONALITY YOU ARE NOT DONE YET !!!" | tee -a $LOGFILE
+echo " !!! WARNING" | tee -a $LOGFILE
 echo ""
-echo ""
-echo ""
-echo " !!! WARNING"
-echo " !!! WARNING - IF YOU WANT FULL FUNCTIONALITY YOU ARE NOT DONE YET !!!"
-echo " !!! WARNING"
-echo ""
-echo " You should really:"
-echo "   - adjust the /etc/cron.d/redelk file to include your teamservers"
-echo "   - adjust all config files in /etc/redelk/ to include your specifics like VT API, email server details, etc"
-echo "   - reset default nginx credentials by adjusting the file /etc/nginx/htpasswd.users. You can use the htpasswd tool from apache2-utils package"
-echo ""
-echo ""
+echo " You should really:" | tee -a $LOGFILE
+echo "   - adjust the /etc/cron.d/redelk file to include your teamservers" | tee -a $LOGFILE
+echo "   - adjust all config files in /etc/redelk/ to include your specifics like VT API, email server details, etc" | tee -a $LOGFILE
+echo "   - reset default nginx credentials by adjusting the file /etc/nginx/htpasswd.users. You can use the htpasswd tool from apache2-utils package" | tee -a $LOGFILE
+echo "" | tee -a $LOGFILE
+echo "" | tee -a $LOGFILE
