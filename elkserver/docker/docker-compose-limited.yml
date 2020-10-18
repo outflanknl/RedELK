@@ -1,0 +1,110 @@
+#
+# Part of RedELK
+# Docker compose config for RedELK
+#
+# Author: Outflank B.V. / Marc Smeets
+#
+#
+
+version: "3.3"
+
+networks:
+  dockernetredelk:
+    driver: bridge
+
+volumes:
+  redelk_es_data:
+    driver: local
+  redelk_logstash_data:
+    driver: local
+  redelk_kibana_data:
+    driver: local
+
+services:
+  elasticsearch:
+    container_name: redelk-elasticsearch
+    image: marcoverip/redelk_elasticsearch:V2beta2
+    networks:
+      - dockernetredelk
+    expose:
+      - "9200"
+    volumes:
+      - redelk_es_data:/usr/share/elasticsearch/data
+    environment:
+      - discovery.type=single-node
+      - cluster.name=redelk-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+    #  - xpack.security.enabled=false
+    #  - xpack.watcher.enabled=false
+    restart: always
+
+  logstash:
+    container_name: redelk-logstash
+    image: docker.elastic.co/logstash/logstash:7.9.2
+    networks:
+      - dockernetredelk
+    ports:
+      - "5044:5044"
+    volumes:
+      - ./redelk-logstash/live/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml
+      - ./redelk-logstash/live/config/conf.d:/etc/logstash/conf.d
+      - ./redelk-logstash/live/config/certs:/etc/logstash/certs
+      - ./redelk-logstash/live/config/ruby-scripts:/etc/logstash/ruby-scripts
+      - ./redelk-base/live/redelklogs/redteamdomaincheck.txt:/var/log/redelk/redteamdomaincheck.txt
+      - redelk_logstash_data:/usr/share/logstash/data
+    environment:
+      - node.name=redelk-logstash
+      - config.reload.automatic:true
+      #- path.data=/var/lib/logstash
+      #- path.logs=/var/log/logstash
+    restart: always
+    depends_on:
+      - elasticsearch
+
+  kibana:
+    container_name: redelk-kibana
+    image: docker.elastic.co/kibana/kibana:7.9.2
+    networks:
+      - dockernetredelk
+    expose:
+      - "5601"
+    volumes:
+      - redelk_kibana_data:/usr/share/kibana/data
+    environment:
+      - ELASTICSEARCH_URL=http://redelk-elasticsearch:9200
+      - ELASTICSEARCH_HOSTS=http://redelk-elasticsearch:9200
+      - xpack.security.enabled=false
+    restart: always
+    depends_on:
+      - logstash
+
+  base:
+    container_name: redelk-base
+    image: marcoverip/redelk_base:V2beta2
+    networks:
+      - dockernetredelk
+    volumes:
+      - ./redelk-base/live/var_www_html:/var/www/html
+      - ./redelk-base/live/config/cron.d/redelk:/etc/cron.d/redelk
+      - ./redelk-base/live/config/etc/redelk:/etc/redelk
+      - ./redelk-base/live/ssh:/home/scponly/.ssh
+      - ./redelk-base/live/redelklogs:/var/log/redelk
+    depends_on:
+      - kibana
+
+  nginx:
+    container_name: redelk-nginx
+    image: nginx:latest
+    networks:
+      - dockernetredelk
+    volumes:
+      - ./redelk-nginx/config/default.conf:/etc/nginx/conf.d/default.conf
+      - ./redelk-nginx/config/htpasswd.users:/etc/nginx/htpasswd.users
+      - ./redelk-base/live/var_www_html:/var/www/html
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: always
+    depends_on:
+      - base
