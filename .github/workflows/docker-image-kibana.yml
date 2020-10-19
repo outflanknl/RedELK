@@ -10,7 +10,7 @@ on:
       - 'v*'
     paths:
       - 'docker/redelk-kibana/**'
-      - '.github/workflows/docker-image-kibana.yaml'
+      - '.github/workflows/docker-image-kibana.yml'
   pull_request:
     branches:
       - 'master'
@@ -18,7 +18,7 @@ on:
       - 'v*'
     paths:
       - 'docker/redelk-kibana/**'
-      - '.github/workflows/docker-image-kibana.yaml'
+      - '.github/workflows/docker-image-kibana.yml'
 
 jobs:
   docker:

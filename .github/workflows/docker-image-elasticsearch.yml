@@ -10,7 +10,7 @@ on:
       - 'v*'
     paths:
       - 'docker/redelk-elasticsearch/**'
-      - '.github/workflows/docker-image-elasticsearch.yaml'
+      - '.github/workflows/docker-image-elasticsearch.yml'
   pull_request:
     branches:
       - 'master'
@@ -18,7 +18,7 @@ on:
       - 'v*'
     paths:
       - 'docker/redelk-elasticsearch/**'
-      - '.github/workflows/docker-image-elasticsearch.yaml'
+      - '.github/workflows/docker-image-elasticsearch.yml'
 
 jobs:
   docker:
