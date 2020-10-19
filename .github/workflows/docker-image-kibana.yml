@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - 'master'
+      - 'maindev'
       - 'v*'
     tags:
       - 'v*'
@@ -13,6 +14,7 @@ on:
   pull_request:
     branches:
       - 'master'
+      - 'maindev'
       - 'v*'
     paths:
       - 'docker/redelk-kibana/**'
