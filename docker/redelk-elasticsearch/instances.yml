@@ -1,0 +1,19 @@
+instances:
+  - name: redelk-elasticsearch
+    dns:
+      - redelk-elasticsearch
+      - localhost
+    ip:
+      - 127.0.0.1
+  - name: redelk-kibana
+    dns:
+      - redelk-kibana
+      - localhost
+    ip:
+      - 127.0.0.1
+  - name: redelk-logstash
+    dns:
+      - redelk-logstash
+      - localhost
+    ip:
+      - 127.0.0.1
