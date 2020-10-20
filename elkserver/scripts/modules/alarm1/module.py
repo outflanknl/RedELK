@@ -40,7 +40,8 @@ class Module():
         ret['hits'] = {}
         ret['hits']['hits'] = alarmLines
         ret['hits']['total'] = len(alarmLines)
-        ret['results'] = results
+        ret['fields'] = ['_source.http.request.body.content', '_source.source.nat.ip', '_source.source.geo.country_name', '_source.source.as.organization.name', '_source.redir.frontend.name', '_source.redir.backend.name', '_source.infra.attack_scenario', '_source.tags', '_source.redir.timestamp']
+        #ret['results'] = results
         print("[a] finished running module %s . result: %s hits"%(ret['info']['name'],ret['hits']['total']))
         #print(ret)
         return(ret)

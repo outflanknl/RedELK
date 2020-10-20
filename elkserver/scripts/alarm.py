@@ -54,6 +54,7 @@ if __name__ == '__main__':
         aD[a]['result'] = moduleClass.run()
 
     # now we can loop over the modules once again and log the lines
+    # as this non indexed it's not sure if this will stay.
     for a in aD:
         r = aD[a]['result']
         for rHit in r['hits']['hits']:
@@ -66,6 +67,8 @@ if __name__ == '__main__':
             ri = es.index(index=ESindex, ignore=400,
                          doc_type='_doc', body=alarm)
         for c in cD:
+            #connector will process ['hits']['hits'] which contains a list of 'jsons' looking like an ES line
+            #connector will report the fields in ['hits']['fields'] for each of the lines in the list
             connector = cD[c]['m'].Module()
             #print(pprint(r))
             if r['hits']['total'] > 0:
