@@ -21,7 +21,10 @@ def getValue(path, source):
             return getValue('.'.join(p[1:]), source[p[0]])
         else:
             if p[0] == 'ip':
-                return source[p[0]][0]
+                if type(source[p[0]]) == type([]):
+                    return source[p[0]][0]
+                else:
+                    return source[p[0]]
             else:
                 return source[p[0]]
     else:
