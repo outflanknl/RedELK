@@ -1,6 +1,6 @@
 import json
 
-with open('/etc/redelk/alarm.json.conf') as json_data:
+with open('/etc/redelk/config.json') as json_data:
     d = json.load(json_data)
 
 #### General
