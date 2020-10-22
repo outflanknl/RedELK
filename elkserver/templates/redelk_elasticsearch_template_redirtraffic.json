@@ -22,136 +22,9 @@
             {
                 "labels": {
                     "mapping": {
-                        "type": "keyword"
+                        "type": "flattened"
                     },
-                    "match_mapping_type": "string",
-                    "path_match": "labels.*"
-                }
-            },
-            {
-                "container.labels": {
-                    "mapping": {
-                        "type": "keyword"
-                    },
-                    "match_mapping_type": "string",
-                    "path_match": "container.labels.*"
-                }
-            },
-            {
-                "dns.answers": {
-                    "mapping": {
-                        "type": "keyword"
-                    },
-                    "match_mapping_type": "string",
-                    "path_match": "dns.answers.*"
-                }
-            },
-            {
-                "log.syslog": {
-                    "mapping": {
-                        "type": "keyword"
-                    },
-                    "match_mapping_type": "string",
-                    "path_match": "log.syslog.*"
-                }
-            },
-            {
-                "network.inner": {
-                    "mapping": {
-                        "type": "keyword"
-                    },
-                    "match_mapping_type": "string",
-                    "path_match": "network.inner.*"
-                }
-            },
-            {
-                "observer.egress": {
-                    "mapping": {
-                        "type": "keyword"
-                    },
-                    "match_mapping_type": "string",
-                    "path_match": "observer.egress.*"
-                }
-            },
-            {
-                "observer.ingress": {
-                    "mapping": {
-                        "type": "keyword"
-                    },
-                    "match_mapping_type": "string",
-                    "path_match": "observer.ingress.*"
-                }
-            },
-            {
-                "fields": {
-                    "mapping": {
-                        "type": "keyword"
-                    },
-                    "match_mapping_type": "string",
-                    "path_match": "fields.*"
-                }
-            },
-            {
-                "docker.container.labels": {
-                    "mapping": {
-                        "type": "keyword"
-                    },
-                    "match_mapping_type": "string",
-                    "path_match": "docker.container.labels.*"
-                }
-            },
-            {
-                "kubernetes.labels.*": {
-                    "mapping": {
-                        "type": "keyword"
-                    },
-                    "match_mapping_type": "*",
-                    "path_match": "kubernetes.labels.*"
-                }
-            },
-            {
-                "kubernetes.annotations.*": {
-                    "mapping": {
-                        "type": "keyword"
-                    },
-                    "match_mapping_type": "*",
-                    "path_match": "kubernetes.annotations.*"
-                }
-            },
-            {
-                "docker.attrs": {
-                    "mapping": {
-                        "type": "keyword"
-                    },
-                    "match_mapping_type": "string",
-                    "path_match": "docker.attrs.*"
-                }
-            },
-            {
-                "azure.activitylogs.identity.claims.*": {
-                    "mapping": {
-                        "type": "keyword"
-                    },
-                    "match_mapping_type": "*",
-                    "path_match": "azure.activitylogs.identity.claims.*"
-                }
-            },
-            {
-                "kibana.log.meta": {
-                    "mapping": {
-                        "type": "keyword"
-                    },
-                    "match_mapping_type": "string",
-                    "path_match": "kibana.log.meta.*"
-                }
-            },
-            {
-                "strings_as_keyword": {
-                    "mapping": {
-                        "ignore_above": 1024,
-                        "type": "keyword"
-                    },
-                    "match_mapping_type": "string"
+                    "path_match": "alarm.alarm_*"
                 }
             }
         ],
@@ -185,6 +58,14 @@
                     "version": {
                         "ignore_above": 1024,
                         "type": "keyword"
+                    }
+                },
+                "type": "object"
+            },
+            "alarm": {
+                "properties": {
+                    "timestamp": {
+                        "type": "date"
                     }
                 },
                 "type": "object"
