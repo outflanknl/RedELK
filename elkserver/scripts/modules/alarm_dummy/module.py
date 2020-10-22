@@ -3,6 +3,7 @@
 # Part of RedELK
 #
 # Author: Lorenzo Bernardi / @fastlorenzo
+# Co-Author: Mark Bergman / @xychix
 #
 from modules.helpers import *
 import traceback
@@ -21,7 +22,7 @@ class Module():
     def __init__(self):
         #print("class init")
         pass
-    
+
     def run(self):
         ret = {}
         alarmLines = []
@@ -32,15 +33,12 @@ class Module():
         ret['hits']['total'] = 0
         if config.DEBUG > 0:
             print("[a] module %s . generating results. config.DEBUG set to %s"%(ret['info']['name'],config.DEBUG))
-            for num in range(3):
-                ret['results'][num] = {
-                    'test': {
-                        'key': 'val_%s'%num
-                        }
-                    }
-                ret['hits']['total'] = ret['hits']['total'] +1
-        #ret['hits']['total'] = len(ret['hits']['hits'])
-
+            for num in range(6):
+                line = {}
+                ret[]'key_%s'%num]: 'val_%s'%num
+                ret['hits']['hits'].append(line)
+        ret['hits']['total'] = len(ret['hits']['hits'])
+        ret['fields'] = list(ret['hits']['hits'][0].keys())
         print("[a] finished running module %s . result: %s hits"%(ret['info']['name'],ret['hits']['total']))
         #print(ret)
         return(ret)

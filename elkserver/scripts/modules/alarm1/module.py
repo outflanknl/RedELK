@@ -40,7 +40,8 @@ class Module():
         ret['hits'] = {}
         ret['hits']['hits'] = alarmLines
         ret['hits']['total'] = len(alarmLines)
-        ret['results'] = results
+        ret['fields'] = ['_source.http.request.body.content', '_source.source.nat.ip', '_source.source.geo.country_name', '_source.source.as.organization.name', '_source.redir.frontend.name', '_source.redir.backend.name', '_source.infra.attack_scenario', '_source.tags', '_source.redir.timestamp']
+        #ret['results'] = results
         print("[a] finished running module %s . result: %s hits"%(ret['info']['name'],ret['hits']['total']))
         #print(ret)
         return(ret)
@@ -77,18 +78,18 @@ class Module():
                 sip = getValue('_source.source.ip', ip)
                 if sip not in UniqueIPs:
                     UniqueIPs[sip] = {}
-            UniqueIPs[sip]['http.request.body.content'] = getValue('_source.http.request.body.content', ip)
-            UniqueIPs[sip]['source.ip'] = sip
-            UniqueIPs[sip]['source.nat.ip'] = getValue('_source.source.nat.ip', ip)
-            UniqueIPs[sip]['country_name'] = getValue('_source.source.geo.country_name', ip)
-            UniqueIPs[sip]['ISP'] = getValue('_source.source.as.organization.name', ip)
-            UniqueIPs[sip]['redir.frontend.name'] = getValue('_source.redir.frontend.name', ip)
-            UniqueIPs[sip]['redir.backend.name'] = getValue('_source.redir.backend.name', ip)
-            UniqueIPs[sip]['infra.attack_scenario'] = getValue('_source.infra.attack_scenario', ip)
-            UniqueIPs[sip]['tags'] = getValue('_source.tags', ip)
-            UniqueIPs[sip]['redir.timestamp'] = getValue('_source.redir.timestamp', ip)
-            report['alarm'] = True
-            print("[A] alarm set in %s" % report['fname'])
+                    UniqueIPs[sip]['http.request.body.content'] = getValue('_source.http.request.body.content', ip)
+                    UniqueIPs[sip]['source.ip'] = sip
+                    UniqueIPs[sip]['source.nat.ip'] = getValue('_source.source.nat.ip', ip)
+                    UniqueIPs[sip]['country_name'] = getValue('_source.source.geo.country_name', ip)
+                    UniqueIPs[sip]['ISP'] = getValue('_source.source.as.organization.name', ip)
+                    UniqueIPs[sip]['redir.frontend.name'] = getValue('_source.redir.frontend.name', ip)
+                    UniqueIPs[sip]['redir.backend.name'] = getValue('_source.redir.backend.name', ip)
+                    UniqueIPs[sip]['infra.attack_scenario'] = getValue('_source.infra.attack_scenario', ip)
+                    UniqueIPs[sip]['tags'] = getValue('_source.tags', ip)
+                    UniqueIPs[sip]['redir.timestamp'] = getValue('_source.redir.timestamp', ip)
+                    report['alarm'] = True
+                print("[A] alarm set in %s for ip %s" % report['fname'],sip)
             if 'times_seen' in UniqueIPs[sip]:
                 UniqueIPs[sip]['times_seen'] += 1
             else:
