@@ -19,11 +19,15 @@ volumes:
     driver: local
   redelk_kibana_data:
     driver: local
+  redelk_jupyter_data:
+    driver: local
+  redelk_bloodhound_data:
+    driver: local
 
 services:
   elasticsearch:
     container_name: redelk-elasticsearch
-    image: marcoverip/redelk_elasticsearch:V2beta2
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2
     networks:
       - dockernetredelk
     expose:
@@ -35,8 +39,8 @@ services:
       - cluster.name=redelk-cluster
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
-    #  - xpack.security.enabled=false
-    #  - xpack.watcher.enabled=false
+      - xpack.security.enabled=false
+      - xpack.watcher.enabled=false
     restart: always
 
   logstash:
@@ -51,7 +55,7 @@ services:
       - ./redelk-logstash/live/config/conf.d:/etc/logstash/conf.d
       - ./redelk-logstash/live/config/certs:/etc/logstash/certs
       - ./redelk-logstash/live/config/ruby-scripts:/etc/logstash/ruby-scripts
-      - ./redelk-base/live/redelklogs/redteamdomaincheck.txt:/var/log/redelk/redteamdomaincheck.txt
+      - ./redelk-base/live/redelklogs:/var/log/redelk
       - redelk_logstash_data:/usr/share/logstash/data
     environment:
       - node.name=redelk-logstash
@@ -79,32 +83,32 @@ services:
     depends_on:
       - logstash
 
-  base:
-    container_name: redelk-base
-    image: marcoverip/redelk_base:V2beta2
-    networks:
-      - dockernetredelk
-    volumes:
-      - ./redelk-base/live/var_www_html:/var/www/html
-      - ./redelk-base/live/config/cron.d/redelk:/etc/cron.d/redelk
-      - ./redelk-base/live/config/etc/redelk:/etc/redelk
-      - ./redelk-base/live/ssh:/home/scponly/.ssh
-      - ./redelk-base/live/redelklogs:/var/log/redelk
-    depends_on:
-      - kibana
-
   nginx:
     container_name: redelk-nginx
     image: nginx:latest
     networks:
       - dockernetredelk
     volumes:
-      - ./redelk-nginx/config/default.conf:/etc/nginx/conf.d/default.conf
-      - ./redelk-nginx/config/htpasswd.users:/etc/nginx/htpasswd.users
+      - ./redelk-nginx/live/config:/etc/nginx/conf.d
       - ./redelk-base/live/var_www_html:/var/www/html
     ports:
       - "80:80"
       - "443:443"
     restart: always
     depends_on:
-      - base
+      - kibana
+
+  base:
+    container_name: redelk-base
+    build: ./redelk-base
+    networks:
+      - dockernetredelk
+    volumes:
+      - ./redelk-base/live/var_www_html:/var/www/html
+      - ./redelk-base/live/config/etc/cron.d:/etc/cron.d
+      - ./redelk-base/live/config/etc/redelk:/etc/redelk
+      - ./redelk-base/live/redelklogs:/var/log/redelk
+      - ./redelk-base/live/ssh:/home/redelk/.ssh
+    restart: always
+    depends_on:
+      - nginx

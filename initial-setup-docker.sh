@@ -121,7 +121,7 @@ cp ./certs/redelkCA.crt ./redirs/filebeat/ >> $LOGFILE 2>&1
 
 echo "[*] Creating ssh directories if necessary" | tee -a $LOGFILE
 if [ ! -d "./sshkey" ] || [ ! -d "./elkserver/ssh" ] || [ ! -d "./c2servers/ssh" ] ; then
-    mkdir -p ./sshkey && mkdir -p ./c2servers/ssh && mkdir -p ./elkserver/ssh && mkdir -p ./elkserver/docker/redelk-base/installdata/ssh
+    mkdir -p ./sshkey && mkdir -p ./c2servers/ssh && mkdir -p ./elkserver/ssh && mkdir -p ./elkserver/docker/redelk-base/redelkinstalldata/ssh && mkdir -p ./elkserver/docker/redelk-base/live/ssh
 fi >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
@@ -141,6 +141,8 @@ echo "[*] Copying sshkeys to relevant folders." | tee -a $LOGFILE
 cp ./sshkey/id_rsa.pub ./c2servers/ssh/id_rsa.pub >> $LOGFILE 2>&1
 cp ./sshkey/id_rsa.pub ./elkserver/ssh/id_rsa.pub >> $LOGFILE 2>&1
 cp ./sshkey/id_rsa ./elkserver/ssh/id_rsa >> $LOGFILE 2>&1
+cp ./sshkey/id_rsa.pub ./elkserver/docker/redelk-base/redelkinstalldata/ssh/id_rsa.pub >> $LOGFILE 2>&1
+cp ./sshkey/id_rsa ./elkserver/docker/redelk-base/redelkinstalldata/ssh/id_rsa >> $LOGFILE 2>&1
 cp ./sshkey/id_rsa.pub ./elkserver/docker/redelk-base/live/ssh/id_rsa.pub >> $LOGFILE 2>&1
 cp ./sshkey/id_rsa ./elkserver/docker/redelk-base/live/ssh/id_rsa >> $LOGFILE 2>&1
 
@@ -149,7 +151,8 @@ echo "[*] Copying VERSION file to subfolders." | tee -a $LOGFILE
 if [ -f "./VERSION" ]; then
     cp ./VERSION c2servers/  
     cp ./VERSION elkserver/
-    cp ./VERSION elkserver/docker/redelk-base/installdata/
+    cp ./VERSION elkserver/docker/
+    cp ./VERSION elkserver/docker/redelk-base/redelkinstalldata/
     cp ./VERSION redirs/
 fi >> $LOGFILE 2>&1
 ERROR=$?

@@ -24,11 +24,10 @@ volumes:
   redelk_bloodhound_data:
     driver: local
 
-
 services:
   elasticsearch:
     container_name: redelk-elasticsearch
-    image: marcoverip/redelk_elasticsearch:V2beta2
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2
     networks:
       - dockernetredelk
     expose:
@@ -40,8 +39,8 @@ services:
       - cluster.name=redelk-cluster
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
-    #  - xpack.security.enabled=false
-    #  - xpack.watcher.enabled=false
+      - xpack.security.enabled=false
+      - xpack.watcher.enabled=false
     restart: always
 
   logstash:
@@ -56,7 +55,7 @@ services:
       - ./redelk-logstash/live/config/conf.d:/etc/logstash/conf.d
       - ./redelk-logstash/live/config/certs:/etc/logstash/certs
       - ./redelk-logstash/live/config/ruby-scripts:/etc/logstash/ruby-scripts
-      - ./redelk-base/live/redelklogs/redteamdomaincheck.txt:/var/log/redelk/redteamdomaincheck.txt
+      - ./redelk-base/live/redelklogs:/var/log/redelk
       - redelk_logstash_data:/usr/share/logstash/data
     environment:
       - node.name=redelk-logstash
@@ -84,69 +83,65 @@ services:
     depends_on:
       - logstash
 
-  jupyter:
-    container_name: redelk-jupyter
-    image: jupyter/scipy-notebook:4a112c0f11eb
-    networks:
-      - dockernetredelk
-    expose:
-      - "8888"
-    volumes:
-      - ./redelk-jupyter/live/workbooks:/home/jovyan/work
-    environment:
-      - NotebookApp.token=''
-      - NotebookApp.password=''
-      - NotebookApp.allow_remote_access='True'
-      - NotebookApp.allow_origin='*'
-      - NotebookApp.base_url='/jupyter/'
-    restart: always
-    depends_on:
-      - kibana
-
-  base:
-    container_name: redelk-base
-    image: marcoverip/redelk_base:V2beta2
-    networks:
-      - dockernetredelk
-    volumes:
-      - ./redelk-base/live/var_www_html:/var/www/html
-      - ./redelk-base/live/config/cron.d/redelk:/etc/cron.d/redelk
-      - ./redelk-base/live/config/etc/redelk:/etc/redelk
-      - ./redelk-base/live/ssh:/home/scponly/.ssh
-      - ./redelk-base/live/redelklogs:/var/log/redelk
-    depends_on:
-      - jupyter
-
-  bloodhound:
-    container_name: redelk-bloodbound
-    image: specterops/bloodhound-neo4j
-    networks:
-      - dockernetredelk
-    volumes:
-      - redelk_bloodhound_data:/var/lib/neo4j
-    ports:
-      - 7687:7687
-      - 7474:7474
-    environment:
-      - NEO4J_AUTH=neo4j/BloodHound
-      - NEO4J_dbms_memory_heap_initial__size=1G
-      - NEO4J_dbms_memory_heap_max__size=1G
-      - NEO4J_dbms_memory_pagecache_size=1G
-    depends_on:
-      - base
-
   nginx:
     container_name: redelk-nginx
     image: nginx:latest
     networks:
       - dockernetredelk
     volumes:
-      - ./redelk-nginx/live/config/default.conf:/etc/nginx/conf.d/default.conf
-      - ./redelk-nginx/live/config/htpasswd.users:/etc/nginx/htpasswd.users
+      - ./redelk-nginx/live/config:/etc/nginx/conf.d
       - ./redelk-base/live/var_www_html:/var/www/html
     ports:
       - "80:80"
       - "443:443"
     restart: always
     depends_on:
+      - kibana
+
+  base:
+    container_name: redelk-base
+    build: ./redelk-base
+    # image: outflanknl/redelk_base:V2beta2
+    networks:
+      - dockernetredelk
+    volumes:
+      - ./redelk-base/live/var_www_html:/var/www/html
+      - ./redelk-base/live/config/etc/cron.d:/etc/cron.d
+      - ./redelk-base/live/config/etc/redelk:/etc/redelk
+      - ./redelk-base/live/redelklogs:/var/log/redelk
+      - ./redelk-base/live/ssh:/home/redelk/.ssh
+    restart: always
+    depends_on:
+      - nginx
+
+  jupyter:
+    container_name: redelk-jupyter
+    build: ./redelk-jupyter
+    networks:
+      - dockernetredelk
+    expose:
+      - "8888"
+    volumes:
+      - ./redelk-jupyter/live/workbooks:/home/jovyan/work
+    restart: always
+    depends_on:
       - base
+
+  bloodhound:
+    container_name: redelk-bloodhound
+    image: specterops/bloodhound-neo4j
+    networks:
+      - dockernetredelk
+    volumes:
+      - redelk_bloodhound_data:/var/lib/neo4j
+    ports:
+      - "7687:7687"
+    expose: 
+      - "7474"
+    environment:
+      - NEO4J_AUTH=neo4j/BloodHound
+      - NEO4J_dbms_memory_heap_initial__size=1G
+      - NEO4J_dbms_memory_heap_max__size=1G
+      - NEO4J_dbms_memory_pagecache_size=1G
+    depends_on:
+      - jupyter

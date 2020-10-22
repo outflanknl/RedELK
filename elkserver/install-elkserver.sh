@@ -12,6 +12,7 @@ INSTALLER="RedELK elkserver installer"
 CWD=`pwd`
 ELKVERSION="7.9.2"
 
+printf "`date +'%b %e %R'` $INSTALLER - Starting installer\n" > $LOGFILE 2>&1
 echo ""
 echo ""
 echo ""
@@ -23,11 +24,14 @@ echo "   |_| \__\___| \____||_____||_____||_|\_\\"
 echo ""
 echo ""
 echo ""   
-echo "`date +'%b %e %R'` $INSTALLER - Starting installer" | tee $LOGFILE
-printf "`date +'%b %e %R'` $INSTALLER - Starting installer\n" > $LOGFILE 2>&1
 echo "This script will install and configure necessary components for RedELK on ELK server"
 echo ""
 echo ""
+
+if [[ $EUID -ne 0 ]]; then
+  echo "[X] Not running as root. Exiting"
+  exit 1
+fi
 
 if [ ${#} -ne 0 ] && [ ${1} = "limited" ]; then
     echo "Parameter 'limited' found. Going for the limited RedELK experience." | tee -a $LOGFILE

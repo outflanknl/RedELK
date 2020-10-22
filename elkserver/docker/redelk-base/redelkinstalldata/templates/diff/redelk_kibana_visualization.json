@@ -1,0 +1,3896 @@
+[
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "savedSearchRefName": "search_0",
+            "title": "RedELK - IOC over time",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {},
+                        "schema": "metric",
+                        "type": "count"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "2",
+                        "params": {
+                            "drop_partials": false,
+                            "extended_bounds": {},
+                            "field": "@timestamp",
+                            "interval": "auto",
+                            "min_doc_count": 1,
+                            "scaleMetricValues": false,
+                            "timeRange": {
+                                "from": "now-12M",
+                                "to": "now"
+                            },
+                            "useNormalizedEsInterval": true
+                        },
+                        "schema": "segment",
+                        "type": "date_histogram"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "3",
+                        "params": {
+                            "customLabel": "IOC Type",
+                            "field": "ioc.type",
+                            "missingBucket": false,
+                            "missingBucketLabel": "Missing",
+                            "order": "desc",
+                            "orderBy": "1",
+                            "otherBucket": false,
+                            "otherBucketLabel": "Other",
+                            "size": 10
+                        },
+                        "schema": "group",
+                        "type": "terms"
+                    }
+                ],
+                "params": {
+                    "addLegend": true,
+                    "addTimeMarker": false,
+                    "addTooltip": true,
+                    "categoryAxes": [
+                        {
+                            "id": "CategoryAxis-1",
+                            "labels": {
+                                "filter": true,
+                                "show": true,
+                                "truncate": 100
+                            },
+                            "position": "bottom",
+                            "scale": {
+                                "type": "linear"
+                            },
+                            "show": true,
+                            "style": {},
+                            "title": {},
+                            "type": "category"
+                        }
+                    ],
+                    "grid": {
+                        "categoryLines": false
+                    },
+                    "labels": {
+                        "show": false
+                    },
+                    "legendPosition": "right",
+                    "seriesParams": [
+                        {
+                            "data": {
+                                "id": "1",
+                                "label": "Count"
+                            },
+                            "drawLinesBetweenPoints": true,
+                            "lineWidth": 2,
+                            "mode": "stacked",
+                            "show": true,
+                            "showCircles": true,
+                            "type": "histogram",
+                            "valueAxis": "ValueAxis-1"
+                        }
+                    ],
+                    "thresholdLine": {
+                        "color": "#E7664C",
+                        "show": false,
+                        "style": "full",
+                        "value": 10,
+                        "width": 1
+                    },
+                    "times": [],
+                    "type": "histogram",
+                    "valueAxes": [
+                        {
+                            "id": "ValueAxis-1",
+                            "labels": {
+                                "filter": false,
+                                "rotate": 0,
+                                "show": true,
+                                "truncate": 100
+                            },
+                            "name": "LeftAxis-1",
+                            "position": "left",
+                            "scale": {
+                                "mode": "normal",
+                                "type": "linear"
+                            },
+                            "show": true,
+                            "style": {},
+                            "title": {
+                                "text": "Count"
+                            },
+                            "type": "value"
+                        }
+                    ]
+                },
+                "title": "RedELK - IOC over time",
+                "type": "histogram"
+            }
+        },
+        "id": "057076f0-d4e4-11ea-9301-a30a04251ae9",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "4c003e20-b6aa-11e8-bc1a-cf8fa3255855",
+                "name": "search_0",
+                "type": "search"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "savedSearchRefName": "search_0",
+            "title": "RedELK - Screenshots over time",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {
+                            "customLabel": "Screenshots"
+                        },
+                        "schema": "metric",
+                        "type": "count"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "2",
+                        "params": {
+                            "drop_partials": false,
+                            "extended_bounds": {},
+                            "field": "@timestamp",
+                            "interval": "auto",
+                            "min_doc_count": 1,
+                            "scaleMetricValues": false,
+                            "timeRange": {
+                                "from": "now-30d",
+                                "to": "now"
+                            },
+                            "useNormalizedEsInterval": true
+                        },
+                        "schema": "segment",
+                        "type": "date_histogram"
+                    }
+                ],
+                "params": {
+                    "addLegend": true,
+                    "addTimeMarker": false,
+                    "addTooltip": true,
+                    "categoryAxes": [
+                        {
+                            "id": "CategoryAxis-1",
+                            "labels": {
+                                "filter": true,
+                                "show": true,
+                                "truncate": 100
+                            },
+                            "position": "bottom",
+                            "scale": {
+                                "type": "linear"
+                            },
+                            "show": true,
+                            "style": {},
+                            "title": {},
+                            "type": "category"
+                        }
+                    ],
+                    "grid": {
+                        "categoryLines": false
+                    },
+                    "labels": {
+                        "show": false
+                    },
+                    "legendPosition": "top",
+                    "seriesParams": [
+                        {
+                            "data": {
+                                "id": "1",
+                                "label": "Screenshots"
+                            },
+                            "drawLinesBetweenPoints": true,
+                            "lineWidth": 2,
+                            "mode": "stacked",
+                            "show": true,
+                            "showCircles": true,
+                            "type": "histogram",
+                            "valueAxis": "ValueAxis-1"
+                        }
+                    ],
+                    "thresholdLine": {
+                        "color": "#E7664C",
+                        "show": false,
+                        "style": "full",
+                        "value": 10,
+                        "width": 1
+                    },
+                    "times": [],
+                    "type": "histogram",
+                    "valueAxes": [
+                        {
+                            "id": "ValueAxis-1",
+                            "labels": {
+                                "filter": false,
+                                "rotate": 0,
+                                "show": true,
+                                "truncate": 100
+                            },
+                            "name": "LeftAxis-1",
+                            "position": "left",
+                            "scale": {
+                                "mode": "normal",
+                                "type": "linear"
+                            },
+                            "show": true,
+                            "style": {},
+                            "title": {
+                                "text": "Screenshots"
+                            },
+                            "type": "value"
+                        }
+                    ]
+                },
+                "title": "RedELK - Screenshots over time",
+                "type": "histogram"
+            }
+        },
+        "id": "0b5ffcd0-d317-11ea-9301-a30a04251ae9",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "e8de79f0-b6aa-11e8-bc1a-cf8fa3255855",
+                "name": "search_0",
+                "type": "search"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "title": "RedELK - Dashboard links internal",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [],
+                "params": {
+                    "fontSize": 12,
+                    "markdown": "**Dashboards** : [Summary](/app/kibana#/dashboard/02486040-d355-11ea-9301-a30a04251ae9) | [Alarms](/app/kibana#/dashboard/53b69200-d4e3-11ea-9301-a30a04251ae9) | [Traffic](/app/kibana#/dashboard/0f8626d0-c6f4-11e8-a9c6-cd307b96b1ba) | [Implants](/app/kibana#/dashboard/117dbba0-c6f5-11e8-a9c6-cd307b96b1ba) | [Red Team Operations](/app/kibana#/dashboard/04b87c50-d028-11ea-9301-a30a04251ae9) | [Tasks](/app/kibana#/dashboard/0523c8a0-d025-11ea-9301-a30a04251ae9) | [Downloads](/app/kibana#/dashboard/643de010-d04c-11ea-9301-a30a04251ae9) | [Credentials](/app/kibana#/dashboard/82b865a0-d318-11ea-9301-a30a04251ae9) | [Screenshots](/app/kibana#/dashboard/a2dcebf0-d316-11ea-9301-a30a04251ae9) | [IOC](/app/kibana#/dashboard/86643e90-d4e4-11ea-9301-a30a04251ae9) | [TTP](/app/kibana#/dashboard/3ed7a630-d051-11ea-9301-a30a04251ae9)",
+                    "openLinksInNewTab": false
+                },
+                "title": "RedELK - Dashboard links internal",
+                "type": "markdown"
+            }
+        },
+        "id": "0f82b540-d237-11ea-9301-a30a04251ae9",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [
+                        {
+                            "$state": {
+                                "store": "appState"
+                            },
+                            "meta": {
+                                "alias": null,
+                                "disabled": false,
+                                "indexRefName": "kibanaSavedObjectMeta.searchSourceJSON.filter[0].meta.index",
+                                "key": "c2.log.type",
+                                "negate": false,
+                                "params": {
+                                    "query": "implant_newimplant"
+                                },
+                                "type": "phrase"
+                            },
+                            "query": {
+                                "match_phrase": {
+                                    "c2.log.type": "implant_newimplant"
+                                }
+                            }
+                        }
+                    ],
+                    "indexRefName": "kibanaSavedObjectMeta.searchSourceJSON.index",
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "title": "RedELK - Top computers with new implants",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {
+                            "customLabel": "Amount of implants"
+                        },
+                        "schema": "metric",
+                        "type": "count"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "2",
+                        "params": {
+                            "customLabel": "Hostname",
+                            "field": "host.name",
+                            "missingBucket": false,
+                            "missingBucketLabel": "Missing",
+                            "order": "desc",
+                            "orderBy": "1",
+                            "otherBucket": false,
+                            "otherBucketLabel": "Other",
+                            "size": 17
+                        },
+                        "schema": "segment",
+                        "type": "terms"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "3",
+                        "params": {
+                            "customLabel": "Username",
+                            "field": "user.name",
+                            "missingBucket": false,
+                            "missingBucketLabel": "Missing",
+                            "order": "desc",
+                            "orderBy": "1",
+                            "otherBucket": false,
+                            "otherBucketLabel": "Other",
+                            "size": 10
+                        },
+                        "schema": "segment",
+                        "type": "terms"
+                    }
+                ],
+                "params": {
+                    "addLegend": true,
+                    "addTooltip": true,
+                    "isDonut": true,
+                    "labels": {
+                        "last_level": true,
+                        "show": false,
+                        "truncate": 100,
+                        "values": true
+                    },
+                    "legendPosition": "right",
+                    "type": "pie"
+                },
+                "title": "RedELK - Top computers with new implants",
+                "type": "pie"
+            }
+        },
+        "id": "10dcc4a0-b8e7-11e8-94dd-171ae5c1fd1a",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "rtops",
+                "name": "kibanaSavedObjectMeta.searchSourceJSON.index",
+                "type": "index-pattern"
+            },
+            {
+                "id": "rtops",
+                "name": "kibanaSavedObjectMeta.searchSourceJSON.filter[0].meta.index",
+                "type": "index-pattern"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "indexRefName": "kibanaSavedObjectMeta.searchSourceJSON.index",
+                    "query": {
+                        "language": "lucene",
+                        "query": "NOT (redir.backend.name: c2*)"
+                    }
+                }
+            },
+            "title": "RedELK - Redirector Traffic - Decoy",
+            "uiStateJSON": "{\"mapCenter\":[32.93684850365019,0.7170999376103283],\"mapZoom\":2}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {
+                            "customLabel": "Source IP",
+                            "field": "source.ip"
+                        },
+                        "schema": "metric",
+                        "type": "cardinality"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "2",
+                        "params": {
+                            "autoPrecision": true,
+                            "customLabel": "",
+                            "field": "source.geo.location",
+                            "isFilteredByCollar": true,
+                            "precision": 2,
+                            "useGeocentroid": true
+                        },
+                        "schema": "segment",
+                        "type": "geohash_grid"
+                    }
+                ],
+                "params": {
+                    "addTooltip": true,
+                    "colorSchema": "Yellow to Red",
+                    "heatClusterSize": 1.5,
+                    "isDesaturated": true,
+                    "legendPosition": "bottomright",
+                    "mapCenter": [
+                        0,
+                        0
+                    ],
+                    "mapType": "Heatmap",
+                    "mapZoom": 2,
+                    "wms": {
+                        "baseLayersAreLoaded": {},
+                        "enabled": false,
+                        "options": {
+                            "format": "image/png",
+                            "transparent": true
+                        },
+                        "selectedTmsLayer": {
+                            "attribution": "<p>&#169; <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors | <a href=\"https://www.elastic.co/elastic-maps-service\">Elastic Maps Service</a></p>&#10;",
+                            "id": "road_map",
+                            "maxZoom": 18,
+                            "minZoom": 0,
+                            "subdomains": [],
+                            "url": "https://tiles.maps.elastic.co/v2/default/{z}/{x}/{y}.png?elastic_tile_service_tos=agree&my_app_name=kibana&my_app_version=6.4.0&license=2f28f176-767a-4df6-a815-1f17dd8e46fc"
+                        },
+                        "tmsLayers": [
+                            {
+                                "attribution": "<p>&#169; <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors | <a href=\"https://www.elastic.co/elastic-maps-service\">Elastic Maps Service</a></p>&#10;",
+                                "id": "road_map",
+                                "maxZoom": 18,
+                                "minZoom": 0,
+                                "subdomains": [],
+                                "url": "https://tiles.maps.elastic.co/v2/default/{z}/{x}/{y}.png?elastic_tile_service_tos=agree&my_app_name=kibana&my_app_version=6.4.0&license=2f28f176-767a-4df6-a815-1f17dd8e46fc"
+                            }
+                        ]
+                    }
+                },
+                "title": "RedELK - Redirector Traffic - Decoy",
+                "type": "tile_map"
+            }
+        },
+        "id": "10dd40f0-b983-11e8-94dd-171ae5c1fd1a",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "redirtraffic",
+                "name": "kibanaSavedObjectMeta.searchSourceJSON.index",
+                "type": "index-pattern"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "indexRefName": "kibanaSavedObjectMeta.searchSourceJSON.index",
+                    "query": {
+                        "language": "lucene",
+                        "query": "(redir.backend.name: c2*)"
+                    }
+                }
+            },
+            "title": "RedELK - Redirector Traffic - C2",
+            "uiStateJSON": "{\"mapCenter\":[32.93684850365019,0.7170999376103283],\"mapZoom\":2}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {
+                            "customLabel": "Source IP",
+                            "field": "source.ip"
+                        },
+                        "schema": "metric",
+                        "type": "cardinality"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "2",
+                        "params": {
+                            "autoPrecision": true,
+                            "customLabel": "",
+                            "field": "source.geo.location",
+                            "isFilteredByCollar": true,
+                            "precision": 2,
+                            "useGeocentroid": true
+                        },
+                        "schema": "segment",
+                        "type": "geohash_grid"
+                    }
+                ],
+                "params": {
+                    "addTooltip": true,
+                    "colorSchema": "Yellow to Red",
+                    "heatClusterSize": 1.5,
+                    "isDesaturated": true,
+                    "legendPosition": "bottomright",
+                    "mapCenter": [
+                        0,
+                        0
+                    ],
+                    "mapType": "Heatmap",
+                    "mapZoom": 2,
+                    "wms": {
+                        "baseLayersAreLoaded": {},
+                        "enabled": false,
+                        "options": {
+                            "format": "image/png",
+                            "transparent": true
+                        },
+                        "selectedTmsLayer": {
+                            "attribution": "<p>&#169; <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors | <a href=\"https://www.elastic.co/elastic-maps-service\">Elastic Maps Service</a></p>&#10;",
+                            "id": "road_map",
+                            "maxZoom": 18,
+                            "minZoom": 0,
+                            "subdomains": [],
+                            "url": "https://tiles.maps.elastic.co/v2/default/{z}/{x}/{y}.png?elastic_tile_service_tos=agree&my_app_name=kibana&my_app_version=6.4.0&license=2f28f176-767a-4df6-a815-1f17dd8e46fc"
+                        },
+                        "tmsLayers": [
+                            {
+                                "attribution": "<p>&#169; <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors | <a href=\"https://www.elastic.co/elastic-maps-service\">Elastic Maps Service</a></p>&#10;",
+                                "id": "road_map",
+                                "maxZoom": 18,
+                                "minZoom": 0,
+                                "subdomains": [],
+                                "url": "https://tiles.maps.elastic.co/v2/default/{z}/{x}/{y}.png?elastic_tile_service_tos=agree&my_app_name=kibana&my_app_version=6.4.0&license=2f28f176-767a-4df6-a815-1f17dd8e46fc"
+                            }
+                        ]
+                    }
+                },
+                "title": "RedELK - Redirector Traffic - C2",
+                "type": "tile_map"
+            }
+        },
+        "id": "1d26da60-b983-11e8-94dd-171ae5c1fd1a",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "redirtraffic",
+                "name": "kibanaSavedObjectMeta.searchSourceJSON.index",
+                "type": "index-pattern"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "savedSearchRefName": "search_0",
+            "title": "RedELK - MITRE ATT&CK Techniques",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {},
+                        "schema": "metric",
+                        "type": "count"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "2",
+                        "params": {
+                            "drop_partials": false,
+                            "extended_bounds": {},
+                            "field": "@timestamp",
+                            "interval": "auto",
+                            "min_doc_count": 1,
+                            "scaleMetricValues": false,
+                            "timeRange": {
+                                "from": "now-6h",
+                                "to": "now"
+                            },
+                            "useNormalizedEsInterval": true
+                        },
+                        "schema": "segment",
+                        "type": "date_histogram"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "3",
+                        "params": {
+                            "field": "signal.rule.threat.technique.name",
+                            "missingBucket": false,
+                            "missingBucketLabel": "Missing",
+                            "order": "desc",
+                            "orderBy": "1",
+                            "otherBucket": true,
+                            "otherBucketLabel": "Other",
+                            "size": 100
+                        },
+                        "schema": "group",
+                        "type": "terms"
+                    }
+                ],
+                "params": {
+                    "addLegend": true,
+                    "addTimeMarker": false,
+                    "addTooltip": true,
+                    "categoryAxes": [
+                        {
+                            "id": "CategoryAxis-1",
+                            "labels": {
+                                "filter": true,
+                                "show": true,
+                                "truncate": 100
+                            },
+                            "position": "bottom",
+                            "scale": {
+                                "type": "linear"
+                            },
+                            "show": true,
+                            "style": {},
+                            "title": {},
+                            "type": "category"
+                        }
+                    ],
+                    "grid": {
+                        "categoryLines": false
+                    },
+                    "labels": {
+                        "show": false
+                    },
+                    "legendPosition": "right",
+                    "seriesParams": [
+                        {
+                            "data": {
+                                "id": "1",
+                                "label": "Count"
+                            },
+                            "drawLinesBetweenPoints": true,
+                            "lineWidth": 2,
+                            "mode": "stacked",
+                            "show": true,
+                            "showCircles": true,
+                            "type": "histogram",
+                            "valueAxis": "ValueAxis-1"
+                        }
+                    ],
+                    "thresholdLine": {
+                        "color": "#E7664C",
+                        "show": false,
+                        "style": "full",
+                        "value": 10,
+                        "width": 1
+                    },
+                    "times": [],
+                    "type": "histogram",
+                    "valueAxes": [
+                        {
+                            "id": "ValueAxis-1",
+                            "labels": {
+                                "filter": false,
+                                "rotate": 0,
+                                "show": true,
+                                "truncate": 100
+                            },
+                            "name": "LeftAxis-1",
+                            "position": "left",
+                            "scale": {
+                                "mode": "normal",
+                                "type": "linear"
+                            },
+                            "show": true,
+                            "style": {},
+                            "title": {
+                                "text": "Count"
+                            },
+                            "type": "value"
+                        }
+                    ]
+                },
+                "title": "RedELK - MITRE ATT&CK Techniques",
+                "type": "histogram"
+            }
+        },
+        "id": "231792d0-d050-11ea-9301-a30a04251ae9",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "dddbba20-d04f-11ea-9301-a30a04251ae9",
+                "name": "search_0",
+                "type": "search"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "savedSearchRefName": "search_0",
+            "title": "RedELK - MITRE ATT&CK Tactics",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {},
+                        "schema": "metric",
+                        "type": "count"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "2",
+                        "params": {
+                            "drop_partials": false,
+                            "extended_bounds": {},
+                            "field": "@timestamp",
+                            "interval": "auto",
+                            "min_doc_count": 1,
+                            "scaleMetricValues": false,
+                            "timeRange": {
+                                "from": "now-6h",
+                                "to": "now"
+                            },
+                            "useNormalizedEsInterval": true
+                        },
+                        "schema": "segment",
+                        "type": "date_histogram"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "3",
+                        "params": {
+                            "field": "signal.rule.threat.tactic.name",
+                            "missingBucket": false,
+                            "missingBucketLabel": "Missing",
+                            "order": "desc",
+                            "orderBy": "1",
+                            "otherBucket": true,
+                            "otherBucketLabel": "Other",
+                            "size": 100
+                        },
+                        "schema": "group",
+                        "type": "terms"
+                    }
+                ],
+                "params": {
+                    "addLegend": true,
+                    "addTimeMarker": false,
+                    "addTooltip": true,
+                    "categoryAxes": [
+                        {
+                            "id": "CategoryAxis-1",
+                            "labels": {
+                                "filter": true,
+                                "show": true,
+                                "truncate": 100
+                            },
+                            "position": "bottom",
+                            "scale": {
+                                "type": "linear"
+                            },
+                            "show": true,
+                            "style": {},
+                            "title": {},
+                            "type": "category"
+                        }
+                    ],
+                    "grid": {
+                        "categoryLines": false
+                    },
+                    "labels": {
+                        "show": false
+                    },
+                    "legendPosition": "right",
+                    "seriesParams": [
+                        {
+                            "data": {
+                                "id": "1",
+                                "label": "Count"
+                            },
+                            "drawLinesBetweenPoints": true,
+                            "lineWidth": 2,
+                            "mode": "stacked",
+                            "show": true,
+                            "showCircles": true,
+                            "type": "histogram",
+                            "valueAxis": "ValueAxis-1"
+                        }
+                    ],
+                    "thresholdLine": {
+                        "color": "#E7664C",
+                        "show": false,
+                        "style": "full",
+                        "value": 10,
+                        "width": 1
+                    },
+                    "times": [],
+                    "type": "histogram",
+                    "valueAxes": [
+                        {
+                            "id": "ValueAxis-1",
+                            "labels": {
+                                "filter": false,
+                                "rotate": 0,
+                                "show": true,
+                                "truncate": 100
+                            },
+                            "name": "LeftAxis-1",
+                            "position": "left",
+                            "scale": {
+                                "mode": "normal",
+                                "type": "linear"
+                            },
+                            "show": true,
+                            "style": {},
+                            "title": {
+                                "text": "Count"
+                            },
+                            "type": "value"
+                        }
+                    ]
+                },
+                "title": "RedELK - MITRE ATT&CK Tactics",
+                "type": "histogram"
+            }
+        },
+        "id": "2f5a2760-d050-11ea-9301-a30a04251ae9",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "dddbba20-d04f-11ea-9301-a30a04251ae9",
+                "name": "search_0",
+                "type": "search"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "savedSearchRefName": "search_0",
+            "title": "RedELK - IOC Types tag cloud",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {
+                            "customLabel": ""
+                        },
+                        "schema": "metric",
+                        "type": "count"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "2",
+                        "params": {
+                            "customLabel": "IOC Types",
+                            "field": "ioc.type",
+                            "missingBucket": false,
+                            "missingBucketLabel": "Missing",
+                            "order": "desc",
+                            "orderBy": "1",
+                            "otherBucket": false,
+                            "otherBucketLabel": "Other",
+                            "size": 10
+                        },
+                        "schema": "segment",
+                        "type": "terms"
+                    }
+                ],
+                "params": {
+                    "maxFontSize": 72,
+                    "minFontSize": 18,
+                    "orientation": "single",
+                    "scale": "linear",
+                    "showLabel": true
+                },
+                "title": "RedELK - IOC Types tag cloud",
+                "type": "tagcloud"
+            }
+        },
+        "id": "3729cde0-d4e4-11ea-9301-a30a04251ae9",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "4c003e20-b6aa-11e8-bc1a-cf8fa3255855",
+                "name": "search_0",
+                "type": "search"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "savedSearchRefName": "search_0",
+            "title": "RedELK - Screenshots total count",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {
+                            "customLabel": "Screenshots"
+                        },
+                        "schema": "metric",
+                        "type": "count"
+                    }
+                ],
+                "params": {
+                    "addLegend": false,
+                    "addTooltip": true,
+                    "metric": {
+                        "colorSchema": "Green to Red",
+                        "colorsRange": [
+                            {
+                                "from": 0,
+                                "to": 10000
+                            }
+                        ],
+                        "invertColors": false,
+                        "labels": {
+                            "show": true
+                        },
+                        "metricColorMode": "None",
+                        "percentageMode": false,
+                        "style": {
+                            "bgColor": false,
+                            "bgFill": "#000",
+                            "fontSize": 60,
+                            "labelColor": false,
+                            "subText": ""
+                        },
+                        "useRanges": false
+                    },
+                    "type": "metric"
+                },
+                "title": "RedELK - Screenshots total count",
+                "type": "metric"
+            }
+        },
+        "id": "389dddc0-d317-11ea-9301-a30a04251ae9",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "e8de79f0-b6aa-11e8-bc1a-cf8fa3255855",
+                "name": "search_0",
+                "type": "search"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "savedSearchRefName": "search_0",
+            "title": "RedELK - Alarmed IOC over time",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {
+                            "customLabel": "Alarmed IOC"
+                        },
+                        "schema": "metric",
+                        "type": "count"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "2",
+                        "params": {
+                            "drop_partials": false,
+                            "extended_bounds": {},
+                            "field": "@timestamp",
+                            "interval": "auto",
+                            "min_doc_count": 1,
+                            "scaleMetricValues": false,
+                            "timeRange": {
+                                "from": "now-30h",
+                                "to": "now"
+                            },
+                            "useNormalizedEsInterval": true
+                        },
+                        "schema": "segment",
+                        "type": "date_histogram"
+                    }
+                ],
+                "params": {
+                    "addLegend": true,
+                    "addTimeMarker": false,
+                    "addTooltip": true,
+                    "categoryAxes": [
+                        {
+                            "id": "CategoryAxis-1",
+                            "labels": {
+                                "filter": true,
+                                "show": true,
+                                "truncate": 100
+                            },
+                            "position": "bottom",
+                            "scale": {
+                                "type": "linear"
+                            },
+                            "show": true,
+                            "style": {},
+                            "title": {},
+                            "type": "category"
+                        }
+                    ],
+                    "grid": {
+                        "categoryLines": false
+                    },
+                    "labels": {
+                        "show": false
+                    },
+                    "legendPosition": "right",
+                    "seriesParams": [
+                        {
+                            "data": {
+                                "id": "1",
+                                "label": "Alarmed IOC"
+                            },
+                            "drawLinesBetweenPoints": true,
+                            "lineWidth": 2,
+                            "mode": "stacked",
+                            "show": true,
+                            "showCircles": true,
+                            "type": "histogram",
+                            "valueAxis": "ValueAxis-1"
+                        }
+                    ],
+                    "thresholdLine": {
+                        "color": "#E7664C",
+                        "show": false,
+                        "style": "full",
+                        "value": 10,
+                        "width": 1
+                    },
+                    "times": [],
+                    "type": "histogram",
+                    "valueAxes": [
+                        {
+                            "id": "ValueAxis-1",
+                            "labels": {
+                                "filter": false,
+                                "rotate": 0,
+                                "show": true,
+                                "truncate": 100
+                            },
+                            "name": "LeftAxis-1",
+                            "position": "left",
+                            "scale": {
+                                "mode": "normal",
+                                "type": "linear"
+                            },
+                            "show": true,
+                            "style": {},
+                            "title": {
+                                "text": "Alarmed IOC"
+                            },
+                            "type": "value"
+                        }
+                    ]
+                },
+                "title": "RedELK - Alarmed IOC over time",
+                "type": "histogram"
+            }
+        },
+        "id": "3ae6c0c0-d4e2-11ea-9301-a30a04251ae9",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "10da2290-d4e2-11ea-9301-a30a04251ae9",
+                "name": "search_0",
+                "type": "search"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "savedSearchRefName": "search_0",
+            "title": "RedELK - Downloads per user tag cloud",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {},
+                        "schema": "metric",
+                        "type": "count"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "2",
+                        "params": {
+                            "customLabel": "Downloads",
+                            "field": "user.name",
+                            "missingBucket": false,
+                            "missingBucketLabel": "Missing",
+                            "order": "desc",
+                            "orderBy": "1",
+                            "otherBucket": true,
+                            "otherBucketLabel": "Other",
+                            "size": 20
+                        },
+                        "schema": "segment",
+                        "type": "terms"
+                    }
+                ],
+                "params": {
+                    "maxFontSize": 72,
+                    "minFontSize": 18,
+                    "orientation": "single",
+                    "scale": "linear",
+                    "showLabel": false
+                },
+                "title": "RedELK - Downloads per user tag cloud",
+                "type": "tagcloud"
+            }
+        },
+        "id": "41f94ad0-d04c-11ea-9301-a30a04251ae9",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "26ba4cb0-0f73-11e9-8e1e-a16db980e11e",
+                "name": "search_0",
+                "type": "search"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "title": "RedELK - Dashboard links external",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [],
+                "params": {
+                    "fontSize": 12,
+                    "markdown": "**External tools** : [MITRE ATT&CK Navigator](/attack-navigator/) | [Jupyter Notebook](/jupyter/) | [Neo4j Browser](/neo4jbrowser/) ",
+                    "openLinksInNewTab": true
+                },
+                "title": "RedELK - Dashboard links external",
+                "type": "markdown"
+            }
+        },
+        "id": "45491770-0886-11eb-a2d2-171dc8941414",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "savedSearchRefName": "search_0",
+            "title": "RedELK - TTP Techniques unique count total ",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {
+                            "customLabel": "MITRE ATT&CK Techniques",
+                            "field": "threat.technique.id"
+                        },
+                        "schema": "metric",
+                        "type": "cardinality"
+                    }
+                ],
+                "params": {
+                    "addLegend": false,
+                    "addTooltip": true,
+                    "metric": {
+                        "colorSchema": "Green to Red",
+                        "colorsRange": [
+                            {
+                                "from": 0,
+                                "to": 10000
+                            }
+                        ],
+                        "invertColors": false,
+                        "labels": {
+                            "show": true
+                        },
+                        "metricColorMode": "None",
+                        "percentageMode": false,
+                        "style": {
+                            "bgColor": false,
+                            "bgFill": "#000",
+                            "fontSize": 60,
+                            "labelColor": false,
+                            "subText": ""
+                        },
+                        "useRanges": false
+                    },
+                    "type": "metric"
+                },
+                "title": "RedELK - TTP Techniques unique count total ",
+                "type": "metric"
+            }
+        },
+        "id": "464660c0-d360-11ea-9301-a30a04251ae9",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "cc523820-d021-11ea-9301-a30a04251ae9",
+                "name": "search_0",
+                "type": "search"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "savedSearchRefName": "search_0",
+            "title": "RedELK - Implants total count ",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {
+                            "customLabel": "Implants"
+                        },
+                        "schema": "metric",
+                        "type": "count"
+                    }
+                ],
+                "params": {
+                    "addLegend": false,
+                    "addTooltip": true,
+                    "metric": {
+                        "colorSchema": "Green to Red",
+                        "colorsRange": [
+                            {
+                                "from": 0,
+                                "to": 10000
+                            }
+                        ],
+                        "invertColors": false,
+                        "labels": {
+                            "show": true
+                        },
+                        "metricColorMode": "None",
+                        "percentageMode": false,
+                        "style": {
+                            "bgColor": false,
+                            "bgFill": "#000",
+                            "fontSize": 60,
+                            "labelColor": false,
+                            "subText": ""
+                        },
+                        "useRanges": false
+                    },
+                    "type": "metric"
+                },
+                "title": "RedELK - Implants total count ",
+                "type": "metric"
+            }
+        },
+        "id": "57626ad0-d355-11ea-9301-a30a04251ae9",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "68e8e870-b6aa-11e8-bc1a-cf8fa3255855",
+                "name": "search_0",
+                "type": "search"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "savedSearchRefName": "search_0",
+            "title": "RedELK - IOC total count",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {
+                            "customLabel": "IOC"
+                        },
+                        "schema": "metric",
+                        "type": "count"
+                    }
+                ],
+                "params": {
+                    "addLegend": false,
+                    "addTooltip": true,
+                    "metric": {
+                        "colorSchema": "Green to Red",
+                        "colorsRange": [
+                            {
+                                "from": 0,
+                                "to": 10000
+                            }
+                        ],
+                        "invertColors": false,
+                        "labels": {
+                            "show": true
+                        },
+                        "metricColorMode": "None",
+                        "percentageMode": false,
+                        "style": {
+                            "bgColor": false,
+                            "bgFill": "#000",
+                            "fontSize": 60,
+                            "labelColor": false,
+                            "subText": ""
+                        },
+                        "useRanges": false
+                    },
+                    "type": "metric"
+                },
+                "title": "RedELK - IOC total count",
+                "type": "metric"
+            }
+        },
+        "id": "5ffe8850-d4e4-11ea-9301-a30a04251ae9",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "4c003e20-b6aa-11e8-bc1a-cf8fa3255855",
+                "name": "search_0",
+                "type": "search"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "savedSearchRefName": "search_0",
+            "title": "RedELK - Redirector traffic alarmed IP total count",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {
+                            "customLabel": "Alarmed IP",
+                            "field": "source.ip"
+                        },
+                        "schema": "metric",
+                        "type": "cardinality"
+                    }
+                ],
+                "params": {
+                    "addLegend": false,
+                    "addTooltip": true,
+                    "metric": {
+                        "colorSchema": "Green to Red",
+                        "colorsRange": [
+                            {
+                                "from": 0,
+                                "to": 10000
+                            }
+                        ],
+                        "invertColors": false,
+                        "labels": {
+                            "show": true
+                        },
+                        "metricColorMode": "None",
+                        "percentageMode": false,
+                        "style": {
+                            "bgColor": false,
+                            "bgFill": "#000",
+                            "fontSize": 60,
+                            "labelColor": false,
+                            "subText": ""
+                        },
+                        "useRanges": false
+                    },
+                    "type": "metric"
+                },
+                "title": "RedELK - Redirector traffic alarmed IP total count",
+                "type": "metric"
+            }
+        },
+        "id": "62b61920-d4e2-11ea-9301-a30a04251ae9",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "658d7180-d4e1-11ea-9301-a30a04251ae9",
+                "name": "search_0",
+                "type": "search"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "savedSearchRefName": "search_0",
+            "title": "RedELK - Beacons per host",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {},
+                        "schema": "metric",
+                        "type": "count"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "2",
+                        "params": {
+                            "field": "host.name",
+                            "missingBucket": false,
+                            "missingBucketLabel": "Missing",
+                            "order": "desc",
+                            "orderBy": "1",
+                            "otherBucket": true,
+                            "otherBucketLabel": "Other",
+                            "size": 999
+                        },
+                        "schema": "segment",
+                        "type": "terms"
+                    }
+                ],
+                "params": {
+                    "addLegend": true,
+                    "addTooltip": true,
+                    "isDonut": true,
+                    "labels": {
+                        "last_level": true,
+                        "show": false,
+                        "truncate": 100,
+                        "values": true
+                    },
+                    "legendPosition": "right",
+                    "type": "pie"
+                },
+                "title": "RedELK - Beacons per host",
+                "type": "pie"
+            }
+        },
+        "id": "632081a0-d02a-11ea-9301-a30a04251ae9",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "68e8e870-b6aa-11e8-bc1a-cf8fa3255855",
+                "name": "search_0",
+                "type": "search"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "savedSearchRefName": "search_0",
+            "title": "RedELK - Screenshots per user tag cloud",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {},
+                        "schema": "metric",
+                        "type": "count"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "2",
+                        "params": {
+                            "field": "user.name",
+                            "missingBucket": false,
+                            "missingBucketLabel": "Missing",
+                            "order": "desc",
+                            "orderBy": "1",
+                            "otherBucket": true,
+                            "otherBucketLabel": "Other",
+                            "size": 100
+                        },
+                        "schema": "segment",
+                        "type": "terms"
+                    }
+                ],
+                "params": {
+                    "maxFontSize": 72,
+                    "minFontSize": 18,
+                    "orientation": "single",
+                    "scale": "linear",
+                    "showLabel": false
+                },
+                "title": "RedELK - Screenshots per user tag cloud",
+                "type": "tagcloud"
+            }
+        },
+        "id": "659280b0-d317-11ea-9301-a30a04251ae9",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "e8de79f0-b6aa-11e8-bc1a-cf8fa3255855",
+                "name": "search_0",
+                "type": "search"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "savedSearchRefName": "search_0",
+            "title": "RedELK - Beacons per user",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {},
+                        "schema": "metric",
+                        "type": "count"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "2",
+                        "params": {
+                            "field": "user.name",
+                            "missingBucket": false,
+                            "missingBucketLabel": "Missing",
+                            "order": "desc",
+                            "orderBy": "1",
+                            "otherBucket": true,
+                            "otherBucketLabel": "Other",
+                            "size": 999
+                        },
+                        "schema": "segment",
+                        "type": "terms"
+                    }
+                ],
+                "params": {
+                    "addLegend": true,
+                    "addTooltip": true,
+                    "isDonut": true,
+                    "labels": {
+                        "last_level": true,
+                        "show": false,
+                        "truncate": 100,
+                        "values": true
+                    },
+                    "legendPosition": "right",
+                    "type": "pie"
+                },
+                "title": "RedELK - Beacons per user",
+                "type": "pie"
+            }
+        },
+        "id": "6fcf1e70-d02a-11ea-9301-a30a04251ae9",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "68e8e870-b6aa-11e8-bc1a-cf8fa3255855",
+                "name": "search_0",
+                "type": "search"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "savedSearchRefName": "search_0",
+            "title": "RedELK - Alarmed IOC total count",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {
+                            "customLabel": "Alarmed IOC"
+                        },
+                        "schema": "metric",
+                        "type": "count"
+                    }
+                ],
+                "params": {
+                    "addLegend": false,
+                    "addTooltip": true,
+                    "metric": {
+                        "colorSchema": "Green to Red",
+                        "colorsRange": [
+                            {
+                                "from": 0,
+                                "to": 10000
+                            }
+                        ],
+                        "invertColors": false,
+                        "labels": {
+                            "show": true
+                        },
+                        "metricColorMode": "None",
+                        "percentageMode": false,
+                        "style": {
+                            "bgColor": false,
+                            "bgFill": "#000",
+                            "fontSize": 60,
+                            "labelColor": false,
+                            "subText": ""
+                        },
+                        "useRanges": false
+                    },
+                    "type": "metric"
+                },
+                "title": "RedELK - Alarmed IOC total count",
+                "type": "metric"
+            }
+        },
+        "id": "7d850b30-d4e2-11ea-9301-a30a04251ae9",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "10da2290-d4e2-11ea-9301-a30a04251ae9",
+                "name": "search_0",
+                "type": "search"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "savedSearchRefName": "search_0",
+            "title": "RedELK - Downloads over time",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {
+                            "customLabel": "Downloads"
+                        },
+                        "schema": "metric",
+                        "type": "count"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "2",
+                        "params": {
+                            "drop_partials": false,
+                            "extended_bounds": {},
+                            "field": "@timestamp",
+                            "interval": "auto",
+                            "min_doc_count": 1,
+                            "scaleMetricValues": false,
+                            "timeRange": {
+                                "from": "now-4w",
+                                "to": "now"
+                            },
+                            "useNormalizedEsInterval": true
+                        },
+                        "schema": "segment",
+                        "type": "date_histogram"
+                    }
+                ],
+                "params": {
+                    "addLegend": true,
+                    "addTimeMarker": false,
+                    "addTooltip": true,
+                    "categoryAxes": [
+                        {
+                            "id": "CategoryAxis-1",
+                            "labels": {
+                                "filter": true,
+                                "show": true,
+                                "truncate": 100
+                            },
+                            "position": "bottom",
+                            "scale": {
+                                "type": "linear"
+                            },
+                            "show": true,
+                            "style": {},
+                            "title": {},
+                            "type": "category"
+                        }
+                    ],
+                    "grid": {
+                        "categoryLines": false
+                    },
+                    "labels": {
+                        "show": false
+                    },
+                    "legendPosition": "right",
+                    "seriesParams": [
+                        {
+                            "data": {
+                                "id": "1",
+                                "label": "Downloads"
+                            },
+                            "drawLinesBetweenPoints": true,
+                            "lineWidth": 2,
+                            "mode": "stacked",
+                            "show": true,
+                            "showCircles": true,
+                            "type": "histogram",
+                            "valueAxis": "ValueAxis-1"
+                        }
+                    ],
+                    "thresholdLine": {
+                        "color": "#E7664C",
+                        "show": false,
+                        "style": "full",
+                        "value": 10,
+                        "width": 1
+                    },
+                    "times": [],
+                    "type": "histogram",
+                    "valueAxes": [
+                        {
+                            "id": "ValueAxis-1",
+                            "labels": {
+                                "filter": false,
+                                "rotate": 0,
+                                "show": true,
+                                "truncate": 100
+                            },
+                            "name": "LeftAxis-1",
+                            "position": "left",
+                            "scale": {
+                                "defaultYExtents": false,
+                                "mode": "normal",
+                                "setYExtents": false,
+                                "type": "linear"
+                            },
+                            "show": true,
+                            "style": {},
+                            "title": {
+                                "text": "Downloads"
+                            },
+                            "type": "value"
+                        }
+                    ]
+                },
+                "title": "RedELK - CS - Downloads over time",
+                "type": "histogram"
+            }
+        },
+        "id": "85446c80-d04b-11ea-9301-a30a04251ae9",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "26ba4cb0-0f73-11e9-8e1e-a16db980e11e",
+                "name": "search_0",
+                "type": "search"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [
+                        {
+                            "$state": {
+                                "store": "appState"
+                            },
+                            "meta": {
+                                "alias": null,
+                                "disabled": false,
+                                "indexRefName": "kibanaSavedObjectMeta.searchSourceJSON.filter[0].meta.index",
+                                "key": "c2.log.type",
+                                "negate": false,
+                                "params": {
+                                    "query": "implant_newimplant"
+                                },
+                                "type": "phrase"
+                            },
+                            "query": {
+                                "match_phrase": {
+                                    "c2.log.type": "implant_newimplant"
+                                }
+                            }
+                        }
+                    ],
+                    "indexRefName": "kibanaSavedObjectMeta.searchSourceJSON.index",
+                    "query": {
+                        "language": "lucene",
+                        "query": ""
+                    }
+                }
+            },
+            "title": "RedELK - Top new implants by ext IP address and scenario",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {
+                            "customLabel": "Amount of new implants"
+                        },
+                        "schema": "metric",
+                        "type": "count"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "2",
+                        "params": {
+                            "customLabel": "Redirector IP",
+                            "field": "host.ip_ext",
+                            "missingBucket": false,
+                            "missingBucketLabel": "Missing",
+                            "order": "desc",
+                            "orderBy": "1",
+                            "otherBucket": false,
+                            "otherBucketLabel": "Other",
+                            "size": 20
+                        },
+                        "schema": "segment",
+                        "type": "terms"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "3",
+                        "params": {
+                            "customLabel": "Scenario",
+                            "field": "infra.attack_scenario",
+                            "missingBucket": false,
+                            "missingBucketLabel": "Missing",
+                            "order": "desc",
+                            "orderBy": "1",
+                            "otherBucket": false,
+                            "otherBucketLabel": "Other",
+                            "size": 5
+                        },
+                        "schema": "segment",
+                        "type": "terms"
+                    }
+                ],
+                "params": {
+                    "addLegend": true,
+                    "addTooltip": true,
+                    "isDonut": false,
+                    "labels": {
+                        "last_level": false,
+                        "show": true,
+                        "truncate": 100,
+                        "values": true
+                    },
+                    "legendPosition": "top",
+                    "type": "pie"
+                },
+                "title": "RedELK - Top new implants by ext IP address and scenario",
+                "type": "pie"
+            }
+        },
+        "id": "88003df0-b8ec-11e8-94dd-171ae5c1fd1a",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "rtops",
+                "name": "kibanaSavedObjectMeta.searchSourceJSON.index",
+                "type": "index-pattern"
+            },
+            {
+                "id": "rtops",
+                "name": "kibanaSavedObjectMeta.searchSourceJSON.filter[0].meta.index",
+                "type": "index-pattern"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "savedSearchRefName": "search_0",
+            "title": "RedELK - TTP Cloud Tag",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {
+                            "customLabel": "IDs"
+                        },
+                        "schema": "metric",
+                        "type": "count"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "2",
+                        "params": {
+                            "customLabel": "TTP",
+                            "field": "threat.technique.id",
+                            "missingBucket": false,
+                            "missingBucketLabel": "Missing",
+                            "order": "desc",
+                            "orderBy": "1",
+                            "otherBucket": true,
+                            "otherBucketLabel": "Other TTPs",
+                            "size": 100
+                        },
+                        "schema": "segment",
+                        "type": "terms"
+                    }
+                ],
+                "params": {
+                    "maxFontSize": 72,
+                    "minFontSize": 18,
+                    "orientation": "single",
+                    "scale": "linear",
+                    "showLabel": false
+                },
+                "title": "RedELK - TTP Cloud Tag",
+                "type": "tagcloud"
+            }
+        },
+        "id": "88db1280-d024-11ea-9301-a30a04251ae9",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "cc523820-d021-11ea-9301-a30a04251ae9",
+                "name": "search_0",
+                "type": "search"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "indexRefName": "kibanaSavedObjectMeta.searchSourceJSON.index",
+                    "query": {
+                        "language": "lucene",
+                        "query": "c2.log.type: \"implant_newimplant\" AND (NOT tags: testsystems_V* )"
+                    }
+                }
+            },
+            "title": "RedELK - Top users with new implants",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {},
+                        "schema": "metric",
+                        "type": "count"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "2",
+                        "params": {
+                            "field": "user.name",
+                            "missingBucket": false,
+                            "missingBucketLabel": "Missing",
+                            "order": "desc",
+                            "orderBy": "1",
+                            "otherBucket": false,
+                            "otherBucketLabel": "Other",
+                            "size": 20
+                        },
+                        "schema": "segment",
+                        "type": "terms"
+                    }
+                ],
+                "params": {
+                    "addLegend": true,
+                    "addTooltip": false,
+                    "isDonut": true,
+                    "labels": {
+                        "last_level": true,
+                        "show": true,
+                        "truncate": 100,
+                        "values": true
+                    },
+                    "legendPosition": "right",
+                    "type": "pie"
+                },
+                "title": "RedELK - Top users with new implants",
+                "type": "pie"
+            }
+        },
+        "id": "a1efc620-b8e4-11e8-94dd-171ae5c1fd1a",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "rtops",
+                "name": "kibanaSavedObjectMeta.searchSourceJSON.index",
+                "type": "index-pattern"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "savedSearchRefName": "search_0",
+            "title": "RedELK - Tasks per host and user",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {},
+                        "schema": "metric",
+                        "type": "count"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "3",
+                        "params": {
+                            "field": "user.name",
+                            "missingBucket": false,
+                            "missingBucketLabel": "Missing",
+                            "order": "desc",
+                            "orderBy": "1",
+                            "otherBucket": true,
+                            "otherBucketLabel": "Other users",
+                            "size": 100
+                        },
+                        "schema": "segment",
+                        "type": "terms"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "2",
+                        "params": {
+                            "field": "host.name",
+                            "missingBucket": false,
+                            "missingBucketLabel": "Missing",
+                            "order": "desc",
+                            "orderBy": "1",
+                            "otherBucket": true,
+                            "otherBucketLabel": "Other hosts",
+                            "size": 100
+                        },
+                        "schema": "segment",
+                        "type": "terms"
+                    }
+                ],
+                "params": {
+                    "addLegend": true,
+                    "addTooltip": true,
+                    "isDonut": true,
+                    "labels": {
+                        "last_level": true,
+                        "show": false,
+                        "truncate": 100,
+                        "values": true
+                    },
+                    "legendPosition": "right",
+                    "type": "pie"
+                },
+                "title": "RedELK - Tasks per host and user",
+                "type": "pie"
+            }
+        },
+        "id": "a5554e20-d025-11ea-9301-a30a04251ae9",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "cc523820-d021-11ea-9301-a30a04251ae9",
+                "name": "search_0",
+                "type": "search"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "savedSearchRefName": "search_0",
+            "title": "RedELK - Credentials over time",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {
+                            "customLabel": "Credentials captured"
+                        },
+                        "schema": "metric",
+                        "type": "count"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "2",
+                        "params": {
+                            "drop_partials": false,
+                            "extended_bounds": {},
+                            "field": "@timestamp",
+                            "interval": "auto",
+                            "min_doc_count": 1,
+                            "scaleMetricValues": false,
+                            "timeRange": {
+                                "from": "now-30d",
+                                "to": "now"
+                            },
+                            "useNormalizedEsInterval": true
+                        },
+                        "schema": "segment",
+                        "type": "date_histogram"
+                    }
+                ],
+                "params": {
+                    "addLegend": true,
+                    "addTimeMarker": false,
+                    "addTooltip": true,
+                    "categoryAxes": [
+                        {
+                            "id": "CategoryAxis-1",
+                            "labels": {
+                                "filter": true,
+                                "show": true,
+                                "truncate": 100
+                            },
+                            "position": "bottom",
+                            "scale": {
+                                "type": "linear"
+                            },
+                            "show": true,
+                            "style": {},
+                            "title": {},
+                            "type": "category"
+                        }
+                    ],
+                    "grid": {
+                        "categoryLines": false
+                    },
+                    "labels": {
+                        "show": false
+                    },
+                    "legendPosition": "bottom",
+                    "seriesParams": [
+                        {
+                            "data": {
+                                "id": "1",
+                                "label": "Credentials captured"
+                            },
+                            "drawLinesBetweenPoints": true,
+                            "lineWidth": 2,
+                            "mode": "stacked",
+                            "show": true,
+                            "showCircles": true,
+                            "type": "histogram",
+                            "valueAxis": "ValueAxis-1"
+                        }
+                    ],
+                    "thresholdLine": {
+                        "color": "#E7664C",
+                        "show": false,
+                        "style": "full",
+                        "value": 10,
+                        "width": 1
+                    },
+                    "times": [],
+                    "type": "histogram",
+                    "valueAxes": [
+                        {
+                            "id": "ValueAxis-1",
+                            "labels": {
+                                "filter": false,
+                                "rotate": 0,
+                                "show": true,
+                                "truncate": 100
+                            },
+                            "name": "LeftAxis-1",
+                            "position": "left",
+                            "scale": {
+                                "mode": "normal",
+                                "type": "linear"
+                            },
+                            "show": true,
+                            "style": {},
+                            "title": {
+                                "text": "Credentials captured"
+                            },
+                            "type": "value"
+                        }
+                    ]
+                },
+                "title": "RedELK - Credentials over time",
+                "type": "histogram"
+            }
+        },
+        "id": "ab609c60-d319-11ea-9301-a30a04251ae9",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "3fabe620-6c38-11ea-97d6-55783aed877a",
+                "name": "search_0",
+                "type": "search"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "savedSearchRefName": "search_0",
+            "title": "RedELK - MITRE ATT&CK Techniques tag cloud",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {},
+                        "schema": "metric",
+                        "type": "count"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "2",
+                        "params": {
+                            "field": "signal.rule.threat.technique.name",
+                            "missingBucket": false,
+                            "missingBucketLabel": "Missing",
+                            "order": "desc",
+                            "orderBy": "1",
+                            "otherBucket": true,
+                            "otherBucketLabel": "Other",
+                            "size": 300
+                        },
+                        "schema": "segment",
+                        "type": "terms"
+                    }
+                ],
+                "params": {
+                    "maxFontSize": 58,
+                    "minFontSize": 14,
+                    "orientation": "single",
+                    "scale": "linear",
+                    "showLabel": false
+                },
+                "title": "RedELK - MITRE ATT&CK Techniques tag cloud",
+                "type": "tagcloud"
+            }
+        },
+        "id": "abdcd940-d050-11ea-9301-a30a04251ae9",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "dddbba20-d04f-11ea-9301-a30a04251ae9",
+                "name": "search_0",
+                "type": "search"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "savedSearchRefName": "search_0",
+            "title": "RedELK - Tasks per C2 operator",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {
+                            "customLabel": "Tasks launched"
+                        },
+                        "schema": "metric",
+                        "type": "count"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "2",
+                        "params": {
+                            "drop_partials": false,
+                            "extended_bounds": {},
+                            "field": "@timestamp",
+                            "interval": "auto",
+                            "min_doc_count": 1,
+                            "scaleMetricValues": false,
+                            "timeRange": {
+                                "from": "now-1d",
+                                "to": "now"
+                            },
+                            "useNormalizedEsInterval": true
+                        },
+                        "schema": "segment",
+                        "type": "date_histogram"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "3",
+                        "params": {
+                            "field": "user.name",
+                            "missingBucket": true,
+                            "missingBucketLabel": "Unknown user",
+                            "order": "desc",
+                            "orderBy": "1",
+                            "otherBucket": false,
+                            "otherBucketLabel": "Other",
+                            "size": 10
+                        },
+                        "schema": "group",
+                        "type": "terms"
+                    }
+                ],
+                "params": {
+                    "addLegend": true,
+                    "addTimeMarker": false,
+                    "addTooltip": true,
+                    "categoryAxes": [
+                        {
+                            "id": "CategoryAxis-1",
+                            "labels": {
+                                "filter": true,
+                                "show": true,
+                                "truncate": 100
+                            },
+                            "position": "bottom",
+                            "scale": {
+                                "type": "linear"
+                            },
+                            "show": true,
+                            "style": {},
+                            "title": {},
+                            "type": "category"
+                        }
+                    ],
+                    "grid": {
+                        "categoryLines": false
+                    },
+                    "labels": {
+                        "show": false
+                    },
+                    "legendPosition": "right",
+                    "seriesParams": [
+                        {
+                            "data": {
+                                "id": "1",
+                                "label": "Tasks launched"
+                            },
+                            "drawLinesBetweenPoints": true,
+                            "lineWidth": 2,
+                            "mode": "stacked",
+                            "show": true,
+                            "showCircles": true,
+                            "type": "histogram",
+                            "valueAxis": "ValueAxis-1"
+                        }
+                    ],
+                    "thresholdLine": {
+                        "color": "#E7664C",
+                        "show": false,
+                        "style": "full",
+                        "value": 10,
+                        "width": 1
+                    },
+                    "times": [],
+                    "type": "histogram",
+                    "valueAxes": [
+                        {
+                            "id": "ValueAxis-1",
+                            "labels": {
+                                "filter": false,
+                                "rotate": 0,
+                                "show": true,
+                                "truncate": 100
+                            },
+                            "name": "LeftAxis-1",
+                            "position": "left",
+                            "scale": {
+                                "mode": "normal",
+                                "type": "linear"
+                            },
+                            "show": true,
+                            "style": {},
+                            "title": {
+                                "text": "Tasks launched"
+                            },
+                            "type": "value"
+                        }
+                    ]
+                },
+                "title": "RedELK - Tasks launched per operator",
+                "type": "histogram"
+            }
+        },
+        "id": "afb6ce00-d022-11ea-9301-a30a04251ae9",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "cc523820-d021-11ea-9301-a30a04251ae9",
+                "name": "search_0",
+                "type": "search"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "savedSearchRefName": "search_0",
+            "title": "RedELK - Hosts total unique count",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "2",
+                        "params": {
+                            "customLabel": "Hosts",
+                            "field": "host.name"
+                        },
+                        "schema": "metric",
+                        "type": "cardinality"
+                    }
+                ],
+                "params": {
+                    "addLegend": false,
+                    "addTooltip": true,
+                    "metric": {
+                        "colorSchema": "Green to Red",
+                        "colorsRange": [
+                            {
+                                "from": 0,
+                                "to": 10000
+                            }
+                        ],
+                        "invertColors": false,
+                        "labels": {
+                            "show": true
+                        },
+                        "metricColorMode": "None",
+                        "percentageMode": false,
+                        "style": {
+                            "bgColor": false,
+                            "bgFill": "#000",
+                            "fontSize": 60,
+                            "labelColor": false,
+                            "subText": ""
+                        },
+                        "useRanges": false
+                    },
+                    "type": "metric"
+                },
+                "title": "RedELK - Hosts total unique count",
+                "type": "metric"
+            }
+        },
+        "id": "b19d4790-d35f-11ea-9301-a30a04251ae9",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "68e8e870-b6aa-11e8-bc1a-cf8fa3255855",
+                "name": "search_0",
+                "type": "search"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "savedSearchRefName": "search_0",
+            "title": "RedELK - Downloads total count",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {
+                            "customLabel": "Downloads"
+                        },
+                        "schema": "metric",
+                        "type": "count"
+                    }
+                ],
+                "params": {
+                    "addLegend": false,
+                    "addTooltip": true,
+                    "metric": {
+                        "colorSchema": "Green to Red",
+                        "colorsRange": [
+                            {
+                                "from": 0,
+                                "to": 10000
+                            }
+                        ],
+                        "invertColors": false,
+                        "labels": {
+                            "show": true
+                        },
+                        "metricColorMode": "None",
+                        "percentageMode": false,
+                        "style": {
+                            "bgColor": false,
+                            "bgFill": "#000",
+                            "fontSize": 60,
+                            "labelColor": false,
+                            "subText": ""
+                        },
+                        "useRanges": false
+                    },
+                    "type": "metric"
+                },
+                "title": "RedELK - CS - Downloads total count",
+                "type": "metric"
+            }
+        },
+        "id": "b5beb3c0-d04b-11ea-9301-a30a04251ae9",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "26ba4cb0-0f73-11e9-8e1e-a16db980e11e",
+                "name": "search_0",
+                "type": "search"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "savedSearchRefName": "search_0",
+            "title": "RedELK - Tasks execution timeframe",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {
+                            "customLabel": "First task",
+                            "field": "@timestamp"
+                        },
+                        "schema": "metric",
+                        "type": "min"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "2",
+                        "params": {
+                            "customLabel": "Last task",
+                            "field": "@timestamp"
+                        },
+                        "schema": "metric",
+                        "type": "max"
+                    }
+                ],
+                "params": {
+                    "addLegend": false,
+                    "addTooltip": true,
+                    "metric": {
+                        "colorSchema": "Green to Red",
+                        "colorsRange": [
+                            {
+                                "from": 0,
+                                "to": 10000
+                            }
+                        ],
+                        "invertColors": false,
+                        "labels": {
+                            "show": true
+                        },
+                        "metricColorMode": "None",
+                        "percentageMode": false,
+                        "style": {
+                            "bgColor": false,
+                            "bgFill": "#000",
+                            "fontSize": 24,
+                            "labelColor": false,
+                            "subText": ""
+                        },
+                        "useRanges": false
+                    },
+                    "type": "metric"
+                },
+                "title": "RedELK - Tasks execution timeframe",
+                "type": "metric"
+            }
+        },
+        "id": "ce581930-d361-11ea-9301-a30a04251ae9",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "cc523820-d021-11ea-9301-a30a04251ae9",
+                "name": "search_0",
+                "type": "search"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "title": "RedELK - Target host and user selector",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [],
+                "params": {
+                    "controls": [
+                        {
+                            "fieldName": "host.name",
+                            "id": "1595867425052",
+                            "indexPatternRefName": "control_0_index_pattern",
+                            "label": "Target host(s)",
+                            "options": {
+                                "dynamicOptions": true,
+                                "multiselect": true,
+                                "order": "desc",
+                                "size": 5,
+                                "type": "terms"
+                            },
+                            "parent": "",
+                            "type": "list"
+                        },
+                        {
+                            "fieldName": "user.name",
+                            "id": "1595867451919",
+                            "indexPatternRefName": "control_1_index_pattern",
+                            "label": "Target user(s)",
+                            "options": {
+                                "dynamicOptions": true,
+                                "multiselect": true,
+                                "order": "desc",
+                                "size": 5,
+                                "type": "terms"
+                            },
+                            "parent": "",
+                            "type": "list"
+                        }
+                    ],
+                    "pinFilters": false,
+                    "updateFiltersOnChange": true,
+                    "useTimeFilter": false
+                },
+                "title": "RedELK - Target host and user selector",
+                "type": "input_control_vis"
+            }
+        },
+        "id": "d2c7b720-d026-11ea-9301-a30a04251ae9",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "rtops",
+                "name": "control_0_index_pattern",
+                "type": "index-pattern"
+            },
+            {
+                "id": "rtops",
+                "name": "control_1_index_pattern",
+                "type": "index-pattern"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "savedSearchRefName": "search_0",
+            "title": "RedELK - Credentials total count",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {
+                            "customLabel": "Credentials"
+                        },
+                        "schema": "metric",
+                        "type": "count"
+                    }
+                ],
+                "params": {
+                    "addLegend": false,
+                    "addTooltip": true,
+                    "metric": {
+                        "colorSchema": "Green to Red",
+                        "colorsRange": [
+                            {
+                                "from": 0,
+                                "to": 10000
+                            }
+                        ],
+                        "invertColors": false,
+                        "labels": {
+                            "show": true
+                        },
+                        "metricColorMode": "None",
+                        "percentageMode": false,
+                        "style": {
+                            "bgColor": false,
+                            "bgFill": "#000",
+                            "fontSize": 60,
+                            "labelColor": false,
+                            "subText": ""
+                        },
+                        "useRanges": false
+                    },
+                    "type": "metric"
+                },
+                "title": "RedELK - Credentials total count",
+                "type": "metric"
+            }
+        },
+        "id": "dcf86190-d319-11ea-9301-a30a04251ae9",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "3fabe620-6c38-11ea-97d6-55783aed877a",
+                "name": "search_0",
+                "type": "search"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "indexRefName": "kibanaSavedObjectMeta.searchSourceJSON.index",
+                    "query": {
+                        "language": "lucene",
+                        "query": "c2.log.type: implant_newimplant"
+                    }
+                }
+            },
+            "title": "RedELK - New implants over time",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {
+                            "customLabel": "Amount of implants"
+                        },
+                        "schema": "metric",
+                        "type": "count"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "2",
+                        "params": {
+                            "extended_bounds": {},
+                            "field": "@timestamp",
+                            "interval": "auto",
+                            "min_doc_count": 1
+                        },
+                        "schema": "segment",
+                        "type": "date_histogram"
+                    }
+                ],
+                "params": {
+                    "addLegend": true,
+                    "addTimeMarker": false,
+                    "addTooltip": true,
+                    "categoryAxes": [
+                        {
+                            "id": "CategoryAxis-1",
+                            "labels": {
+                                "rotate": 0,
+                                "show": true,
+                                "truncate": 100
+                            },
+                            "position": "bottom",
+                            "scale": {
+                                "type": "linear"
+                            },
+                            "show": true,
+                            "style": {},
+                            "title": {},
+                            "type": "category"
+                        }
+                    ],
+                    "grid": {
+                        "categoryLines": true,
+                        "style": {
+                            "color": "#eee"
+                        },
+                        "valueAxis": null
+                    },
+                    "legendPosition": "top",
+                    "seriesParams": [
+                        {
+                            "data": {
+                                "id": "1",
+                                "label": "Amount of implants"
+                            },
+                            "drawLinesBetweenPoints": true,
+                            "interpolate": "linear",
+                            "lineWidth": 5,
+                            "mode": "stacked",
+                            "show": "true",
+                            "showCircles": true,
+                            "type": "line",
+                            "valueAxis": "ValueAxis-1"
+                        }
+                    ],
+                    "times": [],
+                    "type": "line",
+                    "valueAxes": [
+                        {
+                            "id": "ValueAxis-1",
+                            "labels": {
+                                "filter": false,
+                                "rotate": 0,
+                                "show": true,
+                                "truncate": 100
+                            },
+                            "name": "LeftAxis-1",
+                            "position": "left",
+                            "scale": {
+                                "mode": "normal",
+                                "type": "linear"
+                            },
+                            "show": true,
+                            "style": {},
+                            "title": {
+                                "text": "Amount of implants"
+                            },
+                            "type": "value"
+                        }
+                    ]
+                },
+                "title": "New implants over time",
+                "type": "line"
+            }
+        },
+        "id": "e12434d0-b8e8-11e8-94dd-171ae5c1fd1a",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "rtops",
+                "name": "kibanaSavedObjectMeta.searchSourceJSON.index",
+                "type": "index-pattern"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "indexRefName": "kibanaSavedObjectMeta.searchSourceJSON.index",
+                    "query": {
+                        "language": "lucene",
+                        "query": ""
+                    }
+                }
+            },
+            "title": "RedELK - Redirector Traffic All",
+            "uiStateJSON": "{\"mapCenter\":[20.96143961409684,13.007096309476236],\"mapZoom\":2}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {
+                            "customLabel": "Source IP",
+                            "field": "source.ip"
+                        },
+                        "schema": "metric",
+                        "type": "cardinality"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "2",
+                        "params": {
+                            "autoPrecision": true,
+                            "customLabel": "",
+                            "field": "source.geo.location",
+                            "isFilteredByCollar": true,
+                            "precision": 2,
+                            "useGeocentroid": true
+                        },
+                        "schema": "segment",
+                        "type": "geohash_grid"
+                    }
+                ],
+                "params": {
+                    "addTooltip": true,
+                    "colorSchema": "Blues",
+                    "heatClusterSize": 1.5,
+                    "isDesaturated": true,
+                    "legendPosition": "bottomright",
+                    "mapCenter": [
+                        0,
+                        0
+                    ],
+                    "mapType": "Heatmap",
+                    "mapZoom": 2,
+                    "wms": {
+                        "baseLayersAreLoaded": {},
+                        "enabled": false,
+                        "options": {
+                            "format": "image/png",
+                            "transparent": true
+                        },
+                        "selectedTmsLayer": {
+                            "attribution": "<p>&#169; <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors | <a href=\"https://www.elastic.co/elastic-maps-service\">Elastic Maps Service</a></p>&#10;",
+                            "id": "road_map",
+                            "maxZoom": 18,
+                            "minZoom": 0,
+                            "subdomains": [],
+                            "url": "https://tiles.maps.elastic.co/v2/default/{z}/{x}/{y}.png?elastic_tile_service_tos=agree&my_app_name=kibana&my_app_version=6.4.0&license=2f28f176-767a-4df6-a815-1f17dd8e46fc"
+                        },
+                        "tmsLayers": [
+                            {
+                                "attribution": "<p>&#169; <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors | <a href=\"https://www.elastic.co/elastic-maps-service\">Elastic Maps Service</a></p>&#10;",
+                                "id": "road_map",
+                                "maxZoom": 18,
+                                "minZoom": 0,
+                                "subdomains": [],
+                                "url": "https://tiles.maps.elastic.co/v2/default/{z}/{x}/{y}.png?elastic_tile_service_tos=agree&my_app_name=kibana&my_app_version=6.4.0&license=2f28f176-767a-4df6-a815-1f17dd8e46fc"
+                            }
+                        ]
+                    }
+                },
+                "title": "RedELK - Redirector Traffic All",
+                "type": "tile_map"
+            }
+        },
+        "id": "e97f6f10-b982-11e8-94dd-171ae5c1fd1a",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "redirtraffic",
+                "name": "kibanaSavedObjectMeta.searchSourceJSON.index",
+                "type": "index-pattern"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [
+                        {
+                            "$state": {
+                                "store": "appState"
+                            },
+                            "meta": {
+                                "alias": null,
+                                "disabled": false,
+                                "indexRefName": "kibanaSavedObjectMeta.searchSourceJSON.filter[0].meta.index",
+                                "key": "c2.log.type",
+                                "negate": false,
+                                "params": {
+                                    "query": "implant_newimplant"
+                                },
+                                "type": "phrase"
+                            },
+                            "query": {
+                                "match_phrase": {
+                                    "c2.log.type": "implant_newimplant"
+                                }
+                            }
+                        }
+                    ],
+                    "indexRefName": "kibanaSavedObjectMeta.searchSourceJSON.index",
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "title": "RedELK - Implant per top users with computers",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {
+                            "customLabel": "Amount of implants"
+                        },
+                        "schema": "metric",
+                        "type": "count"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "2",
+                        "params": {
+                            "customLabel": "Username",
+                            "field": "user.name",
+                            "missingBucket": false,
+                            "missingBucketLabel": "Missing",
+                            "order": "desc",
+                            "orderBy": "1",
+                            "otherBucket": false,
+                            "otherBucketLabel": "Other",
+                            "size": 20
+                        },
+                        "schema": "segment",
+                        "type": "terms"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "3",
+                        "params": {
+                            "customLabel": "Computername",
+                            "field": "host.name",
+                            "missingBucket": false,
+                            "missingBucketLabel": "Missing",
+                            "order": "desc",
+                            "orderBy": "1",
+                            "otherBucket": false,
+                            "otherBucketLabel": "Other",
+                            "size": 50
+                        },
+                        "schema": "group",
+                        "type": "terms"
+                    }
+                ],
+                "params": {
+                    "addLegend": true,
+                    "addTimeMarker": false,
+                    "addTooltip": true,
+                    "categoryAxes": [
+                        {
+                            "id": "CategoryAxis-1",
+                            "labels": {
+                                "filter": false,
+                                "rotate": 0,
+                                "show": true,
+                                "truncate": 200
+                            },
+                            "position": "left",
+                            "scale": {
+                                "type": "linear"
+                            },
+                            "show": true,
+                            "style": {},
+                            "title": {},
+                            "type": "category"
+                        }
+                    ],
+                    "grid": {
+                        "categoryLines": false,
+                        "style": {
+                            "color": "#eee"
+                        }
+                    },
+                    "labels": {},
+                    "legendPosition": "right",
+                    "seriesParams": [
+                        {
+                            "data": {
+                                "id": "1",
+                                "label": "Amount of implants"
+                            },
+                            "drawLinesBetweenPoints": true,
+                            "mode": "stacked",
+                            "show": true,
+                            "showCircles": true,
+                            "type": "histogram",
+                            "valueAxis": "ValueAxis-2"
+                        }
+                    ],
+                    "thresholdLine": {
+                        "color": "#E7664C",
+                        "show": false,
+                        "style": "full",
+                        "value": 10,
+                        "width": 1
+                    },
+                    "times": [],
+                    "type": "histogram",
+                    "valueAxes": [
+                        {
+                            "id": "ValueAxis-2",
+                            "labels": {
+                                "filter": true,
+                                "rotate": 75,
+                                "show": true,
+                                "truncate": 100
+                            },
+                            "name": "BottomAxis-1",
+                            "position": "bottom",
+                            "scale": {
+                                "mode": "normal",
+                                "type": "linear"
+                            },
+                            "show": true,
+                            "style": {},
+                            "title": {
+                                "text": "Amount of implants"
+                            },
+                            "type": "value"
+                        }
+                    ]
+                },
+                "title": "RedELK - Implant per top users with computers",
+                "type": "horizontal_bar"
+            }
+        },
+        "id": "f0dcbda0-b8e5-11e8-94dd-171ae5c1fd1a",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "rtops",
+                "name": "kibanaSavedObjectMeta.searchSourceJSON.index",
+                "type": "index-pattern"
+            },
+            {
+                "id": "rtops",
+                "name": "kibanaSavedObjectMeta.searchSourceJSON.filter[0].meta.index",
+                "type": "index-pattern"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "savedSearchRefName": "search_0",
+            "title": "RedELK - Redirector traffic alarmed IP over time",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {
+                            "customLabel": "Total hits"
+                        },
+                        "schema": "metric",
+                        "type": "count"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "2",
+                        "params": {
+                            "drop_partials": false,
+                            "extended_bounds": {},
+                            "field": "@timestamp",
+                            "interval": "auto",
+                            "min_doc_count": 1,
+                            "scaleMetricValues": false,
+                            "timeRange": {
+                                "from": "now-30h",
+                                "to": "now"
+                            },
+                            "useNormalizedEsInterval": true
+                        },
+                        "schema": "segment",
+                        "type": "date_histogram"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "3",
+                        "params": {
+                            "customLabel": "Alarmed IPs",
+                            "field": "source.ip",
+                            "missingBucket": false,
+                            "missingBucketLabel": "Missing",
+                            "order": "desc",
+                            "orderBy": "1",
+                            "otherBucket": true,
+                            "otherBucketLabel": "Other IPs",
+                            "size": 10
+                        },
+                        "schema": "group",
+                        "type": "terms"
+                    }
+                ],
+                "params": {
+                    "addLegend": true,
+                    "addTimeMarker": false,
+                    "addTooltip": true,
+                    "categoryAxes": [
+                        {
+                            "id": "CategoryAxis-1",
+                            "labels": {
+                                "filter": true,
+                                "show": true,
+                                "truncate": 100
+                            },
+                            "position": "bottom",
+                            "scale": {
+                                "type": "linear"
+                            },
+                            "show": true,
+                            "style": {},
+                            "title": {},
+                            "type": "category"
+                        }
+                    ],
+                    "grid": {
+                        "categoryLines": false
+                    },
+                    "labels": {
+                        "show": false
+                    },
+                    "legendPosition": "right",
+                    "seriesParams": [
+                        {
+                            "data": {
+                                "id": "1",
+                                "label": "Total hits"
+                            },
+                            "drawLinesBetweenPoints": true,
+                            "lineWidth": 2,
+                            "mode": "stacked",
+                            "show": true,
+                            "showCircles": true,
+                            "type": "histogram",
+                            "valueAxis": "ValueAxis-1"
+                        }
+                    ],
+                    "thresholdLine": {
+                        "color": "#E7664C",
+                        "show": false,
+                        "style": "full",
+                        "value": 10,
+                        "width": 1
+                    },
+                    "times": [],
+                    "type": "histogram",
+                    "valueAxes": [
+                        {
+                            "id": "ValueAxis-1",
+                            "labels": {
+                                "filter": false,
+                                "rotate": 0,
+                                "show": true,
+                                "truncate": 100
+                            },
+                            "name": "LeftAxis-1",
+                            "position": "left",
+                            "scale": {
+                                "mode": "normal",
+                                "type": "linear"
+                            },
+                            "show": true,
+                            "style": {},
+                            "title": {
+                                "text": "Total hits"
+                            },
+                            "type": "value"
+                        }
+                    ]
+                },
+                "title": "RedELK - Redirector traffic alarmed IP over time",
+                "type": "histogram"
+            }
+        },
+        "id": "f7141500-d4e1-11ea-9301-a30a04251ae9",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "658d7180-d4e1-11ea-9301-a30a04251ae9",
+                "name": "search_0",
+                "type": "search"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "savedSearchRefName": "search_0",
+            "title": "RedELK - MITRE ATT&CK Tactics tag cloud",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {},
+                        "schema": "metric",
+                        "type": "count"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "2",
+                        "params": {
+                            "field": "signal.rule.threat.tactic.name",
+                            "missingBucket": false,
+                            "missingBucketLabel": "Missing",
+                            "order": "desc",
+                            "orderBy": "1",
+                            "otherBucket": true,
+                            "otherBucketLabel": "Other",
+                            "size": 300
+                        },
+                        "schema": "segment",
+                        "type": "terms"
+                    }
+                ],
+                "params": {
+                    "maxFontSize": 64,
+                    "minFontSize": 18,
+                    "orientation": "single",
+                    "scale": "linear",
+                    "showLabel": false
+                },
+                "title": "RedELK - MITRE ATT&CK Tactics tag cloud",
+                "type": "tagcloud"
+            }
+        },
+        "id": "ff3c3b80-d050-11ea-9301-a30a04251ae9",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "dddbba20-d04f-11ea-9301-a30a04251ae9",
+                "name": "search_0",
+                "type": "search"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "savedSearchRefName": "search_0",
+            "title": "RedELK - Credentials per realm tag cloud",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {},
+                        "schema": "metric",
+                        "type": "count"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "2",
+                        "params": {
+                            "field": "creds.realm.keyword",
+                            "missingBucket": false,
+                            "missingBucketLabel": "Missing",
+                            "order": "desc",
+                            "orderBy": "1",
+                            "otherBucket": true,
+                            "otherBucketLabel": "Other",
+                            "size": 100
+                        },
+                        "schema": "segment",
+                        "type": "terms"
+                    }
+                ],
+                "params": {
+                    "maxFontSize": 72,
+                    "minFontSize": 18,
+                    "orientation": "single",
+                    "scale": "linear",
+                    "showLabel": false
+                },
+                "title": "RedELK - Credentials per realm tag cloud",
+                "type": "tagcloud"
+            }
+        },
+        "id": "ff4497f0-d319-11ea-9301-a30a04251ae9",
+        "migrationVersion": {
+            "visualization": "7.8.0"
+        },
+        "references": [
+            {
+                "id": "3fabe620-6c38-11ea-97d6-55783aed877a",
+                "name": "search_0",
+                "type": "search"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    }
+]

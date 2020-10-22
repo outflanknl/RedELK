@@ -11,6 +11,7 @@ INSTALLER="RedELK elkserver installer"
 CWD=`pwd`
 ELKVERSION="7.9.2"
 
+printf "`date +'%b %e %R'` $INSTALLER - Starting installer\n" > $LOGFILE 2>&1
 echo ""
 echo ""
 echo ""
@@ -25,8 +26,6 @@ echo "      DOCKER DOCKER DOCKER DOCKER DOCKER    "
 echo ""
 echo ""
 echo ""   
-echo "`date +'%b %e %R'` $INSTALLER - Starting installer" | tee $LOGFILE
-printf "`date +'%b %e %R'` $INSTALLER - Starting installer\n" > $LOGFILE 2>&1
 echo "This script will install and configure necessary components for RedELK on ELK server"
 echo ""
 echo ""
@@ -226,12 +225,19 @@ if [ $ERROR -ne 0 ]; then
     echoerror "Could not set permissions on certs for logsatsh (Error Code: $ERROR)."
 fi
 
+echo "[*] Setting permissions on redelk logs" | tee -a $LOGFILE
+chown 1000 ./docker/redelk-base/live/redelklogs/* && chmod 664 ./docker/redelk-base/live/redelklogs/* >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "Could not set permissions on redelk logs (Error Code: $ERROR)."
+fi
+
 
 echo "[*] Building RedELK from $DOCKERCONFFILE file" | tee -a $LOGFILE
 docker-compose -f ./docker/$DOCKERCONFFILE up --build -d # >>$LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not run HELK via docker-compose file $DOCKERCONFFILE (Error Code: $ERROR)."
+    echoerror "Could not build RedELK using docker-compose file $DOCKERCONFFILE (Error Code: $ERROR)."
     exit 1
 fi
 
@@ -247,11 +253,12 @@ echo "" | tee -a $LOGFILE
 echo "" | tee -a $LOGFILE
 echo "" | tee -a $LOGFILE
 echo " Done with base setup of RedELK on ELK server" | tee -a $LOGFILE
-echo " You can now login with redelk:redelk on " | tee -a $LOGFILE
-echo "   - Main RedELK Kibana interface on port 80 (redelk:redelk)" | tee -a $LOGFILE
+echo " You can now login with on: " | tee -a $LOGFILE
+echo "   - Main RedELK Kibana interface on port 80 (default redelk:redelk)" | tee -a $LOGFILE
 if [ ${WHATTOINSTALL} != "limited" ]; then
-    echo "   - Neo4J using the Neo4J browser on port 7474" | tee -a $LOGFILE
-    echo "   - Neo4J using the BloodHound app on bolt://$IP:7687 (neo4j:BloodHound)" | tee -a $LOGFILE
+    echo "   - Jupyter notebooks on /jupyter" | tee -a $LOGFILE
+    echo "   - Neo4J Browser on /neo4jbrowser" | tee -a $LOGFILE
+    echo "   - Neo4J using the BloodHound app on port 7687 (neo4j:BloodHound)" | tee -a $LOGFILE
 fi
 echo "" | tee -a $LOGFILE
 echo "" | tee -a $LOGFILE
@@ -261,8 +268,8 @@ echo " !!! WARNING - IF YOU WANT FULL FUNCTIONALITY YOU ARE NOT DONE YET !!!" | 
 echo " !!! WARNING" | tee -a $LOGFILE
 echo ""
 echo " You should really:" | tee -a $LOGFILE
-echo "   - adjust the ./docker./redelk-base/live/config/cron.d/redelk file to include your teamservers" | tee -a $LOGFILE
-echo "   - adjust all config files in ./docker./redelk-base/live/config/etc/redelk to include your specifics like VT API, email server details, etc" | tee -a $LOGFILE
-echo "   - reset default nginx credentials by adjusting the file /etc/nginx/htpasswd.users. You can use the htpasswd tool from apache2-utils package" | tee -a $LOGFILE
+echo "   - adjust the ./docker/redelk-base/live/config/etc/cron.d/redelk file to include your teamservers" | tee -a $LOGFILE
+echo "   - adjust all config files in ./docker/redelk-base/live/config/etc/redelk to include your specifics like VT API, email server details, etc" | tee -a $LOGFILE
+echo "   - reset default nginx credentials by adjusting the file ./docker/redelk-nginx/live/config/htpasswd.users. You can use the htpasswd tool from apache2-utils package" | tee -a $LOGFILE
 echo "" | tee -a $LOGFILE
 echo "" | tee -a $LOGFILE

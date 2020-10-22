@@ -1,0 +1,638 @@
+[
+    {
+        "attributes": {
+            "fieldFormatMap": "{\"implant.log_file\":{\"id\":\"url\",\"params\":{\"parsedUrl\":{\"pathname\":\"/app/kibana\",\"basePath\":\"\"},\"urlTemplate\":\"/../..{{rawValue}}\",\"labelTemplate\":\"Implant URL\"}}}",
+            "fields": [
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "date"
+                    ],
+                    "name": "@timestamp",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "date"
+                },
+                {
+                    "aggregatable": false,
+                    "count": 0,
+                    "esTypes": [
+                        "text"
+                    ],
+                    "name": "@version",
+                    "readFromDocValues": false,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "@version.keyword",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "subType": {
+                        "multi": {
+                            "parent": "@version"
+                        }
+                    },
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "_id"
+                    ],
+                    "name": "_id",
+                    "readFromDocValues": false,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "_index"
+                    ],
+                    "name": "_index",
+                    "readFromDocValues": false,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": false,
+                    "count": 0,
+                    "name": "_score",
+                    "readFromDocValues": false,
+                    "scripted": false,
+                    "searchable": false,
+                    "type": "number"
+                },
+                {
+                    "aggregatable": false,
+                    "count": 0,
+                    "esTypes": [
+                        "_source"
+                    ],
+                    "name": "_source",
+                    "readFromDocValues": false,
+                    "scripted": false,
+                    "searchable": false,
+                    "type": "_source"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "_type"
+                    ],
+                    "name": "_type",
+                    "readFromDocValues": false,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": false,
+                    "count": 0,
+                    "esTypes": [
+                        "text"
+                    ],
+                    "name": "bluechecktimestamp",
+                    "readFromDocValues": false,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "bluechecktimestamp.keyword",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "subType": {
+                        "multi": {
+                            "parent": "bluechecktimestamp"
+                        }
+                    },
+                    "type": "string"
+                },
+                {
+                    "aggregatable": false,
+                    "count": 0,
+                    "esTypes": [
+                        "text"
+                    ],
+                    "name": "bluechecktype",
+                    "readFromDocValues": false,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "bluechecktype.keyword",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "subType": {
+                        "multi": {
+                            "parent": "bluechecktype"
+                        }
+                    },
+                    "type": "string"
+                },
+                {
+                    "aggregatable": false,
+                    "count": 1,
+                    "esTypes": [
+                        "text"
+                    ],
+                    "name": "classifier",
+                    "readFromDocValues": false,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "classifier.keyword",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "subType": {
+                        "multi": {
+                            "parent": "classifier"
+                        }
+                    },
+                    "type": "string"
+                },
+                {
+                    "aggregatable": false,
+                    "count": 1,
+                    "esTypes": [
+                        "text"
+                    ],
+                    "name": "domain",
+                    "readFromDocValues": false,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "domain.keyword",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "subType": {
+                        "multi": {
+                            "parent": "domain"
+                        }
+                    },
+                    "type": "string"
+                },
+                {
+                    "aggregatable": false,
+                    "count": 0,
+                    "esTypes": [
+                        "text"
+                    ],
+                    "name": "ecs.version",
+                    "readFromDocValues": false,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "ecs.version.keyword",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "subType": {
+                        "multi": {
+                            "parent": "ecs.version"
+                        }
+                    },
+                    "type": "string"
+                },
+                {
+                    "aggregatable": false,
+                    "count": 0,
+                    "esTypes": [
+                        "text"
+                    ],
+                    "name": "event.type",
+                    "readFromDocValues": false,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "event.type.keyword",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "subType": {
+                        "multi": {
+                            "parent": "event.type"
+                        }
+                    },
+                    "type": "string"
+                },
+                {
+                    "aggregatable": false,
+                    "count": 0,
+                    "esTypes": [
+                        "text"
+                    ],
+                    "name": "host",
+                    "readFromDocValues": false,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "host.keyword",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "subType": {
+                        "multi": {
+                            "parent": "host"
+                        }
+                    },
+                    "type": "string"
+                },
+                {
+                    "aggregatable": false,
+                    "count": 0,
+                    "esTypes": [
+                        "text"
+                    ],
+                    "name": "implant.id",
+                    "readFromDocValues": false,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "implant.id.keyword",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "subType": {
+                        "multi": {
+                            "parent": "implant.id"
+                        }
+                    },
+                    "type": "string"
+                },
+                {
+                    "aggregatable": false,
+                    "count": 0,
+                    "esTypes": [
+                        "text"
+                    ],
+                    "name": "implant.log_file",
+                    "readFromDocValues": false,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "implant.log_file.keyword",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "subType": {
+                        "multi": {
+                            "parent": "implant.log_file"
+                        }
+                    },
+                    "type": "string"
+                },
+                {
+                    "aggregatable": false,
+                    "count": 0,
+                    "esTypes": [
+                        "text"
+                    ],
+                    "name": "infra.attack_scenario",
+                    "readFromDocValues": false,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "infra.attack_scenario.keyword",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "subType": {
+                        "multi": {
+                            "parent": "infra.attack_scenario"
+                        }
+                    },
+                    "type": "string"
+                },
+                {
+                    "aggregatable": false,
+                    "count": 1,
+                    "esTypes": [
+                        "text"
+                    ],
+                    "name": "message",
+                    "readFromDocValues": false,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "message.keyword",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "subType": {
+                        "multi": {
+                            "parent": "message"
+                        }
+                    },
+                    "type": "string"
+                },
+                {
+                    "aggregatable": false,
+                    "count": 0,
+                    "esTypes": [
+                        "text"
+                    ],
+                    "name": "path",
+                    "readFromDocValues": false,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "path.keyword",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "subType": {
+                        "multi": {
+                            "parent": "path"
+                        }
+                    },
+                    "type": "string"
+                },
+                {
+                    "aggregatable": false,
+                    "count": 0,
+                    "esTypes": [
+                        "text"
+                    ],
+                    "name": "pstools.psx.edr_name",
+                    "readFromDocValues": false,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "pstools.psx.edr_name.keyword",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "subType": {
+                        "multi": {
+                            "parent": "pstools.psx.edr_name"
+                        }
+                    },
+                    "type": "string"
+                },
+                {
+                    "aggregatable": false,
+                    "count": 0,
+                    "esTypes": [
+                        "text"
+                    ],
+                    "name": "pstools.psx.security_products",
+                    "readFromDocValues": false,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "pstools.psx.security_products.keyword",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "subType": {
+                        "multi": {
+                            "parent": "pstools.psx.security_products"
+                        }
+                    },
+                    "type": "string"
+                },
+                {
+                    "aggregatable": false,
+                    "count": 0,
+                    "esTypes": [
+                        "text"
+                    ],
+                    "name": "pstools.tool",
+                    "readFromDocValues": false,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "pstools.tool.keyword",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "subType": {
+                        "multi": {
+                            "parent": "pstools.tool"
+                        }
+                    },
+                    "type": "string"
+                },
+                {
+                    "aggregatable": false,
+                    "count": 1,
+                    "esTypes": [
+                        "text"
+                    ],
+                    "name": "results",
+                    "readFromDocValues": false,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "results.keyword",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "subType": {
+                        "multi": {
+                            "parent": "results"
+                        }
+                    },
+                    "type": "string"
+                },
+                {
+                    "aggregatable": false,
+                    "count": 0,
+                    "esTypes": [
+                        "text"
+                    ],
+                    "name": "tags",
+                    "readFromDocValues": false,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "tags.keyword",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "subType": {
+                        "multi": {
+                            "parent": "tags"
+                        }
+                    },
+                    "type": "string"
+                },
+                {
+                    "aggregatable": false,
+                    "count": 0,
+                    "esTypes": [
+                        "text"
+                    ],
+                    "name": "type",
+                    "readFromDocValues": false,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "type.keyword",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "subType": {
+                        "multi": {
+                            "parent": "type"
+                        }
+                    },
+                    "type": "string"
+                }
+            ],
+            "timeFieldName": "@timestamp",
+            "title": "bluecheck-*"
+        },
+        "id": "bluecheck",
+        "migrationVersion": {
+            "index-pattern": "7.6.0"
+        },
+        "references": [],
+        "type": "index-pattern",
+        "version": "1"
+    }
+]

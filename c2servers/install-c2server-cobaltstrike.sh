@@ -41,6 +41,7 @@ preinstallcheck() {
     fi
 }
 
+printf "`date +'%b %e %R'` $INSTALLER - Starting installer\n" > $LOGFILE 2>&1
 echo ""
 echo ""
 echo ""
@@ -53,8 +54,13 @@ echo ""
 echo ""
 echo ""   
 echo "This script will install and configure necessary components for RedELK on Cobalt Strike teamservers"
-echo "`date +'%b %e %R'` $INSTALLER - Starting installer" | tee $LOGFILE
-printf "`date +'%b %e %R'` $INSTALLER - Starting installer\n" > $LOGFILE 2>&1
+echo ""
+echo ""
+
+if [[ $EUID -ne 0 ]]; then
+  echo "[X] Not running as root. Exiting"
+  exit 1
+fi
 
 if ! [ $# -eq 3 ] ; then
     echo "[X] ERROR Incorrect amount of parameters"

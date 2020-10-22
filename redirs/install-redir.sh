@@ -46,8 +46,26 @@ preinstallcheck() {
     fi
 }
 
-echo "This script will install and configure necessary components for RedELK on redirectors"
 printf "`date +'%b %e %R'` $INSTALLER - Starting installer\n" > $LOGFILE 2>&1
+echo ""
+echo ""
+echo ""
+echo "    ____            _  _____  _      _  __"
+echo "   |  _ \  ___   __| || ____|| |    | |/ /"
+echo "   | |_) |/ _ \ / _\` ||  _|  | |    | ' / "
+echo "   |  _ <|  __/| (_| || |___ | |___ | . \ "
+echo "   |_| \__\___| \____||_____||_____||_|\_\\"
+echo ""
+echo ""
+echo ""   
+echo "This script will install and configure necessary components for RedELK on on rdirectors"
+echo ""
+echo ""
+
+if [[ $EUID -ne 0 ]]; then
+  echo "[X] Not running as root. Exiting"
+  exit 1
+fi
 
 if ! [ $# -eq 3 ] ; then
     echo "[X] ERROR Incorrect amount of parameters"
@@ -60,106 +78,106 @@ fi
 
 preinstallcheck
 
-echo "Adding GPG key of Elastic"
+echo "[*] Adding GPG key of Elastic"  | tee -a $LOGFILE
 wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add - >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not add GPG key (Error Code: $ERROR)."
 fi
 
-echo "Installing apt-transport-https"
+echo "[*] Installing apt-transport-https" | tee -a $LOGFILE
 apt-get install -y apt-transport-https >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not install apt-transport-https (Error Code: $ERROR)."
 fi
 
-echo "Adding Elastic APT repository"
+echo "[*] Adding Elastic APT repository" | tee -a $LOGFILE
 if [ ! -f  /etc/apt/sources.list.d/elastic-7.x.list ]; then
     echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | tee -a /etc/apt/sources.list.d/elastic-7.x.list >> $LOGFILE 2>&1
 fi
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not add APT repository (Error Code: $ERROR)."
+    echoerror "[X] Could not add APT repository (Error Code: $ERROR)."
 fi
 
-echo "Updating APT"
+echo "[*] Updating APT" | tee -a $LOGFILE
 apt-get update  >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "Could not update APT (Error Code: $ERROR)."
 fi
 
-echo "Installing filebeat ..."
+echo "[*] Installing filebeat" | tee -a $LOGFILE
 apt-get install -y filebeat=$ELKVERSION >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not install filebeat (Error Code: $ERROR)."
+    echoerror "[X] Could not install filebeat (Error Code: $ERROR)."
 fi
 
-echo "Setting filebeat to auto start after reboot"
+echo "[*] Setting filebeat to auto start after reboot" | tee -a $LOGFILE
 systemctl enable filebeat >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not change auto boot settings (Error Code: $ERROR)."
+    echoerror "[X] Could not change auto boot settings (Error Code: $ERROR)."
 fi
 
-echo "Making backup of original filebeat config"
+echo "[*] Making backup of original filebeat config" | tee -a $LOGFILE
 mv /etc/filebeat/filebeat.yml /etc/filebeat/filebeat.yml.ori >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not make backup (Error Code: $ERROR)."
+    echoerror "[X] Could not make backup (Error Code: $ERROR)."
 fi
 
-echo "Copying new config file"
+echo "[*] Copying new config file" | tee -a $LOGFILE
 cp ./filebeat/filebeat.yml /etc/filebeat/ >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not copy filebeat config (Error Code: $ERROR)."
+    echoerror "[X] Could not copy filebeat config (Error Code: $ERROR)."
 fi
 
-echo "Copying ca file ..."
+echo "[*] Copying ca file" | tee -a $LOGFILE
 cp ./filebeat/redelkCA.crt /etc/filebeat/ >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not copy ca file (Error Code: $ERROR)."
+    echoerror "[X] Could not copy ca file (Error Code: $ERROR)."
 fi
 
-echo "Altering hostname field in filebeat config"
+echo "[*] Altering hostname field in filebeat config" | tee -a $LOGFILE
 sed -i s/'@@HOSTNAME@@'/$1/g /etc/filebeat/filebeat.yml  >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not change hostname field in filebeat config (Error Code: $ERROR)."
+    echoerror "[X] Could not change hostname field in filebeat config (Error Code: $ERROR)."
 fi
 
-echo "Altering attackscenario field in filebeat config "
+echo "[*] Altering attackscenario field in filebeat config" | tee -a $LOGFILE
 sed -i s/'@@ATTACKSCENARIO@@'/$2/g /etc/filebeat/filebeat.yml >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not change attackscenario field in filebeat config (Error Code: $ERROR)."
+    echoerror "[X] Could not change attackscenario field in filebeat config (Error Code: $ERROR)."
 fi
 
-echo "Altering log destination field in filebeat config "
+echo "[*] Altering log destination field in filebeat config" | tee -a $LOGFILE
 sed -i s/'@@HOSTANDPORT@@'/$3/g /etc/filebeat/filebeat.yml >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not change log destination field in filebeat config (Error Code: $ERROR)."
+    echoerror "[X] Could not change log destination field in filebeat config (Error Code: $ERROR)."
 fi
 
-echo "Altering logrotate settings for HAProxy - rotate weekly instead of daily"
+echo "[*] Altering logrotate settings for HAProxy - rotate weekly instead of daily" | tee -a $LOGFILE
 if [ -f  /etc/logrotate.d/haproxy ]; then
     sed -i s/'daily'/'weekly'/g /etc/logrotate.d/haproxy >> $LOGFILE 2>&1
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
-        echoerror "Could not change logrotate settings for HAProxy (Error Code: $ERROR). "
+        echoerror "[X] Could not change logrotate settings for HAProxy (Error Code: $ERROR). "
     fi
 fi
 
-echo "Starting filebeat"
+echo "[*] Starting filebeat" | tee -a $LOGFILE
 service filebeat start >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not start filebeat (Error Code: $ERROR)."
+    echoerror "[X] Could not start filebeat (Error Code: $ERROR)."
 fi
 
 grep -i error $LOGFILE 2>&1
@@ -170,6 +188,6 @@ if [ $ERROR -eq 0 ]; then
 fi
 
 echo ""
-echo ""
-echo "Done with setup of RedELK on redirector."
-echo ""
+echo "" | tee -a $LOGFILE
+echo "Done with setup of RedELK on redirector." | tee -a $LOGFILE
+echo "" | tee -a $LOGFILE
