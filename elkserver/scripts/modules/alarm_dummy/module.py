@@ -3,11 +3,11 @@
 # Part of RedELK
 #
 # Author: Lorenzo Bernardi / @fastlorenzo
-# Co-Author: Mark Bergman / @xychix
 #
 from modules.helpers import *
 import traceback
 import config
+import logging
 
 info = {
     'version': 0.1,
@@ -20,25 +20,40 @@ info = {
 
 class Module():
     def __init__(self):
-        #print("class init")
+        self.logger = logging.getLogger(info['submodule'])
         pass
 
     def run(self):
-        ret = {}
+        ret = initial_alarm_result
         alarmLines = []
         ret['info'] = info
-        ret['hits'] = {}
         ret['hits']['hits'] = []
-        ret['results'] = {}
         ret['hits']['total'] = 0
+        ret['fields'] = ['@timestamp', 'host.name', 'user.name', 'ioc.type', 'file.name', 'file.hash.md5', 'ioc.domain', 'c2.message']
+        ret['groupby'] = ['ioc.type', 'file.hash.md5']
         if config.DEBUG > 0:
-            print("[a] module %s . generating results. config.DEBUG set to %s"%(ret['info']['name'],config.DEBUG))
-            for num in range(6):
-                line = {}
-                ret[]'key_%s'%num]: 'val_%s'%num
-                ret['hits']['hits'].append(line)
-        ret['hits']['total'] = len(ret['hits']['hits'])
-        ret['fields'] = list(ret['hits']['hits'][0].keys())
-        print("[a] finished running module %s . result: %s hits"%(ret['info']['name'],ret['hits']['total']))
-        #print(ret)
+            self.logger.debug('generating results. config.DEBUG set to %s' % config.DEBUG)
+            for r in self.alarm_dummy():
+                ret['hits']['hits'].append(r)
+                ret['mutations'][r['_id']] = {'test':'extra_data'}
+                ret['hits']['total'] += 1
+
+        self.logger.info('finished running module. result: %s hits' % ret['hits']['total'])
+        self.logger.debug(ret)
         return(ret)
+
+    def alarm_dummy(self):
+        q = "c2.log.type:ioc AND NOT tags:ALARMED_*"
+        report = {}
+        report['alarm'] = False
+        report['fname'] = "alarm_check2"
+        report['name'] = "Test IOC's against public sources"
+        report['description'] = "This check queries public sources given a list of md5 hashes. If a hash was seen we set an alarm\n"
+        report['query'] = q
+        iocs = []
+        i = countQuery(q, index="rtops-*")
+        self.logger.debug('Getting 1 document')
+        r = getQuery(q, 1, index="rtops-*")
+        self.logger.debug(r)
+
+        return(r)

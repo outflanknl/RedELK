@@ -75,9 +75,24 @@ notifications = {
     }
 }
 if 'notifications' in d:
-    for n in notifications:
-        if n in d['notifications']:
-            notifications[n] = d['notifications'][n]
+    for n in d['notifications']:
+        notifications[n] = d['notifications'][n]
+
+#### Alarms
+alarms = {
+    'alarm1': {
+        'enabled': False
+    },
+    'alarm2': {
+        'enabled': False
+    },
+    'alarm3': {
+        'enabled': False
+    }
+}
+if 'alarms' in d:
+    for a in d['alarms']:
+        alarms[a] = d['alarms'][a]
 
 es_connection = ['http://localhost:9200']
 if 'es_connection' in d: es_connection = d['es_connection']
