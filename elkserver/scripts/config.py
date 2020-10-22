@@ -26,31 +26,9 @@ if "ibm_BasicAuth" in d: ibm_BasicAuth = d['ibm_BasicAuth']
 HybridAnalysisAPIKEY = ""
 if "HybridAnalysisAPIKEY" in d: HybridAnalysisAPIKEY = d['HybridAnalysisAPIKEY']
 
-#### SMTP settings
-smtpSrv=''
-if "smtpSrv" in d: smtpSrv = d['smtpSrv']
-
-smtpPort=25
-if "smtpPort" in d: smtpPort = int(d['smtpPort'])
-
-smtpName=""
-if "smtpName" in d: smtpName = d['smtpName']
-
-smtpPass=""
-if "smtpPass" in d: smtpPass = d['smtpPass']
-
-fromAddr=""
-if "fromAddr" in d: fromAddr = d['fromAddr']
-
-toAddrs=[""]
-if "toAddrs" in d: toAddrs = d['toAddrs']
-
 #### directory for cache files (including shelves)
 tempDir="/tmp"
 if "tempDir" in d: tempDir = d['tempDir']
-
-msTeamsWebhookURL = ""
-if "msTeamsWebhookURL" in d: msTeamsWebhookURL = d['msTeamsWebhookURL']
 
 #### Notifications
 notifications = {
