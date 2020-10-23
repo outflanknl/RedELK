@@ -24,8 +24,8 @@ Here's a conceptual overview of how RedELK works.
 
 # Authors and contribution #
 This project is developed and maintained by:
-- Marc Smeets (@MarcOverIP on Github and Twitter)
-- Mark Bergman (@xychix on Github and Twitter)
-- Lorenzo Bernardi (@fastlorenzo on Github and Twitter)
+- Marc Smeets (@MarcOverIP on [Github](https://github.com/MarcOverIP) and [Twitter](https://twitter.com/MarcOverIP))
+- Mark Bergman (@xychix on [Github](https://github.com/xychix) and [Twitter](https://twitter.com/xychix))
+- Lorenzo Bernardi (@fastlorenzo on [Github](https://github.com/fastlorenzo) and [Twitter](https://twitter.com/fastlorenzo))
 
 We welcome contributions! Contributions can be both in code, as well as in ideas you might have for further development, alarms, usability improvements, etc. 
