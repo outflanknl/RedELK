@@ -35,7 +35,7 @@ preinstallcheck() {
             service filebeat stop
             ERROR=$?
             if [ $ERROR -ne 0 ]; then
-                echoerror "Could not stop filebeat (Error Code: $ERROR)."
+                echoerror "[X] Could not stop filebeat (Error Code: $ERROR)."
             fi
         fi
     fi
@@ -83,14 +83,14 @@ echo "[*] Adding GPG key of Elastic" | tee -a $LOGFILE
 wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add - >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not add GPG key (Error Code: $ERROR)."
+    echoerror "[X] Could not add GPG key (Error Code: $ERROR)."
 fi
 
 echo "[*] Installing apt-transport-https" | tee -a $LOGFILE
 apt-get install -y apt-transport-https >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not install apt-transport-https (Error Code: $ERROR)."
+    echoerror "[X] Could not install apt-transport-https (Error Code: $ERROR)."
 fi
 
 echo "[*] Adding Elastic APT repository" | tee -a $LOGFILE
@@ -99,77 +99,77 @@ if [ ! -f  /etc/apt/sources.list.d/elastic-7.x.list ]; then
 fi
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not add APT repository (Error Code: $ERROR)."
+    echoerror "[X] Could not add APT repository (Error Code: $ERROR)."
 fi
 
 echo "[*] Updating APT" | tee -a $LOGFILE
 apt-get update  >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not update APT (Error Code: $ERROR)."
+    echoerror "[X] Could not update APT (Error Code: $ERROR)."
 fi
 
 echo "[*] Installing filebeat" | tee -a $LOGFILE
 apt-get install -y filebeat=$ELKVERSION >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not install filebeat (Error Code: $ERROR)."
+    echoerror "[X] Could not install filebeat (Error Code: $ERROR)."
 fi
 
 echo "[*] Setting filebeat to auto start after reboot" | tee -a $LOGFILE
 systemctl enable filebeat >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not change auto boot settings (Error Code: $ERROR)."
+    echoerror "[X] Could not change auto boot settings (Error Code: $ERROR)."
 fi
 
 echo "[*] Making backup of original filebeat config" | tee -a $LOGFILE
 mv /etc/filebeat/filebeat.yml /etc/filebeat/filebeat.yml.ori >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not make backup (Error Code: $ERROR)."
+    echoerror "[X] Could not make backup (Error Code: $ERROR)."
 fi
 
 echo "[*] Copying new config file" | tee -a $LOGFILE
 cp ./filebeat/filebeat_cobaltstrike.yml /etc/filebeat/filebeat.yml >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not copy filebeat config (Error Code: $ERROR)."
+    echoerror "[X] Could not copy filebeat config (Error Code: $ERROR)."
 fi
 
 echo "[*] Copying ca file" | tee -a $LOGFILE
 cp ./filebeat/redelkCA.crt /etc/filebeat/ >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not copy ca file (Error Code: $ERROR)."
+    echoerror "[X] Could not copy ca file (Error Code: $ERROR)."
 fi
 
 echo "[*] Altering hostname field in filebeat config" | tee -a $LOGFILE
 sed -i s/'@@HOSTNAME@@'/$1/g /etc/filebeat/filebeat.yml  >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not change hostname field in filebeat config (Error Code: $ERROR)."
+    echoerror "[X] Could not change hostname field in filebeat config (Error Code: $ERROR)."
 fi
 
 echo "[*] Altering attackscenario field in filebeat config" | tee -a $LOGFILE
 sed -i s/'@@ATTACKSCENARIO@@'/$2/g /etc/filebeat/filebeat.yml >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not change attackscenario field in filebeat config (Error Code: $ERROR)."
+    echoerror "[X] Could not change attackscenario field in filebeat config (Error Code: $ERROR)."
 fi
 
 echo "[*] Altering log destination field in filebeat config" | tee -a $LOGFILE
 sed -i s/'@@HOSTANDPORT@@'/$3/g /etc/filebeat/filebeat.yml >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not change log destination field in filebeat config (Error Code: $ERROR)."
+    echoerror "[X] Could not change log destination field in filebeat config (Error Code: $ERROR)."
 fi
 
 echo "[*] Starting filebeat" | tee -a $LOGFILE
 service filebeat start >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not start filebeat (Error Code: $ERROR)."
+    echoerror "[X] Could not start filebeat (Error Code: $ERROR)."
 fi
 
 echo "[*] Creating scponly user" | tee -a $LOGFILE
@@ -182,7 +182,7 @@ else
 fi  >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not create scponly user (Error Code: $ERROR)."
+    echoerror "[X] Could not create scponly user (Error Code: $ERROR)."
 fi
 
 echo "[*] Setting ssh key authentication for scponly user" | tee -a $LOGFILE
@@ -195,14 +195,14 @@ if [ $EXIT -eq 0  ]; then
 fi  >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not set ssh key authentication for scponly user (Error Code: $ERROR)."
+    echoerror "[X] Could not set ssh key authentication for scponly user (Error Code: $ERROR)."
 fi
 
 echo "[*] Installing rush" | tee -a $LOGFILE
 apt-get install -y rush >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not install rush (Error Code: $ERROR)."
+    echoerror "[X] Could not install rush (Error Code: $ERROR)."
 fi
 
 echo "[*] Configuring rush" | tee -a $LOGFILE
@@ -225,7 +225,7 @@ EOF
 fi >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not configure rush (Error Code: $ERROR)."
+    echoerror "[X] Could not configure rush (Error Code: $ERROR)."
 fi
 
 echo "[*] Creating crontab for local rscync of cobaltstrike logs" | tee -a $LOGFILE
@@ -234,42 +234,42 @@ if [ ! -f /etc/cron.d/redelk_cobaltstrike ]; then
 fi
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not create crontab for local rsync of cobaltstrike logs (Error Code: $ERROR)."
+    echoerror "[X] Could not create crontab for local rsync of cobaltstrike logs (Error Code: $ERROR)."
 fi
 
 echo "[*] Creating RedELK log directory" | tee -a $LOGFILE
 mkdir -p /var/log/redelk >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not create RedELK log directory (Error Code: $ERROR)."
+    echoerror "[X] Could not create RedELK log directory (Error Code: $ERROR)."
 fi
 
 echo "[*] Copying RedELK background running scripts" | tee -a $LOGFILE
 mkdir -p /usr/share/redelk/bin && cp -r ./scripts/* /usr/share/redelk/bin/ && chmod -R 775 /usr/share/redelk/bin/* >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not copy background running scripts (Error Code: $ERROR)."
+    echoerror "[X] Could not copy background running scripts (Error Code: $ERROR)."
 fi
 
 echo "[*] Installing Python3 pip" | tee -a $LOGFILE
 apt-get install -y python3-pip >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not install Python3 pip (Error Code: $ERROR)."
+    echoerror "[X] Could not install Python3 pip (Error Code: $ERROR)."
 fi
 
 echo "[*] Installing pip modules for CS .bin parsing" | tee -a $LOGFILE
 pip3 install javaobj-py3 >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not install pip modules for .bin parsing (Error Code: $ERROR)."
+    echoerror "[X] Could not install pip modules for .bin parsing (Error Code: $ERROR)."
 fi
 
 echo "[*] Restarting filebeat" | tee -a $LOGFILE
 service filebeat restart >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not restart filebeat (Error Code: $ERROR)."
+    echoerror "[X] Could not restart filebeat (Error Code: $ERROR)."
 fi
 
 

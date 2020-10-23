@@ -13,7 +13,7 @@ echoerror() {
     printf "`date +'%b %e %R'` $INSTALLER - ${RC} * ERROR ${EC}: $@\n" >> $LOGFILE 2>&1
 }
 
-
+printf "`date +'%b %e %R'` $INSTALLER - Starting installer\n" > $LOGFILE 2>&1
 echo ""
 echo ""
 echo ""
@@ -26,19 +26,19 @@ echo ""
 echo ""
 echo ""   
 echo "This script will generate necessary keys and packages for RedELK deployments"
-echo "`date +'%b %e %R'` $INSTALLER - Starting installer" | tee $LOGFILE
-printf "`date +'%b %e %R'` $INSTALLER - Starting installer\n" > $LOGFILE 2>&1
+echo ""   
+echo ""   
 
 if ! [ $# -eq 1 ] ; then
     echo "[X] ERROR missing parameter"
     echo "[X] require 1st parameter: path of openssl config file"
-    echoerror "Incorrect amount of parameters"
+    echoerror "[X] Incorrect amount of parameters"
     exit 1
 fi
 
 if [  ! -f $1 ];then
     echo "[X]  ERROR Could not find openssl config file. Stopping"
-    echoerror "Could not find openssl config file"
+    echoerror "[X] Could not find openssl config file"
     exit 1
 fi >> $LOGFILE 2>&1
 
@@ -56,7 +56,7 @@ if [ ! -d "./certs" ]; then
 fi >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror " Could not create ./certs directory (Error Code: $ERROR)."
+    echoerror "[X] Could not create ./certs directory (Error Code: $ERROR)."
 fi
 
 echo "[*] Generating private key for CA" | tee -a $LOGFILE
@@ -65,7 +65,7 @@ if [ ! -f "./certs/redelkCA.key" ]; then
 fi  >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not generate private key for CA (Error Code: $ERROR)."
+    echoerror "[X] Could not generate private key for CA (Error Code: $ERROR)."
 fi
 
 echo "[*] Creating Certificate Authority" | tee -a $LOGFILE
@@ -74,7 +74,7 @@ if [ ! -f "./certs/redelkCA.crt" ]; then
 fi  >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not generate certificate authority (Error Code: $ERROR)."
+    echoerror "[X] Could not generate certificate authority (Error Code: $ERROR)."
 fi
 
 echo "[*] Generating private key for ELK server" | tee -a $LOGFILE
@@ -83,7 +83,7 @@ if [ ! -f "./certs/elkserver.key" ]; then
 fi  >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not generate private key for ELK server (Error Code: $ERROR)."
+    echoerror "[X] Could not generate private key for ELK server (Error Code: $ERROR)."
 fi
 
 echo "[*] Generating certificate for ELK server" | tee -a $LOGFILE
@@ -92,7 +92,7 @@ if [ ! -f "./certs/elkserver.csr" ]; then
 fi >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not generate certificates for elk server  (Error Code: $ERROR)."
+    echoerror "[X] Could not generate certificates for elk server  (Error Code: $ERROR)."
 fi
 
 echo "[*] Signing certificate of ELK server with our new CA" | tee -a $LOGFILE
@@ -101,7 +101,7 @@ if [ ! -f "./certs/elkserver.crt" ]; then
 fi >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not sign elk server certificate with CA (Error Code: $ERROR)."
+    echoerror "[X] Could not sign elk server certificate with CA (Error Code: $ERROR)."
 fi
 
 echo "[*] Converting ELK server private key to PKCS8 format" | tee -a $LOGFILE
@@ -110,7 +110,7 @@ if [ ! -f "./certs/elkserver.key.pem" ]; then
 fi  >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not convert ELK server private key to PKCS8 format(Error Code: $ERROR)."
+    echoerror "[X] Could not convert ELK server private key to PKCS8 format(Error Code: $ERROR)."
 fi
 
 echo "[*] Copying certificates to relevant redir and c2servers folders." | tee -a $LOGFILE
@@ -124,7 +124,7 @@ if [ ! -d "./sshkey" ] || [ ! -d "./elkserver/ssh" ] || [ ! -d "./c2servers/ssh"
 fi >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not create ssh directories (Error Code: $ERROR)."
+    echoerror "[X] Could not create ssh directories (Error Code: $ERROR)."
 fi
 
 echo "[*] Generating SSH key pair for scponly user" | tee -a $LOGFILE
@@ -133,7 +133,7 @@ if [ ! -f "./sshkey/id_rsa" ] ||  [ ! -f "sshkey/id_rsa.pub" ]; then
 fi >> $LOGFILE 2>&1 
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not generate SSH key pair for scponly user (Error Code: $ERROR)."
+    echoerror "[X] Could not generate SSH key pair for scponly user (Error Code: $ERROR)."
 fi
 
 echo "[*] Copying sshkeys to relevant folders." | tee -a $LOGFILE
@@ -149,7 +149,7 @@ if [ -f "./VERSION" ]; then
 fi >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not copy VERSION file to subfolders (Error Code: $ERROR)."
+    echoerror "[X] Could not copy VERSION file to subfolders (Error Code: $ERROR)."
 fi
 
 echo "[*] Creating TGZ packages for easy distribution" | tee -a $LOGFILE
@@ -158,21 +158,21 @@ if [ ! -f "./elkserver.tgz" ]; then
 fi >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not TGZ for elkserver directory (Error Code: $ERROR)."
+    echoerror "[X] Could not TGZ for elkserver directory (Error Code: $ERROR)."
 fi
 if [ ! -f "./redirs.tgz" ]; then
     tar zcvf redirs.tgz redirs/
 fi >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not TGZ for redirs directory (Error Code: $ERROR)."
+    echoerror "[X] Could not TGZ for redirs directory (Error Code: $ERROR)."
 fi
 if [ ! -f "./c2servers.tgz" ]; then
     tar zcvf c2servers.tgz c2servers/
 fi >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not TGZ for c2servers directory (Error Code: $ERROR)."
+    echoerror "[X] Could not TGZ for c2servers directory (Error Code: $ERROR)."
 fi
 
 grep -i error $LOGFILE 2>&1

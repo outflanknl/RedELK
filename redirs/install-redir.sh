@@ -40,7 +40,7 @@ preinstallcheck() {
             service filebeat stop
             ERROR=$?
             if [ $ERROR -ne 0 ]; then
-                echoerror "Could not stop filebeat (Error Code: $ERROR)."
+                echoerror "[X] Could not stop filebeat (Error Code: $ERROR)."
             fi
         fi
     fi

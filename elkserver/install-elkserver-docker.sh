@@ -65,7 +65,7 @@ install_docker(){
         apt -y install docker >> $LOGFILE 2>&1
         ERROR=$?
         if [ $ERROR -ne 0 ]; then
-            echoerror "Could not install docker via apt (Error Code: $ERROR)."
+            echoerror "[X] Could not install docker via apt (Error Code: $ERROR)."
             exit 1
         fi
     else
@@ -88,7 +88,7 @@ install_docker_compose(){
         apt -y install docker-compose >> $LOGFILE 2>&1
         ERROR=$?
         if [ $ERROR -ne 0 ]; then
-            echoerror "Could not install docker-compose via apt (Error Code: $ERROR)."
+            echoerror "[X] Could not install docker-compose via apt (Error Code: $ERROR)."
             exit 1
         fi
     else 
@@ -98,7 +98,7 @@ install_docker_compose(){
         chmod +x /usr/local/bin/docker-compose >> $LOGFILE 2>&1
         ERROR=$?
         if [ $ERROR -ne 0 ]; then
-            echoerror "Could not install docker-compose (Error Code: $ERROR)."
+            echoerror "[X] Could not install docker-compose (Error Code: $ERROR)."
             exit 1
         fi
     fi
@@ -137,6 +137,11 @@ preinstallcheck() {
 
     # checking system memory and setting variables
     AVAILABLE_MEMORY=$(awk '/MemAvailable/{printf "%.f", $2/1024}' /proc/meminfo)
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echo "[X] Error getting memory configuration of this host. Exiting." | tee -a $LOGFILE
+        exit 1
+    fi
 
     # check for full or limited install
     if [ ${WHATTOINSTALL} = "limited" ]; then
@@ -206,7 +211,7 @@ echo "[*] Adjusting memory settings for ES" | tee -a $LOGFILE
 sed -E -i.bak "s/Xms1g/Xms${ES_MEMORY}/g" ./docker/${DOCKERCONFFILE} >> $LOGFILE 2>&1 && sed -E -i.bak2 "s/Xmx1g/Xmx${ES_MEMORY}/g" ./docker/${DOCKERCONFFILE} >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Coul not adjust ES memory settings (Error Code: $ERROR)."
+    echoerror "[X] Could not adjust ES memory settings (Error Code: $ERROR)."
 fi
 
 if [ ${WHATTOINSTALL} = "full" ]; then
@@ -214,7 +219,7 @@ if [ ${WHATTOINSTALL} = "full" ]; then
     sed -E -i.bak3 "s/_size=1G/_size=${NEO4J_MEMORY}/g" ./docker/${DOCKERCONFFILE}
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
-        echoerror "Coul not adjust ES memory settings (Error Code: $ERROR)."
+        echoerror "[X] Could not adjust ES memory settings (Error Code: $ERROR)."
     fi
 fi
 
@@ -222,14 +227,14 @@ echo "[*] Setting permissions on certs for logstash" | tee -a $LOGFILE
 chown 1000 ./docker/redelk-logstash/live/config/certs/elkserver.crt && chown 1000 ./docker/redelk-logstash/live/config/certs/elkserver.key >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not set permissions on certs for logsatsh (Error Code: $ERROR)."
+    echoerror "[X] Could not set permissions on certs for logsatsh (Error Code: $ERROR)."
 fi
 
 echo "[*] Setting permissions on redelk logs" | tee -a $LOGFILE
 chown 1000 ./docker/redelk-base/live/redelklogs/* && chmod 664 ./docker/redelk-base/live/redelklogs/* >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not set permissions on redelk logs (Error Code: $ERROR)."
+    echoerror "[X] Could not set permissions on redelk logs (Error Code: $ERROR)."
 fi
 
 
@@ -237,7 +242,7 @@ echo "[*] Building RedELK from $DOCKERCONFFILE file" | tee -a $LOGFILE
 docker-compose -f ./docker/$DOCKERCONFFILE up --build -d # >>$LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "Could not build RedELK using docker-compose file $DOCKERCONFFILE (Error Code: $ERROR)."
+    echoerror "[X] Could not build RedELK using docker-compose file $DOCKERCONFFILE (Error Code: $ERROR)."
     exit 1
 fi
 
