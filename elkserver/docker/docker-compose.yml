@@ -100,8 +100,8 @@ services:
 
   base:
     container_name: redelk-base
-    build: ./redelk-base
-    # image: outflanknl/redelk_base:V2beta2
+    #build: ./redelk-base
+    image: outflanknl/redelk_base:V2beta2
     networks:
       - dockernetredelk
     volumes:
