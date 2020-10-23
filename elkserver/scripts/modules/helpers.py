@@ -61,7 +61,7 @@ def setTags(tag, lst):
 # Adds alarm extra data to the source doc in ES
 def addAlarmData(doc, data, alarm_name):
     doc['_source']['alarm'] = {
-        'last_alerted': datetime.utcnow().isoformat(),
+        'last_alarmed': datetime.utcnow().isoformat(),
         'last_checked': datetime.utcnow().isoformat(),
         alarm_name: data
     }
