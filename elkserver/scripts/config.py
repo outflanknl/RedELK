@@ -1,6 +1,6 @@
 import json
 
-with open('/etc/redelk/alarm.json.conf') as json_data:
+with open('/etc/redelk/config.json') as json_data:
     d = json.load(json_data)
 
 #### General
@@ -26,31 +26,9 @@ if "ibm_BasicAuth" in d: ibm_BasicAuth = d['ibm_BasicAuth']
 HybridAnalysisAPIKEY = ""
 if "HybridAnalysisAPIKEY" in d: HybridAnalysisAPIKEY = d['HybridAnalysisAPIKEY']
 
-#### SMTP settings
-smtpSrv=''
-if "smtpSrv" in d: smtpSrv = d['smtpSrv']
-
-smtpPort=25
-if "smtpPort" in d: smtpPort = int(d['smtpPort'])
-
-smtpName=""
-if "smtpName" in d: smtpName = d['smtpName']
-
-smtpPass=""
-if "smtpPass" in d: smtpPass = d['smtpPass']
-
-fromAddr=""
-if "fromAddr" in d: fromAddr = d['fromAddr']
-
-toAddrs=[""]
-if "toAddrs" in d: toAddrs = d['toAddrs']
-
 #### directory for cache files (including shelves)
 tempDir="/tmp"
 if "tempDir" in d: tempDir = d['tempDir']
-
-msTeamsWebhookURL = ""
-if "msTeamsWebhookURL" in d: msTeamsWebhookURL = d['msTeamsWebhookURL']
 
 #### Notifications
 notifications = {
@@ -75,9 +53,24 @@ notifications = {
     }
 }
 if 'notifications' in d:
-    for n in notifications:
-        if n in d['notifications']:
-            notifications[n] = d['notifications'][n]
+    for n in d['notifications']:
+        notifications[n] = d['notifications'][n]
+
+#### Alarms
+alarms = {
+    'alarm1': {
+        'enabled': False
+    },
+    'alarm2': {
+        'enabled': False
+    },
+    'alarm3': {
+        'enabled': False
+    }
+}
+if 'alarms' in d:
+    for a in d['alarms']:
+        alarms[a] = d['alarms'][a]
 
 es_connection = ['http://localhost:9200']
 if 'es_connection' in d: es_connection = d['es_connection']
