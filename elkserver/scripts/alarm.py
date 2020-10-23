@@ -17,7 +17,7 @@ from modules.helpers import *
 from config import alarms, notifications
 import itertools
 
-LOG_LEVEL = logging.INFO
+LOG_LEVEL = logging.DEBUG
 
 if __name__ == '__main__':
     logging.basicConfig(
@@ -72,14 +72,15 @@ if __name__ == '__main__':
     for a in aD:
         if a in alarms and alarms[a]['enabled']:
             logger.debug('Alarm %s enabled, processing hits' % a)
-            # Needed as groupHits will change r['hits']['hits'] and different alarms might do different grouping
-            r = copy.deepcopy(aD[a]['result'])
+            r = aD[a]['result']
             for rHit in r['hits']['hits']:
                 alarm_name = aD[a]['info']['submodule']
                 # Let's tag the doc with the alarm name
                 setTags(alarm_name, [rHit])
-                # And now, let's add mutations data to the doc
-                addAlarmData(rHit, r['mutations'][rHit['_id']], alarm_name)
+                # And now, let's add mutations data to the doc and update back the hits
+                rHit = addAlarmData(rHit, r['mutations'][rHit['_id']], alarm_name)
+            # Needed as groupHits will change r['hits']['hits'] and different alarms might do different grouping
+            r = copy.deepcopy(aD[a]['result'])
             for c in cD:
                 # connector will process ['hits']['hits'] which contains a list of 'jsons' looking like an ES line
                 # connector will report the fields in ['hits']['fields'] for each of the lines in the list

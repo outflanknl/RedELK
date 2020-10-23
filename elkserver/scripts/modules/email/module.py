@@ -6,7 +6,7 @@
 # Author: Outflank B.V. / Mark Bergman / @xychix
 # Contributor: Lorenzo Bernardi / @fastlorenzo
 #
-import config
+from config import notifications
 import socket
 import json
 import argparse
@@ -39,7 +39,7 @@ class Module():
         #print("class init")
         pass
 
-    def SendMail(self, to, mail, subject, fromaddr=config.fromAddr, attachment="None", smtpSrv=config.smtpSrv, smtpPort=config.smtpPort, smtpName=config.smtpName, smtpPass=config.smtpPass):
+    def SendMail(self, to, mail, subject, fromaddr=notifications['email']['from'], attachment="None", smtpSrv=notifications['email']['smtp']['host'], smtpPort=notifications['email']['smtp']['port'], smtpName=notifications['email']['smtp']['login'], smtpPass=notifications['email']['smtp']['pass']):
         msg = MIMEMultipart()
         # Read html File
         html = mail
@@ -98,4 +98,4 @@ class Module():
             print('Error sending email: %s' % e)
             pass
         mail += "</body></html>\n"
-        smtpResp = self.SendMail(config.toAddrs, mail, subject)
+        smtpResp = self.SendMail(notifications['email']['to'], mail, subject)
