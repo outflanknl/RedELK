@@ -6,7 +6,7 @@
 # Contributor: Lorenzo Bernardi / @fastlorenzo
 #
 from modules.helpers import *
-from config import interval, vt_apikey
+from config import interval, alarms
 from iocsources import ioc_vt as vt
 from iocsources import ioc_ibm as ibm
 from iocsources import ioc_hybridanalysis as ha
@@ -105,14 +105,14 @@ class Module():
 
         # ioc VirusTotal
         self.logger.debug('Checking IOC against VirusTotal')
-        t = vt.VT(config.vt_apikey)
+        t = vt.VT(alarms[info['submodule']]['vt_api_key'])
         t.test(md5s)
         reportI['VirusTotal'] = t.report
         self.logger.debug('Results from VirusTotal: %s' % t.report)
 
         # ioc IBM x-force
         self.logger.debug('Checking IOC against IBM X-Force')
-        i = ibm.IBM()
+        i = ibm.IBM(alarms[info['submodule']]['ibm_basic_auth'])
         i.test(md5s)
         reportI['IBM X-Force'] = i.report
 
