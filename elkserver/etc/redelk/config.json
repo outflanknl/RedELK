@@ -2,7 +2,6 @@
     "DEBUG": "0",
     "Verbosity": "0",
     "interval": 3600,
-    "HybridAnalysisAPIKEY": "",
     "tempDir": "/tmp",
     "es_connection": ["http://localhost:9200"],
     "notifications": {
