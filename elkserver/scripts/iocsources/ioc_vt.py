@@ -6,18 +6,9 @@
 # Contributor: Lorenzo Bernardi / @fastlorenzo
 #
 import requests
-import hashlib
 import os
-import shelve
-import time
 import json
-import config
 import logging
-
-V = config.Verbosity
-interval = config.interval
-tempDir = config.tempDir
-
 
 class VT():
     def __init__(self, api_key):
