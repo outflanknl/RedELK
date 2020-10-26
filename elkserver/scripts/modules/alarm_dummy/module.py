@@ -27,7 +27,7 @@ class Module():
         ret = initial_alarm_result
         ret['info'] = info
         ret['fields'] = ['@timestamp', 'host.name', 'user.name', 'ioc.type', 'file.name', 'file.hash.md5', 'ioc.domain', 'c2.message']
-        ret['groupby'] = []
+        ret['groupby'] = ['ioc.type', 'file.name']
         self.logger.debug('Running dummy alarm')
         for r in self.alarm_dummy():
             ret['hits']['hits'].append(r)
@@ -49,7 +49,7 @@ class Module():
         iocs = []
         i = countQuery(q, index="rtops-*")
         self.logger.debug('Getting 1 document')
-        r = getQuery(q, 2, index="rtops-*")
+        r = getQuery(q, 200, index="rtops-*")
         self.logger.debug(r)
 
         return(r)

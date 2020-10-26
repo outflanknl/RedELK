@@ -158,12 +158,13 @@ class Module():
                         </tr>
                         ''' % (bgcolor, field, pprint(val))
                     r += 1
-                alarm += '<tr><td colspan=2 style="padding: 30px;">&nbsp;</td></tr>'
+                mail += '<tr><td colspan=2 style="padding: 15px;">&nbsp;</td></tr>'
 
             mail += '</table>\n</body>\n</html>'
         except Exception as e:
             self.logger.error('Error sending email: %s' % e)
+            self.logger.exception(e)
             pass
         mail += "</body></html>\n"
-        self.logger.debug('Sending email: %s' % mail)
+        #self.logger.debug('Sending email: %s' % mail)
         smtpResp = self.SendMail(notifications['email']['to'], mail, subject)
