@@ -12,7 +12,6 @@ import logging
 
 class VT():
     def __init__(self, api_key):
-        version = "0.1"
         self.report = {}
         self.report['source'] = 'Virus Total'
         self.logger = logging.getLogger('ioc_vt')
@@ -25,8 +24,8 @@ class VT():
     def virustotalReport(self, hashlist):
         params = {'apikey': self.api_key, 'resource': hashlist}
         headers = {
-            "Accept-Encoding": "gzip, deflate",
-            "User-Agent": "python"
+            'Accept-Encoding': 'gzip, deflate',
+            'User-Agent': 'python'
         }
         response = requests.get('https://www.virustotal.com/vtapi/v2/file/report',
                                 params=params, headers=headers)
@@ -45,10 +44,10 @@ class VT():
             }
         r = self.virustotalReport(",".join(list))
         res = r[1]
-        self.logger.debug("[9] status code %s" % r[0])
+        self.logger.debug('status code %s' % r[0])
         if type(res) != type([]):
             res = [res]  # dirty?
-            self.logger.debug("[9] just emties resultlist is was %s" % r[1])
+            self.logger.debug('just emties resultlist is was %s' % r[1])
         if len(res) > 0:  # yeah really bad, no time now
             for report in res:
                 try:
