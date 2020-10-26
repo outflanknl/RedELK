@@ -63,7 +63,7 @@ if __name__ == '__main__':
                 logger.info('[a] initiating class Module() in %s' % a)
                 moduleClass = aD[a]['m'].Module()
                 logger.info('[a] Running Run() from the Module class in %s' % a)
-                aD[a]['result'] = moduleClass.run()
+                aD[a]['result'] = copy.deepcopy(moduleClass.run())
             except Exception as e:
                 logger.error('Error running alarm %s: %s' % (a, e))
                 logger.exception(e)
@@ -73,6 +73,7 @@ if __name__ == '__main__':
         if a in alarms and alarms[a]['enabled']:
             logger.debug('Alarm %s enabled, processing hits' % a)
             r = aD[a]['result']
+            logger.debug('Alarm results: %s' % aD[a]['result'])
             for rHit in r['hits']['hits']:
                 alarm_name = aD[a]['info']['submodule']
                 # Let's tag the doc with the alarm name
@@ -85,11 +86,10 @@ if __name__ == '__main__':
                 # connector will process ['hits']['hits'] which contains a list of 'jsons' looking like an ES line
                 # connector will report the fields in ['hits']['fields'] for each of the lines in the list
                 if c in notifications and notifications[c]['enabled']:
-                    logger.info('connector %s enabled, sending alarm' % c)
+                    logger.info('connector %s enabled, sending alarm (%d hits)' % (c, r['hits']['total']))
                     connector = cD[c]['m'].Module()
                     if r['hits']['total'] > 0:
                         # Group the hits before sending it to the alarm, based on the 'groubpby' array returned by the alarm
                         gb = list(r['groupby'])
                         r['hits']['hits'] = groupHits(r['hits']['hits'], gb)
                         connector.send_alarm(r)
-                    pass

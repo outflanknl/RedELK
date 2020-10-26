@@ -17,6 +17,8 @@ es = Elasticsearch(config.es_connection, verify_certs=False)
 logger = logging.getLogger('helpers')
 
 def pprint(r):
+    if isinstance(r, str):
+        return(r)
     s = json.dumps(r, indent=2, sort_keys=True)
     return(s)
 
