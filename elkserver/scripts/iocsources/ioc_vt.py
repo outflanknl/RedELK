@@ -1,4 +1,10 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
+#
+# Part of RedELK
+#
+# Author: Outflank B.V. / Mark Bergman / @xychix
+# Contributor: Lorenzo Bernardi / @fastlorenzo
+#
 import requests
 import hashlib
 import os
