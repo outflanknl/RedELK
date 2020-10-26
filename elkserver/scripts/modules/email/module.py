@@ -16,6 +16,7 @@ import requests
 import smtplib
 import os
 import shutil
+from json2html import *
 from email.mime.application import MIMEApplication
 from email.mime.multipart import MIMEMultipart
 from email.utils import COMMASPACE, formatdate
@@ -151,12 +152,13 @@ class Module():
                 for field in alarm['fields']:
                     bgcolor = '#FAFAFA' if r % 2 == 0 else '#F1F1F1'
                     val = getValue('_source.%s' % field, hit)
+                    value = json2html.convert(json = val)
                     mail += '''
                         <tr bgcolor="%s" style="color: #153643; font-family: Arial, sans-serif; font-size: 12px; line-height: 16px;">
                             <td style="padding: 10px 10px 10px 10px;"><b>%s</b></td>
                             <td style="padding: 10px 10px 10px 10px; white-space:pre-wrap; word-wrap:break-word">%s</td>
                         </tr>
-                        ''' % (bgcolor, field, pprint(val))
+                        ''' % (bgcolor, field, value)
                     r += 1
                 mail += '<tr><td colspan=2 style="padding: 15px;">&nbsp;</td></tr>'
 
