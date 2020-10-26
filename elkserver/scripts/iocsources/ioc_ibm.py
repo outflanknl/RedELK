@@ -6,25 +6,14 @@
 # Contributor: Lorenzo Bernardi / @fastlorenzo
 #
 import requests
-import hashlib
 import os
-import shelve
-import time
 import json
-import config
 import logging
-
-V = config.Verbosity
-interval = config.interval
-tempDir = config.tempDir
-
 
 class IBM():
     def __init__(self, basic_auth):
-        version = "0.1"
-        self.debug = []
         self.report = {}
-        self.report['source'] = "IBM X-Force"
+        self.report['source'] = 'IBM X-Force'
         self.logger = logging.getLogger('ioc_ibm')
         self.basic_auth = basic_auth
 
@@ -34,9 +23,9 @@ class IBM():
 
     def IBMreport(self, hashlist):
         r = []
-        headers = {"Authorization": self.basic_auth}
+        headers = {'Authorization': self.basic_auth}
         for h in hashlist:
-            response = requests.get("https://api.xforce.ibmcloud.com/malware/%s" % h, headers=headers)
+            response = requests.get('https://api.xforce.ibmcloud.com/malware/%s' % h, headers=headers)
             if response.status_code == 200:
                 json_response = response.json()
                 json_response['query_hash'] = h
@@ -61,7 +50,6 @@ class IBM():
             self.logger.debug('status code %s' % res[0])
             if res[1] != None:  # We have json response!
                 report = res[1]
-                self.debug.append(res)
                 md5 = report['query_hash']
                 if 'malware' in report:
                     # We have a malware ALARM
