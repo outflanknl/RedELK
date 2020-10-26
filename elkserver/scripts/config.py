@@ -10,7 +10,7 @@ if "Verbosity" in d: Verbosity = int(d['Verbosity'])
 DEBUG = 0 #Debug 1 or 0
 if "DEBUG" in d: DEBUG = int(d['DEBUG'])
 
-interval = 3600 #interval for rechecking IOC's
+interval = 3600 #interval for rechecking IOC's (in seconds)
 if "interval" in d: interval = int(d['interval'])
 
 
@@ -58,13 +58,17 @@ if 'notifications' in d:
 
 #### Alarms
 alarms = {
-    'alarm1': {
+    'alarm_filehash': {
+        'enabled': False,
+        'vt_api_key': ''
+    },
+    'alarm_httptraffic': {
         'enabled': False
     },
-    'alarm2': {
+    'alarm_useragent': {
         'enabled': False
     },
-    'alarm3': {
+    'alarm_dummy': {
         'enabled': False
     }
 }

@@ -25,10 +25,7 @@ class Module():
 
     def run(self):
         ret = initial_alarm_result
-        alarmLines = []
         ret['info'] = info
-        ret['hits']['hits'] = []
-        ret['hits']['total'] = 0
         ret['fields'] = ['@timestamp', 'host.name', 'user.name', 'ioc.type', 'file.name', 'file.hash.md5', 'ioc.domain', 'c2.message']
         ret['groupby'] = ['ioc.type', 'file.hash.md5']
         if config.DEBUG > 0:

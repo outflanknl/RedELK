@@ -61,10 +61,23 @@ def setTags(tag, lst):
 # Adds alarm extra data to the source doc in ES
 def addAlarmData(doc, data, alarm_name):
     doc['_source']['alarm'] = {
-        'timestamp': datetime.utcnow().isoformat(),
+        'last_alarmed': datetime.utcnow().isoformat(),
+        'last_checked': datetime.utcnow().isoformat(),
         alarm_name: data
     }
     r = es.update(index=doc['_index'], id=doc['_id'], body={'doc': doc['_source']})
+    return(doc)
+
+# Sets the alarm.last_checked date to an ES doc
+def setCheckedDate(doc):
+    if 'alarm' in doc['_source']:
+        doc['_source']['alarm']['last_checked'] = datetime.utcnow().isoformat()
+    else:
+        doc['_source']['alarm'] = {
+            'last_checked': datetime.utcnow().isoformat()
+        }
+    r = es.update(index=doc['_index'], id=doc['_id'], body={'doc': doc['_source']})
+    return(doc)
 
 # Takes a list of hits and a list of field names (dot notation) and returns a grouped list
 def groupHits(hits, groupby, res=None):

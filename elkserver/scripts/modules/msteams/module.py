@@ -46,7 +46,7 @@ class Module():
                 #tcs.activitySubtitle(alarm['info']['description'])
                 for field in alarm['fields']:
                     val = getValue('_source.%s' % field, hit)
-                    tcs.addFact(field, val)
+                    tcs.addFact(field, pprint(val))
                 tmsg.addSection(tcs)
         except Exception as e:
             self.logger.exception(e)

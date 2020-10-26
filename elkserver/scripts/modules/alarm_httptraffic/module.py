@@ -10,11 +10,11 @@ import traceback
 
 info = {
     'version': 0.1,
-    'name': 'alarm1 module',
+    'name': 'HTTP Traffic module',
     'alarmmsg': 'UNKNOWN IP TO C2_ backend',
     'description': 'This check queries for IP\'s that aren\'t listed in any iplist* but do talk to c2* paths on redirectors',
     'type': 'redelk_alarm',   # Could also contain redelk_enrich if it was an enrichment module
-    'submodule': 'alarm1'
+    'submodule': 'alarm_httptraffic'
 }
 
 class Module():
