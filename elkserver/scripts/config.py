@@ -52,7 +52,8 @@ alarms = {
     'alarm_filehash': {
         'enabled': False,
         'vt_api_key': '', # Virustotal API
-        'ibm_basic_auth': '' # IBM X-Force API (can be retreived from a sample call on their swagger test site)
+        'ibm_basic_auth': '', # IBM X-Force API (can be retreived from a sample call on their swagger test site)
+        'ha_api_key': '' # Hybrid Analysis API
     },
     'alarm_httptraffic': {
         'enabled': False

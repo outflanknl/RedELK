@@ -118,7 +118,7 @@ class Module():
 
         # ioc Hybrid Analysis
         self.logger.debug('Checking IOC against Hybrid Analysis')
-        h = ha.HA()
+        h = ha.HA(alarms[info['submodule']]['ha_api_key'])
         h.test(md5s)
         reportI['Hybrid Analysis'] = h.report
 

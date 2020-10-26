@@ -33,7 +33,8 @@
         "alarm_filehash": {
             "enabled": false,
             "vt_api_key": "",
-            "ibm_basic_auth": "Basic "
+            "ibm_basic_auth": "Basic ",
+            "ha_api_key": ""
         },
         "alarm_httptraffic": {
             "enabled": false,
