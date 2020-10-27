@@ -2,8 +2,6 @@
     "DEBUG": "0",
     "Verbosity": "0",
     "interval": 3600,
-    "ibm_BasicAuth": "Basic ",
-    "HybridAnalysisAPIKEY": "",
     "tempDir": "/tmp",
     "es_connection": ["http://localhost:9200"],
     "notifications": {
@@ -33,7 +31,9 @@
         },
         "alarm_filehash": {
             "enabled": false,
-            "vt_api_key": ""
+            "vt_api_key": "",
+            "ibm_basic_auth": "Basic ",
+            "ha_api_key": ""
         },
         "alarm_httptraffic": {
             "enabled": false,

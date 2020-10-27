@@ -17,6 +17,8 @@ es = Elasticsearch(config.es_connection, verify_certs=False)
 logger = logging.getLogger('helpers')
 
 def pprint(r):
+    if isinstance(r, str):
+        return(r)
     s = json.dumps(r, indent=2, sort_keys=True)
     return(s)
 
@@ -49,6 +51,12 @@ def countQuery(query, index="redirtraffic-*"):
     r3 = es.search(index=index, body=q3, size=0)
     return(r3['hits']['total']['value'])
 
+def rawSearch(query, size="5000", index="redirtraffic-*"):
+    r3 = es.search(index=index, body=query, size=size)
+    if(r3['hits']['total']['value'] == 0):
+        return(None)
+    return(r3)
+
 # Sets tag to all objects in lst
 def setTags(tag, lst):
     for l in lst:
@@ -59,12 +67,14 @@ def setTags(tag, lst):
         r = es.update(index=l['_index'], id=l['_id'], body={'doc': l['_source']})
 
 # Adds alarm extra data to the source doc in ES
-def addAlarmData(doc, data, alarm_name):
+def addAlarmData(doc, data, alarm_name, alarmed=True):
     doc['_source']['alarm'] = {
-        'last_alarmed': datetime.utcnow().isoformat(),
         'last_checked': datetime.utcnow().isoformat(),
         alarm_name: data
     }
+    if alarmed:
+        doc['_source']['alarm']['last_alarmed'] = datetime.utcnow().isoformat()
+
     r = es.update(index=doc['_index'], id=doc['_id'], body={'doc': doc['_source']})
     return(doc)
 

@@ -13,15 +13,6 @@ if "DEBUG" in d: DEBUG = int(d['DEBUG'])
 interval = 3600 #interval for rechecking IOC's (in seconds)
 if "interval" in d: interval = int(d['interval'])
 
-
-#### Virustotal API
-vt_apikey = ""
-if "vt_apikey" in d: vt_apikey = d['vt_apikey']
-
-#### IBM X-Force API (can be retreived from a sample call on their swagger test site)
-ibm_BasicAuth = ""
-if "ibm_BasicAuth" in d: ibm_BasicAuth = d['ibm_BasicAuth']
-
 #### HybridAnalysisAPIKEY
 HybridAnalysisAPIKEY = ""
 if "HybridAnalysisAPIKEY" in d: HybridAnalysisAPIKEY = d['HybridAnalysisAPIKEY']
@@ -60,7 +51,9 @@ if 'notifications' in d:
 alarms = {
     'alarm_filehash': {
         'enabled': False,
-        'vt_api_key': ''
+        'vt_api_key': '', # Virustotal API
+        'ibm_basic_auth': '', # IBM X-Force API (can be retreived from a sample call on their swagger test site)
+        'ha_api_key': '' # Hybrid Analysis API
     },
     'alarm_httptraffic': {
         'enabled': False
