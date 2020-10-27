@@ -73,7 +73,7 @@ if __name__ == '__main__':
         if a in alarms and alarms[a]['enabled']:
             logger.debug('Alarm %s enabled, processing hits' % a)
             r = aD[a]['result']
-            logger.debug('Alarm results: %s' % aD[a]['result'])
+            #logger.debug('Alarm results: %s' % aD[a]['result'])
             for rHit in r['hits']['hits']:
                 alarm_name = aD[a]['info']['submodule']
                 # Let's tag the doc with the alarm name

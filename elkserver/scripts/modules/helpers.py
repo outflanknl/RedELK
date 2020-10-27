@@ -51,6 +51,12 @@ def countQuery(query, index="redirtraffic-*"):
     r3 = es.search(index=index, body=q3, size=0)
     return(r3['hits']['total']['value'])
 
+def rawSearch(query, size="5000", index="redirtraffic-*"):
+    r3 = es.search(index=index, body=query, size=size)
+    if(r3['hits']['total']['value'] == 0):
+        return(None)
+    return(r3)
+
 # Sets tag to all objects in lst
 def setTags(tag, lst):
     for l in lst:

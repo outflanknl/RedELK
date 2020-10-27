@@ -48,7 +48,42 @@ class Module():
 
     def alarm_check(self):
         # This check queries public sources given a list of md5 hashes. If a hash was seen we set an alarm
-        q = 'c2.log.type:ioc AND NOT tags:alarm_* AND ioc.type:file'
+        q = 'c2.log.type:ioc AND NOT tags:alarm_filehash AND ioc.type:file'
+        alarmed_md5_q = {
+            "aggs": {
+                "interval_filter": {
+                    "filter": {
+                        "range": {
+                            "alarm.last_checked": {
+                                "gte":"now-%ds" % interval,
+                                "lt":"now"
+                            }
+                        }
+                    },
+                    "aggs": {
+                        "md5_interval": {
+                            "terms": {
+                                "field": "file.hash.md5"
+                            }
+                        }
+                    }
+                },
+                "alarmed_filter": {
+                    "filter": {
+                        "terms": {
+                            "tags": ["alarm_filehash"]
+                        }
+                    },
+                    "aggs": {
+                        "md5_alarmed": {
+                            "terms": {
+                                "field": "file.hash.md5"
+                            }
+                        }
+                    }
+                }
+            }
+        }
         report = {}
         iocs = []
         self.logger.debug('Running query %s' % q)
@@ -59,6 +94,23 @@ class Module():
         iocs = getQuery(q, i, index='rtops-*')
         if type(iocs) != type([]):
             iocs = []
+        self.logger.debug('found ioc: %s' % iocs)
+
+        # Then we get an aggregation of all md5 alarmed within the last 'interval' time
+        self.logger.debug('Running query %s' % alarmed_md5_q)
+        omd5 = rawSearch(alarmed_md5_q, index='rtops-*')
+        self.logger.debug(omd5['aggregations'])
+
+        already_checked = []
+        already_alarmed = []
+
+        # add md5 hashes that have been checked within the 'interval' in 'already_checked'
+        for h in omd5['aggregations']['interval_filter']['md5_interval']['buckets']:
+            already_checked.append(h['key'])
+
+        # add md5 hashes that have been alarmed previously in 'already_alarmed'
+        for h in omd5['aggregations']['alarmed_filter']['md5_alarmed']['buckets']:
+            already_alarmed.append(h['key'])
 
         md5d = {}
         md5s = []
@@ -74,24 +126,21 @@ class Module():
             else:
                 md5d[h] = [ioc]
 
-            # Checks if the IOC should be checked (last_checked > interval)
-            lc = getValue('_source.alarm.last_checked', ioc)
-            if lc:
-                lcDate = datetime.strptime(lc, '%Y-%m-%dT%H:%M:%S.%f')
-                if h in md5ShouldCheck:
-                    md5ShouldCheck[h] = (last_checked_max > lcDate) & md5ShouldCheck[h]
-                else:
-                    md5ShouldCheck[h] = (last_checked_max > lcDate)
+            # Checks if the IOC should be checked (last_checked > interval or not alarmed already)
+            should_check = True
+            if h in already_alarmed or h in already_checked:
+                should_check = False
+
+            if h in md5ShouldCheck:
+                md5ShouldCheck[h] = should_check & md5ShouldCheck[h]
             else:
-                if h in md5ShouldCheck:
-                    md5ShouldCheck[h] = True & md5ShouldCheck[h]
-                else:
-                    md5ShouldCheck[h] = True
+                md5ShouldCheck[h] = should_check
             # self.logger.debug('Should check: %s' % md5ShouldCheck[h])
 
         for hash in dict.copy(md5d):
             # If we should not check the hash, remove it from the list
             if hash in md5ShouldCheck and md5ShouldCheck[hash] == False:
+                self.logger.debug('[%s] md5 hash already checked within interval or already alarmed previously, skipping' % hash)
                 del md5d[hash]
 
         # Create an array with all md5 hashes to send to the different providers
@@ -153,6 +202,7 @@ class Module():
                     report['hits'].append(ioc)
                 # Hash was not found so we update the last_checked date
                 else:
+                    self.logger.debug('md5 hash not alarmed, updating last_checked date: [%s]' % hash)
                     setCheckedDate(ioc)
 
         return(report)
