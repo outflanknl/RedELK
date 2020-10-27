@@ -126,9 +126,19 @@ class Module():
             else:
                 md5d[h] = [ioc]
 
-            # Checks if the IOC should be checked (last_checked > interval or not alarmed already)
             should_check = True
-            if h in already_alarmed or h in already_checked:
+            # Check if the IOC has already been alarmed
+            if h in already_alarmed:
+                # Skip it
+                should_check = False
+                # Set the last checked date
+                addAlarmData(ioc, {}, info['submodule'], False)
+                # Tag the doc as alarmed
+                setTags(info['submodule'], [ioc])
+
+            # Check if the IOC has already been checked within 'interval'
+            if h in already_checked:
+                # Skip if for now
                 should_check = False
 
             if h in md5ShouldCheck:
@@ -203,6 +213,6 @@ class Module():
                 # Hash was not found so we update the last_checked date
                 else:
                     self.logger.debug('md5 hash not alarmed, updating last_checked date: [%s]' % hash)
-                    setCheckedDate(ioc)
+                    addAlarmData(ioc, {}, info['submodule'], False)
 
         return(report)
