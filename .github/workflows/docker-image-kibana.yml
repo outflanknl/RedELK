@@ -9,7 +9,7 @@ on:
     tags:
       - 'v*'
     paths:
-      - 'docker/redelk-kibana/**'
+      - 'elkserver/devdata/redelk-kibana/**'
       - '.github/workflows/docker-image-kibana.yml'
   pull_request:
     branches:
@@ -17,7 +17,7 @@ on:
       - 'maindev'
       - 'v*'
     paths:
-      - 'docker/redelk-kibana/**'
+      - 'elkserver/devdata/redelk-kibana/**'
       - '.github/workflows/docker-image-kibana.yml'
 
 jobs:
@@ -47,7 +47,7 @@ jobs:
             --build-arg VCS_REF=${GITHUB_SHA::8} \
             --cache-from "type=local,src=/tmp/.buildx-cache" \
             --cache-to "type=local,dest=/tmp/.buildx-cache" \
-            ${TAGS} --file docker/redelk-kibana/Dockerfile docker/redelk-kibana
+            ${TAGS} --file elkserver/devdata/redelk-kibana/Dockerfile elkserver/devdata/redelk-kibana
       - name: Set up Docker Buildx
         uses: crazy-max/ghaction-docker-buildx@v3.3.0
       - name: Cache Docker layers

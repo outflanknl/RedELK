@@ -9,7 +9,7 @@ on:
     tags:
       - 'v*'
     paths:
-      - 'docker/redelk-elasticsearch/**'
+      - 'elkserver/devdata/redelk-elasticsearch/**'
       - '.github/workflows/docker-image-elasticsearch.yml'
   pull_request:
     branches:
@@ -17,7 +17,7 @@ on:
       - 'maindev'
       - 'v*'
     paths:
-      - 'docker/redelk-elasticsearch/**'
+      - 'elkserver/devdata/redelk-elasticsearch/**'
       - '.github/workflows/docker-image-elasticsearch.yml'
 
 jobs:
@@ -29,7 +29,7 @@ jobs:
       - name: Prepare
         id: prepare
         run: |
-          DOCKER_IMAGE=fastlorenzo/redelk-elasticsearch
+          DOCKER_IMAGE=redelk/elasticsearch
           DOCKER_PLATFORMS=linux/amd64,linux/arm64
           VERSION=latest
           if [[ $GITHUB_REF == refs/tags/* ]]; then
@@ -47,7 +47,7 @@ jobs:
             --build-arg VCS_REF=${GITHUB_SHA::8} \
             --cache-from "type=local,src=/tmp/.buildx-cache" \
             --cache-to "type=local,dest=/tmp/.buildx-cache" \
-            ${TAGS} --file docker/redelk-elasticsearch/Dockerfile docker/redelk-elasticsearch
+            ${TAGS} --file elkserver/devdata/redelk-elasticsearch/Dockerfile elkserver/devdata/redelk-elasticsearch
       - name: Set up Docker Buildx
         uses: crazy-max/ghaction-docker-buildx@v3.3.0
       - name: Cache Docker layers
