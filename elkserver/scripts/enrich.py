@@ -406,30 +406,41 @@ from elasticsearch.helpers import scan
 #relies on es object beiing there
 #relies on guiQueryWindow and setTags function
 
+def insertIOCmanualMin(es,md5,filename):
+    ioc = {'c2': {
+             'message': "ioc insert from redir %s %s"%(filename,md5),
+             'log': {
+               'type':'ioc'
+                }
+             },
+         '@version': '1',
+         'infra': {'log':{'type':'rtops'}},
+         'event': {'module': 'manual'},
+         'input': {'type': 'manual'},
+         'tags': ['manual insert'],
+         'ioc': {
+           'type':'file'},
+         'file' :{
+            'hash':{
+                'md5':md5
+                },
+            'name':filename
+            },
+         '@timestamp': datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
+          }
+    ESindex = "rtops-%s"%datetime.datetime.utcnow().strftime("%Y.%m.%d")
+    r = es.index(index=ESindex, ignore=400,  doc_type='_doc', body=ioc)
+    print(r)
+
 def insertIOC(es,line):
   ESindex = "rtops-%s"%datetime.datetime.now().strftime("%Y.%m.%d")
-  iocmd5 = parse_qs(urlparse.urlparse(line['_source']['redirtraffic.httprequest'].split(' ')[-2]).query)['md5'][0]
-  iocfilename = parse_qs(urlparse.urlparse(line['_source']['redirtraffic.httprequest'].split(' ')[-2]).query)['filename'][0]
+  iocmd5 = parse_qs(urlparse.urlparse(line['_source']['http']['request']['body']['content'].split(' ')[-2]).query)['md5'][0]
+  iocfilename = parse_qs(urlparse.urlparse(line['_source']['http']['request']['body']['content'].split(' ')[-2]).query)['filename'][0]
+  insertIOCmanualMin(es,iocmd5,iocfilename)
 
-  ioc = {'csmessage': "ioc insert from SMUGGLE %s %s on %s"%(iocfilename,iocmd5,datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%fZ")),
-         '@version': '1',
-         'infralogtype': 'rtops',
-         'input': {'type': 'manual'},
-         'prospector': {'type': 'log'},
-         'tags': ['manual insert'],
-         'ioc_type': 'file',
-         'ioc_name' : iocfilename,
-         #'@timestamp': datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
-         '@timestamp':line['_source']['@timestamp'],
-         'message': "ioc insert from SMUGGLE %s %s"%(iocfilename,iocmd5),
-         'cslogtype': 'ioc',
-         'ioc_hash': iocmd5,
-          }
-  ESindex = "rtops-%s"%datetime.datetime.now().strftime("%Y.%m.%d")
-  r = es.index(index=ESindex, ignore=400,  doc_type='doc', body=ioc)
-  print(r)
 
-QUERY = """redirtraffic.httprequest:*smugglelogmd5* AND NOT tags:ioc_added"""
+#QUERY = """redirtraffic.httprequest:*smugglelogmd5* AND NOT tags:ioc_added"""
+QUERY = """http.request.body.content:*smugglelogmd5* AND NOT tags:ioc_added"""
 INDEX = "redirtraffic-*"
 
 
