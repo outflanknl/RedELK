@@ -29,7 +29,7 @@ jobs:
       - name: Prepare
         id: prepare
         run: |
-          DOCKER_IMAGE=fastlorenzo/redelk-kibana
+          DOCKER_IMAGE=redelk/kibana
           DOCKER_PLATFORMS=linux/amd64,linux/arm64
           VERSION=latest
           if [[ $GITHUB_REF == refs/tags/* ]]; then
