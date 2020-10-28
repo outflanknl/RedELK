@@ -31,7 +31,7 @@ echo ""
 
 if ! [ $# -eq 1 ] ; then
     echo "[X] ERROR missing parameter"
-    echo "[X] require 1st parameter: path of openssl config file"
+    echo "[X] require 1st parameter: path of openssl config file (likely 'certs/config.cnf')"
     echoerror "[X] Incorrect amount of parameters"
     exit 1
 fi
@@ -83,7 +83,7 @@ if [ ! -f "./certs/elkserver.key" ]; then
 fi  >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "[X] Could not generate private key for ELK server (Error Code: $ERROR)."
+    echoerror "Could not generate private key for ELK server (Error Code: $ERROR)."
 fi
 
 echo "[*] Generating certificate for ELK server" | tee -a $LOGFILE
@@ -114,13 +114,13 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "[*] Copying certificates to relevant redir and c2servers folders." | tee -a $LOGFILE
-cp -r ./certs ./elkserver/logstash/ >> $LOGFILE 2>&1
+cp -r ./certs/* ./elkserver/redelk-logstash/live/certs/ >> $LOGFILE 2>&1
 cp ./certs/redelkCA.crt ./c2servers/filebeat/ >> $LOGFILE 2>&1
 cp ./certs/redelkCA.crt ./redirs/filebeat/ >> $LOGFILE 2>&1
 
 echo "[*] Creating ssh directories if necessary" | tee -a $LOGFILE
-if [ ! -d "./sshkey" ] || [ ! -d "./elkserver/ssh" ] || [ ! -d "./c2servers/ssh" ] ; then
-    mkdir -p ./sshkey && mkdir -p ./c2servers/ssh && mkdir -p ./elkserver/ssh
+if [ ! -d "./sshkey" ] || [ ! -d "./elkserver/redelk-base/live/ssh" ] || [ ! -d "./c2servers/ssh" ] ; then
+    mkdir -p ./sshkey && mkdir -p ./elkserver/redelk-base/live/ssh && mkdir -p ./c2servers/ssh
 fi >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
@@ -138,13 +138,13 @@ fi
 
 echo "[*] Copying sshkeys to relevant folders." | tee -a $LOGFILE
 cp ./sshkey/id_rsa.pub ./c2servers/ssh/id_rsa.pub >> $LOGFILE 2>&1
-cp ./sshkey/id_rsa.pub ./elkserver/ssh/id_rsa.pub >> $LOGFILE 2>&1
-cp ./sshkey/id_rsa ./elkserver/ssh/id_rsa >> $LOGFILE 2>&1
+cp ./sshkey/id_rsa* ./elkserver/redelk-base/live/ssh/ >> $LOGFILE 2>&1
 
 echo "[*] Copying VERSION file to subfolders." | tee -a $LOGFILE
 if [ -f "./VERSION" ]; then
     cp ./VERSION c2servers/  
     cp ./VERSION elkserver/
+    cp ./VERSION elkserver/devdata/
     cp ./VERSION redirs/
 fi >> $LOGFILE 2>&1
 ERROR=$?

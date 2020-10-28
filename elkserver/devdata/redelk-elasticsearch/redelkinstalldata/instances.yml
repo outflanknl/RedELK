@@ -1,0 +1,18 @@
+#
+# Part of RedELK
+# Instances file for elasticsearch cert generation
+#
+# Author: Outflank B.V. / Marc Smeets
+# Contributor: Lorenzo Bernardi / @fastlorenzo
+#
+
+instances:
+    - name: redelk-elasticsearch
+      dns:
+        - redelk-elasticsearch
+    - name: redelk-kibana
+      dns:
+        - redelk-kibana
+    - name: redelk-logstash
+      dns:
+        - redelk-logstash
