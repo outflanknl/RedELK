@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # Part of RedELK
-# Script to generate TLS certificates, SSH keys and installation packages required for RedELK 
+# Script to generate TLS certificates, SSH keys and installation packages required for RedELK
 #
 # Author: Outflank B.V. / Marc Smeets
 #
@@ -24,10 +24,10 @@ echo "   |  _ <|  __/| (_| || |___ | |___ | . \ "
 echo "   |_| \__\___| \____||_____||_____||_|\_\\"
 echo ""
 echo ""
-echo ""   
+echo ""
 echo "This script will generate necessary keys and packages for RedELK deployments"
-echo ""   
-echo ""   
+echo ""
+echo ""
 
 if ! [ $# -eq 1 ] ; then
     echo "[X] ERROR missing parameter"
@@ -60,8 +60,8 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "[*] Generating private key for CA" | tee -a $LOGFILE
-if [ ! -f "./certs/redelkCA.key" ]; then 
-    openssl genrsa -out ./certs/redelkCA.key 2048 
+if [ ! -f "./certs/redelkCA.key" ]; then
+    openssl genrsa -out ./certs/redelkCA.key 2048
 fi  >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
@@ -114,6 +114,7 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "[*] Copying certificates to relevant redir and c2servers folders." | tee -a $LOGFILE
+mkdir -p ./elkserver/mounts/logstash-config/certs_inputs/ >> $LOGFILE 2>&1
 cp -r ./certs/* ./elkserver/mounts/logstash-config/certs_inputs/ >> $LOGFILE 2>&1
 cp ./certs/redelkCA.crt ./c2servers/filebeat/ >> $LOGFILE 2>&1
 cp ./certs/redelkCA.crt ./redirs/filebeat/ >> $LOGFILE 2>&1
@@ -130,7 +131,7 @@ fi
 echo "[*] Generating SSH key pair for scponly user" | tee -a $LOGFILE
 if [ ! -f "./sshkey/id_rsa" ] ||  [ ! -f "sshkey/id_rsa.pub" ]; then
     ssh-keygen -t rsa -f "./sshkey/id_rsa" -P ""
-fi >> $LOGFILE 2>&1 
+fi >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "[X] Could not generate SSH key pair for scponly user (Error Code: $ERROR)."
@@ -142,7 +143,7 @@ cp ./sshkey/id_rsa* ./elkserver/mounts/redelk-ssh/ >> $LOGFILE 2>&1
 
 echo "[*] Copying VERSION file to subfolders." | tee -a $LOGFILE
 if [ -f "./VERSION" ]; then
-    cp ./VERSION c2servers/  
+    cp ./VERSION c2servers/
     cp ./VERSION elkserver/
     cp ./VERSION redirs/
 fi >> $LOGFILE 2>&1
@@ -186,6 +187,3 @@ echo ""
 echo "[*] Done with initial setup." | tee -a $LOGFILE
 echo "[*] Copy the redirs.tgz, c2servers.tgz and elkserver.tgz packages to every redirector, c2servers or ELK-server. Then run the relevant setup script there locally." | tee -a $LOGFILE
 echo "" | tee -a $LOGFILE
-
-
-
