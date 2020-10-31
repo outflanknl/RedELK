@@ -3,19 +3,15 @@ name: Build docker kibana image
 on:
   push:
     branches:
-      - 'master'
-      - 'maindev'
-      - 'v*'
+      - '*'
     tags:
-      - 'v*'
+      - '*'
     paths:
       - 'elkserver/devdata/redelk-kibana/**'
       - '.github/workflows/docker-image-kibana.yml'
   pull_request:
     branches:
-      - 'master'
-      - 'maindev'
-      - 'v*'
+      - '*'
     paths:
       - 'elkserver/devdata/redelk-kibana/**'
       - '.github/workflows/docker-image-kibana.yml'
