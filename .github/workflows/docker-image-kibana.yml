@@ -54,7 +54,7 @@ jobs:
         uses: booxmedialtd/ws-action-parse-semver@v1
         with:
          input_string: ${{ github.ref }}
-         version_extractor_regex: '\/(.*)$'
+         version_extractor_regex: 'refs\/.*\/(.*)$'
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
