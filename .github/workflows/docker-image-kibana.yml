@@ -31,7 +31,7 @@ jobs:
         name: Prepare
         id: prepare
         run: |
-          DOCKER_IMAGE="${docker_repo}/kibana"
+          DOCKER_IMAGE="${DOCKER_REPO}/kibana"
           VERSION=latest
           if [[ $GITHUB_REF == refs/tags/* ]]; then
             VERSION=${GITHUB_REF#refs/tags/v}
@@ -46,8 +46,8 @@ jobs:
           echo ::set-output name=build_args::VERSION=${VERSION} \
             BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') \
             VCS_REF=${GITHUB_SHA::8}
-        with:
-          docker_repo: ${{ secrets.DOCKER_REPO }}
+        env:
+          DOCKER_REPO: ${{ secrets.DOCKER_REPO }}
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
