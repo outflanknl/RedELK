@@ -1,9 +1,0 @@
-<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-    <!-- <path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3z" fill="red"/> -->
-    <path d="M9 4 l-4 -4 l-4 4 h2.5
-             V20
-             h-2.5 l4 4 l4 -4 h-2.5 V4"/>
-             <text x="24" y="10" text-anchor="end" font-weight="bold" font-family="Verdana" font-size="12">Z</text>
-             <text x="24" y="22" text-anchor="end" font-weight="bold" font-family="Verdana" font-size="12">A</text>
-    <path d="M0 0h24v24H0z" fill="none"/>
-</svg>

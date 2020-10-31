@@ -19,7 +19,7 @@ echo ""
 echo ""
 echo "    ____            _  _____  _      _  __"
 echo "   |  _ \  ___   __| || ____|| |    | |/ /"
-echo "   | |_) |/ _ \ / _\` ||  _|  | |    | ' / "
+echo "   | |_) |/ _ \ / _  ||  _|  | |    | ' / "
 echo "   |  _ <|  __/| (_| || |___ | |___ | . \ "
 echo "   |_| \__\___| \____||_____||_____||_|\_\\"
 echo ""
@@ -114,13 +114,13 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "[*] Copying certificates to relevant redir and c2servers folders." | tee -a $LOGFILE
-cp -r ./certs/* ./elkserver/redelk-logstash/live/certs/ >> $LOGFILE 2>&1
+cp -r ./certs/* ./elkserver/mounts/logstash-config/certs_inputs/ >> $LOGFILE 2>&1
 cp ./certs/redelkCA.crt ./c2servers/filebeat/ >> $LOGFILE 2>&1
 cp ./certs/redelkCA.crt ./redirs/filebeat/ >> $LOGFILE 2>&1
 
 echo "[*] Creating ssh directories if necessary" | tee -a $LOGFILE
-if [ ! -d "./sshkey" ] || [ ! -d "./elkserver/redelk-base/live/ssh" ] || [ ! -d "./c2servers/ssh" ] ; then
-    mkdir -p ./sshkey && mkdir -p ./elkserver/redelk-base/live/ssh && mkdir -p ./c2servers/ssh
+if [ ! -d "./sshkey" ] || [ ! -d "./elkserver/mounts/redelk-ssh" ] || [ ! -d "./c2servers/ssh" ] ; then
+    mkdir -p ./sshkey && mkdir -p ./elkserver/mounts/redelk-ssh && mkdir -p ./c2servers/ssh
 fi >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
@@ -138,13 +138,12 @@ fi
 
 echo "[*] Copying sshkeys to relevant folders." | tee -a $LOGFILE
 cp ./sshkey/id_rsa.pub ./c2servers/ssh/id_rsa.pub >> $LOGFILE 2>&1
-cp ./sshkey/id_rsa* ./elkserver/redelk-base/live/ssh/ >> $LOGFILE 2>&1
+cp ./sshkey/id_rsa* ./elkserver/mounts/redelk-ssh/ >> $LOGFILE 2>&1
 
 echo "[*] Copying VERSION file to subfolders." | tee -a $LOGFILE
 if [ -f "./VERSION" ]; then
     cp ./VERSION c2servers/  
     cp ./VERSION elkserver/
-    cp ./VERSION elkserver/devdata/
     cp ./VERSION redirs/
 fi >> $LOGFILE 2>&1
 ERROR=$?
@@ -185,7 +184,7 @@ fi
 echo ""
 echo ""
 echo "[*] Done with initial setup." | tee -a $LOGFILE
-echo "[*] Copy the redir, c2servers or elkserver folders to every redirector, c2servers or ELK-server. Then run the relevant setup script there locally." | tee -a $LOGFILE
+echo "[*] Copy the redirs.tgz, c2servers.tgz and elkserver.tgz packages to every redirector, c2servers or ELK-server. Then run the relevant setup script there locally." | tee -a $LOGFILE
 echo "" | tee -a $LOGFILE
 
 
