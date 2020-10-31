@@ -76,7 +76,7 @@ echo "[*] Creating redelk user"
 curl -XPOST  $ES_URL/_security/user/redelk --cacert $CERTS_DIR_ES/ca/ca.crt -s -uelastic:$ELASTIC_PASSWORD -H 'Content-Type: application/json' --data-binary @- << EOF
 {
   "password": "$CREDS_redelk",
-  "roles": ["super-user"],
+  "roles": ["superuser"],
   "full_name": "RedELK Operator"
 }
 EOF
