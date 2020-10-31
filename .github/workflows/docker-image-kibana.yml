@@ -24,33 +24,42 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      -
+        name: Checkout
         uses: actions/checkout@v2
-      - name: Prepare
+      -
+        name: Prepare
         id: prepare
         run: |
-          DOCKER_IMAGE=redelk/kibana
-          DOCKER_PLATFORMS=linux/amd64,linux/arm64
+          DOCKER_IMAGE=$DOCKER_REPO/kibana
           VERSION=latest
           if [[ $GITHUB_REF == refs/tags/* ]]; then
             VERSION=${GITHUB_REF#refs/tags/v}
           fi
-          TAGS="--tag ${DOCKER_IMAGE}:${VERSION}"
+          TAGS="${DOCKER_IMAGE}:${VERSION}"
           if [[ $VERSION =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
-            TAGS="$TAGS --tag ${DOCKER_IMAGE}:latest"
+            TAGS="$TAGS\n${DOCKER_IMAGE}:latest"
           fi
           echo ::set-output name=docker_image::${DOCKER_IMAGE}
           echo ::set-output name=version::${VERSION}
-          echo ::set-output name=buildx_args::--platform ${DOCKER_PLATFORMS} \
-            --build-arg VERSION=${VERSION} \
-            --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') \
-            --build-arg VCS_REF=${GITHUB_SHA::8} \
-            --cache-from "type=local,src=/tmp/.buildx-cache" \
-            --cache-to "type=local,dest=/tmp/.buildx-cache" \
-            ${TAGS} --file elkserver/devdata/redelk-kibana/Dockerfile elkserver/devdata/redelk-kibana
-      - name: Set up Docker Buildx
-        uses: crazy-max/ghaction-docker-buildx@v3.3.0
-      - name: Cache Docker layers
+          echo ::set-output name=tags::${TAGS}
+          echo ::set-output name=build_args::VERSION=${VERSION} \
+            BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') \
+            VCS_REF=${GITHUB_SHA::8}
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      -
+        name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      -
+        name: Cache Docker layers
         uses: actions/cache@v2
         id: cache
         with:
@@ -58,20 +67,15 @@ jobs:
           key: ${{ runner.os }}-buildx-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-buildx-
-      - name: Docker Buildx (build)
-        run: |
-          docker buildx build --output "type=image,push=false" ${{ steps.prepare.outputs.buildx_args }}
-      - name: Login to DockerHub
-        if: success()
-        uses: crazy-max/ghaction-docker-login@v1.1.1
+      -
+        name: Build and push
+        uses: docker/build-push-action@v2
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Docker Buildx (push)
-        if: success()
-        run: |
-          docker buildx build --output "type=image,push=true" ${{ steps.prepare.outputs.buildx_args }}
-      - name: Docker Check Manifest
-        if: success()
-        run: |
-          docker run --rm mplatform/mquery ${{ steps.prepare.outputs.docker_image }}:${{ steps.prepare.outputs.version }}
+          context: elkserver/devdata/redelk-kibana
+          file: ./elkserver/devdata/redelk-kibana/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.prepare.outputs.tags }}
+          build-args: ${{ steps.prepare.outputs.build_args }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
