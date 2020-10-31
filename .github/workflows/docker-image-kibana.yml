@@ -49,6 +49,13 @@ jobs:
         env:
           DOCKER_REPO: ${{ secrets.DOCKER_REPO }}
       -
+        name: Parse semver string
+        id: semver_parser
+        uses: booxmedialtd/ws-action-parse-semver@v1
+        with:
+         input_string: ${{ GITHUB_REF }}
+         version_extractor_regex: '\/(.*)$'
+      -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       -
@@ -77,7 +84,10 @@ jobs:
           file: ./elkserver/docker/redelk-kibana/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ${{ steps.prepare.outputs.tags }}
+          tags: |
+            ${{ steps.semver_parser.outputs.major }}
+            "${{ steps.semver_parser.outputs.major }}.${{ steps.semver_parser.outputs.minor }}"
+            "${{ steps.semver_parser.outputs.major }}.${{ steps.semver_parser.outputs.minor }}.${{ steps.semver_parser.outputs.patch }}"
           build-args: ${{ steps.prepare.outputs.build_args }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
