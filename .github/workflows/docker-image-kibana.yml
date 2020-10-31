@@ -37,7 +37,7 @@ jobs:
             VERSION=${GITHUB_REF#refs/tags/v}
           fi
           if [[ $GITHUB_REF == refs/heads/* ]]; then
-            VERSION=${GITHUB_REF#refs/heads/v}
+            VERSION=${GITHUB_REF#refs/heads/}
           fi
           TAGS="${DOCKER_IMAGE}:${VERSION}"
           if [[ $VERSION =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
