@@ -63,7 +63,7 @@ class Module():
                 UniqueIPs[sip]['times_seen'] += 1
             else:
                 UniqueIPs[sip]['times_seen'] = 1
-        report['results'] = UniqueIPs
+        report['results'] = UniqueIPs #No need to put it there but also no harm.
         with open("/tmp/ALARMED_alarm_check1.ips", "a") as f:
             for ip in UniqueIPs:
                 f.write("%s\n" % ip)
