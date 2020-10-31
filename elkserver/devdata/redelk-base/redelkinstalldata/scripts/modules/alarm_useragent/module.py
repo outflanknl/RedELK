@@ -7,6 +7,7 @@
 #
 from modules.helpers import *
 import traceback
+import logging
 
 info = {
     'version': 0.1,
@@ -22,6 +23,26 @@ class Module():
     def __init__(self):
         #print("class init")
         pass
+
+
+    def run(self):
+        ret = initial_alarm_result
+        ret['info'] = info
+        ret['fields'] = ['@timestamp','source.ip','http.headers.useragent','source.nat.ip','redir.frontend.name','redir.backend.name','infra.attack_scenario']
+        ret['groupby'] = ['source.ip','http.headers.useragent']
+        try:
+            report = self.alarm_check()
+            ret['hits']['hits'] = report['hits']
+            ret['mutations'] = report['mutations']
+            ret['hits']['total'] = len(report['hits'])
+        except Exception as e:
+            stackTrace = traceback.format_exc()
+            ret['error'] = stackTrace
+            self.logger.exception(e)
+            pass
+        self.logger.info('finished running module. result: %s hits' % ret['hits']['total'])
+        return(ret)
+
 
     def run(self):
         ret = {}
@@ -46,7 +67,7 @@ class Module():
         #print(ret)
         return(ret)
 
-    def alarm_check3(self):
+    def alarm_check(self):
         # This check queries for UA's that are listed in any blacklist_useragents.conf and do talk to c2* paths on redirectors\n
         # We will dig trough ALL data finding specific IP related lines and tag them
         fname = "/etc/redelk/rogue_useragents.conf"
@@ -74,40 +95,10 @@ class Module():
         if i >= 10000:
             i = 10000
         r = getQuery(q, i)
-        report = {}
-        report['alarm'] = False
-        # if i > 0: report['alarm'] = True #if the query gives 'new lines's we hit on them
-        report['fname'] = "alarm_check3"
-        report['name'] = "Blacklisted UA to C2"
-        report['description'] = "This check queries for UA's that are blacklisted in blacklist_useragents.conf and do talk to c2* paths on redirectors\n"
-        report['query'] = q
         UniqueLINEs = {}
         if type(r) != type([]):
             r = []
-        rAlarmed = []
-        for line in r:
-            rAlarmed.append(line)
-            l = getValue('_source.source.ip', line)
-            if getValue('_source.source.ip', line) not in UniqueLINEs:
-                UniqueLINEs[l] = {}
-            UniqueLINEs[l]['http.request.body.content'] = getValue('_source.http.request.body.content', line)
-            UniqueLINEs[l]['source.ip'] = getValue('_source.source.ip', line)
-            UniqueLINEs[l]['source.nat.ip'] = getValue('_source.source.nat.ip', line)
-            UniqueLINEs[l]['country_name'] = getValue('_source.source.geo.country_name', line)
-            UniqueLINEs[l]['ISP'] = getValue('_source.source.as.organization.name', line)
-            UniqueLINEs[l]['redir.frontend.name'] = getValue('_source.redir.frontend.name', line)
-            UniqueLINEs[l]['redir.backend.name'] = getValue('_source.redir.backend.name', line)
-            UniqueLINEs[l]['infra.attack_scenario'] = getValue('_source.infra.attack_scenario', line)
-            UniqueLINEs[l]['tags'] = getValue('_source.tags', line)
-            UniqueLINEs[l]['redir.timestamp'] = getValue('_source.redir.timestamp', line)
-            report['alarm'] = True
-            print("[A] alarm set in %s" % report['fname'])
-            if 'times_seen' in UniqueLINEs[l]:
-                UniqueLINEs[l]['times_seen'] += 1
-            else:
-                UniqueLINEs[l]['times_seen'] = 1
-        report['results'] = UniqueLINEs
-        # TODO before returning we might have to set an tag on our resultset so we alarm only once. (maybe a tag per alarm?    "ALARMED_%s"%report['fname'] migt do)
-        setTags("ALARMED_%s" % report['fname'], rAlarmed)
-        report['alarmLines'] = rAlarmed
+        report = {}
+        report['mutations'] = {}
+        report['hits'] = r
         return(report)

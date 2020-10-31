@@ -7,6 +7,7 @@
 #
 from modules.helpers import *
 import traceback
+import logging
 
 info = {
     'version': 0.1,
@@ -23,27 +24,21 @@ class Module():
         pass
 
     def run(self):
-        ret = {}
-        alarmLines = []
-        results = {}
+        ret = initial_alarm_result
+        ret['info'] = info
+        ret['fields'] = ['source.ip', 'source.nat.ip', 'source.geo.country_name', 'source.as.organization.name', 'redir.frontend.name', 'redir.backend.name', 'infra.attack_scenario', 'tags', 'redir.timestamp']
+        ret['groupby'] = ['source.ip']
         try:
             report = self.alarm_check1()
-            alarmLines = report.get('alarmLines', [])
-            results = report.get('results', {})
-            # TODO before returning we might have to set an tag on our resultset so we alarm only once. (maybe a tag per alarm?  "ALARMED_%s"%report['fname'] migt do)
-            setTags("ALARMED_%s" % info['submodule'], alarmLines)
+            ret['hits']['hits'] = report['hits']
+            ret['mutations'] = report['mutations'] # for this alarm this is an empty list
+            ret['hits']['total'] = len(report['hits'])
         except Exception as e:
             stackTrace = traceback.format_exc()
             ret['error'] = stackTrace
+            self.logger.exception(e)
             pass
-        ret['info'] = info
-        ret['hits'] = {}
-        ret['hits']['hits'] = alarmLines
-        ret['hits']['total'] = len(alarmLines)
-        ret['fields'] = ['_source.http.request.body.content', '_source.source.nat.ip', '_source.source.geo.country_name', '_source.source.as.organization.name', '_source.redir.frontend.name', '_source.redir.backend.name', '_source.infra.attack_scenario', '_source.tags', '_source.redir.timestamp']
-        #ret['results'] = results
-        print("[a] finished running module %s . result: %s hits"%(ret['info']['name'],ret['hits']['total']))
-        #print(ret)
+        self.logger.info('finished running module. result: %s hits' % ret['hits']['total'])
         return(ret)
 
     def alarm_check1(self):
@@ -52,7 +47,7 @@ class Module():
         i = countQuery(q)
         if i >= 10000:
             i = 10000
-        r = getQuery(q, i)
+        r = getQuery(q, i) # need to query 'until' now - 5min as we're relying on enrichment here!
         report = {}
         report['alarm'] = False
         # if i > 0: report['alarm'] = True #if the query gives 'new ip's we hit on them
@@ -62,34 +57,8 @@ class Module():
         report['query'] = q
         UniqueIPs = {}
         if type(r) != type([]):
-            r = []
-        rAlarmed = []
+            r = [] # TODO: dirty bugfix, replace with error handling!
         for ip in r:
-            # give enrichment 5 minutes to catch up.
-            nowDelayed = datetime.utcnow() - timedelta(minutes=5)
-            d = ip['_source']['@timestamp']
-            timestamp = datetime.strptime(d, '%Y-%m-%dT%H:%M:%S.%fZ')
-            # if timestamp > nowDelayed:
-            #  print("item to new %s < %s"%(timestamp,nowDelayed))
-            if timestamp < nowDelayed:
-                #print("[D] %s < %s"%(timestamp,nowDelayed))
-                #print("[D]%s"% ip['_id'])
-                rAlarmed.append(ip)
-                sip = getValue('_source.source.ip', ip)
-                if sip not in UniqueIPs:
-                    UniqueIPs[sip] = {}
-                    UniqueIPs[sip]['http.request.body.content'] = getValue('_source.http.request.body.content', ip)
-                    UniqueIPs[sip]['source.ip'] = sip
-                    UniqueIPs[sip]['source.nat.ip'] = getValue('_source.source.nat.ip', ip)
-                    UniqueIPs[sip]['country_name'] = getValue('_source.source.geo.country_name', ip)
-                    UniqueIPs[sip]['ISP'] = getValue('_source.source.as.organization.name', ip)
-                    UniqueIPs[sip]['redir.frontend.name'] = getValue('_source.redir.frontend.name', ip)
-                    UniqueIPs[sip]['redir.backend.name'] = getValue('_source.redir.backend.name', ip)
-                    UniqueIPs[sip]['infra.attack_scenario'] = getValue('_source.infra.attack_scenario', ip)
-                    UniqueIPs[sip]['tags'] = getValue('_source.tags', ip)
-                    UniqueIPs[sip]['redir.timestamp'] = getValue('_source.redir.timestamp', ip)
-                    report['alarm'] = True
-                print("[A] alarm set in %s for ip %s" % report['fname'],sip)
             if 'times_seen' in UniqueIPs[sip]:
                 UniqueIPs[sip]['times_seen'] += 1
             else:
@@ -98,5 +67,6 @@ class Module():
         with open("/tmp/ALARMED_alarm_check1.ips", "a") as f:
             for ip in UniqueIPs:
                 f.write("%s\n" % ip)
-        report['alarmLines'] = rAlarmed
+        report['hits'] = r
+        report['mutations'] = {}
         return(report)
