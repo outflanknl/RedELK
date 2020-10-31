@@ -83,6 +83,7 @@ celerybeat-schedule
 
 # Environments
 .env
+.env.bak*
 .venv
 env/
 venv/
@@ -107,13 +108,17 @@ elkserver/scripts/upload_redelkz.sh
 c2servers.tgz
 c2servers/VERSION
 c2servers/ssh/
-certs/elkserver.key
-certs/elkserver.key.pem
-certs/redelkCA.key
+c2servers/filebeat/*.crt
+certs/*.key
+certs/*.crt
+certs/*.csr
+certs/*.pem
+certs/*.srl
 elkserver.tgz
 elkserver/VERSION
 elkserver/mounts/redelk-ssh/
 redelk-inintialsetup.log
 redirs.tgz
 redirs/VERSION
+redirs/filebeat/*.crt
 sshkey/
