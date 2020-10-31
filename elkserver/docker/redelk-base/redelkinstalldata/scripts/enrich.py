@@ -15,9 +15,9 @@ import time
 import traceback
 import config
 from time import sleep
-es = Elasticsearch('https://elastic:redelk@redelk-elasticsearch:9200',
-  verify_certs=False,
-  connection_class=RequestsHttpConnection)
+
+urllib3.disable_warnings()
+es = Elasticsearch(config.es_connection, verify_certs=False)
 
 qSize = 10000
 
