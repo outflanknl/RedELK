@@ -8,11 +8,10 @@
 
 LOGFILE="redelk-install.log"
 INSTALLER="RedELK elkserver installer"
-CWD=`pwd`
-ELKVERSION="7.9.2"
 DEV="no"
 WHATTOINSTALL="full"
-DOCKERCONFFILE="docker-compose.yml"
+DOCKERCONFFILE="redelk-full.yml"
+DOCKERENVFILE=".env"
 
 printf "`date +'%b %e %R'` $INSTALLER - Starting installer\n" > $LOGFILE 2>&1
 echo ""
@@ -44,13 +43,13 @@ if [ ${#} -ne 0 ] && [ ${1} = "limited" ]; then
     echo ""
     sleep 5
     WHATTOINSTALL="limited"
-    DOCKERCONFFILE="docker-compose-limited.yml"
+    DOCKERCONFFILE="redelk-limited.yml"
 elif [ ${#} -ne 0 ] && [ ${1} = "dev" ]; then
     echo ""
     echo "[*] DEV MODE DEV MODE DEV MODE DEV MODE."  | tee -a $LOGFILE
     echo ""
     DEV="yes"
-    DOCKERCONFFILE="docker-compose-dev.yml"
+    DOCKERCONFFILE="redelk-dev.yml"
 else
     echo "No 'limited' parameter found. Going for the full RedELK installation including: " | tee -a $LOGFILE
     echo "- RedELK"
@@ -147,6 +146,7 @@ preinstallcheck() {
     # checking system memory and setting variables
     AVAILABLE_MEMORY=$(awk '/MemAvailable/{printf "%.f", $2/1024}' /proc/meminfo)
     ERROR=$?
+    echo "[*] Memory found available for RedELK: $AVAILABLE_MEMORY MB."
     if [ $ERROR -ne 0 ]; then
         echoerror "[X] Error getting memory configuration of this host. Exiting."
         exit 1
@@ -216,13 +216,12 @@ preinstallcheck
 
 # DEV specific things
 if [ $DEV == "yes" ]; then
-    cp -r ./devdata/* . >> $LOGFILE 2>&1
-    chown -R 1000 ./devdata/redelk-base/redelkinstalldata
-    chown -R 1000 ./devdata/redelk-logstash/redelkinstalldata
+    chown -R 1000 ./docker/redelk-base/redelkinstalldata
+    chown -R 1000 ./docker/redelk-logstash/redelkinstalldata
 fi
 
 echo "[*] Adjusting memory settings for ES" | tee -a $LOGFILE
-sed -E -i.bak "s/Xms1g/Xms${ES_MEMORY}/g" ${DOCKERCONFFILE} >> $LOGFILE 2>&1 && sed -E -i.bak2 "s/Xmx1g/Xmx${ES_MEMORY}/g" ${DOCKERCONFFILE} >> $LOGFILE 2>&1
+sed -E -i.bak "s/[\$]ES_MEMORY/${ES_MEMORY}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "[X] Could not adjust ES memory settings (Error Code: $ERROR)."
@@ -230,7 +229,7 @@ fi
 
 if [ ${WHATTOINSTALL} = "full" ]; then
     echo "[*] Adjusting memory settings for NEO4J" | tee -a $LOGFILE
-    sed -E -i.bak3 "s/_size=1G/_size=${NEO4J_MEMORY}/g" ${DOCKERCONFFILE}
+    sed -E -i.bak3 "s/[\$]NEO4J_MEMORY/${NEO4J_MEMORY}/g" ${DOCKERENVFILE}
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echoerror "[X] Could not adjust ES memory settings (Error Code: $ERROR)."
@@ -238,21 +237,21 @@ if [ ${WHATTOINSTALL} = "full" ]; then
 fi
 
 echo "[*] Setting permissions on certs for logstash" | tee -a $LOGFILE
-chown -R 1000 ./redelk-logstash/live/certs >> $LOGFILE 2>&1
+chown -R 1000 ./mounts/logstash-config/certs_inputs >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "[X] Could not set permissions on certs for logsatsh (Error Code: $ERROR)."
 fi
 
 echo "[*] Setting permissions on redelk logs" | tee -a $LOGFILE
-chown 1000 ./redelk-base/live/redelklogs/* && chmod 664 ./redelk-base/live/redelklogs/* >> $LOGFILE 2>&1
+chown -R 1000 ./mounts/redelk-logs && chmod 664 ./mounts/redelk-logs/* >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "[X] Could not set permissions on redelk logs (Error Code: $ERROR)."
 fi
 
 echo "[*] Setting permissions on Jupyter notebook work dir" | tee -a $LOGFILE
-chown -R 1000 ./redelk-jupyter/live/workbooks >> $LOGFILE 2>&1
+chown -R 1000 ./mounts/jupyter-workbooks >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "[X] Could not set permissions on Jupyter notebook work dir (Error Code: $ERROR)."
@@ -293,8 +292,8 @@ echo " !!! WARNING - IF YOU WANT FULL FUNCTIONALITY YOU ARE NOT DONE YET !!!" | 
 echo " !!! WARNING" | tee -a $LOGFILE
 echo ""
 echo " You should really:" | tee -a $LOGFILE
-echo "   - adjust the redelk-base/live/config/etc/cron.d/redelk file to include your teamservers" | tee -a $LOGFILE
-echo "   - adjust all config files in redelk-base/live/config/etc/redelk to include your specifics like VT API, email server details, etc" | tee -a $LOGFILE
-echo "   - reset default nginx credentials by adjusting the file redelk-nginx/live/config/htpasswd.users. You can use the htpasswd tool from apache2-utils package" | tee -a $LOGFILE
+echo "   - adjust the mounts/redelk-config/etc/cron.d/redelk file to include your teamservers" | tee -a $LOGFILE
+echo "   - adjust all config files in mounts/redelk-config/etc/redelk to include your specifics like VT API, email server details, etc" | tee -a $LOGFILE
+echo "   - reset default nginx credentials by adjusting the file mounts/nginx-config/htpasswd.users. You can use the htpasswd tool from apache2-utils package" | tee -a $LOGFILE
 echo "" | tee -a $LOGFILE
 echo "" | tee -a $LOGFILE

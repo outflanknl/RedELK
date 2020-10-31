@@ -47,7 +47,7 @@ echo ""
 echo ""
 echo "    ____            _  _____  _      _  __"
 echo "   |  _ \  ___   __| || ____|| |    | |/ /"
-echo "   | |_) |/ _ \ / _\` ||  _|  | |    | ' / "
+echo "   | |_) |/ _ \ / _  ||  _|  | |    | ' / "
 echo "   |  _ <|  __/| (_| || |___ | |___ | . \ "
 echo "   |_| \__\___| \____||_____||_____||_|\_\\"
 echo ""
@@ -57,10 +57,10 @@ echo "This script will install and configure necessary components for RedELK on 
 echo ""
 echo ""
 
-if [[ $EUID -ne 0 ]]; then
-  echo "[X] Not running as root. Exiting"
-  exit 1
-fi
+#if [[ $EUID -ne 0 ]]; then
+#  echo "[X] Not running as root. Exiting"
+#  exit 1
+#fi
 
 if ! [ $# -eq 3 ] ; then
     echo "[X] ERROR Incorrect amount of parameters"
