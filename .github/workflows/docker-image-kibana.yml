@@ -28,34 +28,38 @@ jobs:
         id: prepare
         run: |
           DOCKER_IMAGE="${DOCKER_REPO}/redelk-kibana"
-          VERSION=latest
-          if [[ $GITHUB_REF == refs/tags/* ]]; then
-            VERSION=${GITHUB_REF#refs/tags/}
-          fi
-          if [[ $GITHUB_REF == refs/heads/* ]]; then
-            VERSION=${GITHUB_REF#refs/heads/}
-          fi
-          TAGS="${DOCKER_IMAGE}:${VERSION}"
-          if [[ $VERSION =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
-            TAGS="$TAGS \
-              ${DOCKER_IMAGE}:latest"
-          fi
+          # VERSION=latest
+          # if [[ $GITHUB_REF == refs/tags/* ]]; then
+          #   VERSION=${GITHUB_REF#refs/tags/}
+          # fi
+          # if [[ $GITHUB_REF == refs/heads/* ]]; then
+          #   VERSION=${GITHUB_REF#refs/heads/}
+          # fi
+          # TAGS="${DOCKER_IMAGE}:${VERSION}"
+          # if [[ $VERSION =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
+          #   TAGS="$TAGS \
+          #     ${DOCKER_IMAGE}:latest"
+          # fi
           echo ::set-output name=docker_image::${DOCKER_IMAGE}
-          echo ::set-output name=version::${VERSION}
-          echo ::set-output name=tags::${TAGS}
-          echo ::set-output name=build_args::VERSION=${VERSION} \
-            BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') \
+          # echo ::set-output name=version::${VERSION}
+          # echo ::set-output name=tags::${TAGS}
+          echo ::set-output name=build_args::BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') \
             VCS_REF=${GITHUB_SHA::8}
-          echo ${TAGS}
         env:
           DOCKER_REPO: ${{ secrets.DOCKER_REPO }}
       -
-        name: Parse semver string
-        id: semver_parser
-        uses: booxmedialtd/ws-action-parse-semver@v1
+        name: Docker meta
+        id: docker_meta
+        uses: crazy-max/ghaction-docker-meta@v1
         with:
-         input_string: ${{ github.ref }}
-         version_extractor_regex: 'refs\/.*\/(.*)$'
+          images: ${{ secrets.DOCKER_REPO }}/redelk-kibana
+      # -
+      #   name: Parse semver string
+      #   id: semver_parser
+      #   uses: booxmedialtd/ws-action-parse-semver@v1
+      #   with:
+      #    input_string: ${{ github.ref }}
+      #    version_extractor_regex: 'refs\/.*\/(.*)$'
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -84,11 +88,13 @@ jobs:
           context: elkserver/docker/redelk-kibana
           file: ./elkserver/docker/redelk-kibana/Dockerfile
           platforms: linux/amd64,linux/arm64
-          push: true
-          tags: |
-            ${{ steps.semver_parser.outputs.major }}
-            ${{ steps.semver_parser.outputs.major }}.${{ steps.semver_parser.outputs.minor }}
-            ${{ steps.semver_parser.outputs.major }}.${{ steps.semver_parser.outputs.minor }}.${{ steps.semver_parser.outputs.patch }}
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.docker_meta.outputs.tags }}
+          labels: ${{ steps.docker_meta.outputs.labels }}
           build-args: ${{ steps.prepare.outputs.build_args }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
+          # tags: |
+          #   ${{ steps.semver_parser.outputs.major }}
+          #   ${{ steps.semver_parser.outputs.major }}.${{ steps.semver_parser.outputs.minor }}
+          #   ${{ steps.semver_parser.outputs.major }}.${{ steps.semver_parser.outputs.minor }}.${{ steps.semver_parser.outputs.patch }}
