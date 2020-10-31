@@ -103,3 +103,17 @@ venv.bak/
 # mypy
 .mypy_cache/
 elkserver/scripts/upload_redelkz.sh
+
+c2servers.tgz
+c2servers/VERSION
+c2servers/ssh/
+certs/elkserver.key
+certs/elkserver.key.pem
+certs/redelkCA.key
+elkserver.tgz
+elkserver/VERSION
+elkserver/mounts/redelk-ssh/
+redelk-inintialsetup.log
+redirs.tgz
+redirs/VERSION
+sshkey/
