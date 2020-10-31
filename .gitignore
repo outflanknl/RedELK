@@ -116,7 +116,9 @@ certs/*.pem
 certs/*.srl
 elkserver.tgz
 elkserver/VERSION
-elkserver/mounts/redelk-ssh/
+elkserver/mounts/redelk-ssh/*
+elkserver/mounts/logstash-config/*
+elkserver/mounts/certs/*
 redelk-inintialsetup.log
 redirs.tgz
 redirs/VERSION
