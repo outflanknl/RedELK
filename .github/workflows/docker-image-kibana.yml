@@ -37,7 +37,8 @@ jobs:
           fi
           TAGS="${DOCKER_IMAGE}:${VERSION}"
           if [[ $VERSION =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
-            TAGS="$TAGS\n${DOCKER_IMAGE}:latest"
+            TAGS="$TAGS \
+              ${DOCKER_IMAGE}:latest"
           fi
           echo ::set-output name=docker_image::${DOCKER_IMAGE}
           echo ::set-output name=version::${VERSION}
