@@ -46,6 +46,7 @@ jobs:
           echo ::set-output name=build_args::VERSION=${VERSION} \
             BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') \
             VCS_REF=${GITHUB_SHA::8}
+          echo ${TAGS}
         env:
           DOCKER_REPO: ${{ secrets.DOCKER_REPO }}
       -
@@ -86,8 +87,8 @@ jobs:
           push: true
           tags: |
             ${{ steps.semver_parser.outputs.major }}
-            "${{ steps.semver_parser.outputs.major }}.${{ steps.semver_parser.outputs.minor }}"
-            "${{ steps.semver_parser.outputs.major }}.${{ steps.semver_parser.outputs.minor }}.${{ steps.semver_parser.outputs.patch }}"
+            ${{ steps.semver_parser.outputs.major }}.${{ steps.semver_parser.outputs.minor }}
+            ${{ steps.semver_parser.outputs.major }}.${{ steps.semver_parser.outputs.minor }}.${{ steps.semver_parser.outputs.patch }}
           build-args: ${{ steps.prepare.outputs.build_args }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
