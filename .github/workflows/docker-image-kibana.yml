@@ -7,13 +7,13 @@ on:
     tags:
       - '*'
     paths:
-      - 'elkserver/devdata/redelk-kibana/**'
+      - 'elkserver/docker/redelk-kibana/**'
       - '.github/workflows/docker-image-kibana.yml'
   pull_request:
     branches:
       - '*'
     paths:
-      - 'elkserver/devdata/redelk-kibana/**'
+      - 'elkserver/docker/redelk-kibana/**'
       - '.github/workflows/docker-image-kibana.yml'
 
 jobs:
@@ -30,7 +30,7 @@ jobs:
           DOCKER_IMAGE="${DOCKER_REPO}/redelk-kibana"
           VERSION=latest
           if [[ $GITHUB_REF == refs/tags/* ]]; then
-            VERSION=${GITHUB_REF#refs/tags/v}
+            VERSION=${GITHUB_REF#refs/tags/}
           fi
           if [[ $GITHUB_REF == refs/heads/* ]]; then
             VERSION=${GITHUB_REF#refs/heads/}
@@ -72,8 +72,8 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: elkserver/devdata/redelk-kibana
-          file: ./elkserver/devdata/redelk-kibana/Dockerfile
+          context: elkserver/docker/redelk-kibana
+          file: ./elkserver/docker/redelk-kibana/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.prepare.outputs.tags }}
