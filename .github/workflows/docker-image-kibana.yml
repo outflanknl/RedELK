@@ -27,6 +27,9 @@ jobs:
         name: Prepare
         id: prepare
         run: |
+          if [[ "x$DOCKER_REPO" == "x" ]]; then
+            DOCKER_REPO=outflanknl
+          fi
           DOCKER_IMAGE="${DOCKER_REPO}/redelk-kibana"
           # VERSION=latest
           # if [[ $GITHUB_REF == refs/tags/* ]]; then
@@ -41,6 +44,7 @@ jobs:
           #     ${DOCKER_IMAGE}:latest"
           # fi
           echo ::set-output name=docker_image::${DOCKER_IMAGE}
+          echo ::set-output name=docker_repo::${DOCKER_REPO}
           # echo ::set-output name=version::${VERSION}
           # echo ::set-output name=tags::${TAGS}
           echo ::set-output name=build_args::BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') \
@@ -52,7 +56,7 @@ jobs:
         id: docker_meta
         uses: crazy-max/ghaction-docker-meta@v1
         with:
-          images: ${{ secrets.DOCKER_REPO }}/redelk-kibana
+          images: ${{ steps.prepare.outputs.docker_image }}
       # -
       #   name: Parse semver string
       #   id: semver_parser
