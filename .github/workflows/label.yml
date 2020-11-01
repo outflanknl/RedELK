@@ -6,7 +6,7 @@
 # https://github.com/actions/labeler
 
 name: Label PR
-on: [pull_request]
+on: [pull_request_target]
 
 jobs:
   label:
