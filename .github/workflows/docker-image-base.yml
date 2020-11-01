@@ -10,8 +10,6 @@ on:
       - 'elkserver/docker/redelk-base/**'
       - '.github/workflows/docker-image-base.yml'
   pull_request:
-    branches:
-      - '*'
     paths:
       - 'elkserver/docker/redelk-base/**'
       - '.github/workflows/docker-image-base.yml'
