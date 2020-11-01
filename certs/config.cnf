@@ -18,7 +18,7 @@ authorityKeyIdentifier = keyid:always,issuer:always
 basicConstraints = CA:TRUE
 
 [v3_req]
-keyUsage = keyEncipherment, dataEncipherment
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment, dataEncipherment
 extendedKeyUsage = serverAuth
 subjectAltName = @alt_names
 
