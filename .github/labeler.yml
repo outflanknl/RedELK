@@ -1,20 +1,22 @@
-# c2servers
+# Adds lable to PR based on file changes
+
+# C2 server files
 c2servers:
   - 'c2servers/**/*'
 
-# elkserver
+# ELK server files
 elkserver:
   - 'elkserver/**/*'
 
-# redirs
+# Redirector files
 redirs:
   - 'redirs/**/*'
 
-# helpers
+# Helper scripts
 helpers:
   - 'helper-scripts/**/*'
 
-# documentation
+# Documentation
 documentation:
   - 'README.md'
   - 'LICENSE'
@@ -23,6 +25,7 @@ documentation:
   - 'images/**/*'
   - 'example-data-and-configs/**/*'
 
+# Installer files
 installer:
   - 'initial-setup.sh'
   - 'c2servers/install-c2server-*.sh'
@@ -30,5 +33,10 @@ installer:
   - 'elkserver/redelk-*.yml'
   - 'redirs/install-redir.sh'
 
+# Docker files
+docker:
+  - 'elkserver/docker/**/*'
+
+# GitHub workflows and CI/CD files
 githubci:
   - '.github/**/*'
