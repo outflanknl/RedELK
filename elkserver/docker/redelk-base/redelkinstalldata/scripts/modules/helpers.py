@@ -45,6 +45,30 @@ def getQuery(query, size="5000", index="redirtraffic-*"):
         return(None)
     return(r3['hits']['hits'])
 
+def guiQueryWindow(q,start,end):
+    q = {
+  "query": {
+    "bool": {
+      "filter": [
+        {
+          "query_string": {
+            "query": "%s"%q
+          }
+        },
+        {
+          "range": {
+            "@timestamp": {
+              "from": "%s"%start,
+              "to": "%s"%end
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+    return(q)
+
 def countQuery(query, index="redirtraffic-*"):
     print('count')
     q3 = {'query': {'query_string': {'query': query}}}
