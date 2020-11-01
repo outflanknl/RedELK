@@ -1,0 +1,34 @@
+# c2servers
+c2servers:
+  - 'c2servers/**/*'
+
+# elkserver
+elkserver:
+  - 'elkserver/**/*'
+
+# redirs
+redirs:
+  - 'redirs/**/*'
+
+# helpers
+helpers:
+  - 'helper-scripts/**/*'
+
+# documentation
+documentation:
+  - 'README.md'
+  - 'LICENSE'
+  - 'VERSION'
+  - 'releasenotes.txt'
+  - 'images/**/*'
+  - 'example-data-and-configs/**/*'
+
+installer:
+  - 'initial-setup.sh'
+  - 'c2servers/install-c2server-*.sh'
+  - 'elkserver/install-elkserver.sh'
+  - 'elkserver/redelk-*.yml'
+  - 'redirs/install-redir.sh'
+
+githubci:
+  - '.github/**/*'
