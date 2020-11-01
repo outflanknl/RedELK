@@ -90,15 +90,6 @@ upcheck_elasticsearch
 upcheck_kibana
 
 # Start with specifcs for elasticsearch
-echo "[*] Preparing the SIEM signals index" | tee -a $LOGFILE
-upcheck_elasticsearch
-$CURL -X PUT "https://redelk-elasticsearch:9200/.siem-signals-default?pretty" >> $LOGFILE 2>&1
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echo "[X] Could not prepare the SIEM signals index (Error Code: $ERROR)."
-fi
-echo "" >> $LOGFILE
-
 echo "[*] Installing Elasticsearch ILM policy" | tee -a $LOGFILE
 upcheck_elasticsearch
 $CURL -X PUT "https://redelk-elasticsearch:9200/_ilm/policy/redelk" -H "Content-Type: application/json" -d @./root/redelkinstalldata/templates/redelk_elasticsearch_ilm.json >> $LOGFILE 2>&1
@@ -118,6 +109,15 @@ fi
 echo "" >> $LOGFILE
 
 # Now Kibana specifics
+echo "[*] Preparing the SIEM signals index" | tee -a $LOGFILE
+upcheck_kibana
+$CURL -X POST "https://redelk-kibana:5601/api/detection_engine/index" -H 'kbn-xsrf: true' >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echo "[X] Could not prepare the SIEM signals index (Error Code: $ERROR)."
+fi
+echo "" >> $LOGFILE
+
 echo "[*] Installing Kibana index patterns" | tee -a $LOGFILE
 upcheck_kibana
 for i in ./root/redelkinstalldata/templates/redelk_kibana_index-pattern*.ndjson; do
@@ -163,6 +163,15 @@ $CURL -X POST "https://redelk-kibana:5601/api/kibana/settings" -H 'kbn-xsrf: tru
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
    echo "[X] Could not install Kibana advanced settings (Error Code: $ERROR)."
+fi
+echo "" >> $LOGFILE
+
+echo "[*] Disabling telemetry" | tee -a $LOGFILE
+upcheck_kibana
+$CURL -X POST "https://redelk-kibana:5601/api/telemetry/v2/optIn" -H 'kbn-xsrf: true' -H 'Content-Type: application/json' --data '{"enabled":false}' >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+   echo "[X] Could not disable Kibana telemetry (Error Code: $ERROR)."
 fi
 echo "" >> $LOGFILE
 
