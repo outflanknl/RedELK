@@ -44,7 +44,7 @@ class Module():
 
     def alarm_check(self):
         # This check queries for IP's that aren't listed in any iplist* but do talk to c2* paths on redirectors\n
-        q = "NOT tags:iplist_* AND redir.backend.name:c2* AND NOT tags:alarm_* AND tags:enrich_*"
+        q = "NOT tags:iplist_* AND redir.backend.name:c2* AND NOT tags:alarm_* AND tags:enriched_v*"
         i = countQuery(q)
         if i >= 10000:
             i = 10000

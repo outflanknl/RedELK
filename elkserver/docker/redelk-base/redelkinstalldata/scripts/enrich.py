@@ -52,7 +52,6 @@ def enrichAllLinesWithBeacon(l1,b):
   q3['query']['query_string']['query'] = "implant.id:\"%s\" AND NOT c2.log.type:implant_newimplant AND agent.hostname:%s AND NOT tags:enriched_v01"%(l1['_source']['implant']['id'],l1["_source"]['agent']['hostname'])
   r3 = es.search(index="rtops-*", size=qSize, body=q3)
   for l1 in r3['hits']['hits']:
-    l1["_source"]['tags'].append("enriched_v01")
     for field in ["host","user","process"]:
       try:
         l1["_source"][field] = b["_source"][field]
@@ -60,6 +59,7 @@ def enrichAllLinesWithBeacon(l1,b):
       except:
         stackTrace = traceback.format_exc()
         print(stackTrace)
+    l1["_source"]['tags'].append("enriched_v01")
     #es.update(index=l1['_index'],doc_type=l1['_type'],id=l1['_id'],body={'doc':l1['_source']})
     es.update(index=l1['_index'],id=l1['_id'],body={'doc':l1['_source']})
     tagsSet = tagsSet + 1
@@ -367,7 +367,7 @@ if __name__ == '__main__':
   print("Summary: date: %s, tagsSet: %s, Function:iplist_alarmed (total to tag is %s)"%(datetime.datetime.now(),tagsSet,rT))
 
   tagsSet = 0
-  tagsSet,TotalNotTagged = enrichV1()
+  tagsSet,TotalNotTagged = enrichV1()  #we need this to be after the iplist enrichments. If we find the tag of this alarm wel know iplists have been checked.
   print("Summary: date: %s, tagsSet: %s, Function:enrichV1 (total to tag is %s)"%(datetime.datetime.now(),tagsSet,TotalNotTagged))
 
   tagsSet = 0
@@ -448,7 +448,7 @@ INDEX = "redirtraffic-*"
 
 queryFrom = 0
 
-py_timestamp = datetime.datetime.now()
+py_timestamp = datetime.datetime.utcnow()
 fromtime =  (py_timestamp - datetime.timedelta(days=2)).strftime("%Y-%m-%dT%H:%M:%S.%fZ")
 totime   =  (py_timestamp - datetime.timedelta(hours=0)).strftime("%Y-%m-%dT%H:%M:%S.%fZ")
 jsonQuery = guiQueryWindow(QUERY,fromtime,totime)
