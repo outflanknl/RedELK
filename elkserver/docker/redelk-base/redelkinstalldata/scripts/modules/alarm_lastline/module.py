@@ -19,7 +19,7 @@ info = {
 
 class Module():
     def __init__(self):
-        #print("class init")
+        self.logger = logging.getLogger(info['submodule'])
         pass
 
     def run(self):
@@ -28,7 +28,7 @@ class Module():
         ret['fields'] = ['source.ip', 'source.nat.ip', 'source.geo.country_name', 'source.as.organization.name', 'redir.frontend.name', 'redir.backend.name', 'infra.attack_scenario', 'tags', 'redir.timestamp']
         ret['groupby'] = ['source.ip']
         try:
-            report = self.alarm_check1()
+            report = self.alarm_check()
             ret['hits']['hits'] = report['hits']
             ret['mutations'] = report['mutations'] # for this alarm this is an empty list
             ret['hits']['total'] = len(report['hits'])
