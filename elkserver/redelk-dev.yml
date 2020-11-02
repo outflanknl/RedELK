@@ -30,6 +30,9 @@ services:
     build: ./docker/redelk-elasticsearch
     networks:
       - dockernetredelk
+    # Only for dev purposes, expose ES port
+    ports:
+      - "9200:9200"
     expose:
       - "9200"
     volumes:
@@ -61,6 +64,7 @@ services:
       - CREDS_kibana_system=${CREDS_kibana_system}
       - CREDS_logstash_system=${CREDS_logstash_system}
       - CREDS_redelk_ingest=${CREDS_redelk_ingest}
+      - CREDS_redelk=${CREDS_redelk}
       - ES_URL=${ES_URL}
     restart: always
 
@@ -105,6 +109,9 @@ services:
     build: ./docker/redelk-kibana
     networks:
       - dockernetredelk
+    # Only for dev purposes, expose kibana port
+    ports:
+      - "5601:5601"
     expose:
       - "5601"
     volumes:

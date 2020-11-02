@@ -20,7 +20,6 @@ info = {
 class Module():
     def __init__(self):
         self.logger = logging.getLogger(info['submodule'])
-        #print("class init")
         pass
 
     def run(self):
