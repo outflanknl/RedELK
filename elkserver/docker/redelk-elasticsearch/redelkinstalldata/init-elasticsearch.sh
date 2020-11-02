@@ -3,8 +3,9 @@
 # Part of RedELK
 # Init script for RedELK elasticsearch image
 #
-# Author: Outflank B.V. / Marc Smeets
-# Contributor: Lorenzo Bernardi / @fastlorenzo
+# Authors:
+#   - Outflank B.V. / Marc Smeets
+#   - Lorenzo Bernardi (@fastlorenzo)
 #
 
 if [[ ! -f $CERTS_DIR_ES/bundle.zip ]]; then
@@ -69,4 +70,17 @@ EOF
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "[X] Error creating redelk_ingest user (Error Code: $ERROR)."
+fi
+
+echo "[*] Creating redelk user"
+curl -XPOST  $ES_URL/_security/user/redelk --cacert $CERTS_DIR_ES/ca/ca.crt -s -uelastic:$ELASTIC_PASSWORD -H 'Content-Type: application/json' --data-binary @- << EOF
+{
+  "password": "$CREDS_redelk",
+  "roles": ["superuser"],
+  "full_name": "RedELK Operator"
+}
+EOF
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "[X] Error creating redelk user (Error Code: $ERROR)."
 fi

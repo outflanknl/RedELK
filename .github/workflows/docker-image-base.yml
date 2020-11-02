@@ -1,4 +1,4 @@
-name: Build docker elasticsearch image
+name: Build docker base image
 
 on:
   push:
@@ -7,14 +7,12 @@ on:
     tags:
       - '*'
     paths:
-      - 'elkserver/docker/redelk-elasticsearch/**'
-      - '.github/workflows/docker-image-elasticsearch.yml'
+      - 'elkserver/docker/redelk-base/**'
+      - '.github/workflows/docker-image-base.yml'
   pull_request:
-    branches:
-      - '*'
     paths:
-      - 'elkserver/docker/redelk-elasticsearch/**'
-      - '.github/workflows/docker-image-elasticsearch.yml'
+      - 'elkserver/docker/redelk-base/**'
+      - '.github/workflows/docker-image-base.yml'
 
 jobs:
   docker:
@@ -30,7 +28,7 @@ jobs:
           if [[ "x$DOCKER_REPO" == "x" ]]; then
             DOCKER_REPO=outflanknl
           fi
-          DOCKER_IMAGE="${DOCKER_REPO}/redelk-elasticsearch"
+          DOCKER_IMAGE="${DOCKER_REPO}/redelk-base"
           # VERSION=latest
           # if [[ $GITHUB_REF == refs/tags/* ]]; then
           #   VERSION=${GITHUB_REF#refs/tags/}
@@ -83,15 +81,15 @@ jobs:
         id: cache
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-elasticsearch-${{ github.sha }}
+          key: ${{ runner.os }}-buildx-base-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-buildx-elasticsearch-
+            ${{ runner.os }}-buildx-base-
       -
         name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: elkserver/docker/redelk-elasticsearch
-          file: ./elkserver/docker/redelk-elasticsearch/Dockerfile
+          context: elkserver/docker/redelk-base
+          file: ./elkserver/docker/redelk-base/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.docker_meta.outputs.tags }}
