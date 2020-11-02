@@ -1,0 +1,53 @@
+03/29 15:18:46 UTC [metadata] 13.80.254.1 <- 10.99.1.4; computer: LabMaster; user: outflank *; process: testbeacon.exe; pid: 2004; os: Windows; version: 6.2; beacon arch: x64 (x64)
+03/29 15:19:00 UTC [input] <neo> upload
+03/29 15:19:15 UTC [input] <neo> pwd
+03/29 15:19:15 UTC [task] <> Tasked beacon to print working directory
+03/29 15:19:19 UTC [checkin] host called home, sent: 8 bytes
+03/29 15:19:20 UTC [output]
+Current directory is C:\Users\outflank\Desktop
+
+03/29 15:19:39 UTC [input] <neo> cd \windows\temp
+03/29 15:19:39 UTC [task] <> cd \windows\temp
+03/29 15:19:39 UTC [checkin] host called home, sent: 21 bytes
+03/29 15:19:40 UTC [input] <neo> pwd
+03/29 15:19:40 UTC [task] <> Tasked beacon to print working directory
+03/29 15:19:43 UTC [checkin] host called home, sent: 8 bytes
+03/29 15:19:43 UTC [output]
+Current directory is C:\windows\temp
+
+03/29 15:19:49 UTC [input] <neo> upload
+03/29 15:19:56 UTC [task] <> Tasked beacon to upload C:\Users\outflank\Desktop\OfferNr2020F6592_salary.doc as OfferNr2020F6592_salary.doc
+03/29 15:19:56 UTC [indicator] file: f06d1ae4cbde03cde3898f05b841850f 150016 bytes OfferNr2020F6592_salary.doc
+03/29 15:19:58 UTC [checkin] host called home, sent: 150055 bytes
+03/29 15:20:21 UTC [input] <neo> ls
+03/29 15:20:21 UTC [task] <> Tasked beacon to list files in .
+03/29 15:20:21 UTC [checkin] host called home, sent: 19 bytes
+03/29 15:20:21 UTC [output]
+C:\windows\temp\*
+D	0	03/29/2020 15:20:01	.
+D	0	03/29/2020 15:20:01	..
+D	0	03/29/2020 11:18:45	C4663637-44E3-43AA-9240-B6235C0B5998-Sigs
+F	33311	03/29/2020 09:50:19	chrome_installer.log
+D	0	03/29/2020 09:37:54	Crashpad
+F	0	03/29/2020 09:27:39	DMI6A08.tmp
+D	0	03/29/2020 09:43:18	hsperfdata_LabMaster$
+F	0	03/29/2020 11:24:19	LabMaster-20200329-1124.log
+F	8670	03/29/2020 11:25:55	LabMaster-20200329-1125.log
+F	14480	03/29/2020 11:25:59	LabMaster-20200329-1125a.log
+F	11410	03/29/2020 11:25:59	LabMaster-20200329-1125b.log
+F	32790	03/29/2020 11:26:29	LabMaster-20200329-1126.log
+F	10400	03/29/2020 11:18:45	MpCmdRun.log
+F	18736	03/29/2020 11:18:45	MpSigStub.log
+F	150016	03/29/2020 15:19:58	OfferNr2020F6592_salary.doc
+F	0	03/29/2020 11:24:19	officeclicktorun.exe_streamserver(202003291124191078).log
+F	102	03/29/2020 09:17:42	silconfig.log
+D	0	03/29/2020 09:18:28	winrmdone
+D	0	03/29/2020 09:18:24	winrmrunning
+
+
+03/29 15:29:24 UTC [input] <neo> exit
+03/29 15:29:24 UTC [task] <> Tasked beacon to exit
+03/29 15:29:28 UTC [checkin] host called home, sent: 8 bytes
+03/29 15:29:28 UTC [output]
+beacon exit.
+

