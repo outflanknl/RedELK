@@ -14,6 +14,7 @@ import datetime
 import time
 import traceback
 import config
+import urllib3
 from time import sleep
 
 urllib3.disable_warnings()
@@ -242,7 +243,7 @@ def findUntaggedLines(tag,size=qSize,index="redirtraffic-*"):
   return(r3['hits']['hits'],r3['hits']['total']['value'])
 
 def enrich_greynoiseSet(handler):
-  tag = "enrich_greynoise"
+  tag = "enriched_greynoise"
   Set,rT = findUntaggedLines(tag)
   cRes = 0
   for l in Set:

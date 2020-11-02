@@ -42,7 +42,7 @@ def getQuery(query, size="5000", index="redirtraffic-*"):
     q3 = {'query': {'query_string': {'query': query}}}
     r3 = es.search(index=index, body=q3, size=size)
     if(r3['hits']['total']['value'] == 0):
-        return(None)
+        return([])
     return(r3['hits']['hits'])
 
 def guiQueryWindow(q,start,end):
@@ -94,7 +94,7 @@ def setTags(tag, lst):
 def addAlarmData(doc, data, alarm_name, alarmed=True):
     ts = datetime.utcnow().isoformat()
     # Create the alarm field if it doesn't exist yet
-    if not doc['_source']['alarm']:
+    if 'alarm' not in doc['_source']:
         doc['_source']['alarm'] = {}
 
     # Set the last checked date

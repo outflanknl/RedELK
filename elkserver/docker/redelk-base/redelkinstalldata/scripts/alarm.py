@@ -78,8 +78,13 @@ if __name__ == '__main__':
                 alarm_name = aD[a]['info']['submodule']
                 # Let's tag the doc with the alarm name
                 setTags(alarm_name, [rHit])
+                # First check if there is a mutation data to add
+                if rHit['_id'] in r['mutations']:
+                    m = r['mutations'][rHit['_id']]
+                else:
+                    m = {}
                 # And now, let's add mutations data to the doc and update back the hits
-                rHit = addAlarmData(rHit, r['mutations'][rHit['_id']], alarm_name)
+                rHit = addAlarmData(rHit, m, alarm_name)
             # Needed as groupHits will change r['hits']['hits'] and different alarms might do different grouping
             r = copy.deepcopy(aD[a]['result'])
             for c in cD:

@@ -184,6 +184,14 @@ if [ $ERROR -ne 0 ]; then
 fi
 echo "" >> $LOGFILE
 
+echo "[*] Fixing cron file permissions" | tee -a $LOGFILE
+chown root:root /etc/cron.d/redelk >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echo "[X] Could not fix cron file permissions (Error Code: $ERROR)."
+fi
+echo "" >> $LOGFILE
+
 # End with echo to logfile and some white lines
 echo "[*]    `date +'%b %e %R'` Installer finished" | tee -a $LOGFILE
 echo "" >> $LOGFILE

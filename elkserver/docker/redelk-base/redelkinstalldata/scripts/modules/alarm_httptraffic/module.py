@@ -44,15 +44,19 @@ class Module():
 
     def alarm_check(self):
         # This check queries for IP's that aren't listed in any iplist* but do talk to c2* paths on redirectors\n
-        q = "NOT tags:iplist_* AND redir.backend.name:c2* AND NOT tags:alarm_* AND tags:enriched_v*"
+        q = "NOT tags:iplist_* AND redir.backend.name:c2* AND NOT tags:alarm_* AND tags:enriched_*"
         i = countQuery(q)
         if i >= 10000:
             i = 10000
         r = getQuery(q, i) # need to query 'until' now - 5min as we're relying on enrichment here!
+        self.logger.debug('hits[%d]:%s' % (i,r))
         UniqueIPs = {}
         if type(r) != type([]):
             r = [] # TODO: dirty bugfix, replace with error handling!
-        for ip in r:
+        for l in r:
+            sip = getValue('_source.source.ip', l)
+            if sip not in UniqueIPs:
+                UniqueIPs[sip] = {}
             if 'times_seen' in UniqueIPs[sip]:
                 UniqueIPs[sip]['times_seen'] += 1
             else:
