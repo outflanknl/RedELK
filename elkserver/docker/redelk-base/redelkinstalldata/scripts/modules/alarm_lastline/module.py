@@ -2,7 +2,9 @@
 #
 # Part of RedELK
 #
-# Author: Lorenzo Bernardi / @fastlorenzo
+# Authors:
+# - Outflank B.V. / Mark Bergman (@xychix)
+# - Lorenzo Bernardi (@fastlorenzo)
 #
 from modules.helpers import *
 import traceback

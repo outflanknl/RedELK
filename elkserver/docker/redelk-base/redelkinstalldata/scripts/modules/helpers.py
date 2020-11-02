@@ -1,3 +1,11 @@
+#!/usr/bin/python3
+#
+# Part of RedELK
+#
+# Authors:
+# - Outflank B.V. / Mark Bergman (@xychix)
+# - Lorenzo Bernardi (@fastlorenzo)
+#
 import json
 import sys
 import datetime

@@ -3,8 +3,9 @@
 # Part of RedELK
 # Script to check if there are alarms to be sent
 #
-# Author: Outflank B.V. / Mark Bergman / @xychix
-# Contributor: Lorenzo Bernardi / @fastlorenzo
+# Authors:
+# - Outflank B.V. / Mark Bergman (@xychix)
+# - Lorenzo Bernardi (@fastlorenzo)
 #
 import os
 import traceback

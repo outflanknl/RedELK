@@ -3,9 +3,10 @@
 # Part of RedELK
 # Script to start enrichment process of data in elasticsearch
 #
-# Author: Outflank B.V. / Mark Bergman / @xychix
+# Part of RedELK
 #
-# License : BSD3
+# Authors:
+# - Outflank B.V. / Mark Bergman (@xychix)
 #
 from elasticsearch import Elasticsearch, RequestsHttpConnection
 import json
