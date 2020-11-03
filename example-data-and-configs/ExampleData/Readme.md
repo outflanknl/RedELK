@@ -36,7 +36,7 @@ On the RedELK server run:
 
 ## Method 2 - using filebeat
 In this method you will need the files `c2server1_cobaltstrike.zip`, `c2server2_cobaltstrike.zip`, `redira1_access-redelk.log` and `redirb1_haproxy.log`.
-You will also need to have the same offensive systems created - or be more experience with filebeat and know how to import data using the right tags. 
+You will also need to have the same offensive systems created - or be more experienced with filebeat and know how to import data using the right tags. 
 
 Place files on systems as following:
 * On redira1: `redira1_access-redelk.log` as `/var/log/apache2/access-redelk.log`
