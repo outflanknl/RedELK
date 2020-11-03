@@ -25,7 +25,6 @@ class Module():
         #print("class init")
         pass
 
-
     def run(self):
         ret = initial_alarm_result
         ret['info'] = info
@@ -42,30 +41,6 @@ class Module():
             self.logger.exception(e)
             pass
         self.logger.info('finished running module. result: %s hits' % ret['hits']['total'])
-        return(ret)
-
-
-    def run(self):
-        ret = {}
-        alarmLines = []
-        results = {}
-        try:
-            report = self.alarm_check3()
-            alarmLines = report.get('alarmLines', [])
-            results = report.get('results', [])
-            # TODO before returning we might have to set an tag on our resultset so we alarm only once. (maybe a tag per alarm?  "ALARMED_%s"%report['fname'] migt do)
-            setTags("ALARMED_%s" % info['submodule'], alarmLines)
-        except Exception as e:
-            stackTrace = traceback.format_exc()
-            ret['error'] = stackTrace
-            pass
-        ret['info'] = info
-        ret['hits'] = {}
-        ret['hits']['hits'] = alarmLines
-        ret['hits']['total'] = len(alarmLines)
-        ret['results'] = results
-        print("[a] finished running module %s . result: %s hits"%(ret['info']['name'],ret['hits']['total']))
-        #print(ret)
         return(ret)
 
     def alarm_check(self):
