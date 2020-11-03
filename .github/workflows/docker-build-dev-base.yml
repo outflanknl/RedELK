@@ -6,13 +6,13 @@ on:
       - '*'
     paths:
       - 'elkserver/docker/redelk-base/**'
-      - '.github\workflows\docker-build-dev-base.yml'
+      - '.github/workflows/docker-build-dev-base.yml'
   pull_request:
     branches:
       - '*'
     paths:
       - 'elkserver/docker/redelk-base/**'
-      - '.github\workflows\docker-build-dev-base.yml'
+      - '.github/workflows/docker-build-dev-base.yml'
 
 jobs:
   docker:
