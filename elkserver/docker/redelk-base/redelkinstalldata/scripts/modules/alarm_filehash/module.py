@@ -2,8 +2,9 @@
 #
 # Part of RedELK
 #
-# Author: Outflank B.V. / Mark Bergman / @xychix
-# Contributor: Lorenzo Bernardi / @fastlorenzo
+# Authors:
+# - Outflank B.V. / Mark Bergman (@xychix)
+# - Lorenzo Bernardi (@fastlorenzo)
 #
 from modules.helpers import *
 from config import interval, alarms
