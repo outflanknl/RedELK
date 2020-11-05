@@ -9,17 +9,13 @@
 version: "3.3"
 
 networks:
-  dockernetredelk:
+  net:
     driver: bridge
 
 volumes:
   es_data:
     driver: local
-  logstash_data:
-    driver: local
   kibana_data:
-    driver: local
-  jupyter_data:
     driver: local
   bloodhound_data:
     driver: local
@@ -36,7 +32,7 @@ services:
     expose:
       - "9200"
     volumes:
-      - redelk_es_data:/usr/share/elasticsearch/data
+      - es_data:/usr/share/elasticsearch/data
       - ./mounts/certs:${CERTS_DIR_ES}
     environment:
       - discovery.type=single-node
@@ -118,7 +114,7 @@ services:
     expose:
       - "5601"
     volumes:
-      - redelk_kibana_data:/usr/share/kibana/data
+      - kibana_data:/usr/share/kibana/data
       - ./mounts/certs:${CERTS_DIR_KBN}
     environment:
       - ELASTICSEARCH_HOSTS=${ES_URL}
@@ -185,7 +181,7 @@ services:
     networks:
       - net
     volumes:
-      - redelk_bloodhound_data:/var/lib/neo4j
+      - bloodhound_data:/var/lib/neo4j
     ports:
       - "7687:7687"
     expose:
