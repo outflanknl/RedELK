@@ -9,6 +9,7 @@
 LOGFILE="redelk-install.log"
 INSTALLER="RedELK elkserver installer"
 DEV="no"
+DRYRUN="no"
 WHATTOINSTALL="full"
 DOCKERCONFFILE="redelk-full.yml"
 DOCKERENVFILE=".env"
@@ -51,6 +52,11 @@ elif [ ${#} -ne 0 ] && [ ${1} = "dev" ]; then
     echo ""
     DEV="yes"
     DOCKERCONFFILE="redelk-dev.yml"
+elif [ ${#} -ne 0 ] && [ ${1} = "dryrun" ]; then
+    echo ""
+    echo "[*] Dry run mode, only running pre-req checks and creating initial .env file."  | tee -a $LOGFILE
+    echo ""
+    DRYRUN="yes"
 else
     echo "No 'limited' parameter found. Going for the full RedELK installation including: " | tee -a $LOGFILE
     echo "- RedELK"
@@ -328,12 +334,14 @@ if [ $ERROR -ne 0 ]; then
     echoerror "[X] Could not set permissions on Jupyter notebook work dir (Error Code: $ERROR)."
 fi
 
-echo "[*] Building RedELK from $DOCKERCONFFILE file" | tee -a $LOGFILE
-docker-compose -f $DOCKERCONFFILE up --build -d # >>$LOGFILE 2>&1
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echoerror "[X] Could not build RedELK using docker-compose file $DOCKERCONFFILE (Error Code: $ERROR)."
-    exit 1
+if [ $DRYRUN == "no" ]; then
+  echo "[*] Building RedELK from $DOCKERCONFFILE file" | tee -a $LOGFILE
+  docker-compose -f $DOCKERCONFFILE up --build -d # >>$LOGFILE 2>&1
+  ERROR=$?
+  if [ $ERROR -ne 0 ]; then
+      echoerror "[X] Could not build RedELK using docker-compose file $DOCKERCONFFILE (Error Code: $ERROR)."
+      exit 1
+  fi
 fi
 
 grep "* ERROR " redelk-install.log
@@ -347,24 +355,29 @@ fi
 echo "" | tee -a $LOGFILE
 echo "" | tee -a $LOGFILE
 echo "" | tee -a $LOGFILE
-echo " Done with base setup of RedELK on ELK server" | tee -a $LOGFILE
-echo " You can now login with on: " | tee -a $LOGFILE
-echo "   - Main RedELK Kibana interface on port 80 (default redelk:redelk)" | tee -a $LOGFILE
-if [ ${WHATTOINSTALL} != "limited" ]; then
-    echo "   - Jupyter notebooks on /jupyter" | tee -a $LOGFILE
-    echo "   - Neo4J Browser on /neo4jbrowser" | tee -a $LOGFILE
-    echo "   - Neo4J using the BloodHound app on port 7687 (neo4j:BloodHound)" | tee -a $LOGFILE
+if [ $DRYRUN == "no" ]; then
+  echo " Done with base setup of RedELK on ELK server" | tee -a $LOGFILE
+  echo " You can now login with on: " | tee -a $LOGFILE
+  echo "   - Main RedELK Kibana interface on port 80 (default redelk:redelk)" | tee -a $LOGFILE
+  if [ ${WHATTOINSTALL} != "limited" ]; then
+      echo "   - Jupyter notebooks on /jupyter" | tee -a $LOGFILE
+      echo "   - Neo4J Browser on /neo4jbrowser" | tee -a $LOGFILE
+      echo "   - Neo4J using the BloodHound app on port 7687 (neo4j:BloodHound)" | tee -a $LOGFILE
+  fi
+  echo "" | tee -a $LOGFILE
+  echo "" | tee -a $LOGFILE
+  echo "" | tee -a $LOGFILE
+  echo " !!! WARNING" | tee -a $LOGFILE
+  echo " !!! WARNING - IF YOU WANT FULL FUNCTIONALITY YOU ARE NOT DONE YET !!!" | tee -a $LOGFILE
+  echo " !!! WARNING" | tee -a $LOGFILE
+  echo ""
+  echo " You should really:" | tee -a $LOGFILE
+  echo "   - adjust the mounts/redelk-config/etc/cron.d/redelk file to include your teamservers" | tee -a $LOGFILE
+  echo "   - adjust all config files in mounts/redelk-config/etc/redelk to include your specifics like VT API, email server details, etc" | tee -a $LOGFILE
+  echo "   - reset default nginx credentials by adjusting the file mounts/nginx-config/htpasswd.users. You can use the htpasswd tool from apache2-utils package" | tee -a $LOGFILE
+else
+  echo "Done with dry-run checks and .env file creation." | tee -a $LOGFILE
+  echo "You can now adapt the .env file and then run the installer again with 'full' or 'limited' options." | tee -a $LOGFILE
 fi
-echo "" | tee -a $LOGFILE
-echo "" | tee -a $LOGFILE
-echo "" | tee -a $LOGFILE
-echo " !!! WARNING" | tee -a $LOGFILE
-echo " !!! WARNING - IF YOU WANT FULL FUNCTIONALITY YOU ARE NOT DONE YET !!!" | tee -a $LOGFILE
-echo " !!! WARNING" | tee -a $LOGFILE
-echo ""
-echo " You should really:" | tee -a $LOGFILE
-echo "   - adjust the mounts/redelk-config/etc/cron.d/redelk file to include your teamservers" | tee -a $LOGFILE
-echo "   - adjust all config files in mounts/redelk-config/etc/redelk to include your specifics like VT API, email server details, etc" | tee -a $LOGFILE
-echo "   - reset default nginx credentials by adjusting the file mounts/nginx-config/htpasswd.users. You can use the htpasswd tool from apache2-utils package" | tee -a $LOGFILE
 echo "" | tee -a $LOGFILE
 echo "" | tee -a $LOGFILE
