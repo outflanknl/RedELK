@@ -1,4 +1,4 @@
-name: Build docker base image (prd)
+name: Build docker elasticsearch image (prd)
 
 on:
   push:

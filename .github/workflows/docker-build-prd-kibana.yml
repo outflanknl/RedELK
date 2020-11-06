@@ -1,4 +1,4 @@
-name: Build docker base image (prd)
+name: Build docker kibana image (prd)
 
 on:
   push:
