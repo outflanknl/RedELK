@@ -267,20 +267,56 @@ if [ $ERROR -ne 0 ]; then
     echoerror "[X] Could not set redelk_ingest ES password (Error Code: $ERROR)."
 fi
 
-CREDS_redelk=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
-echo "[*] Setting redelk ES password" | tee -a $LOGFILE
-sed -E -i.bak "s/\{\{CREDS_redelk\}\}/${CREDS_redelk}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echoerror "[X] Could not set redelk ES password (Error Code: $ERROR)."
+# check if we need to create a redelk user account
+if (grep "{{CREDS_redelk}}" $DOCKERENVFILE > /dev/null); then
+    CREDS_redelk=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
+    
+    echo "[*] Setting redelk password in elasticsearch" | tee -a $LOGFILE
+    sed -E -i.bak "s/\{\{CREDS_redelk\}\}/${CREDS_redelk}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echoerror "[X] Could not set redelk ES password (Error Code: $ERROR)."
+    fi
+    
+    echo "[*] Installing apache2-utils for setting htaccess" | tee -a $LOGFILE
+    apt -y install apache2-utils >> $LOGFILE 2>&1
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echoerror "[X] Error installing apache2-utils package (Error Code: $ERROR)."
+    fi
+    
+    echo "[*] Setting redelk password in htaccess" | tee -a $LOGFILE
+    htpasswd -b -m mounts/nginx-config/htpasswd.users redelk ${CREDS_redelk} >> $LOGFILE 2>&1
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echoerror "[X] Error setitng redelk password in htaccess (Error Code: $ERROR)."
+    fi
+else
+    echo "[*] Redelk password in elasticsearch already defined - skipping" | tee -a $LOGFILE
+    CREDS_redelk=$(grep -E ^CREDS_redelk= .env|awk -F\= '{print $2}')
 fi
+    
+# check if we need to create a elastic user password
+if (grep "{{ELASTIC_PASSWORD}}" $DOCKERENVFILE > /dev/null); then
+    ELASTIC_PASSWORD=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
 
-ELASTIC_PASSWORD=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
-echo "[*] Setting elastic ES password" | tee -a $LOGFILE
-sed -E -i.bak "s/\{\{ELASTIC_PASSWORD\}\}/${ELASTIC_PASSWORD}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echoerror "[X] Could not set elastic ES password (Error Code: $ERROR)."
+    echo "[*] Setting elastic ES password in Docker template" | tee -a $LOGFILE
+    sed -E -i.bak "s/\{\{ELASTIC_PASSWORD\}\}/${ELASTIC_PASSWORD}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echoerror "[X] Error setting elastic ES password in Docker template (Error Code: $ERROR)."
+    fi
+
+    echo "[*] Setting elastic ES password in redelk config.json" | tee -a $LOGFILE
+    sed -E -i.bak "s/\{\{ELASTIC_PASSWORD\}\}/${ELASTIC_PASSWORD}/g" mounts/redelk-config/etc/redelk/config.json >> $LOGFILE 2>&1
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echoerror "[X] Error setting elastic ES password in redelk config.json (Error Code: $ERROR)."
+    fi
+    rm mounts/redelk-config/etc/redelk/config.json.bak
+else
+    echo "[*] Elastic ES password in docker tempalte already defined - skipping" | tee -a $LOGFILE
+   ELASTIC_PASSWORD=$(grep -E ^ELASTIC_PASSWORD= .env|awk -F\= '{print $2}')
 fi
 
 KBN_XPACK_ENCRYPTEDSAVEDOBJECTS=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
@@ -307,11 +343,11 @@ if [ ${WHATTOINSTALL} = "full" ]; then
     fi
 fi
 
-echo "[*] Setting permissions on certs for logstash" | tee -a $LOGFILE
-chown -R 1000 ./mounts/logstash-config/certs_inputs >> $LOGFILE 2>&1
+echo "[*] Setting permissions on logstash configs" | tee -a $LOGFILE
+chown -R 1000 ./mounts/logstash-config/* >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "[X] Could not set permissions on certs for logsatsh (Error Code: $ERROR)."
+    echoerror "[X] Could not set permissions on logsatsh configs (Error Code: $ERROR)."
 fi
 
 echo "[*] Setting permissions on redelk logs" | tee -a $LOGFILE
@@ -349,7 +385,7 @@ echo "" | tee -a $LOGFILE
 echo "" | tee -a $LOGFILE
 echo " Done with base setup of RedELK on ELK server" | tee -a $LOGFILE
 echo " You can now login with on: " | tee -a $LOGFILE
-echo "   - Main RedELK Kibana interface on port 80 (default redelk:redelk)" | tee -a $LOGFILE
+echo "   - Main RedELK Kibana interface on port 80 (redelk:$CREDS_redelk)" | tee -a $LOGFILE
 if [ ${WHATTOINSTALL} != "limited" ]; then
     echo "   - Jupyter notebooks on /jupyter" | tee -a $LOGFILE
     echo "   - Neo4J Browser on /neo4jbrowser" | tee -a $LOGFILE
@@ -365,6 +401,5 @@ echo ""
 echo " You should really:" | tee -a $LOGFILE
 echo "   - adjust the mounts/redelk-config/etc/cron.d/redelk file to include your teamservers" | tee -a $LOGFILE
 echo "   - adjust all config files in mounts/redelk-config/etc/redelk to include your specifics like VT API, email server details, etc" | tee -a $LOGFILE
-echo "   - reset default nginx credentials by adjusting the file mounts/nginx-config/htpasswd.users. You can use the htpasswd tool from apache2-utils package" | tee -a $LOGFILE
 echo "" | tee -a $LOGFILE
 echo "" | tee -a $LOGFILE
