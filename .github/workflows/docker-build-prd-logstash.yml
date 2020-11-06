@@ -21,7 +21,7 @@ jobs:
           if [[ "x$DOCKER_REPO" == "x" ]]; then
             DOCKER_REPO=outflanknl
           fi
-          DOCKER_IMAGE="${DOCKER_REPO}/redelk-kibana"
+          DOCKER_IMAGE="${DOCKER_REPO}/redelk-logstash"
           echo ::set-output name=docker_image::${DOCKER_IMAGE}
           echo ::set-output name=docker_repo::${DOCKER_REPO}
           echo ::set-output name=build_args::BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') \
@@ -53,15 +53,15 @@ jobs:
         id: cache
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-kibana-${{ github.sha }}
+          key: ${{ runner.os }}-buildx-logstash-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-buildx-kibana-
+            ${{ runner.os }}-buildx-logstash-
       -
         name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: elkserver/docker/redelk-kibana
-          file: ./elkserver/docker/redelk-kibana/Dockerfile
+          context: elkserver/docker/redelk-logstash
+          file: ./elkserver/docker/redelk-logstash/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.docker_meta.outputs.tags }}
