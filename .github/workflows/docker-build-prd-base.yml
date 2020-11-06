@@ -1,11 +1,8 @@
 name: Build docker base image (prd)
 
 on:
-  push:
-    tags:
-      - '*'
-    paths:
-      - '*'
+  release:
+    types: [published]
 
 jobs:
   docker:
