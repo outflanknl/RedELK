@@ -7,7 +7,7 @@ RedELK release notes
 * RedELK Kibana app is included by default
 * New format for alarm emails
 * Structured and increased configurable options in redelk config file config.json
-* restructured enrich and alarm python scripts
+* Restructured enrich and alarm python scripts
 * Added rudimentary uninstall scripts for redirs, c2servers and elkserver
 
 
