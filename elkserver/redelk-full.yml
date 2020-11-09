@@ -133,10 +133,17 @@ services:
     networks:
       - net
     volumes:
-      - ./mounts/nginx-config:/etc/nginx/conf.d
+      - ./mounts/nginx-config:/etc/nginx/templates
       - ./mounts/redelk-www:/var/www/html
+      # Quick fix to enable TLS on nginx, to be refactored later
+      - ./mounts/logstash-config/certs_inputs:${CERTS_DIR_NGINX}
     ports:
       - "80:80"
+      - "443:443"
+    environment:
+      - TLS_CERTIFICATE_PATH=${TLS_CERTIFICATE_PATH}
+      - TLS_KEY_PATH=${TLS_KEY_PATH}
+      - TLS_CA_PATH=${TLS_CA_PATH}
     restart: always
     depends_on:
       - kibana
