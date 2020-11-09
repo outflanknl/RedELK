@@ -2,7 +2,8 @@
 #
 # Part of RedELK
 #
-# Author: Lorenzo Bernardi / @fastlorenzo
+# Authors:
+# - Lorenzo Bernardi (@fastlorenzo)
 #
 import config
 import pymsteams

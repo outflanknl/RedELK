@@ -3,7 +3,7 @@
     "Verbosity": "0",
     "interval": 3600,
     "tempDir": "/tmp",
-    "es_connection": ["https://elastic:redelk@redelk-elasticsearch:9200"],
+    "es_connection": ["https://elastic:{{ELASTIC_PASSWORD}}@redelk-elasticsearch:9200"],
     "notifications": {
         "email": {
             "enabled": false,

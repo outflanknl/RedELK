@@ -1,3 +1,9 @@
+![Build docker base image (dev)](https://github.com/outflanknl/RedELK/workflows/Build%20docker%20base%20image%20(dev)/badge.svg?branch=maindev)
+![Build docker elasticsearch image (dev)](https://github.com/outflanknl/RedELK/workflows/Build%20docker%20elasticsearch%20image%20(dev)/badge.svg?branch=maindev)
+![Build docker jupyter image (dev)](https://github.com/outflanknl/RedELK/workflows/Build%20docker%20jupyter%20image%20(dev)/badge.svg?branch=maindev)
+![Build docker kibana image (dev)](https://github.com/outflanknl/RedELK/workflows/Build%20docker%20kibana%20image%20(dev)/badge.svg?branch=maindev)
+![Build docker logstash image (dev)](https://github.com/outflanknl/RedELK/workflows/Build%20docker%20logstash%20image%20(dev)/badge.svg?branch=maindev)
+
 Red Team's SIEM - tool for Red Teams for tracking and alarming about Blue Team activities as well as enhanced usability in long term operations.
 
 Check the [wiki](https://github.com/outflanknl/RedELK/wiki) for info on usage or one the blog posts or presentations listed below:
@@ -28,4 +34,4 @@ This project is developed and maintained by:
 - Mark Bergman (@xychix on [Github](https://github.com/xychix) and [Twitter](https://twitter.com/xychix))
 - Lorenzo Bernardi (@fastlorenzo on [Github](https://github.com/fastlorenzo) and [Twitter](https://twitter.com/fastlorenzo))
 
-We welcome contributions! Contributions can be both in code, as well as in ideas you might have for further development, alarms, usability improvements, etc. 
+We welcome contributions! Contributions can be both in code, as well as in ideas you might have for further development, alarms, usability improvements, etc.

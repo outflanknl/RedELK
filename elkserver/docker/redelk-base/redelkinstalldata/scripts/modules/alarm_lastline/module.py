@@ -2,7 +2,9 @@
 #
 # Part of RedELK
 #
-# Author: Lorenzo Bernardi / @fastlorenzo
+# Authors:
+# - Outflank B.V. / Mark Bergman (@xychix)
+# - Lorenzo Bernardi (@fastlorenzo)
 #
 from modules.helpers import *
 import traceback
@@ -20,7 +22,6 @@ info = {
 class Module():
     def __init__(self):
         self.logger = logging.getLogger(info['submodule'])
-        #print("class init")
         pass
 
     def run(self):

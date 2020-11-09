@@ -2,7 +2,8 @@
 #
 # Part of RedELK
 #
-# Author: Lorenzo Bernardi / @fastlorenzo
+# Authors:
+# - Lorenzo Bernardi (@fastlorenzo)
 #
 from modules.helpers import *
 import traceback
@@ -39,7 +40,7 @@ class Module():
         return(ret)
 
     def alarm_dummy(self):
-        q = "c2.log.type:ioc AND NOT tags:ALARMED_*"
+        q = "c2.log.type:ioc AND NOT tags:alarm_*"
         report = {}
         report['alarm'] = False
         report['fname'] = "alarm_check2"

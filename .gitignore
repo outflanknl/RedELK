@@ -83,6 +83,7 @@ celerybeat-schedule
 
 # Environments
 .env
+.env.bak*
 .venv
 env/
 venv/
@@ -103,3 +104,24 @@ venv.bak/
 # mypy
 .mypy_cache/
 elkserver/scripts/upload_redelkz.sh
+
+c2servers.tgz
+c2servers/VERSION
+c2servers/ssh/
+c2servers/filebeat/*.crt
+certs/*.key
+certs/*.crt
+certs/*.csr
+certs/*.pem
+certs/*.srl
+elkserver.tgz
+elkserver/VERSION
+elkserver/mounts/redelk-ssh/*
+elkserver/mounts/logstash-config/*
+elkserver/mounts/certs/*
+elkserver/redelk-install.log
+redelk-inintialsetup.log
+redirs.tgz
+redirs/VERSION
+redirs/filebeat/*.crt
+sshkey/
