@@ -68,7 +68,7 @@ echoerror() {
 
 install_docker(){
     echo "[*] Installing docker"
-    if [ -x "$(command -v apt)"]; then
+    if [ -x "$(command -v apt)" ]; then
         echo "[*] apt based system found, trying to install docker via apt" | tee -a $LOGFILE
         apt -y install docker >> $LOGFILE 2>&1
         ERROR=$?
@@ -270,21 +270,21 @@ fi
 # check if we need to create a redelk user account
 if (grep "{{CREDS_redelk}}" $DOCKERENVFILE > /dev/null); then
     CREDS_redelk=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
-    
+
     echo "[*] Setting redelk password in elasticsearch" | tee -a $LOGFILE
     sed -E -i.bak "s/\{\{CREDS_redelk\}\}/${CREDS_redelk}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echoerror "[X] Could not set redelk ES password (Error Code: $ERROR)."
     fi
-    
+
     echo "[*] Installing apache2-utils for setting htaccess" | tee -a $LOGFILE
     apt -y install apache2-utils >> $LOGFILE 2>&1
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echoerror "[X] Error installing apache2-utils package (Error Code: $ERROR)."
     fi
-    
+
     echo "[*] Setting redelk password in htaccess" | tee -a $LOGFILE
     htpasswd -b -m mounts/nginx-config/htpasswd.users redelk ${CREDS_redelk} >> $LOGFILE 2>&1
     ERROR=$?
@@ -295,7 +295,7 @@ else
     echo "[*] Redelk password in elasticsearch already defined - skipping" | tee -a $LOGFILE
     CREDS_redelk=$(grep -E ^CREDS_redelk= .env|awk -F\= '{print $2}')
 fi
-    
+
 # check if we need to create a elastic user password
 if (grep "{{ELASTIC_PASSWORD}}" $DOCKERENVFILE > /dev/null); then
     ELASTIC_PASSWORD=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
