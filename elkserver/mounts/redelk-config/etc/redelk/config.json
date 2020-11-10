@@ -4,6 +4,8 @@
     "interval": 3600,
     "tempDir": "/tmp",
     "es_connection": ["https://elastic:{{ELASTIC_PASSWORD}}@redelk-elasticsearch:9200"],
+    "external_domain": "",
+    "le_email": "",
     "notifications": {
         "email": {
             "enabled": false,

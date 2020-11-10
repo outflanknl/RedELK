@@ -133,18 +133,29 @@ services:
     volumes:
       - ./mounts/nginx-config:/etc/nginx/templates
       - ./mounts/redelk-www:/var/www/html
-      # Quick fix to enable TLS on nginx, to be refactored later
-      - ./mounts/logstash-config/certs_inputs:${CERTS_DIR_NGINX}
+      - ${CERTS_DIR_NGINX_LOCAL}:${CERTS_DIR_NGINX}
+      - ${CERTS_DIR_NGINX_CA_LOCAL}:${CERTS_DIR_NGINX_CA}
+      - ./mounts/certbot/conf:/etc/letsencrypt
+      - ./mounts/certbot/www:/var/www/certbot
     ports:
       - "80:80"
       - "443:443"
     environment:
-      - TLS_CERTIFICATE_PATH=${TLS_CERTIFICATE_PATH}
-      - TLS_KEY_PATH=${TLS_KEY_PATH}
-      - TLS_CA_PATH=${TLS_CA_PATH}
+      - TLS_NGINX_CRT_PATH=${TLS_NGINX_CRT_PATH}
+      - TLS_NGINX_KEY_PATH=${TLS_NGINX_KEY_PATH}
+      - TLS_NGINX_CA_PATH=${TLS_NGINX_CA_PATH}
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & /docker-entrypoint.d/20-envsubst-on-templates.sh; nginx -g \"daemon off;\"'"
+    restart: always
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./mounts/certbot/conf:/etc/letsencrypt
+      - ./mounts/certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
     restart: always
     depends_on:
-      - kibana
+      - nginx
 
   base:
     container_name: redelk-base
