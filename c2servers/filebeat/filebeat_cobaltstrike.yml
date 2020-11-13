@@ -101,6 +101,27 @@ filebeat.inputs:
       log:
         type: keystrokes
 
+- type: log
+  scan_frequency: 5s
+  enabled: true
+  fields_under_root: true
+  paths:
+    - /root/cobaltstrike/logs/*/*/screenshots.log
+  # Since Cobalt Strike version 3.14 the time format in the logs is changed. Here we use regex 'or' function (expr1)|(expr2) to match new or old format
+  multiline.pattern: '(^\d\d\/\d\d\s\d\d\:\d\d\:\d\d\sUTC\s\[)|(^\d\d\/\d\d\s\d\d\:\d\d\:\d\d\s\[)' # match "06/19 12:32:56 UTC [" or "06/19 12:32:56 ["
+  multiline.negate: true
+  multiline.match: after
+  multiline.max_lines: 100000
+  fields:
+    infra:
+      log:
+        type: rtops
+    c2:
+      program: cobaltstrike
+      log:
+        type: screenshots
+
+
 filebeat.config.modules:
   path: ${path.config}/modules.d/*.yml
   reload.enabled: false
