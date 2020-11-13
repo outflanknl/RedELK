@@ -131,19 +131,7 @@ services:
     depends_on:
       - logstash
 
-  nginx:
-    container_name: redelk-nginx
-    image: nginx:latest
-    networks:
-      - net
-    volumes:
-      - ./mounts/nginx-config:/etc/nginx/conf.d
-      - ./mounts/redelk-www:/var/www/html
-    ports:
-      - "80:80"
     restart: always
-    depends_on:
-      - kibana
 
   base:
     container_name: redelk-base
@@ -191,5 +179,6 @@ services:
       - NEO4J_dbms_memory_heap_initial__size=${NEO4J_dbms_memory_heap_initial__size}
       - NEO4J_dbms_memory_heap_max__size=${NEO4J_dbms_memory_heap_max__size}
       - NEO4J_dbms_memory_pagecache_size=${NEO4J_dbms_memory_pagecache_size}
+    restart: always
     depends_on:
       - jupyter
