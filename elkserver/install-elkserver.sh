@@ -430,7 +430,7 @@ echo "[*] Running initial Let's Encrypt script" | tee -a $LOGFILE
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "[X] Could not run initial Let's Encrypt script (Error Code: $ERROR)."
-    exit 1
+    #exit 1
 fi
 
 echo "[*] Building RedELK from $DOCKERCONFFILE file" | tee -a $LOGFILE
