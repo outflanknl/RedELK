@@ -790,7 +790,7 @@
             "number_of_replicas": "0",
             "number_of_shards": "1",
             "query": {
-                "default_field": []
+                "default_field": "*"
             },
             "refresh_interval": "5s"
         }
