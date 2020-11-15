@@ -12,7 +12,7 @@ from pprint import pprint
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-SCHEME = 'http'
+SCHEME = 'https'
 KIBANA_URL = SCHEME + '://localhost:5601'
 KIBANA_USER = 'redelk'
 KIBANA_PASS = 'redelk'
@@ -21,7 +21,7 @@ REDELK_OBJ_FILTER = 'RedELK'
 INDEX_PATTERNS_FILTER = 'rtops|redirtraffic|implantsdb|bluecheck|credentials|email|.siem-signals'
 EXPORT_FILES_PREFIX_KIBANA = 'redelk_kibana_'
 ES_URL = SCHEME + '://localhost:9200'
-ES_TEMPLATES_LIST = [ 'rtops', 'redirtraffic', 'implantsdb', 'bluecheck' ]
+ES_TEMPLATES_LIST = [ 'rtops', 'redirtraffic', 'implantsdb', ] #'bluecheck' ]
 EXPORT_FILES_PREFIX_ES = 'redelk_elasticsearch_'
 DIFF_PATH = 'diff/' # path is relative to exportpath
 
