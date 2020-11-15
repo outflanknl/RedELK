@@ -9,19 +9,15 @@
 version: "3.3"
 
 networks:
-  dockernetredelk:
+  net:
     driver: bridge
 
 volumes:
-  redelk_es_data:
+  es_data:
     driver: local
-  redelk_logstash_data:
+  kibana_data:
     driver: local
-  redelk_kibana_data:
-    driver: local
-  redelk_jupyter_data:
-    driver: local
-  redelk_bloodhound_data:
+  bloodhound_data:
     driver: local
 
 services:
@@ -29,14 +25,14 @@ services:
     container_name: redelk-elasticsearch
     build: ./docker/redelk-elasticsearch
     networks:
-      - dockernetredelk
+      - net
     # Only for dev purposes, expose ES port
     ports:
       - "9200:9200"
     expose:
       - "9200"
     volumes:
-      - redelk_es_data:/usr/share/elasticsearch/data
+      - es_data:/usr/share/elasticsearch/data
       - ./mounts/certs:${CERTS_DIR_ES}
     environment:
       - discovery.type=single-node
@@ -72,7 +68,7 @@ services:
     container_name: redelk-logstash
     build: ./docker/redelk-logstash
     networks:
-      - dockernetredelk
+      - net
     ports:
       - "5044:5044"
     expose:
@@ -87,19 +83,22 @@ services:
       # Uncomment the line below if you want to insert your own logstash config.
       # Remember that you need to insert a total set of working configs (inputs, filters and outputs).
       # Have a look at docker/redelk-logstash/redelkinstalldata/config/ for working configs
-      #- ./mounts/redelk-logstash/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml
-      #- ./mounts/redelk-logstash/redelk-main:/usr/share/logstash/redelk-main
+      #- ./mounts/logstash-config/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml
+      #- ./mounts/logstash-config/redelk-main:/usr/share/logstash/redelk-main
     environment:
       - node.name=redelk-logstash
       - config.reload.automatic:true
       - CERTS_DIR_REDELK=${CERTS_DIR_REDELK}
       - CERTS_DIR_LOGSTASH=${CERTS_DIR_LOGSTASH}
+      - CERTS_LOGSTASH_OUTPUT_CA=${CERTS_LOGSTASH_OUTPUT_CA}
+      - CERTS_LOGSTASH_INPUT_KEY=${CERTS_LOGSTASH_INPUT_KEY}
+      - CERTS_LOGSTASH_INPUT_CRT=${CERTS_LOGSTASH_INPUT_CRT}
       - CREDS_redelk_ingest=${CREDS_redelk_ingest}
       - XPACK_MONITORING_ENABLED=false
       - XPACK_MONITORING_ELASTICSEARCH_HOSTS=["${ES_URL}"]
       - XPACK_MONITORING_ELASTICSEARCH_USERNAME=logstash_system
       - XPACK_MONITORING_ELASTICSEARCH_PASSWORD=${CREDS_logstash_system}
-      - XPACK_MONITORING_ELASTICSEARCH_SSL_CERTIFICATE_AUTHORITY=${CERTS_DIR_LOGSTASH}/ca/ca.crt
+      - XPACK_MONITORING_ELASTICSEARCH_SSL_CERTIFICATE_AUTHORITY=${CERTS_LOGSTASH_OUTPUT_CA}
     restart: always
     depends_on:
       - elasticsearch
@@ -108,14 +107,14 @@ services:
     container_name: redelk-kibana
     build: ./docker/redelk-kibana
     networks:
-      - dockernetredelk
+      - net
     # Only for dev purposes, expose kibana port
     ports:
       - "5601:5601"
     expose:
       - "5601"
     volumes:
-      - redelk_kibana_data:/usr/share/kibana/data
+      - kibana_data:/usr/share/kibana/data
       - ./mounts/certs:${CERTS_DIR_KBN}
     environment:
       - ELASTICSEARCH_HOSTS=${ES_URL}
@@ -132,25 +131,45 @@ services:
     depends_on:
       - logstash
 
+    restart: always
+
   nginx:
     container_name: redelk-nginx
     image: nginx:latest
     networks:
-      - dockernetredelk
+      - net
     volumes:
-      - ./mounts/nginx-config:/etc/nginx/conf.d
+      - ./mounts/nginx-config:/etc/nginx/templates
       - ./mounts/redelk-www:/var/www/html
+      - ${CERTS_DIR_NGINX_LOCAL}:${CERTS_DIR_NGINX}
+      - ${CERTS_DIR_NGINX_CA_LOCAL}:${CERTS_DIR_NGINX_CA}
+      - ./mounts/certbot/conf:/etc/letsencrypt
+      - ./mounts/certbot/www:/var/www/certbot
     ports:
       - "80:80"
+      - "443:443"
+    environment:
+      - TLS_NGINX_CRT_PATH=${TLS_NGINX_CRT_PATH}
+      - TLS_NGINX_KEY_PATH=${TLS_NGINX_KEY_PATH}
+      - TLS_NGINX_CA_PATH=${TLS_NGINX_CA_PATH}
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & /docker-entrypoint.d/20-envsubst-on-templates.sh; nginx -g \"daemon off;\"'"
+    restart: always
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./mounts/certbot/conf:/etc/letsencrypt
+      - ./mounts/certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
     restart: always
     depends_on:
-      - kibana
+      - nginx
 
   base:
     container_name: redelk-base
     build: ./docker/redelk-base
     networks:
-      - dockernetredelk
+      - net
     volumes:
       - ./mounts/redelk-config/etc/cron.d:/etc/cron.d
       - ./mounts/redelk-config/etc/redelk:/etc/redelk
@@ -167,7 +186,7 @@ services:
     container_name: redelk-jupyter
     build: ./docker/redelk-jupyter
     networks:
-      - dockernetredelk
+      - net
     expose:
       - "8888"
     volumes:
@@ -180,9 +199,9 @@ services:
     container_name: redelk-bloodhound
     image: specterops/bloodhound-neo4j
     networks:
-      - dockernetredelk
+      - net
     volumes:
-      - redelk_bloodhound_data:/var/lib/neo4j
+      - bloodhound_data:/var/lib/neo4j
     ports:
       - "7687:7687"
     expose:
@@ -192,6 +211,7 @@ services:
       - NEO4J_dbms_memory_heap_initial__size=${NEO4J_dbms_memory_heap_initial__size}
       - NEO4J_dbms_memory_heap_max__size=${NEO4J_dbms_memory_heap_max__size}
       - NEO4J_dbms_memory_pagecache_size=${NEO4J_dbms_memory_pagecache_size}
+    restart: always
     depends_on:
       - jupyter
 

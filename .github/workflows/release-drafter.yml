@@ -6,6 +6,7 @@ on:
     branches:
       - main
       - master
+      - maindev
 
 jobs:
   update_release_draft:

@@ -166,6 +166,15 @@ if [ $ERROR -ne 0 ]; then
 fi
 echo "" >> $LOGFILE
 
+echo "[*] Disabling telemetry" | tee -a $LOGFILE
+upcheck_kibana
+$CURL -X POST "https://redelk-kibana:5601/api/telemetry/v2/optIn" -H 'kbn-xsrf: true' -H 'Content-Type: application/json' --data '{"enabled":false}' >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+   echo "[X] Could not disable Kibana telemetry (Error Code: $ERROR)."
+fi
+echo "" >> $LOGFILE
+
 echo "[*] Installing Kibana SIEM detection rules (for MITRE ATT&CK mapping)" | tee -a $LOGFILE
 upcheck_kibana
 $CURL -X POST "https://redelk-kibana:5601/api/detection_engine/rules/_import?overwrite=true" -H 'kbn-xsrf: true' -F file=@./root/redelkinstalldata/templates/redelk_siem_detection_rules.ndjson >> $LOGFILE 2>&1
@@ -181,6 +190,14 @@ $CURL 'https://redelk-kibana:5601/api/spaces/space/default?overwrite=true' -H 'k
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echo "[X] Could not adjust Kibana logo (Error Code: $ERROR)."
+fi
+echo "" >> $LOGFILE
+
+echo "[*] Fixing cron file permissions" | tee -a $LOGFILE
+chown root:root /etc/cron.d/redelk >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echo "[X] Could not fix cron file permissions (Error Code: $ERROR)."
 fi
 echo "" >> $LOGFILE
 

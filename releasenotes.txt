@@ -1,10 +1,21 @@
 
 RedELK release notes
 
+### version 2.0.0 BETA3
+* Dockerized the installation on the elkserver components
+* Enabled X-pack on ELK stack
+* RedELK Kibana app is included by default
+* New format for alarm emails
+* Structured and increased configurable options in redelk config file config.json
+* Restructured enrich and alarm python scripts
+* Added rudimentary uninstall scripts for redirs, c2servers and elkserver
+
+
+
 ### version 2.0 BETA2
 * Elastic stack upgraded to version 7.9.2
 * Added nginx availability of Neo4J Browser
-* Dashboard overview now has seperate list of 'external' tools, i.e. ATT&CK Navigator, Jupyter Notebooks and Neo4J Browser
+* Dashboard overview now has separate list of 'external' tools, i.e. ATT&CK Navigator, Jupyter Notebooks and Neo4J Browser
 * Restructuring of python scripts for alarming; now has a modular setup
 * Added support for Alarms via Microsoft Teams
 * Overall python scripts clean up
@@ -17,15 +28,15 @@ RedELK release notes
 ### version 2.0 BETA1
 * Elastic stack upgraded to version 7.8
 * Use Elasticsearch ILM to manage indices
-* Elastich stack field naming overhaul:
-   - Indices rtops and beacondb (now implantsbd) are now C2 framework agnostic instead of Cobalt Strike terms specific
+* Elastic stack field naming overhaul:
+   - Indices rtops and beacondb (now implantsdb) are now C2 framework agnostic instead of Cobalt Strike terms specific
    - Field names adhere to ECS naming standard as much as possible
    - Field names and their types are now defined in ES templates and Kibana index patterns
    - Documented all field in names and types
 * First step of support for PoshC2 C2 framework. Thanks @benpturner for the heavy lifting
 * Offensive hunting tools are now installed on the RedELK server
     - Neo4J for BloodHound integration
-    - Jupyter notenbooks for custom searching and data handling
+    - Jupyter notebooks for custom searching and data handling
     - These two are installed by default unless you pass the 'limited' parameter to the elkserver installer
     - Elkserver installer is now aware of amount of memory and adjusts memory settings of ES, NEO4j and ES to optimized values.
 * Cobalt Strike specific changes:
@@ -36,8 +47,8 @@ RedELK release notes
 Other:
     - Outflank PS-Tools output is now parsed and stored in extra fields inside the rtops index
     - Integrated and adjusted chameleon.py (thanks @DomChell) for performing domain classification checks
-    - Emails from IMAP mailboxes can now be ingested and dispalyed in RedELK
-    - Added several dashboards, vizualisations and searches
+    - Emails from IMAP mailboxes can now be ingested and displayed in RedELK
+    - Added several dashboards, visualisations and searches
     - added Useragent info to incoming traffic on redirectors
 Bugfixes:
     - Fixed double space bug in Apache catch-all Grok rule
@@ -75,7 +86,7 @@ Bugfixes:
 * Adjusting enrichment and alarming python scripts to support the aforementioned renaming.
 * Changed alarm script to use redir destination c2* instead of cobaltstrike* 
 * Minor changes to type definitions of fields, e.g. IPs now stored as IP instead of string.
-* Explicit check and quit with error for non-apt based distrubutions during installation.
+* Explicit check and quit with error for non-apt based distributions during installation.
 * Redir installation script now checks for presence /etc/logrotate.d/haproxy before trying to adjust it.
 * Dozens of minor changes
 

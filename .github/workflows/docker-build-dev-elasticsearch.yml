@@ -1,20 +1,18 @@
-name: Build docker logstash image
+name: Build docker elasticsearch image (dev)
 
 on:
   push:
     branches:
       - '*'
-    tags:
-      - '*'
     paths:
-      - 'elkserver/docker/redelk-logstash/**'
-      - '.github/workflows/docker-image-logstash.yml'
-  pull_request:
+      - 'elkserver/docker/redelk-elasticsearch/**'
+      - '.github/workflows/docker-build-dev-elasticsearch.yml'
+  pull_request_target:
     branches:
       - '*'
     paths:
-      - 'elkserver/docker/redelk-logstash/**'
-      - '.github/workflows/docker-image-logstash.yml'
+      - 'elkserver/docker/redelk-elasticsearch/**'
+      - '.github/workflows/docker-build-dev-elasticsearch.yml'
 
 jobs:
   docker:
@@ -30,23 +28,9 @@ jobs:
           if [[ "x$DOCKER_REPO" == "x" ]]; then
             DOCKER_REPO=outflanknl
           fi
-          DOCKER_IMAGE="${DOCKER_REPO}/redelk-logstash"
-          # VERSION=latest
-          # if [[ $GITHUB_REF == refs/tags/* ]]; then
-          #   VERSION=${GITHUB_REF#refs/tags/}
-          # fi
-          # if [[ $GITHUB_REF == refs/heads/* ]]; then
-          #   VERSION=${GITHUB_REF#refs/heads/}
-          # fi
-          # TAGS="${DOCKER_IMAGE}:${VERSION}"
-          # if [[ $VERSION =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
-          #   TAGS="$TAGS \
-          #     ${DOCKER_IMAGE}:latest"
-          # fi
+          DOCKER_IMAGE="${DOCKER_REPO}/redelk-elasticsearch"
           echo ::set-output name=docker_image::${DOCKER_IMAGE}
           echo ::set-output name=docker_repo::${DOCKER_REPO}
-          # echo ::set-output name=version::${VERSION}
-          # echo ::set-output name=tags::${TAGS}
           echo ::set-output name=build_args::BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') \
             VCS_REF=${GITHUB_SHA::8}
         env:
@@ -57,13 +41,6 @@ jobs:
         uses: crazy-max/ghaction-docker-meta@v1
         with:
           images: ${{ steps.prepare.outputs.docker_image }}
-      # -
-      #   name: Parse semver string
-      #   id: semver_parser
-      #   uses: booxmedialtd/ws-action-parse-semver@v1
-      #   with:
-      #    input_string: ${{ github.ref }}
-      #    version_extractor_regex: 'refs\/.*\/(.*)$'
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -83,23 +60,19 @@ jobs:
         id: cache
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-logstash-${{ github.sha }}
+          key: ${{ runner.os }}-buildx-elasticsearch-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-buildx-logstash-
+            ${{ runner.os }}-buildx-elasticsearch-
       -
         name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: elkserver/docker/redelk-logstash
-          file: ./elkserver/docker/redelk-logstash/Dockerfile
+          context: elkserver/docker/redelk-elasticsearch
+          file: ./elkserver/docker/redelk-elasticsearch/Dockerfile
           platforms: linux/amd64,linux/arm64
-          push: ${{ github.event_name != 'pull_request' }}
+          push: true
           tags: ${{ steps.docker_meta.outputs.tags }}
           labels: ${{ steps.docker_meta.outputs.labels }}
           build-args: ${{ steps.prepare.outputs.build_args }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
-          # tags: |
-          #   ${{ steps.semver_parser.outputs.major }}
-          #   ${{ steps.semver_parser.outputs.major }}.${{ steps.semver_parser.outputs.minor }}
-          #   ${{ steps.semver_parser.outputs.major }}.${{ steps.semver_parser.outputs.minor }}.${{ steps.semver_parser.outputs.patch }}

@@ -1,20 +1,11 @@
-name: Build docker kibana image
+name: Build docker base image (prd)
 
 on:
   push:
-    branches:
-      - '*'
     tags:
       - '*'
     paths:
-      - 'elkserver/docker/redelk-kibana/**'
-      - '.github/workflows/docker-image-kibana.yml'
-  pull_request:
-    branches:
       - '*'
-    paths:
-      - 'elkserver/docker/redelk-kibana/**'
-      - '.github/workflows/docker-image-kibana.yml'
 
 jobs:
   docker:
@@ -30,23 +21,9 @@ jobs:
           if [[ "x$DOCKER_REPO" == "x" ]]; then
             DOCKER_REPO=outflanknl
           fi
-          DOCKER_IMAGE="${DOCKER_REPO}/redelk-kibana"
-          # VERSION=latest
-          # if [[ $GITHUB_REF == refs/tags/* ]]; then
-          #   VERSION=${GITHUB_REF#refs/tags/}
-          # fi
-          # if [[ $GITHUB_REF == refs/heads/* ]]; then
-          #   VERSION=${GITHUB_REF#refs/heads/}
-          # fi
-          # TAGS="${DOCKER_IMAGE}:${VERSION}"
-          # if [[ $VERSION =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
-          #   TAGS="$TAGS \
-          #     ${DOCKER_IMAGE}:latest"
-          # fi
+          DOCKER_IMAGE="${DOCKER_REPO}/redelk-base"
           echo ::set-output name=docker_image::${DOCKER_IMAGE}
           echo ::set-output name=docker_repo::${DOCKER_REPO}
-          # echo ::set-output name=version::${VERSION}
-          # echo ::set-output name=tags::${TAGS}
           echo ::set-output name=build_args::BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') \
             VCS_REF=${GITHUB_SHA::8}
         env:
@@ -57,13 +34,6 @@ jobs:
         uses: crazy-max/ghaction-docker-meta@v1
         with:
           images: ${{ steps.prepare.outputs.docker_image }}
-      # -
-      #   name: Parse semver string
-      #   id: semver_parser
-      #   uses: booxmedialtd/ws-action-parse-semver@v1
-      #   with:
-      #    input_string: ${{ github.ref }}
-      #    version_extractor_regex: 'refs\/.*\/(.*)$'
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -83,15 +53,15 @@ jobs:
         id: cache
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-kibana-${{ github.sha }}
+          key: ${{ runner.os }}-buildx-base-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-buildx-kibana-
+            ${{ runner.os }}-buildx-base-
       -
         name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: elkserver/docker/redelk-kibana
-          file: ./elkserver/docker/redelk-kibana/Dockerfile
+          context: elkserver/docker/redelk-base
+          file: ./elkserver/docker/redelk-base/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.docker_meta.outputs.tags }}
@@ -99,7 +69,3 @@ jobs:
           build-args: ${{ steps.prepare.outputs.build_args }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
-          # tags: |
-          #   ${{ steps.semver_parser.outputs.major }}
-          #   ${{ steps.semver_parser.outputs.major }}.${{ steps.semver_parser.outputs.minor }}
-          #   ${{ steps.semver_parser.outputs.major }}.${{ steps.semver_parser.outputs.minor }}.${{ steps.semver_parser.outputs.patch }}
