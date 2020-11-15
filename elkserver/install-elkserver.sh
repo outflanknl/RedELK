@@ -66,6 +66,7 @@ else
     echo "5 Seconds to abort"
     echo ""
     sleep 5
+    DOCKERCONFFILE="redelk-full.yml"
 fi
 
 echoerror() {
@@ -74,7 +75,7 @@ echoerror() {
 
 install_docker(){
     echo "[*] Installing docker"
-    if [ -x "$(command -v apt)"]; then
+    if [ -x "$(command -v apt)" ]; then
         echo "[*] apt based system found, trying to install docker via apt" | tee -a $LOGFILE
         apt -y install docker >> $LOGFILE 2>&1
         ERROR=$?
@@ -133,6 +134,12 @@ preinstallcheck() {
     # Check if curl is installed
     if [ ! -x "$(command -v curl)" ]; then
         echo "[X] Curl is not installed. Please fix manually. Exiting" | tee -a $LOGFILE
+        exit 1
+    fi
+
+    # Check if jq is installed
+    if [ ! -x "$(command -v jq)" ]; then
+        echo "[X] jq is not installed. Please fix manually. Exiting" | tee -a $LOGFILE
         exit 1
     fi
 
@@ -273,20 +280,56 @@ if [ $ERROR -ne 0 ]; then
     echoerror "[X] Could not set redelk_ingest ES password (Error Code: $ERROR)."
 fi
 
-CREDS_redelk=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
-echo "[*] Setting redelk ES password" | tee -a $LOGFILE
-sed -E -i.bak "s/\{\{CREDS_redelk\}\}/${CREDS_redelk}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echoerror "[X] Could not set redelk ES password (Error Code: $ERROR)."
+# check if we need to create a redelk user account
+if (grep "{{CREDS_redelk}}" $DOCKERENVFILE > /dev/null); then
+    CREDS_redelk=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
+
+    echo "[*] Setting redelk password in elasticsearch" | tee -a $LOGFILE
+    sed -E -i.bak "s/\{\{CREDS_redelk\}\}/${CREDS_redelk}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echoerror "[X] Could not set redelk ES password (Error Code: $ERROR)."
+    fi
+
+    echo "[*] Installing apache2-utils for setting htaccess" | tee -a $LOGFILE
+    apt -y install apache2-utils >> $LOGFILE 2>&1
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echoerror "[X] Error installing apache2-utils package (Error Code: $ERROR)."
+    fi
+
+    echo "[*] Setting redelk password in htaccess" | tee -a $LOGFILE
+    htpasswd -b -m mounts/nginx-config/htpasswd.users redelk ${CREDS_redelk} >> $LOGFILE 2>&1
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echoerror "[X] Error setitng redelk password in htaccess (Error Code: $ERROR)."
+    fi
+else
+    echo "[*] Redelk password in elasticsearch already defined - skipping" | tee -a $LOGFILE
+    CREDS_redelk=$(grep -E ^CREDS_redelk= .env|awk -F\= '{print $2}')
 fi
 
-ELASTIC_PASSWORD=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
-echo "[*] Setting elastic ES password" | tee -a $LOGFILE
-sed -E -i.bak "s/\{\{ELASTIC_PASSWORD\}\}/${ELASTIC_PASSWORD}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echoerror "[X] Could not set elastic ES password (Error Code: $ERROR)."
+# check if we need to create a elastic user password
+if (grep "{{ELASTIC_PASSWORD}}" $DOCKERENVFILE > /dev/null); then
+    ELASTIC_PASSWORD=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
+
+    echo "[*] Setting elastic ES password in Docker template" | tee -a $LOGFILE
+    sed -E -i.bak "s/\{\{ELASTIC_PASSWORD\}\}/${ELASTIC_PASSWORD}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echoerror "[X] Error setting elastic ES password in Docker template (Error Code: $ERROR)."
+    fi
+
+    echo "[*] Setting elastic ES password in redelk config.json" | tee -a $LOGFILE
+    sed -E -i.bak "s/\{\{ELASTIC_PASSWORD\}\}/${ELASTIC_PASSWORD}/g" mounts/redelk-config/etc/redelk/config.json >> $LOGFILE 2>&1
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echoerror "[X] Error setting elastic ES password in redelk config.json (Error Code: $ERROR)."
+    fi
+    rm mounts/redelk-config/etc/redelk/config.json.bak
+else
+    echo "[*] Elastic ES password in docker tempalte already defined - skipping" | tee -a $LOGFILE
+   ELASTIC_PASSWORD=$(grep -E ^ELASTIC_PASSWORD= .env|awk -F\= '{print $2}')
 fi
 
 KBN_XPACK_ENCRYPTEDSAVEDOBJECTS=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
@@ -313,11 +356,65 @@ if [ ${WHATTOINSTALL} = "full" ]; then
     fi
 fi
 
-echo "[*] Setting permissions on certs for logstash" | tee -a $LOGFILE
-chown -R 1000 ./mounts/logstash-config/certs_inputs >> $LOGFILE 2>&1
+EXTERNAL_DOMAIN=$(cat ./mounts/redelk-config/etc/redelk/config.json | jq -r .external_domain)
+echo "[*] Setting external domain name" | tee -a $LOGFILE
+sed -E -i.bak "s/\{\{EXTERNAL_DOMAIN\}\}/${EXTERNAL_DOMAIN}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "[X] Could not set permissions on certs for logsatsh (Error Code: $ERROR)."
+    echoerror "[X] Could not set external domain name (Error Code: $ERROR)."
+fi
+
+LE_EMAIL=$(cat ./mounts/redelk-config/etc/redelk/config.json | jq -r .le_email)
+echo "[*] Setting Let's Encrypt email" | tee -a $LOGFILE
+sed -E -i.bak "s/\{\{LE_EMAIL\}\}/${LE_EMAIL}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "[X] Could not set Let's Encrypt email (Error Code: $ERROR)."
+fi
+
+# NGINX certificates config
+
+CERTS_DIR_NGINX_LOCAL="./mounts/certbot/conf/live/${EXTERNAL_DOMAIN}"
+CERTS_DIR_NGINX_CA_LOCAL="./mounts/certs/ca/"
+TLS_NGINX_CRT_PATH="/etc/nginx/certs/fullchain.pem"
+TLS_NGINX_KEY_PATH="/etc/nginx/certs/privkey.pem"
+TLS_NGINX_CA_PATH="/etc/nginx/ca_certs/ca.crt"
+echo "[*] Setting CERTS_DIR_NGINX_LOCAL" | tee -a $LOGFILE
+sed -E -i.bak "s/\{\{CERTS_DIR_NGINX_LOCAL\}\}/${CERTS_DIR_NGINX_LOCAL}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "[X] Could not set CERTS_DIR_NGINX_LOCAL (Error Code: $ERROR)."
+fi
+echo "[*] Setting CERTS_DIR_NGINX_CA_LOCAL" | tee -a $LOGFILE
+sed -E -i.bak "s/\{\{CERTS_DIR_NGINX_CA_LOCAL\}\}/${CERTS_DIR_NGINX_CA_LOCAL}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "[X] Could not set CERTS_DIR_NGINX_CA_LOCAL (Error Code: $ERROR)."
+fi
+echo "[*] Setting TLS_NGINX_CRT_PATH" | tee -a $LOGFILE
+sed -E -i.bak "s/\{\{TLS_NGINX_CRT_PATH\}\}/${TLS_NGINX_CRT_PATH}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "[X] Could not set TLS_NGINX_CRT_PATH (Error Code: $ERROR)."
+fi
+echo "[*] Setting TLS_NGINX_KEY_PATH" | tee -a $LOGFILE
+sed -E -i.bak "s/\{\{TLS_NGINX_KEY_PATH\}\}/${TLS_NGINX_KEY_PATH}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "[X] Could not set TLS_NGINX_KEY_PATH (Error Code: $ERROR)."
+fi
+echo "[*] Setting TLS_NGINX_CA_PATH" | tee -a $LOGFILE
+sed -E -i.bak "s/\{\{TLS_NGINX_CA_PATH\}\}/${TLS_NGINX_CA_PATH}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "[X] Could not set TLS_NGINX_CA_PATH (Error Code: $ERROR)."
+fi
+
+echo "[*] Setting permissions on logstash configs" | tee -a $LOGFILE
+chown -R 1000 ./mounts/logstash-config/* >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "[X] Could not set permissions on logsatsh configs (Error Code: $ERROR)."
 fi
 
 echo "[*] Setting permissions on redelk logs" | tee -a $LOGFILE
@@ -335,6 +432,14 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 if [ $DRYRUN == "no" ]; then
+  echo "[*] Running initial Let's Encrypt script" | tee -a $LOGFILE
+  ./init-letsencrypt.sh # >>$LOGFILE 2>&1
+  ERROR=$?
+  if [ $ERROR -ne 0 ]; then
+      echoerror "[X] Could not run initial Let's Encrypt script (Error Code: $ERROR)."
+      #exit 1
+  fi
+
   echo "[*] Building RedELK from $DOCKERCONFFILE file" | tee -a $LOGFILE
   docker-compose -f $DOCKERCONFFILE up --build -d # >>$LOGFILE 2>&1
   ERROR=$?
@@ -358,7 +463,7 @@ echo "" | tee -a $LOGFILE
 if [ $DRYRUN == "no" ]; then
   echo " Done with base setup of RedELK on ELK server" | tee -a $LOGFILE
   echo " You can now login with on: " | tee -a $LOGFILE
-  echo "   - Main RedELK Kibana interface on port 80 (default redelk:redelk)" | tee -a $LOGFILE
+  echo "   - Main RedELK Kibana interface on port 80 (default redelk:$CREDS_redelk)" | tee -a $LOGFILE
   if [ ${WHATTOINSTALL} != "limited" ]; then
       echo "   - Jupyter notebooks on /jupyter" | tee -a $LOGFILE
       echo "   - Neo4J Browser on /neo4jbrowser" | tee -a $LOGFILE
@@ -374,7 +479,7 @@ if [ $DRYRUN == "no" ]; then
   echo " You should really:" | tee -a $LOGFILE
   echo "   - adjust the mounts/redelk-config/etc/cron.d/redelk file to include your teamservers" | tee -a $LOGFILE
   echo "   - adjust all config files in mounts/redelk-config/etc/redelk to include your specifics like VT API, email server details, etc" | tee -a $LOGFILE
-  echo "   - reset default nginx credentials by adjusting the file mounts/nginx-config/htpasswd.users. You can use the htpasswd tool from apache2-utils package" | tee -a $LOGFILE
+  echo "   - adjust the .env file to match any specifics you need (e.g. using custom certificate, etc.)" | tee -a $LOGFILE
 else
   echo "Done with dry-run checks and .env file creation." | tee -a $LOGFILE
   echo "You can now adapt the .env file and then run the installer again with 'full' or 'limited' options." | tee -a $LOGFILE
