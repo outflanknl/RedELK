@@ -2,8 +2,9 @@
 # Part of RedELK
 # Dockerfile for RedELK base image
 #
-# Author: Outflank B.V. / Marc Smeets
-# Contributor: Lorenzo Bernardi / @fastlorenzo
+# Authors:
+# - Outflank B.V. / Marc Smeets
+# - Lorenzo Bernardi
 #
 
 FROM phusion/baseimage:18.04-1.0.0
