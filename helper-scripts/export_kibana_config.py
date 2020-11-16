@@ -12,10 +12,8 @@ from pprint import pprint
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-SCHEME = 'http'
+SCHEME = 'https'
 KIBANA_URL = SCHEME + '://localhost:5601'
-KIBANA_USER = 'redelk'
-KIBANA_PASS = 'redelk'
 KIBANA_OBJECTS_EXPORT_URL = KIBANA_URL + '/api/saved_objects/_export'
 REDELK_OBJ_FILTER = 'RedELK'
 INDEX_PATTERNS_FILTER = 'rtops|redirtraffic|implantsdb|bluecheck|credentials|email|.siem-signals'
@@ -27,58 +25,73 @@ DIFF_PATH = 'diff/' # path is relative to exportpath
 
 
 def fetch_kibana_object(obj_type, exportpath):
-    print('# Processing kibana objects: %s' % obj_type)
-    response = requests.post(KIBANA_OBJECTS_EXPORT_URL, json={'type':obj_type}, verify=False, auth=(KIBANA_USER,KIBANA_PASS), headers={'kbn-xsrf':'true'})
-    rawData = response.text.encode('utf-8')
-    items = ndjson.loads(rawData)
-    if obj_type != 'index-pattern':
-        toExport = []
-        for ip in items:
-            if 'attributes' in ip.keys() and 'title' in ip['attributes']:
-                if re.match(REDELK_OBJ_FILTER, ip['attributes']['title'], re.IGNORECASE):
-                  ip.pop('updated_at', None)
-                  ip['version'] = '1'
-                  toExport.append(ip)
-        print('Exporting %s: %s%s%s.ndjson' % (obj_type,exportpath,EXPORT_FILES_PREFIX_KIBANA,obj_type))
-        with open('%s%s%s.ndjson' % (exportpath,EXPORT_FILES_PREFIX_KIBANA,obj_type), 'w') as f:
-            ndjson.dump(toExport, f)
-    else:
-        for ip in items:
-            if 'attributes' in ip.keys() and 'title' in ip['attributes']:
-                if re.match(INDEX_PATTERNS_FILTER, ip['attributes']['title'], re.IGNORECASE):
-                    #print('%s: %s' % (obj_type,ip['attributes']['title']))
-                    pn = ip['attributes']['title'][:-2] if ip['attributes']['title'].endswith('-*') else ip['attributes']['title']
-                    ip.pop('updated_at', None)
-                    ip['version'] = '1'
-                    print('Exporting %s: %s%s%s_%s.ndjson' % (obj_type,exportpath,EXPORT_FILES_PREFIX_KIBANA,obj_type,pn))
-                    with open('%s%s%s_%s.ndjson' % (exportpath,EXPORT_FILES_PREFIX_KIBANA,obj_type,pn), 'w') as f:
-                        ndjson.dump([ip], f)
+    try:
+        print('# Fetching kibana objects: %s' % obj_type)
+        response = requests.post(KIBANA_OBJECTS_EXPORT_URL, json={'type':obj_type}, verify=False, auth=(KIBANA_USER,KIBANA_PASS), headers={'kbn-xsrf':'true'})
+        if response.status_code != 200:
+            print('!!! Error fetching kibana object %s: HTTP status code %s' % (obj_type, response.status_code))
+        else:
+            rawData = response.text.encode('utf-8')
+            items = ndjson.loads(rawData)
+            if obj_type != 'index-pattern':
+                toExport = []
+                for ip in items:
+                    if 'attributes' in ip.keys() and 'title' in ip['attributes']:
+                        if re.match(REDELK_OBJ_FILTER, ip['attributes']['title'], re.IGNORECASE):
+                          ip.pop('updated_at', None)
+                          ip['version'] = '1'
+                          toExport.append(ip)
+                export_file = os.path.join(exportpath, '%s%s.ndjson' % (EXPORT_FILES_PREFIX_KIBANA, obj_type))
+                print('\tExporting %s: %s' % (obj_type, export_file))
+                with open(export_file, 'w') as f:
+                    ndjson.dump(toExport, f)
+            else:
+                for ip in items:
+                    if 'attributes' in ip.keys() and 'title' in ip['attributes']:
+                        if re.match(INDEX_PATTERNS_FILTER, ip['attributes']['title'], re.IGNORECASE):
+                            #print('%s: %s' % (obj_type,ip['attributes']['title']))
+                            pn = ip['attributes']['title'][:-2] if ip['attributes']['title'].endswith('-*') else ip['attributes']['title']
+                            ip.pop('updated_at', None)
+                            ip['version'] = '1'
+                            export_file = os.path.join(exportpath, '%s%s_%s.ndjson' % (EXPORT_FILES_PREFIX_KIBANA, obj_type, pn))
+                            print('\tExporting %s: %s' % (obj_type, export_file))
+                            with open(export_file, 'w') as f:
+                                ndjson.dump([ip], f)
+    except Exception as e:
+        print('!!! Error fetching kibana object %s: %s' % (obj_type, e))
+
 
 def fetch_es_templates(exportpath):
     for i in ES_TEMPLATES_LIST:
-        print('# Processing ES template: %s' % i)
-        response = requests.get('%s/_template/%s' % (ES_URL, i), verify=False, auth=(KIBANA_USER,KIBANA_PASS))
-        rawData = response.text.encode('utf-8')
-        tmpl = json.loads(rawData)
-        print('Exporting index template %s: %s%stemplate_%s.json' % (i,exportpath,EXPORT_FILES_PREFIX_ES,i))
-        with open('%s%stemplate_%s.json' % (exportpath,EXPORT_FILES_PREFIX_ES,i), 'w') as f:
-            json.dump(tmpl[i], f, indent=4, sort_keys=True)
+        try:
+            print('# Fetching ES template: %s' % i)
+            response = requests.get('%s/_template/%s' % (ES_URL, i), verify=False, auth=(KIBANA_USER,KIBANA_PASS))
+            rawData = response.text.encode('utf-8')
+            tmpl = json.loads(rawData)
+            export_file = os.path.join(exportpath, '%stemplate_%s.json' % (EXPORT_FILES_PREFIX_ES, i))
+            print('\tExporting index template %s: %s' % (i, export_file))
+            with open(export_file, 'w') as f:
+                json.dump(tmpl[i], f, indent=4, sort_keys=True)
+        except Exception as e:
+            print('!!! Error fetching ES template %s: %s' % (i, e))
 
 def process_kibana_object(obj_type, exportpath, indexpattern=None):
-    print('# Processing kibana objects: %s' % obj_type)
+    print('# Processing kibana object: %s' % obj_type)
 
     if obj_type != 'index-pattern':
-        src_file = '%s%s' % (EXPORT_FILES_PREFIX_KIBANA, obj_type)
+        src_file_name = '%s%s' % (EXPORT_FILES_PREFIX_KIBANA, obj_type)
     else:
         if indexpattern is None:
             for i in INDEX_PATTERNS_FILTER.split('|'):
                 process_kibana_object(obj_type, exportpath, indexpattern=i)
             return
         else:
-            src_file = '%s%s_%s' % (EXPORT_FILES_PREFIX_KIBANA, obj_type, indexpattern)
+            src_file_name = '%s%s_%s' % (EXPORT_FILES_PREFIX_KIBANA, obj_type, indexpattern)
 
-    print('Opening %s: %s%s.ndjson' % (obj_type, exportpath, src_file))
-    with open('%s%s.ndjson' % (exportpath, src_file), 'r') as f:
+    src_file = os.path.join(exportpath, '%s.ndjson' % src_file_name)
+    diff_file = os.path.join(exportpath, DIFF_PATH, '%s.json' % src_file_name)
+    print('\tOpening %s: %s' % (obj_type, src_file))
+    with open(src_file, 'r') as f:
         src_ndjson = ndjson.load(f)
 
     for s in src_ndjson:
@@ -94,13 +107,13 @@ def process_kibana_object(obj_type, exportpath, indexpattern=None):
             s['attributes']['optionsJSON'] = json.loads(s['attributes']['optionsJSON'])
             s['attributes']['panelsJSON'] = json.loads(s['attributes']['panelsJSON'])
 
-    print('Writing output to: %s%s%s.json' % (exportpath, DIFF_PATH, src_file))
-    with open('%s%s%s.json' % (exportpath, DIFF_PATH, src_file), 'w') as f:
+    print('\tWriting output to: %s' % diff_file)
+    with open(diff_file, 'w') as f:
         json.dump(src_ndjson, f, indent=4, sort_keys=True)
 
 def check_args():
     parser = argparse.ArgumentParser(description="")
-    parser.add_argument("--exportpath", metavar="<exportpath>", dest="exportpath", default='./', help="Path to export the objects (default ./)")
+    parser.add_argument("--exportpath", metavar="<exportpath>", dest="exportpath", help="Path to export the objects")
     parser.add_argument("--indexpattern", action='store_true', help="Export Kibana index patterns")
     parser.add_argument("--search", action='store_true', help="Export Kibana searches")
     parser.add_argument("--visualization", action='store_true', help="Export Kibana visualizations")
@@ -109,6 +122,9 @@ def check_args():
     parser.add_argument("--estemplate", action='store_true', help="Export Elasticsearch templates")
     parser.add_argument("--export", action='store_true', help="Export data   (either --export of --process required)")
     parser.add_argument("--process", action='store_true', help="Process locally saved NDJSON files for easy diff   (either --export of --process required)")
+    parser.add_argument("--username", metavar="<username>", dest="username", help="Elastic username (default: redelk)")
+    parser.add_argument("--password", metavar="<password>", dest="password", help="Elastic password (default: redelk)")
+
     args = parser.parse_args()
 
     if not args.indexpattern and not args.search and not args.visualization and not args.dashboard and not args.all and not args.estemplate and not (args.export or args.process):
@@ -125,10 +141,18 @@ if __name__ == '__main__':
 
     args = check_args()
 
-    exportpath = args.exportpath if args.exportpath else './'
-    diff_exportpath = exportpath + DIFF_PATH
-    if not os.path.exists(DIFF_PATH):
-        os.makedirs(DIFF_PATH)
+    global BASE_PATH, KIBANA_USER, KIBANA_PASS
+
+    BASE_PATH = os.path.dirname(os.path.abspath(__file__))
+
+    KIBANA_USER = args.username if args.username else 'redelk'
+    KIBANA_PASS = args.password if args.password else 'redelk'
+
+    exportpath = args.exportpath if args.exportpath else os.path.join(BASE_PATH, '../elkserver/docker/redelk-base/redelkinstalldata/templates')
+    print(KIBANA_PASS)
+    diff_exportpath = os.path.join(exportpath, DIFF_PATH)
+    if not os.path.exists(diff_exportpath):
+        os.makedirs(diff_exportpath)
 
     if (args.indexpattern or args.all):
         if args.export:
