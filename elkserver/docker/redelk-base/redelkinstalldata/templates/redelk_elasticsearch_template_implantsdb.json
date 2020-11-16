@@ -438,7 +438,14 @@
                         "ignore_above": 1024,
                         "type": "keyword"
                     },
-                    "ext_domain": {
+                    "domain_ext": {
+                        "doc_values": true,
+                        "eager_global_ordinals": false,
+                        "index": true,
+                        "index_options": "docs",
+                        "norms": false,
+                        "split_queries_on_whitespace": false,
+                        "store": false,
                         "type": "keyword"
                     },
                     "geo": {

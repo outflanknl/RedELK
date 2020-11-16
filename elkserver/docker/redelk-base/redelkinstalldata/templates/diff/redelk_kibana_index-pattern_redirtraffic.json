@@ -16,15 +16,32 @@
                     "type": "date"
                 },
                 {
+                    "aggregatable": false,
+                    "count": 0,
+                    "esTypes": [
+                        "text"
+                    ],
+                    "name": "@version",
+                    "readFromDocValues": false,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
                         "keyword"
                     ],
-                    "name": "@version",
+                    "name": "@version.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
+                    "subType": {
+                        "multi": {
+                            "parent": "@version"
+                        }
+                    },
                     "type": "string"
                 },
                 {
@@ -155,6 +172,18 @@
                     "scripted": false,
                     "searchable": true,
                     "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "date"
+                    ],
+                    "name": "alarm.timestamp",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "date"
                 },
                 {
                     "aggregatable": true,
@@ -474,10 +503,68 @@
                     "esTypes": [
                         "text"
                     ],
+                    "name": "greynoise.Name_list",
+                    "readFromDocValues": false,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "greynoise.Name_list.keyword",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "subType": {
+                        "multi": {
+                            "parent": "greynoise.Name_list"
+                        }
+                    },
+                    "type": "string"
+                },
+                {
+                    "aggregatable": false,
+                    "count": 0,
+                    "esTypes": [
+                        "text"
+                    ],
                     "name": "greynoise.OS_List",
                     "readFromDocValues": false,
                     "scripted": false,
                     "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": false,
+                    "count": 0,
+                    "esTypes": [
+                        "text"
+                    ],
+                    "name": "greynoise.OS_list",
+                    "readFromDocValues": false,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "greynoise.OS_list.keyword",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "subType": {
+                        "multi": {
+                            "parent": "greynoise.OS_list"
+                        }
+                    },
                     "type": "string"
                 },
                 {
@@ -1735,13 +1822,13 @@
                     "type": "string"
                 },
                 {
-                    "aggregatable": true,
+                    "aggregatable": false,
                     "count": 0,
                     "esTypes": [
-                        "keyword"
+                        "text"
                     ],
                     "name": "source.host_info.os_major",
-                    "readFromDocValues": true,
+                    "readFromDocValues": false,
                     "scripted": false,
                     "searchable": true,
                     "type": "string"
@@ -1752,10 +1839,44 @@
                     "esTypes": [
                         "keyword"
                     ],
-                    "name": "source.host_info.os_minor",
+                    "name": "source.host_info.os_major.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
+                    "subType": {
+                        "multi": {
+                            "parent": "source.host_info.os_major"
+                        }
+                    },
+                    "type": "string"
+                },
+                {
+                    "aggregatable": false,
+                    "count": 0,
+                    "esTypes": [
+                        "text"
+                    ],
+                    "name": "source.host_info.os_minor",
+                    "readFromDocValues": false,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "source.host_info.os_minor.keyword",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "subType": {
+                        "multi": {
+                            "parent": "source.host_info.os_minor"
+                        }
+                    },
                     "type": "string"
                 },
                 {

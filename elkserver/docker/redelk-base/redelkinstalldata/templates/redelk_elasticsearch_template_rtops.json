@@ -117,6 +117,19 @@
                     "message": {
                         "type": "text"
                     },
+                    "operator": {
+                        "doc_values": true,
+                        "eager_global_ordinals": false,
+                        "index": true,
+                        "index_options": "docs",
+                        "norms": false,
+                        "split_queries_on_whitespace": false,
+                        "store": false,
+                        "type": "keyword"
+                    },
+                    "operator_ip": {
+                        "type": "ip"
+                    },
                     "program": {
                         "type": "keyword"
                     },
@@ -344,6 +357,9 @@
                         "ignore_above": 1024,
                         "type": "keyword"
                     },
+                    "domain_ext": {
+                        "type": "text"
+                    },
                     "ext_domain": {
                         "type": "keyword"
                     },
@@ -548,8 +564,21 @@
             },
             "keystrokes": {
                 "properties": {
+                    "desktop_session": {
+                        "doc_values": true,
+                        "eager_global_ordinals": false,
+                        "index": true,
+                        "index_options": "docs",
+                        "norms": false,
+                        "split_queries_on_whitespace": false,
+                        "store": false,
+                        "type": "keyword"
+                    },
                     "url": {
                         "type": "keyword"
+                    },
+                    "user": {
+                        "type": "text"
                     }
                 },
                 "type": "object"
@@ -673,11 +702,27 @@
             },
             "screenshot": {
                 "properties": {
+                    "desktop_session": {
+                        "doc_values": true,
+                        "eager_global_ordinals": false,
+                        "index": true,
+                        "index_options": "docs",
+                        "norms": false,
+                        "split_queries_on_whitespace": false,
+                        "store": false,
+                        "type": "keyword"
+                    },
+                    "file_name": {
+                        "type": "text"
+                    },
                     "full": {
                         "type": "keyword"
                     },
                     "thumb": {
                         "type": "keyword"
+                    },
+                    "title": {
+                        "type": "text"
                     }
                 },
                 "type": "object"
