@@ -354,6 +354,14 @@ if [ ${WHATTOINSTALL} = "full" ]; then
     if [ $ERROR -ne 0 ]; then
         echoerror "[X] Could not adjust ES memory settings (Error Code: $ERROR)."
     fi
+
+    NEO4J_PASSWORD=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
+    echo "[*] Setting neo4j password" | tee -a $LOGFILE
+    sed -E -i.bak "s/\{\{NEO4J_PASSWORD\}\}/${NEO4J_PASSWORD}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echoerror "[X] Could not set neo4j password (Error Code: $ERROR)."
+    fi
 fi
 
 EXTERNAL_DOMAIN=$(cat ./mounts/redelk-config/etc/redelk/config.json | jq -r .external_domain)
