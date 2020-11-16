@@ -1,0 +1,179 @@
+filebeat.inputs:
+
+# BEGIN REDIRECTORS CONFIG
+- type: log
+  enabled: true
+  fields_under_root: true
+  paths:
+    - /var/log/sample-data/haproxy.log
+  fields:
+    infra:
+      log:
+        type: redirtraffic
+    redir:
+      program: haproxy
+- type: log
+  enabled: true
+  fields_under_root: true
+  paths:
+    - /var/log/sample-data/apache2.log
+  fields:
+    infra:
+      log:
+        type: redirtraffic
+    redir:
+      program: apache
+- type: log
+  enabled: true
+  fields_under_root: true
+  paths:
+    - /var/log/sample-data/nginx.log
+  fields:
+    infra:
+      log:
+        type: redirtraffic
+    redir:
+      program: nginx
+# END REDIRECTORS CONFIG
+
+# BEGIN COBALT STRIKE CONFIG
+- type: log
+  scan_frequency: 5s
+  enabled: true
+  fields_under_root: true
+  paths:
+    - /var/log/sample-data/cobaltstrike/logs/*/events.log
+  fields:
+    infra:
+      log:
+        type: rtops
+    c2:
+      program: cobaltstrike
+      log:
+        type: events
+
+- type: log
+  scan_frequency: 5s
+  enabled: true
+  fields_under_root: true
+  paths:
+    - /var/log/sample-data/cobaltstrike/logs/*/weblog.log
+  fields:
+    infra:
+      log:
+        type: rtops
+    c2:
+      program: cobaltstrike
+      log:
+        type: weblog
+
+- type: log
+  scan_frequency: 5s
+  enabled: true
+  fields_under_root: true
+  paths:
+    - /var/log/sample-data/cobaltstrike/logs/*/downloads.log
+  fields:
+    infra:
+      log:
+        type: rtops
+    c2:
+      program: cobaltstrike
+      log:
+        type: downloads
+
+- type: log
+  scan_frequency: 5s
+  enabled: true
+  fields_under_root: true
+  paths:
+    - /var/log/sample-data/cobaltstrike/data/export_credentials.tsv
+  fields:
+    infra:
+      log:
+        type: rtops
+    c2:
+      program: cobaltstrike
+      log:
+        type: credentials
+
+- type: log
+  scan_frequency: 5s
+  enabled: true
+  fields_under_root: true
+  paths:
+    - /var/log/sample-data/cobaltstrike/logs/*/*/beacon_*.log
+    - /var/log/sample-data/cobaltstrike/logs/*/*/ssh_*.log
+  # Since Cobalt Strike version 3.14 the time format in the logs is changed. Here we use regex 'or' function (expr1)|(expr2) to match new or old format
+  multiline.pattern: '(^\d\d\/\d\d\s\d\d\:\d\d\:\d\d\sUTC\s\[)|(^\d\d\/\d\d\s\d\d\:\d\d\:\d\d\s\[)' # match "06/19 12:32:56 UTC [" or "06/19 12:32:56 ["
+  multiline.negate: true
+  multiline.match: after
+  multiline.max_lines: 100000
+  fields:
+    infra:
+      log:
+        type: rtops
+    c2:
+      program: cobaltstrike
+      log:
+        type: beacon
+
+- type: log
+  scan_frequency: 5s
+  enabled: true
+  fields_under_root: true
+  paths:
+    - /var/log/sample-data/cobaltstrike/logs/*/*/keystrokes/keystrokes_*.txt
+  # Since Cobalt Strike version 3.14 the time format in the logs is changed. Here we use regex 'or' function (expr1)|(expr2) to match new or old format
+  multiline.pattern: '(^\d\d\/\d\d\s\d\d\:\d\d\:\d\d\sUTC\s\[)|(^\d\d\/\d\d\s\d\d\:\d\d\:\d\d\s\[)' # match "06/19 12:32:56 UTC [" or "06/19 12:32:56 ["
+  multiline.negate: true
+  multiline.match: after
+  multiline.max_lines: 100000
+  fields:
+    infra:
+      log:
+        type: rtops
+    c2:
+      program: cobaltstrike
+      log:
+        type: keystrokes
+
+- type: log
+  scan_frequency: 5s
+  enabled: true
+  fields_under_root: true
+  paths:
+    - /var/log/sample-data/cobaltstrike/logs/*/*/screenshots.log
+  # Since Cobalt Strike version 3.14 the time format in the logs is changed. Here we use regex 'or' function (expr1)|(expr2) to match new or old format
+  multiline.pattern: '(^\d\d\/\d\d\s\d\d\:\d\d\:\d\d\sUTC\s\[)|(^\d\d\/\d\d\s\d\d\:\d\d\:\d\d\s\[)' # match "06/19 12:32:56 UTC [" or "06/19 12:32:56 ["
+  multiline.negate: true
+  multiline.match: after
+  multiline.max_lines: 100000
+  fields:
+    infra:
+      log:
+        type: rtops
+    c2:
+      program: cobaltstrike
+      log:
+        type: screenshots
+
+# END COBALT STRIKE CONFIG
+
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: false
+
+setup.template.settings:
+  index.number_of_shards: 3
+
+name: "sample-client"
+fields_under_root: true
+fields:
+  infra:
+    attack_scenario: sample-scenario
+
+output.logstash:
+  hosts: ["redelk-logstash:5044"]
+  ssl.certificate_authorities: ["/usr/share/filebeat/redelkCA.crt"]
+  ssl.verification_mode: none

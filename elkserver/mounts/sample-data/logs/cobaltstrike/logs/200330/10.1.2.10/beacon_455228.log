@@ -1,0 +1,4 @@
+03/30 09:10:57 UTC [metadata] beacon_22170412 -> 10.1.2.10; computer: S-WIN21; user: ADMIN-W.Trommel *; process: wsmprovhost.exe; pid: 2476; os: Windows; version: 6.3; beacon arch: x64 (x64)
+03/30 09:10:51 UTC [output]
+established link to parent beacon: 10.1.4.10
+
