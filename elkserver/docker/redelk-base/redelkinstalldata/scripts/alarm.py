@@ -15,7 +15,7 @@ import logging
 import copy
 
 from modules.helpers import *
-from config import alarms, notifications
+from config import alarms, notifications, enrich
 import itertools
 
 LOG_LEVEL = logging.DEBUG
@@ -62,19 +62,19 @@ if __name__ == '__main__':
 
     # First loop through the enrichment modules
     for e in eD:
-        try:
-            logger.info('[e] initiating class Module() in %s' % e)
-            moduleClass = eD[e]['m'].Module()
-            logger.info('[e] Running Run() from the Module class in %s' % e)
-            eD[e]['result'] = copy.deepcopy(moduleClass.run())
-        except Exception as err:
-            logger.error('Error running enrichment %s: %s' % (e, err))
-            logger.exception(err)
+        if e in enrich and enrich[e]['enabled'] == True:
+            try:
+                logger.info('[e] initiating class Module() in %s' % e)
+                moduleClass = eD[e]['m'].Module()
+                logger.info('[e] Running Run() from the Module class in %s' % e)
+                eD[e]['result'] = copy.deepcopy(moduleClass.run())
+            except Exception as err:
+                logger.error('Error running enrichment %s: %s' % (e, err))
+                logger.exception(err)
 
     logger.info('Looping module dict')
     # this means we've loaded the modules and will now loop over those one by one
     for a in aD:
-        logger.debug(alarms)
         if a in alarms and alarms[a]['enabled'] == True:
             try:
                 logger.info('[a] initiating class Module() in %s' % a)
