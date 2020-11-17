@@ -51,18 +51,22 @@ if 'notifications' in d:
 alarms = {
     'alarm_filehash': {
         'enabled': False,
+        'interval': 360,
         'vt_api_key': '', # Virustotal API
         'ibm_basic_auth': '', # IBM X-Force API (can be retreived from a sample call on their swagger test site)
         'ha_api_key': '' # Hybrid Analysis API
     },
     'alarm_httptraffic': {
-        'enabled': False
+        'enabled': False,
+        'interval': 360
     },
     'alarm_useragent': {
-        'enabled': False
+        'enabled': False,
+        'interval': 360
     },
     'alarm_dummy': {
-        'enabled': False
+        'enabled': False,
+        'interval': 360
     }
 }
 if 'alarms' in d:
