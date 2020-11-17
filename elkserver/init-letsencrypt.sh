@@ -33,14 +33,10 @@ fi
 #   fi
 # fi
 
-
-# if [ ! -e "$data_path/conf/options-ssl-nginx.conf" ] || [ ! -e "$data_path/conf/ssl-dhparams.pem" ]; then
-#   echo "### Downloading recommended TLS parameters ..."
-#   mkdir -p "$data_path/conf"
-#   curl -s https://raw.githubusercontent.com/certbot/certbot/master/certbot-nginx/certbot_nginx/_internal/tls_configs/options-ssl-nginx.conf > "$data_path/conf/options-ssl-nginx.conf"
-#   curl -s https://raw.githubusercontent.com/certbot/certbot/master/certbot/certbot/ssl-dhparams.pem > "$data_path/conf/ssl-dhparams.pem"
-#   echo
-# fi
+if [ -f "$data_path/conf/live/$domain/privkey.pem" ]; then
+  echo "Existing data found for $domain, skipping"
+  exit 0
+fi
 
 echo "### Creating dummy certificate for $domain ..."
 path="/etc/letsencrypt/live/$domain"
@@ -52,25 +48,15 @@ docker-compose -f $compose_file run --rm --entrypoint "\
     -subj '/CN=${domain}'" certbot
 echo
 
-
+if [ $mode == "dev" ]; then
+  echo "Dev mode, skipping Let's Encrypt"
+  exit 0
+fi
 echo "### Starting nginx ..."
 docker-compose -f $compose_file up --force-recreate -d nginx
 echo
 
-# echo "### Deleting dummy certificate for $domain ..."
-# docker-compose -f $compose_file run --rm --entrypoint "\
-#   rm -Rf /etc/letsencrypt/live/$domain && \
-#   rm -Rf /etc/letsencrypt/archive/$domain && \
-#   rm -Rf /etc/letsencrypt/renewal/$domain.conf" certbot
-# echo
-
-
 echo "### Requesting Let's Encrypt certificate for $domain ..."
-# #Join $domains to -d args
-# domain_args=""
-# for domain in "${domains[@]}"; do
-#   domain_args="$domain_args -d $domain"
-# done
 
 # Select appropriate email arg
 case "$email" in
