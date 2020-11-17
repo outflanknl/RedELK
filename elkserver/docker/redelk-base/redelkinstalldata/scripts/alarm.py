@@ -33,6 +33,7 @@ if __name__ == '__main__':
 
     aD = {}  # aD alarm Dict
     cD = {}  # cD connector Dict
+    eD = {}  # eD enrich Dict
 
     for module in module_folders:
         # only take folders and not '__pycache__'
@@ -50,10 +51,25 @@ if __name__ == '__main__':
                         cD[module] = {}
                         cD[module]['info'] = m.info
                         cD[module]['m'] = m
+                    elif module_type == 'redelk_enrich':
+                        eD[module] = {}
+                        eD[module]['info'] = m.info
+                        eD[module]['m'] = m
             except Exception as e:
                 logger.error('Error in module %s: %s' % (module, e))
                 logger.exception(e)
                 pass
+
+    # First loop through the enrichment modules
+    for e in eD:
+        try:
+            logger.info('[e] initiating class Module() in %s' % e)
+            moduleClass = eD[e]['m'].Module()
+            logger.info('[e] Running Run() from the Module class in %s' % e)
+            eD[e]['result'] = copy.deepcopy(moduleClass.run())
+        except Exception as err:
+            logger.error('Error running enrichment %s: %s' % (e, err))
+            logger.exception(err)
 
     logger.info('Looping module dict')
     # this means we've loaded the modules and will now loop over those one by one

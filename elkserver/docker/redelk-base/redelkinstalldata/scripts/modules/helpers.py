@@ -46,7 +46,7 @@ def getValue(path, source):
     else:
         return None
 
-def getQuery(query, size="5000", index="redirtraffic-*"):
+def getQuery(query, size=5000, index='redirtraffic-*'):
     q3 = {'query': {'query_string': {'query': query}}}
     r3 = es.search(index=index, body=q3, size=size)
     if(r3['hits']['total']['value'] == 0):
