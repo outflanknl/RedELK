@@ -12,11 +12,11 @@ import logging
 
 info = {
     'version': 0.1,
-    'name': 'User-agent module',
-    'alarmmsg': 'VISIT FROM BLACKLISTED USERAGENT TO C2_*',
-    'description': 'This check queries for UA\'s that are listed in any blacklist_useragents.conf and do talk to c2* paths on redirectors',
+    'name': 'backend alarm module',
+    'alarmmsg': 'TRAFFIC TO ANY BACKEND WITH THE WORD ALARM IN THE NAME',
+    'description': 'This check queries for calls to backends that have alarm in their name',
     'type': 'redelk_alarm',   # Could also contain redelk_enrich if it was an enrichment module
-    'submodule': 'alarm_useragent'
+    'submodule': 'alarm_backendalarm'
 }
 
 
@@ -44,28 +44,8 @@ class Module():
         return(ret)
 
     def alarm_check(self):
-        # This check queries for UA's that are listed in any blacklist_useragents.conf and do talk to c2* paths on redirectors\n
-        # We will dig trough ALL data finding specific IP related lines and tag them
-        # reading the useragents we trigger on.
-        fname = "/etc/redelk/rogue_useragents.conf"
-        with open(fname) as f:
-            content = f.readlines()
-        uaList = []
-        for line in content:
-            if not line.startswith('#'):
-                ua = line.strip()
-                uaList.append(line.strip())
-        keywords = uaList
-        qSub = ""
-        #add keywords (UA's) to query
-        for keyword in keywords:
-            if qSub == "":
-                qSub = "(http.headers.useragent:%s" % keyword
-            else:
-                qSub = qSub + " OR http.headers.useragent:%s" % keyword
-        qSub = qSub + ") "
-        #q = "%s AND redir.backendname:c2* AND tags:enrich_* AND NOT tags:alarm_* "%qSub
-        q = "%s AND redir.backend.name:c2* AND NOT tags:%s"%(qSub,info['submodule'])
+        # This check queries for calls to backends that have *alarm* in their name\n
+        q = "redir.backend.name:*alarm* AND NOT tags:%s"%(info['submodule'])
         i = countQuery(q)
         if i >= 10000:
             i = 10000
