@@ -15,8 +15,8 @@ import traceback
 import urllib3
 import json
 import logging
-from datetime import datetime
-from datetime import timedelta
+import os
+import datetime
 from elasticsearch import Elasticsearch
 
 urllib3.disable_warnings()
@@ -100,7 +100,7 @@ def setTags(tag, lst):
 
 # Adds alarm extra data to the source doc in ES
 def addAlarmData(doc, data, alarm_name, alarmed=True):
-    ts = datetime.utcnow().isoformat()
+    ts = datetime.datetime.utcnow().isoformat()
     # Create the alarm field if it doesn't exist yet
     if 'alarm' not in doc['_source']:
         doc['_source']['alarm'] = {}
@@ -123,10 +123,10 @@ def addAlarmData(doc, data, alarm_name, alarmed=True):
 # Sets the alarm.last_checked date to an ES doc
 def setCheckedDate(doc):
     if 'alarm' in doc['_source']:
-        doc['_source']['alarm']['last_checked'] = datetime.utcnow().isoformat()
+        doc['_source']['alarm']['last_checked'] = datetime.datetime.utcnow().isoformat()
     else:
         doc['_source']['alarm'] = {
-            'last_checked': datetime.utcnow().isoformat()
+            'last_checked': datetime.datetime.utcnow().isoformat()
         }
     r = es.update(index=doc['_index'], id=doc['_id'], body={'doc': doc['_source']})
     return(doc)
@@ -163,6 +163,79 @@ def groupHits(hits, groupby, res=None):
 #                v[0]['_groupby'] = k
                 tmpHits.append(v[0])
             return tmpHits
+
+def getLastRun(module_name):
+    try:
+        f = open(os.path.join(config.tempDir, 'redelk_%s' % module_name), 'r')
+        dateTS = f.readline()
+        f.close()
+        return(datetime.datetime.fromtimestamp(float(dateTS)))
+    except Exception as e:
+        logger.debug('Error parsing last run time: %s' % e)
+        return(datetime.datetime.fromtimestamp(0))
+
+def moduleDidRun(module_name):
+    try:
+        d = datetime.datetime.utcnow()
+        f = open(os.path.join(config.tempDir, 'redelk_%s' % module_name), 'w')
+        f.write(str(d.timestamp()))
+        f.close()
+        return(True)
+    except Exception as e:
+        logger.error('Error writting last run time for module %s: %s' % (module_name, os.path.join(config.tempDir, module_name)))
+        logger.exception(e)
+        return(False)
+
+# The following function will check if the module is enabled and when is the last time the module ran.
+# If the last time is before now - interval, the module will be allowed to run
+def shouldModuleRun(module_name, module_type):
+    if module_type == 'redelk_alarm':
+
+        if module_name not in config.alarms:
+            logger.warning('Missing configuration for alarm [%s]. Will not run!', module_name)
+            return(False)
+
+        if 'enabled' in config.alarms[module_name] and not config.alarms[module_name]['enabled']:
+            logger.info('Alarm module [%s] disabled in configuration file. Will not run!' % module_name)
+            return(False)
+
+        if 'interval' in config.alarms[module_name]:
+            interval = config.alarms[module_name]['interval']
+        else:
+            interval = 360
+
+    elif module_type == 'redelk_enrich':
+
+        if module_name not in config.enrich:
+            logger.warning('Missing configuration for enrichment module [%s]. Will not run!', module_name)
+            return(False)
+
+        if 'enabled' in config.enrich[module_name] and not config.enrich[module_name]['enabled']:
+            logger.info('Enrichment module [%s] disabled in configuration file. Will not run!' % module_name)
+            return(False)
+
+        if 'interval' in config.enrich[module_name]:
+            interval = config.enrich[module_name]['interval']
+        else:
+            interval = 360
+
+    else:
+        logger.warning('Invalid module type for shouldModuleRun(%s, %s)' % (module_name, module_type))
+        return(False)
+
+    now = datetime.datetime.utcnow()
+    last_run = getLastRun(module_name)
+    ival = datetime.timedelta(seconds=interval)
+    last_run_max = now - ival
+
+    should_run = last_run < last_run_max
+
+    if not should_run:
+        logger.info('Module [%s] already ran within the interval of %s seconds (%s)' % (module_name, interval, last_run.isoformat()))
+    else:
+        logger.info('All checks ok for module [%s]. Module should run.' % module_name)
+        logger.debug('Last run: %s | Last run max: %s' % (last_run.isoformat(), last_run_max.isoformat()))
+    return(should_run)
 
 
 initial_alarm_result = {

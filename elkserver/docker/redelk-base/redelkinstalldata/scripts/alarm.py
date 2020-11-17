@@ -62,12 +62,13 @@ if __name__ == '__main__':
 
     # First loop through the enrichment modules
     for e in eD:
-        if e in enrich and enrich[e]['enabled'] == True:
+        if shouldModuleRun(e, 'redelk_enrich'):
             try:
                 logger.info('[e] initiating class Module() in %s' % e)
                 moduleClass = eD[e]['m'].Module()
                 logger.info('[e] Running Run() from the Module class in %s' % e)
                 eD[e]['result'] = copy.deepcopy(moduleClass.run())
+                moduleDidRun(e)
             except Exception as err:
                 logger.error('Error running enrichment %s: %s' % (e, err))
                 logger.exception(err)
@@ -75,12 +76,13 @@ if __name__ == '__main__':
     logger.info('Looping module dict')
     # this means we've loaded the modules and will now loop over those one by one
     for a in aD:
-        if a in alarms and alarms[a]['enabled'] == True:
+        if shouldModuleRun(a, 'redelk_alarm'):
             try:
                 logger.info('[a] initiating class Module() in %s' % a)
                 moduleClass = aD[a]['m'].Module()
                 logger.info('[a] Running Run() from the Module class in %s' % a)
                 aD[a]['result'] = copy.deepcopy(moduleClass.run())
+                moduleDidRun(a)
             except Exception as e:
                 logger.error('Error running alarm %s: %s' % (a, e))
                 logger.exception(e)
