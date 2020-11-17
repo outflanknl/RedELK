@@ -376,93 +376,93 @@ if __name__ == '__main__':
   tagsSet,rT = enrich_greynoise()
   print("Summary: date: %s, tagsSet: %s, Function:enrich_greynoise (total to tag is %s)"%(datetime.datetime.now(),tagsSet,rT))
 
-
- ####### test addition for IOC recording
-
-def guiQueryWindow(q,start,end):
-    q = {
-  "query": {
-    "bool": {
-      "filter": [
-        {
-          "query_string": {
-            "query": "%s"%q
-          }
-        },
-        {
-          "range": {
-            "@timestamp": {
-              "from": "%s"%start,
-              "to": "%s"%end
-            }
-          }
-        }
-      ]
-    }
-  }
-}
-    return(q)
-
-
-import urllib.parse as urlparse
-from urllib.parse import parse_qs
-from elasticsearch.helpers import scan
-#relies on es object beiing there
-#relies on guiQueryWindow and setTags function
-
-def insertIOCmanualMin(es,md5,filename):
-    ioc = {'c2': {
-             'message': "ioc insert from redir %s %s"%(filename,md5),
-             'log': {
-               'type':'ioc'
-                }
-             },
-         '@version': '1',
-         'infra': {'log':{'type':'rtops'}},
-         'event': {'module': 'manual'},
-         'input': {'type': 'manual'},
-         'tags': ['manual insert'],
-         'ioc': {
-           'type':'file'},
-         'file' :{
-            'hash':{
-                'md5':md5
-                },
-            'name':filename
-            },
-         '@timestamp': datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
-          }
-    ESindex = "rtops-%s"%datetime.datetime.utcnow().strftime("%Y.%m.%d")
-    r = es.index(index=ESindex, ignore=400,  doc_type='_doc', body=ioc)
-    print(r)
-
-def insertIOC(es,line):
-  ESindex = "rtops-%s"%datetime.datetime.now().strftime("%Y.%m.%d")
-  iocmd5 = parse_qs(urlparse.urlparse(line['_source']['http']['request']['body']['content'].split(' ')[-2]).query)['md5'][0]
-  iocfilename = parse_qs(urlparse.urlparse(line['_source']['http']['request']['body']['content'].split(' ')[-2]).query)['filename'][0]
-  insertIOCmanualMin(es,iocmd5,iocfilename)
-
-
-#QUERY = """redirtraffic.httprequest:*smugglelogmd5* AND NOT tags:ioc_added"""
-QUERY = """http.request.body.content:*smugglelogmd5* AND NOT tags:ioc_added"""
-INDEX = "redirtraffic-*"
-
-
-queryFrom = 0
-
-py_timestamp = datetime.datetime.utcnow()
-fromtime =  (py_timestamp - datetime.timedelta(days=2)).strftime("%Y-%m-%dT%H:%M:%S.%fZ")
-totime   =  (py_timestamp - datetime.timedelta(hours=0)).strftime("%Y-%m-%dT%H:%M:%S.%fZ")
-jsonQuery = guiQueryWindow(QUERY,fromtime,totime)
-
-cnt = 0
-iocLines = []
-
-
-for line in scan(es,query=jsonQuery,index=INDEX):
-  iocLines.append(line)
-  insertIOC(es,line)
-  cnt += 1
-
-setTags('ioc_added',iocLines)
-print("\n[ ] Found %s ioc lines"%cnt)
+#
+#  ####### test addition for IOC recording
+#
+# def guiQueryWindow(q,start,end):
+#     q = {
+#   "query": {
+#     "bool": {
+#       "filter": [
+#         {
+#           "query_string": {
+#             "query": "%s"%q
+#           }
+#         },
+#         {
+#           "range": {
+#             "@timestamp": {
+#               "from": "%s"%start,
+#               "to": "%s"%end
+#             }
+#           }
+#         }
+#       ]
+#     }
+#   }
+# }
+#     return(q)
+#
+#
+# import urllib.parse as urlparse
+# from urllib.parse import parse_qs
+# from elasticsearch.helpers import scan
+# #relies on es object beiing there
+# #relies on guiQueryWindow and setTags function
+#
+# def insertIOCmanualMin(es,md5,filename):
+#     ioc = {'c2': {
+#              'message': "ioc insert from redir %s %s"%(filename,md5),
+#              'log': {
+#                'type':'ioc'
+#                 }
+#              },
+#          '@version': '1',
+#          'infra': {'log':{'type':'rtops'}},
+#          'event': {'module': 'manual'},
+#          'input': {'type': 'manual'},
+#          'tags': ['manual insert'],
+#          'ioc': {
+#            'type':'file'},
+#          'file' :{
+#             'hash':{
+#                 'md5':md5
+#                 },
+#             'name':filename
+#             },
+#          '@timestamp': datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
+#           }
+#     ESindex = "rtops-%s"%datetime.datetime.utcnow().strftime("%Y.%m.%d")
+#     r = es.index(index=ESindex, ignore=400,  doc_type='_doc', body=ioc)
+#     print(r)
+#
+# def insertIOC(es,line):
+#   ESindex = "rtops-%s"%datetime.datetime.now().strftime("%Y.%m.%d")
+#   iocmd5 = parse_qs(urlparse.urlparse(line['_source']['http']['request']['body']['content'].split(' ')[-2]).query)['md5'][0]
+#   iocfilename = parse_qs(urlparse.urlparse(line['_source']['http']['request']['body']['content'].split(' ')[-2]).query)['filename'][0]
+#   insertIOCmanualMin(es,iocmd5,iocfilename)
+#
+#
+# #QUERY = """redirtraffic.httprequest:*smugglelogmd5* AND NOT tags:ioc_added"""
+# QUERY = """http.request.body.content:*smugglelogmd5* AND NOT tags:ioc_added"""
+# INDEX = "redirtraffic-*"
+#
+#
+# queryFrom = 0
+#
+# py_timestamp = datetime.datetime.utcnow()
+# fromtime =  (py_timestamp - datetime.timedelta(days=2)).strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+# totime   =  (py_timestamp - datetime.timedelta(hours=0)).strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+# jsonQuery = guiQueryWindow(QUERY,fromtime,totime)
+#
+# cnt = 0
+# iocLines = []
+#
+#
+# for line in scan(es,query=jsonQuery,index=INDEX):
+#   iocLines.append(line)
+#   insertIOC(es,line)
+#   cnt += 1
+#
+# setTags('ioc_added',iocLines)
+# print("\n[ ] Found %s ioc lines"%cnt)
