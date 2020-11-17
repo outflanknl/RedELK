@@ -38,37 +38,6 @@ def isIP(addr):
     # Not legal
     return(False)
 
-# #### code for enrich_V1 tags
-# def getInitialBeaconLine(l1):
-#   q2 = {'query': {'query_string': {'query': 'FILLME'}}}
-#   q2['query']['query_string']['query'] = "implant.id:\"%s\" AND c2.log.type:implant_newimplant AND agent.hostname:%s"%(l1['_source']['implant']['id'],l1["_source"]['agent']['hostname'])
-#   r2 = es.search(index="rtops-*", size=qSize,body=q2)
-#   b = r2['hits']['hits'][0]
-#   #now we have a beacon
-#   return(b)
-
-# def enrichAllLinesWithBeacon(l1,b):
-#   tagsSet = 0
-#   #query for all not enriched lines (excluding implant_newimplant) make new L1 lines
-#   q3 = {'query': {'query_string': {'query': 'FILLME'}}}
-#   q3['query']['query_string']['query'] = "implant.id:\"%s\" AND NOT c2.log.type:implant_newimplant AND agent.hostname:%s AND NOT tags:enriched_v01"%(l1['_source']['implant']['id'],l1["_source"]['agent']['hostname'])
-#   r3 = es.search(index="rtops-*", size=qSize, body=q3)
-#   for l1 in r3['hits']['hits']:
-#     for field in ["host","user","process"]:
-#       try:
-#         l1["_source"][field] = b["_source"][field]
-#         l1["_source"]['event']['enriched_from'] = b["_id"]
-#       except:
-#         stackTrace = traceback.format_exc()
-#         print(stackTrace)
-#     l1["_source"]['tags'].append("enriched_v01")
-#     #es.update(index=l1['_index'],doc_type=l1['_type'],id=l1['_id'],body={'doc':l1['_source']})
-#     es.update(index=l1['_index'],id=l1['_id'],body={'doc':l1['_source']})
-#     tagsSet = tagsSet + 1
-#     #sys.stdout.write('.')
-#     #sys.stdout.flush()
-#   return(tagsSet,r3['hits']['total']['value'])
-
 def getSet():
   #NOT tags:enriched_v01 AND NOT cslogtype:beacon_newbeacon AND cslogtype:beacon_*
   q3 = {'query': {'query_string': {'query': 'NOT tags:enriched_v01 AND NOT c2.log.type:implant_newimplant AND (c2.log.type:implant_* OR c2.log.type:ioc) AND NOT source:*unknown*'}}}
@@ -76,46 +45,6 @@ def getSet():
   if(r3['hits']['total']['value'] == 0):
     return(None,0)
   return(r3['hits']['hits'],r3['hits']['total']['value'])
-
-# def enrichV1():
-#   tagsSet = 0
-#   doneList = []
-#   run = True
-#   while(run):
-#     doneList = []
-#     Set,rT = getSet()
-#     if Set == None:
-#       run = False
-#       break
-#     else:
-#       #we have some rtop-* lines that should be enriched.
-#       for line in Set:
-#         process = True
-#         try:
-#           id = line['_source']['implant']['id']
-#         except:
-#           stackTrace = traceback.format_exc()
-#           print(stackTrace)
-#           #break # do not break here, breaks enrichments once lines exists without implant id
-#           process = False
-#           pass
-#         if process and line['_source']['implant']['id'] not in doneList:
-#           print("[i] looking for %s"% line['_source']['implant']['id'])
-#           try:
-#             b = getInitialBeaconLine(line)
-#           except:
-#             b = None
-#           if b:
-#             sys.stdout.write('\n %s :'%b['_source']['implant']['id'])
-#             sys.stdout.flush()
-#             newTags,rT2  = enrichAllLinesWithBeacon(line,b)
-#             tagsSet = tagsSet + newTags
-#             doneList.append(b['_source']['implant']['id'])
-#
-#       #we might need a sleep here in order to allow ES to solve it's stuff. We could also just stop running as we would be restarted in a minute...
-#       #sleep(60)
-#       run = False # decided to never loop, cron will restart anyhows
-#   return(tagsSet,rT)
 
 def queryFromConfig(line,index="implantsdb"):
  lineA = line.split(';')
@@ -233,53 +162,6 @@ def findIPLines(fname,tag,field="source.ip",fuzzy=False):
       r,rT = setTagByQuery(query,tag)
   return(r,rT)
 
-#section build for greynoise, in essence loop over all items in index that don't have tag X set
-def findUntaggedLines(tag,size=qSize,index="redirtraffic-*"):
-  query = "NOT tags:%s"%tag
-  q3 = {'query': {'query_string': {'query': 'FILLME'}}}
-  q3['query']['query_string']['query'] = query
-  r3 = es.search(index=index, body=q3, size=size)
-  print("Query %s"%q3)
-  print("items retreived %s"%len(r3['hits']['hits']))
-  return(r3['hits']['hits'],r3['hits']['total']['value'])
-
-def enrich_greynoiseSet(handler):
-  tag = "enriched_greynoise"
-  Set,rT = findUntaggedLines(tag)
-  cRes = 0
-  for l in Set:
-    l["_source"]['tags'].append(tag)
-    try:
-      ip = l["_source"]["source"]["ip"]
-      l["_source"]["greynoise"] = handler.queryIp(ip)
-    except:
-      stackTrace = traceback.format_exc()
-      print(stackTrace)
-      pass
-    #r = es.update(index=l['_index'],doc_type=l['_type'],id=l['_id'],body={'doc':l['_source']})
-    r = es.update(index=l['_index'],id=l['_id'],body={'doc':l['_source']})
-    cRes += 1
-  return(cRes,rT)
-
-def enrich_greynoise():
-  from class_greynoise import greynoise
-  g = greynoise()
-  run = True
-  nTotal = 0
-  rTt = 0
-  while(run):
-    nRes,rT = enrich_greynoiseSet(g)
-    nTotal = nRes + nTotal
-    rTt = rTt + rT
-    if nRes == 0:
-      run = False
-    else:
-      #we might need a sleep here in order to allow ES to solve it's stuff. We could also just stop running as we would be restarted in a minute...
-      #sleep(60)
-      run = False # decided to never loop, cron will restart anyhows
-  return(nTotal,rTt)
-#end section
-
 def findTaggedLines(tag,size=qSize,index="redirtraffic-*"):
   query = "tags:%s"%tag
   q3 = {'query': {'query_string': {'query': 'FILLME'}}}
@@ -367,102 +249,3 @@ if __name__ == '__main__':
   tagsSet = 0
   tagsSet,rT = findIPLines(ipList,"iplist_alarmed_v01")
   print("Summary: date: %s, tagsSet: %s, Function:iplist_alarmed (total to tag is %s)"%(datetime.datetime.now(),tagsSet,rT))
-
-  # tagsSet = 0
-  # tagsSet,TotalNotTagged = enrichV1()  #we need this to be after the iplist enrichments. If we find the tag of this alarm wel know iplists have been checked.
-  # print("Summary: date: %s, tagsSet: %s, Function:enrichV1 (total to tag is %s)"%(datetime.datetime.now(),tagsSet,TotalNotTagged))
-
-  tagsSet = 0
-  tagsSet,rT = enrich_greynoise()
-  print("Summary: date: %s, tagsSet: %s, Function:enrich_greynoise (total to tag is %s)"%(datetime.datetime.now(),tagsSet,rT))
-
-#
-#  ####### test addition for IOC recording
-#
-# def guiQueryWindow(q,start,end):
-#     q = {
-#   "query": {
-#     "bool": {
-#       "filter": [
-#         {
-#           "query_string": {
-#             "query": "%s"%q
-#           }
-#         },
-#         {
-#           "range": {
-#             "@timestamp": {
-#               "from": "%s"%start,
-#               "to": "%s"%end
-#             }
-#           }
-#         }
-#       ]
-#     }
-#   }
-# }
-#     return(q)
-#
-#
-# import urllib.parse as urlparse
-# from urllib.parse import parse_qs
-# from elasticsearch.helpers import scan
-# #relies on es object beiing there
-# #relies on guiQueryWindow and setTags function
-#
-# def insertIOCmanualMin(es,md5,filename):
-#     ioc = {'c2': {
-#              'message': "ioc insert from redir %s %s"%(filename,md5),
-#              'log': {
-#                'type':'ioc'
-#                 }
-#              },
-#          '@version': '1',
-#          'infra': {'log':{'type':'rtops'}},
-#          'event': {'module': 'manual'},
-#          'input': {'type': 'manual'},
-#          'tags': ['manual insert'],
-#          'ioc': {
-#            'type':'file'},
-#          'file' :{
-#             'hash':{
-#                 'md5':md5
-#                 },
-#             'name':filename
-#             },
-#          '@timestamp': datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
-#           }
-#     ESindex = "rtops-%s"%datetime.datetime.utcnow().strftime("%Y.%m.%d")
-#     r = es.index(index=ESindex, ignore=400,  doc_type='_doc', body=ioc)
-#     print(r)
-#
-# def insertIOC(es,line):
-#   ESindex = "rtops-%s"%datetime.datetime.now().strftime("%Y.%m.%d")
-#   iocmd5 = parse_qs(urlparse.urlparse(line['_source']['http']['request']['body']['content'].split(' ')[-2]).query)['md5'][0]
-#   iocfilename = parse_qs(urlparse.urlparse(line['_source']['http']['request']['body']['content'].split(' ')[-2]).query)['filename'][0]
-#   insertIOCmanualMin(es,iocmd5,iocfilename)
-#
-#
-# #QUERY = """redirtraffic.httprequest:*smugglelogmd5* AND NOT tags:ioc_added"""
-# QUERY = """http.request.body.content:*smugglelogmd5* AND NOT tags:ioc_added"""
-# INDEX = "redirtraffic-*"
-#
-#
-# queryFrom = 0
-#
-# py_timestamp = datetime.datetime.utcnow()
-# fromtime =  (py_timestamp - datetime.timedelta(days=2)).strftime("%Y-%m-%dT%H:%M:%S.%fZ")
-# totime   =  (py_timestamp - datetime.timedelta(hours=0)).strftime("%Y-%m-%dT%H:%M:%S.%fZ")
-# jsonQuery = guiQueryWindow(QUERY,fromtime,totime)
-#
-# cnt = 0
-# iocLines = []
-#
-#
-# for line in scan(es,query=jsonQuery,index=INDEX):
-#   iocLines.append(line)
-#   insertIOC(es,line)
-#   cnt += 1
-#
-# setTags('ioc_added',iocLines)
-# print("\n[ ] Found %s ioc lines"%cnt)
