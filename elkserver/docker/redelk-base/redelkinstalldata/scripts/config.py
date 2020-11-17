@@ -69,5 +69,21 @@ if 'alarms' in d:
     for a in d['alarms']:
         alarms[a] = d['alarms'][a]
 
+#### Enrichments modules
+enrich = {
+    'enrich_csbeacon': {
+        'enabled': True,
+        'interval': 360
+    },
+    'enrich_greynoise': {
+        'enabled': True,
+        'interval': 360,
+        'cache': 86400
+    }
+}
+if 'enrich' in d:
+    for e in d['enrich']:
+        enrich[e] = d['enrich'][e]
+
 es_connection = ['http://localhost:9200']
 if 'es_connection' in d: es_connection = d['es_connection']

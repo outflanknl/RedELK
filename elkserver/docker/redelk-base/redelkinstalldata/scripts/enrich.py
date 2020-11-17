@@ -38,36 +38,36 @@ def isIP(addr):
     # Not legal
     return(False)
 
-#### code for enrich_V1 tags
-def getInitialBeaconLine(l1):
-  q2 = {'query': {'query_string': {'query': 'FILLME'}}}
-  q2['query']['query_string']['query'] = "implant.id:\"%s\" AND c2.log.type:implant_newimplant AND agent.hostname:%s"%(l1['_source']['implant']['id'],l1["_source"]['agent']['hostname'])
-  r2 = es.search(index="rtops-*", size=qSize,body=q2)
-  b = r2['hits']['hits'][0]
-  #now we have a beacon
-  return(b)
+# #### code for enrich_V1 tags
+# def getInitialBeaconLine(l1):
+#   q2 = {'query': {'query_string': {'query': 'FILLME'}}}
+#   q2['query']['query_string']['query'] = "implant.id:\"%s\" AND c2.log.type:implant_newimplant AND agent.hostname:%s"%(l1['_source']['implant']['id'],l1["_source"]['agent']['hostname'])
+#   r2 = es.search(index="rtops-*", size=qSize,body=q2)
+#   b = r2['hits']['hits'][0]
+#   #now we have a beacon
+#   return(b)
 
-def enrichAllLinesWithBeacon(l1,b):
-  tagsSet = 0
-  #query for all not enriched lines (excluding implant_newimplant) make new L1 lines
-  q3 = {'query': {'query_string': {'query': 'FILLME'}}}
-  q3['query']['query_string']['query'] = "implant.id:\"%s\" AND NOT c2.log.type:implant_newimplant AND agent.hostname:%s AND NOT tags:enriched_v01"%(l1['_source']['implant']['id'],l1["_source"]['agent']['hostname'])
-  r3 = es.search(index="rtops-*", size=qSize, body=q3)
-  for l1 in r3['hits']['hits']:
-    for field in ["host","user","process"]:
-      try:
-        l1["_source"][field] = b["_source"][field]
-        l1["_source"]['event']['enriched_from'] = b["_id"]
-      except:
-        stackTrace = traceback.format_exc()
-        print(stackTrace)
-    l1["_source"]['tags'].append("enriched_v01")
-    #es.update(index=l1['_index'],doc_type=l1['_type'],id=l1['_id'],body={'doc':l1['_source']})
-    es.update(index=l1['_index'],id=l1['_id'],body={'doc':l1['_source']})
-    tagsSet = tagsSet + 1
-    #sys.stdout.write('.')
-    #sys.stdout.flush()
-  return(tagsSet,r3['hits']['total']['value'])
+# def enrichAllLinesWithBeacon(l1,b):
+#   tagsSet = 0
+#   #query for all not enriched lines (excluding implant_newimplant) make new L1 lines
+#   q3 = {'query': {'query_string': {'query': 'FILLME'}}}
+#   q3['query']['query_string']['query'] = "implant.id:\"%s\" AND NOT c2.log.type:implant_newimplant AND agent.hostname:%s AND NOT tags:enriched_v01"%(l1['_source']['implant']['id'],l1["_source"]['agent']['hostname'])
+#   r3 = es.search(index="rtops-*", size=qSize, body=q3)
+#   for l1 in r3['hits']['hits']:
+#     for field in ["host","user","process"]:
+#       try:
+#         l1["_source"][field] = b["_source"][field]
+#         l1["_source"]['event']['enriched_from'] = b["_id"]
+#       except:
+#         stackTrace = traceback.format_exc()
+#         print(stackTrace)
+#     l1["_source"]['tags'].append("enriched_v01")
+#     #es.update(index=l1['_index'],doc_type=l1['_type'],id=l1['_id'],body={'doc':l1['_source']})
+#     es.update(index=l1['_index'],id=l1['_id'],body={'doc':l1['_source']})
+#     tagsSet = tagsSet + 1
+#     #sys.stdout.write('.')
+#     #sys.stdout.flush()
+#   return(tagsSet,r3['hits']['total']['value'])
 
 def getSet():
   #NOT tags:enriched_v01 AND NOT cslogtype:beacon_newbeacon AND cslogtype:beacon_*
@@ -77,45 +77,45 @@ def getSet():
     return(None,0)
   return(r3['hits']['hits'],r3['hits']['total']['value'])
 
-def enrichV1():
-  tagsSet = 0
-  doneList = []
-  run = True
-  while(run):
-    doneList = []
-    Set,rT = getSet()
-    if Set == None:
-      run = False
-      break
-    else:
-      #we have some rtop-* lines that should be enriched.
-      for line in Set:
-        process = True
-        try:
-          id = line['_source']['implant']['id']
-        except:
-          stackTrace = traceback.format_exc()
-          print(stackTrace)
-          #break # do not break here, breaks enrichments once lines exists without implant id
-          process = False
-          pass
-        if process and line['_source']['implant']['id'] not in doneList:
-          print("[i] looking for %s"% line['_source']['implant']['id'])
-          try:
-            b = getInitialBeaconLine(line)
-          except:
-            b = None
-          if b:
-            sys.stdout.write('\n %s :'%b['_source']['implant']['id'])
-            sys.stdout.flush()
-            newTags,rT2  = enrichAllLinesWithBeacon(line,b)
-            tagsSet = tagsSet + newTags
-            doneList.append(b['_source']['implant']['id'])
-
-      #we might need a sleep here in order to allow ES to solve it's stuff. We could also just stop running as we would be restarted in a minute...
-      #sleep(60)
-      run = False # decided to never loop, cron will restart anyhows
-  return(tagsSet,rT)
+# def enrichV1():
+#   tagsSet = 0
+#   doneList = []
+#   run = True
+#   while(run):
+#     doneList = []
+#     Set,rT = getSet()
+#     if Set == None:
+#       run = False
+#       break
+#     else:
+#       #we have some rtop-* lines that should be enriched.
+#       for line in Set:
+#         process = True
+#         try:
+#           id = line['_source']['implant']['id']
+#         except:
+#           stackTrace = traceback.format_exc()
+#           print(stackTrace)
+#           #break # do not break here, breaks enrichments once lines exists without implant id
+#           process = False
+#           pass
+#         if process and line['_source']['implant']['id'] not in doneList:
+#           print("[i] looking for %s"% line['_source']['implant']['id'])
+#           try:
+#             b = getInitialBeaconLine(line)
+#           except:
+#             b = None
+#           if b:
+#             sys.stdout.write('\n %s :'%b['_source']['implant']['id'])
+#             sys.stdout.flush()
+#             newTags,rT2  = enrichAllLinesWithBeacon(line,b)
+#             tagsSet = tagsSet + newTags
+#             doneList.append(b['_source']['implant']['id'])
+#
+#       #we might need a sleep here in order to allow ES to solve it's stuff. We could also just stop running as we would be restarted in a minute...
+#       #sleep(60)
+#       run = False # decided to never loop, cron will restart anyhows
+#   return(tagsSet,rT)
 
 def queryFromConfig(line,index="implantsdb"):
  lineA = line.split(';')
@@ -368,9 +368,9 @@ if __name__ == '__main__':
   tagsSet,rT = findIPLines(ipList,"iplist_alarmed_v01")
   print("Summary: date: %s, tagsSet: %s, Function:iplist_alarmed (total to tag is %s)"%(datetime.datetime.now(),tagsSet,rT))
 
-  tagsSet = 0
-  tagsSet,TotalNotTagged = enrichV1()  #we need this to be after the iplist enrichments. If we find the tag of this alarm wel know iplists have been checked.
-  print("Summary: date: %s, tagsSet: %s, Function:enrichV1 (total to tag is %s)"%(datetime.datetime.now(),tagsSet,TotalNotTagged))
+  # tagsSet = 0
+  # tagsSet,TotalNotTagged = enrichV1()  #we need this to be after the iplist enrichments. If we find the tag of this alarm wel know iplists have been checked.
+  # print("Summary: date: %s, tagsSet: %s, Function:enrichV1 (total to tag is %s)"%(datetime.datetime.now(),tagsSet,TotalNotTagged))
 
   tagsSet = 0
   tagsSet,rT = enrich_greynoise()
