@@ -4,15 +4,9 @@ on:
   push:
     branches:
       - '*'
-    paths:
-      - 'elkserver/docker/redelk-base/**'
-      - '.github/workflows/docker-build-dev-base.yml'
   pull_request_target:
     branches:
       - '*'
-    paths:
-      - 'elkserver/docker/redelk-base/**'
-      - '.github/workflows/docker-build-dev-base.yml'
 
 jobs:
   docker:

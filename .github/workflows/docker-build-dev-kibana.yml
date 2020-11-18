@@ -4,15 +4,9 @@ on:
   push:
     branches:
       - '*'
-    paths:
-      - 'elkserver/docker/redelk-kibana/**'
-      - '.github/workflows/docker-build-dev-kibana.yml'
   pull_request_target:
     branches:
       - '*'
-    paths:
-      - 'elkserver/docker/redelk-kibana/**'
-      - '.github/workflows/docker-build-dev-kibana.yml'
 
 jobs:
   docker:
