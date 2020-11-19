@@ -71,12 +71,18 @@ if __name__ == '__main__':
                 moduleClass = eD[e]['m'].Module()
                 logger.info('[e] Running Run() from the Module class in %s' % e)
                 eD[e]['result'] = copy.deepcopy(moduleClass.run())
+
+                # Now loop through the hits and tag them
+                for rHit in eD[e]['result']['hits']['hits']:
+                    setTags(eD[e]['info']['submodule'], [rHit])
+
                 eD[e]['status'] = 'success'
                 moduleDidRun(e)
             except Exception as err:
                 logger.error('Error running enrichment %s: %s' % (e, err))
                 logger.exception(err)
                 eD[e]['status'] = 'error'
+
 
 
     logger.info('Looping module dict')

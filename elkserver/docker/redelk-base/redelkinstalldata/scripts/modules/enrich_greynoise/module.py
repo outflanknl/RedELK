@@ -167,12 +167,6 @@ class Module():
     def add_greynoise_data(self, doc, data):
         doc['_source.greynoise'] = data
 
-        # Tag the document
-        if 'tags' in doc['_source']:
-            doc['_source']['tags'].append(info['submodule'])
-        else:
-            doc['_source']['tags'] = [info['submodule']]
-
         try:
             es.update(index=doc['_index'], id=doc['_id'], body={'doc': doc['_source']})
             return(doc)

@@ -89,12 +89,6 @@ class Module():
                     self.logger.info('Field [%s] already exists in destination document, it will be overwritten' % f)
                 dst['_source'][f] = src['_source'][f]
 
-        # Tag the document
-        if 'tags' in dst['_source']:
-            dst['_source']['tags'].append(info['submodule'])
-        else:
-            dst['_source']['tags'] = [info['submodule']]
-
         try:
             es.update(index=dst['_index'], id=dst['_id'], body={'doc': dst['_source']})
             return(dst)

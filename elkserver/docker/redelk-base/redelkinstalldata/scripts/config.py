@@ -51,22 +51,22 @@ if 'notifications' in d:
 alarms = {
     'alarm_filehash': {
         'enabled': False,
-        'interval': 360,
+        'interval': 300,
         'vt_api_key': '', # Virustotal API
         'ibm_basic_auth': '', # IBM X-Force API (can be retreived from a sample call on their swagger test site)
         'ha_api_key': '' # Hybrid Analysis API
     },
     'alarm_httptraffic': {
         'enabled': False,
-        'interval': 360
+        'interval': 310
     },
     'alarm_useragent': {
         'enabled': False,
-        'interval': 360
+        'interval': 320
     },
     'alarm_dummy': {
         'enabled': False,
-        'interval': 360
+        'interval': 300
     }
 }
 if 'alarms' in d:
@@ -77,12 +77,17 @@ if 'alarms' in d:
 enrich = {
     'enrich_csbeacon': {
         'enabled': True,
-        'interval': 360
+        'interval': 300
     },
     'enrich_greynoise': {
         'enabled': True,
-        'interval': 360,
+        'interval': 310,
         'cache': 86400
+    },
+    'enrich_tor': {
+        'enabled': True,
+        'interval': 320,
+        'cache': 3600
     }
 }
 if 'enrich' in d:
