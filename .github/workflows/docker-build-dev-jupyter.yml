@@ -4,15 +4,9 @@ on:
   push:
     branches:
       - '*'
-    paths:
-      - 'elkserver/docker/redelk-jupyter/**'
-      - '.github/workflows/docker-build-dev-jupyter.yml'
   pull_request_target:
     branches:
       - '*'
-    paths:
-      - 'elkserver/docker/redelk-jupyter/**'
-      - '.github/workflows/docker-build-dev-jupyter.yml'
 
 jobs:
   docker:
