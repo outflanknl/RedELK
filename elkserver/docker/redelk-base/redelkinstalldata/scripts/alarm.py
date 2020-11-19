@@ -47,14 +47,17 @@ if __name__ == '__main__':
                         aD[module] = {}
                         aD[module]['info'] = m.info
                         aD[module]['m'] = m
+                        aD[module]['status'] = 'pending'
                     elif module_type == 'redelk_connector':
                         cD[module] = {}
                         cD[module]['info'] = m.info
                         cD[module]['m'] = m
+                        cD[module]['status'] = 'pending'
                     elif module_type == 'redelk_enrich':
                         eD[module] = {}
                         eD[module]['info'] = m.info
                         eD[module]['m'] = m
+                        eD[module]['status'] = 'pending'
             except Exception as e:
                 logger.error('Error in module %s: %s' % (module, e))
                 logger.exception(e)
@@ -68,10 +71,13 @@ if __name__ == '__main__':
                 moduleClass = eD[e]['m'].Module()
                 logger.info('[e] Running Run() from the Module class in %s' % e)
                 eD[e]['result'] = copy.deepcopy(moduleClass.run())
+                eD[e]['status'] = 'success'
                 moduleDidRun(e)
             except Exception as err:
                 logger.error('Error running enrichment %s: %s' % (e, err))
                 logger.exception(err)
+                eD[e]['status'] = 'error'
+
 
     logger.info('Looping module dict')
     # this means we've loaded the modules and will now loop over those one by one
@@ -82,14 +88,22 @@ if __name__ == '__main__':
                 moduleClass = aD[a]['m'].Module()
                 logger.info('[a] Running Run() from the Module class in %s' % a)
                 aD[a]['result'] = copy.deepcopy(moduleClass.run())
+                aD[a]['status'] = 'success'
                 moduleDidRun(a)
             except Exception as e:
                 logger.error('Error running alarm %s: %s' % (a, e))
                 logger.exception(e)
+                aD[a]['status'] = 'error'
 
     # now we can loop over the modules once again and log the lines
     for a in aD:
         if a in alarms and alarms[a]['enabled']:
+
+            # If the alarm did fail to run, skip processing the notification and tagging as we are not sure of the results
+            if aD[a]['status'] == 'error':
+                self.logger.warning('Alarm %s did not run correctly, skipping processing' % a)
+                continue
+
             logger.debug('Alarm %s enabled, processing hits' % a)
             r = aD[a]['result']
             #logger.debug('Alarm results: %s' % aD[a]['result'])
