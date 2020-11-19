@@ -1,7 +1,7 @@
 [
     {
         "attributes": {
-            "fieldFormatMap": "{\"@timestamp\":{\"id\":\"date\",\"params\":{\"parsedUrl\":{\"basePath\":\"\"},\"pattern\":\"MMM D Y, HH:mm:ss\"}},\"event.url\":{\"id\":\"url\",\"params\":{\"parsedUrl\":{\"pathname\":\"/app/kibana\",\"basePath\":\"\"},\"urlTemplate\":\"/../..{{rawValue}}\",\"labelTemplate\":\"Event  URL\"}},\"file.url\":{\"id\":\"url\",\"params\":{\"parsedUrl\":{\"pathname\":\"/app/kibana\",\"basePath\":\"/\"},\"urlTemplate\":\"/../..{{rawValue}}\",\"labelTemplate\":\"File download\"}},\"implant.log_file\":{\"id\":\"url\",\"params\":{\"parsedUrl\":{\"pathname\":\"/app/kibana\",\"basePath\":\"\"},\"urlTemplate\":\"/../..{{rawValue}}\",\"labelTemplate\":\"Implant URL\"}},\"screenshot.full\":{\"id\":\"url\",\"params\":{\"parsedUrl\":{\"pathname\":\"/app/kibana\",\"basePath\":\"\"},\"urlTemplate\":\"/../..{{rawValue}}\",\"labelTemplate\":\"Full screenshot\"}},\"screenshot.thumb\":{\"id\":\"url\",\"params\":{\"parsedUrl\":{\"pathname\":\"/app/kibana\",\"basePath\":\"\"},\"type\":\"img\",\"urlTemplate\":\"/../..{{rawValue}}\"}},\"keystrokes.url\":{\"id\":\"url\",\"params\":{\"parsedUrl\":{\"pathname\":\"/app/kibana\",\"basePath\":\"\"},\"urlTemplate\":\"/../..{{rawValue}}\",\"labelTemplate\":\"Full keystrokes\"}}}",
+            "fieldFormatMap": "{\"@timestamp\":{\"id\":\"date\",\"params\":{\"parsedUrl\":{\"basePath\":\"\"},\"pattern\":\"MMM D Y, HH:mm:ss\"}},\"event.url\":{\"id\":\"url\",\"params\":{\"parsedUrl\":{\"pathname\":\"/app/kibana\",\"basePath\":\"\"},\"urlTemplate\":\"/../..{{rawValue}}\",\"labelTemplate\":\"Event  URL\"}},\"file.url\":{\"id\":\"url\",\"params\":{\"parsedUrl\":{\"pathname\":\"/app/kibana\",\"basePath\":\"/\"},\"urlTemplate\":\"/../..{{rawValue}}\",\"labelTemplate\":\"File download\"}},\"implant.log_file\":{\"id\":\"url\",\"params\":{\"parsedUrl\":{\"pathname\":\"/app/kibana\",\"basePath\":\"\"},\"urlTemplate\":\"/../..{{rawValue}}\",\"labelTemplate\":\"Implant URL\"}},\"keystrokes.url\":{\"id\":\"url\",\"params\":{\"parsedUrl\":{\"pathname\":\"/app/kibana\",\"basePath\":\"\"},\"urlTemplate\":\"/../..{{rawValue}}\",\"labelTemplate\":\"Full keystrokes\"}},\"screenshot.full\":{\"id\":\"url\",\"params\":{\"parsedUrl\":{\"pathname\":\"/app/kibana\",\"basePath\":\"\"},\"urlTemplate\":\"/../..{{rawValue}}\",\"labelTemplate\":\"Full screenshot\"}},\"screenshot.thumb\":{\"id\":\"url\",\"params\":{\"parsedUrl\":{\"pathname\":\"/app/kibana\",\"basePath\":\"\"},\"type\":\"img\",\"urlTemplate\":\"/../..{{rawValue}}\"}}}",
             "fields": [
                 {
                     "aggregatable": true,
@@ -105,180 +105,72 @@
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "agent.ephemeral_id",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "agent.ephemeral_id.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "agent.ephemeral_id"
-                        }
-                    },
                     "type": "string"
                 },
                 {
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "agent.hostname",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "agent.hostname.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "agent.hostname"
-                        }
-                    },
                     "type": "string"
                 },
                 {
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "agent.id",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "agent.id.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "agent.id"
-                        }
-                    },
                     "type": "string"
                 },
                 {
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "agent.name",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "agent.name.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "agent.name"
-                        }
-                    },
                     "type": "string"
                 },
                 {
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "agent.type",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "agent.type.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "agent.type"
-                        }
-                    },
                     "type": "string"
                 },
                 {
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "agent.version",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "agent.version.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "agent.version"
-                        }
-                    },
                     "type": "string"
                 },
                 {
@@ -410,30 +302,12 @@
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "c2.log.type",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "c2.log.type.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "c2.log.type"
-                        }
-                    },
                     "type": "string"
                 },
                 {
@@ -454,25 +328,8 @@
                     "esTypes": [
                         "keyword"
                     ],
-                    "name": "c2.message.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "c2.message"
-                        }
-                    },
-                    "type": "string"
-                },
-                {
-                    "aggregatable": false,
-                    "count": 0,
-                    "esTypes": [
-                        "text"
-                    ],
                     "name": "c2.operator",
-                    "readFromDocValues": false,
+                    "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
                     "type": "string"
@@ -481,76 +338,24 @@
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "c2.operator.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "c2.operator"
-                        }
-                    },
-                    "type": "string"
-                },
-                {
-                    "aggregatable": false,
-                    "count": 0,
-                    "esTypes": [
-                        "text"
+                        "ip"
                     ],
                     "name": "c2.operator_ip",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "c2.operator_ip.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "c2.operator_ip"
-                        }
-                    },
-                    "type": "string"
+                    "type": "ip"
                 },
                 {
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "c2.program",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "c2.program.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "c2.program"
-                        }
-                    },
                     "type": "string"
                 },
                 {
@@ -571,195 +376,70 @@
                     "esTypes": [
                         "keyword"
                     ],
-                    "name": "c2.timestamp.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "c2.timestamp"
-                        }
-                    },
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "text",
-                        "keyword"
-                    ],
                     "name": "creds.credential",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "creds.credential.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "creds.credential"
-                        }
-                    },
                     "type": "string"
                 },
                 {
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "creds.host",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "creds.host.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "creds.host"
-                        }
-                    },
                     "type": "string"
                 },
                 {
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "creds.realm",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "creds.realm.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "creds.realm"
-                        }
-                    },
                     "type": "string"
                 },
                 {
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "creds.source",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "creds.source.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "creds.source"
-                        }
-                    },
                     "type": "string"
                 },
                 {
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "creds.username",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "creds.username.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "creds.username"
-                        }
-                    },
                     "type": "string"
                 },
                 {
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "ecs.version",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "ecs.version.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "ecs.version"
-                        }
-                    },
                     "type": "string"
                 },
                 {
@@ -843,60 +523,24 @@
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "event.action",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "event.action.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "event.action"
-                        }
-                    },
                     "type": "string"
                 },
                 {
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "event.category",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "event.category.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "event.category"
-                        }
-                    },
                     "type": "string"
                 },
                 {
@@ -927,30 +571,12 @@
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "event.dataset",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "event.dataset.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "event.dataset"
-                        }
-                    },
                     "type": "string"
                 },
                 {
@@ -981,30 +607,12 @@
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "event.enriched_from",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "event.enriched_from.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "event.enriched_from"
-                        }
-                    },
                     "type": "string"
                 },
                 {
@@ -1047,60 +655,24 @@
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "event.kind",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "event.kind.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "event.kind"
-                        }
-                    },
                     "type": "string"
                 },
                 {
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "event.module",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "event.module.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "event.module"
-                        }
-                    },
                     "type": "string"
                 },
                 {
@@ -1227,30 +799,12 @@
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "event.type",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "event.type.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "event.type"
-                        }
-                    },
                     "type": "string"
                 },
                 {
@@ -1293,30 +847,12 @@
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "file.hash.md5",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "file.hash.md5.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "file.hash.md5"
-                        }
-                    },
                     "type": "string"
                 },
                 {
@@ -1359,30 +895,12 @@
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "file.name",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "file.name.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "file.name"
-                        }
-                    },
                     "type": "string"
                 },
                 {
@@ -1395,23 +913,6 @@
                     "readFromDocValues": false,
                     "scripted": false,
                     "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "file.path.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "file.path"
-                        }
-                    },
                     "type": "string"
                 },
                 {
@@ -1428,43 +929,15 @@
                 },
                 {
                     "aggregatable": true,
-                    "conflictDescriptions": {
-                        "long": [
-                            "rtops-2020.11.09",
-                            "rtops-2020.11.13"
-                        ],
-                        "text": [
-                            "rtops-2020.09.18",
-                            "rtops-2020.10.02"
-                        ]
-                    },
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "long"
                     ],
                     "name": "file.size",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "conflict"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "file.size.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "file.size"
-                        }
-                    },
-                    "type": "string"
+                    "type": "number"
                 },
                 {
                     "aggregatable": true,
@@ -1532,23 +1005,6 @@
                     "esTypes": [
                         "keyword"
                     ],
-                    "name": "host.domain_ext.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "host.domain_ext"
-                        }
-                    },
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
                     "name": "host.ext_domain",
                     "readFromDocValues": true,
                     "scripted": false,
@@ -1556,13 +1012,12 @@
                     "type": "string"
                 },
                 {
-                    "aggregatable": true,
+                    "aggregatable": false,
                     "count": 0,
                     "esTypes": [
-                        "text",
-                        "keyword"
+                        "text"
                     ],
-                    "name": "host.geo.city_name",
+                    "name": "host.geo.as.organization.name",
                     "readFromDocValues": false,
                     "scripted": false,
                     "searchable": true,
@@ -1574,15 +1029,39 @@
                     "esTypes": [
                         "keyword"
                     ],
-                    "name": "host.geo.city_name.keyword",
+                    "name": "host.geo.as.organization.name.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
                     "subType": {
                         "multi": {
-                            "parent": "host.geo.city_name"
+                            "parent": "host.geo.as.organization.name"
                         }
                     },
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "long"
+                    ],
+                    "name": "host.geo.as.organization.number",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "number"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "host.geo.city_name",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
                     "type": "string"
                 },
                 {
@@ -1601,30 +1080,12 @@
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "host.geo.country_iso_code",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "host.geo.country_iso_code.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "host.geo.country_iso_code"
-                        }
-                    },
                     "type": "string"
                 },
                 {
@@ -1641,62 +1102,15 @@
                 },
                 {
                     "aggregatable": true,
-                    "conflictDescriptions": {
-                        "geo_point": [
-                            "rtops-2020.11.09",
-                            "rtops-2020.11.13"
-                        ],
-                        "object": [
-                            "rtops-2020.04.09",
-                            "rtops-2020.05.18",
-                            "rtops-2020.09.18",
-                            "rtops-2020.10.04"
-                        ]
-                    },
                     "count": 0,
                     "esTypes": [
-                        "object",
                         "geo_point"
                     ],
                     "name": "host.geo.location",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "conflict"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "float"
-                    ],
-                    "name": "host.geo.location.lat",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "host.geo.location"
-                        }
-                    },
-                    "type": "number"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "float"
-                    ],
-                    "name": "host.geo.location.lon",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "host.geo.location"
-                        }
-                    },
-                    "type": "number"
+                    "type": "geo_point"
                 },
                 {
                     "aggregatable": true,
@@ -1714,60 +1128,24 @@
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "host.geo.region_iso_code",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "host.geo.region_iso_code.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "host.geo.region_iso_code"
-                        }
-                    },
                     "type": "string"
                 },
                 {
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "host.geo.region_name",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "host.geo.region_name.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "host.geo.region_name"
-                        }
-                    },
                     "type": "string"
                 },
                 {
@@ -1796,144 +1174,39 @@
                 },
                 {
                     "aggregatable": true,
-                    "conflictDescriptions": {
-                        "ip": [
-                            "rtops-2020.11.09",
-                            "rtops-2020.11.13"
-                        ],
-                        "text": [
-                            "rtops-2020.04.09",
-                            "rtops-2020.05.18",
-                            "rtops-2020.07.17",
-                            "rtops-2020.09.18",
-                            "rtops-2020.09.21",
-                            "rtops-2020.10.02",
-                            "rtops-2020.10.03",
-                            "rtops-2020.10.04",
-                            "rtops-2020.11.06"
-                        ]
-                    },
                     "count": 0,
                     "esTypes": [
-                        "ip",
-                        "text"
+                        "ip"
                     ],
                     "name": "host.ip",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "conflict"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "host.ip.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "host.ip"
-                        }
-                    },
-                    "type": "string"
+                    "type": "ip"
                 },
                 {
                     "aggregatable": true,
-                    "conflictDescriptions": {
-                        "ip": [
-                            "rtops-2020.11.09",
-                            "rtops-2020.11.13"
-                        ],
-                        "text": [
-                            "rtops-2020.04.09",
-                            "rtops-2020.05.18",
-                            "rtops-2020.07.17",
-                            "rtops-2020.09.18",
-                            "rtops-2020.09.21",
-                            "rtops-2020.10.02",
-                            "rtops-2020.10.03",
-                            "rtops-2020.10.04",
-                            "rtops-2020.11.06"
-                        ]
-                    },
                     "count": 0,
                     "esTypes": [
-                        "ip",
-                        "text"
+                        "ip"
                     ],
                     "name": "host.ip_ext",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "conflict"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "host.ip_ext.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "host.ip_ext"
-                        }
-                    },
-                    "type": "string"
+                    "type": "ip"
                 },
                 {
                     "aggregatable": true,
-                    "conflictDescriptions": {
-                        "ip": [
-                            "rtops-2020.11.09",
-                            "rtops-2020.11.13"
-                        ],
-                        "text": [
-                            "rtops-2020.04.09",
-                            "rtops-2020.05.18",
-                            "rtops-2020.07.17",
-                            "rtops-2020.09.18",
-                            "rtops-2020.09.21",
-                            "rtops-2020.10.02",
-                            "rtops-2020.10.03",
-                            "rtops-2020.10.04",
-                            "rtops-2020.11.06"
-                        ]
-                    },
                     "count": 0,
                     "esTypes": [
-                        "ip",
-                        "text"
+                        "ip"
                     ],
                     "name": "host.ip_int",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "conflict"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "host.ip_int.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "host.ip_int"
-                        }
-                    },
-                    "type": "string"
+                    "type": "ip"
                 },
                 {
                     "aggregatable": true,
@@ -1951,30 +1224,12 @@
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "host.name",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "host.name.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "host.name"
-                        }
-                    },
                     "type": "string"
                 },
                 {
@@ -2005,60 +1260,24 @@
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "host.os.family",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "host.os.family.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "host.os.family"
-                        }
-                    },
                     "type": "string"
                 },
                 {
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "host.os.full",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "host.os.full.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "host.os.full"
-                        }
-                    },
                     "type": "string"
                 },
                 {
@@ -2082,60 +1301,24 @@
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "host.os.kernel",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "host.os.kernel.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "host.os.kernel"
-                        }
-                    },
                     "type": "string"
                 },
                 {
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "host.os.name",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "host.os.name.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "host.os.name"
-                        }
-                    },
                     "type": "string"
                 },
                 {
@@ -2159,60 +1342,24 @@
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "host.os.platform",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "host.os.platform.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "host.os.platform"
-                        }
-                    },
                     "type": "string"
                 },
                 {
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "host.os.version",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "host.os.version.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "host.os.version"
-                        }
-                    },
                     "type": "string"
                 },
                 {
@@ -2231,30 +1378,12 @@
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "implant.arch",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "implant.arch.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "implant.arch"
-                        }
-                    },
                     "type": "string"
                 },
                 {
@@ -2267,23 +1396,6 @@
                     "readFromDocValues": false,
                     "scripted": false,
                     "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "implant.checkin.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "implant.checkin"
-                        }
-                    },
                     "type": "string"
                 },
                 {
@@ -2304,45 +1416,10 @@
                     "esTypes": [
                         "keyword"
                     ],
-                    "name": "implant.child_id.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "implant.child_id"
-                        }
-                    },
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "text",
-                        "keyword"
-                    ],
                     "name": "implant.id",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "implant.id.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "implant.id"
-                        }
-                    },
                     "type": "string"
                 },
                 {
@@ -2363,115 +1440,34 @@
                     "esTypes": [
                         "keyword"
                     ],
-                    "name": "implant.input.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "implant.input"
-                        }
-                    },
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "text",
-                        "keyword"
-                    ],
                     "name": "implant.link_mode",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "implant.link_mode.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "implant.link_mode"
-                        }
-                    },
                     "type": "string"
                 },
                 {
                     "aggregatable": true,
-                    "conflictDescriptions": {
-                        "boolean": [
-                            "rtops-2020.11.09",
-                            "rtops-2020.11.13"
-                        ],
-                        "text": [
-                            "rtops-2020.07.17",
-                            "rtops-2020.09.18"
-                        ]
-                    },
                     "count": 0,
                     "esTypes": [
-                        "boolean",
-                        "text"
+                        "boolean"
                     ],
                     "name": "implant.linked",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "conflict"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "implant.linked.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "implant.linked"
-                        }
-                    },
-                    "type": "string"
+                    "type": "boolean"
                 },
                 {
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "implant.log_file",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "implant.log_file.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "implant.log_file"
-                        }
-                    },
                     "type": "string"
                 },
                 {
@@ -2484,23 +1480,6 @@
                     "readFromDocValues": false,
                     "scripted": false,
                     "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "implant.operator.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "implant.operator"
-                        }
-                    },
                     "type": "string"
                 },
                 {
@@ -2521,45 +1500,10 @@
                     "esTypes": [
                         "keyword"
                     ],
-                    "name": "implant.output.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "implant.output"
-                        }
-                    },
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "text",
-                        "keyword"
-                    ],
                     "name": "implant.parent_id",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "implant.parent_id.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "implant.parent_id"
-                        }
-                    },
                     "type": "string"
                 },
                 {
@@ -2578,30 +1522,12 @@
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "implant.task",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "implant.task.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "implant.task"
-                        }
-                    },
                     "type": "string"
                 },
                 {
@@ -2620,30 +1546,12 @@
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "infra.attack_scenario",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "infra.attack_scenario.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "infra.attack_scenario"
-                        }
-                    },
                     "type": "string"
                 },
                 {
@@ -2691,41 +1599,22 @@
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "input.type",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "input.type.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "input.type"
-                        }
-                    },
                     "type": "string"
                 },
                 {
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "ioc.type",
-                    "readFromDocValues": false,
+                    "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
                     "type": "string"
@@ -2735,75 +1624,23 @@
                     "count": 0,
                     "esTypes": [
                         "keyword"
-                    ],
-                    "name": "ioc.type.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "ioc.type"
-                        }
-                    },
-                    "type": "string"
-                },
-                {
-                    "aggregatable": false,
-                    "count": 0,
-                    "esTypes": [
-                        "text"
                     ],
                     "name": "keystrokes.desktop_session",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "keystrokes.desktop_session.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "keystrokes.desktop_session"
-                        }
-                    },
                     "type": "string"
                 },
                 {
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "keystrokes.url",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "keystrokes.url.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "keystrokes.url"
-                        }
-                    },
                     "type": "string"
                 },
                 {
@@ -2824,75 +1661,22 @@
                     "esTypes": [
                         "keyword"
                     ],
-                    "name": "keystrokes.user.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "keystrokes.user"
-                        }
-                    },
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "text",
-                        "keyword"
-                    ],
                     "name": "log.file.path",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "log.file.path.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "log.file.path"
-                        }
-                    },
                     "type": "string"
                 },
                 {
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "log.flags",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "log.flags.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "log.flags"
-                        }
-                    },
                     "type": "string"
                 },
                 {
@@ -3069,45 +1853,10 @@
                     "esTypes": [
                         "keyword"
                     ],
-                    "name": "message.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "message"
-                        }
-                    },
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "text",
-                        "keyword"
-                    ],
                     "name": "process.name",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "process.name.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "process.name"
-                        }
-                    },
                     "type": "string"
                 },
                 {
@@ -3129,252 +1878,26 @@
                 },
                 {
                     "aggregatable": true,
-                    "conflictDescriptions": {
-                        "long": [
-                            "rtops-2020.11.09",
-                            "rtops-2020.11.13"
-                        ],
-                        "text": [
-                            "rtops-2020.04.09",
-                            "rtops-2020.05.18",
-                            "rtops-2020.07.17",
-                            "rtops-2020.09.18",
-                            "rtops-2020.09.21",
-                            "rtops-2020.10.02",
-                            "rtops-2020.10.03",
-                            "rtops-2020.10.04",
-                            "rtops-2020.11.06"
-                        ]
-                    },
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "long"
                     ],
                     "name": "process.pid",
-                    "readFromDocValues": false,
+                    "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "type": "conflict"
+                    "type": "number"
                 },
                 {
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
                         "keyword"
-                    ],
-                    "name": "process.pid.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "process.pid"
-                        }
-                    },
-                    "type": "string"
-                },
-                {
-                    "aggregatable": false,
-                    "count": 0,
-                    "esTypes": [
-                        "text"
-                    ],
-                    "name": "pstools.full_output",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "pstools.full_output.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "pstools.full_output"
-                        }
-                    },
-                    "type": "string"
-                },
-                {
-                    "aggregatable": false,
-                    "count": 0,
-                    "esTypes": [
-                        "text"
-                    ],
-                    "name": "pstools.psx.edr_name",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "pstools.psx.edr_name.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "pstools.psx.edr_name"
-                        }
-                    },
-                    "type": "string"
-                },
-                {
-                    "aggregatable": false,
-                    "count": 0,
-                    "esTypes": [
-                        "text"
-                    ],
-                    "name": "pstools.psx.processes",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "pstools.psx.processes.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "pstools.psx.processes"
-                        }
-                    },
-                    "type": "string"
-                },
-                {
-                    "aggregatable": false,
-                    "count": 0,
-                    "esTypes": [
-                        "text"
-                    ],
-                    "name": "pstools.psx.security_products",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "pstools.psx.security_products.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "pstools.psx.security_products"
-                        }
-                    },
-                    "type": "string"
-                },
-                {
-                    "aggregatable": false,
-                    "count": 0,
-                    "esTypes": [
-                        "text"
-                    ],
-                    "name": "pstools.psx.summary",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "pstools.psx.summary.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "pstools.psx.summary"
-                        }
-                    },
-                    "type": "string"
-                },
-                {
-                    "aggregatable": false,
-                    "count": 0,
-                    "esTypes": [
-                        "text"
-                    ],
-                    "name": "pstools.tool",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "pstools.tool.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "pstools.tool"
-                        }
-                    },
-                    "type": "string"
-                },
-                {
-                    "aggregatable": false,
-                    "count": 0,
-                    "esTypes": [
-                        "text"
                     ],
                     "name": "screenshot.desktop_session",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "screenshot.desktop_session.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "screenshot.desktop_session"
-                        }
-                    },
                     "type": "string"
                 },
                 {
@@ -3395,75 +1918,22 @@
                     "esTypes": [
                         "keyword"
                     ],
-                    "name": "screenshot.file_name.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "screenshot.file_name"
-                        }
-                    },
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "text",
-                        "keyword"
-                    ],
                     "name": "screenshot.full",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "screenshot.full.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "screenshot.full"
-                        }
-                    },
                     "type": "string"
                 },
                 {
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "screenshot.thumb",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "screenshot.thumb.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "screenshot.thumb"
-                        }
-                    },
                     "type": "string"
                 },
                 {
@@ -3476,23 +1946,6 @@
                     "readFromDocValues": false,
                     "scripted": false,
                     "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "screenshot.title.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "screenshot.title"
-                        }
-                    },
                     "type": "string"
                 },
                 {
@@ -3523,30 +1976,12 @@
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "tags",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "tags.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "tags"
-                        }
-                    },
                     "type": "string"
                 },
                 {
@@ -3601,30 +2036,12 @@
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "threat.technique.id",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "threat.technique.id.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "threat.technique.id"
-                        }
-                    },
                     "type": "string"
                 },
                 {
@@ -3732,30 +2149,12 @@
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text",
                         "keyword"
                     ],
                     "name": "user.name",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "user.name.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "user.name"
-                        }
-                    },
                     "type": "string"
                 }
             ],

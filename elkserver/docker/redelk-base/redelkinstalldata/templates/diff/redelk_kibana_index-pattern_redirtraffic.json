@@ -503,68 +503,10 @@
                     "esTypes": [
                         "text"
                     ],
-                    "name": "greynoise.Name_list",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "greynoise.Name_list.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "greynoise.Name_list"
-                        }
-                    },
-                    "type": "string"
-                },
-                {
-                    "aggregatable": false,
-                    "count": 0,
-                    "esTypes": [
-                        "text"
-                    ],
                     "name": "greynoise.OS_List",
                     "readFromDocValues": false,
                     "scripted": false,
                     "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": false,
-                    "count": 0,
-                    "esTypes": [
-                        "text"
-                    ],
-                    "name": "greynoise.OS_list",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "greynoise.OS_list.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "greynoise.OS_list"
-                        }
-                    },
                     "type": "string"
                 },
                 {

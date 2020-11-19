@@ -823,10 +823,6 @@
     "order": 1,
     "settings": {
         "index": {
-            "lifecycle": {
-                "name": "redelk",
-                "rollover_alias": "rtops"
-            },
             "mapping": {
                 "total_fields": {
                     "limit": "10000"
