@@ -392,7 +392,7 @@
                 },
                 {
                     "aggregatable": false,
-                    "count": 1,
+                    "count": 0,
                     "esTypes": [
                         "text"
                     ],
@@ -415,35 +415,6 @@
                     "subType": {
                         "multi": {
                             "parent": "date"
-                        }
-                    },
-                    "type": "string"
-                },
-                {
-                    "aggregatable": false,
-                    "count": 0,
-                    "esTypes": [
-                        "text"
-                    ],
-                    "name": "delivered-to",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "delivered-to.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "delivered-to"
                         }
                     },
                     "type": "string"
@@ -478,10 +449,11 @@
                     "type": "string"
                 },
                 {
-                    "aggregatable": false,
+                    "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text"
+                        "text",
+                        "keyword"
                     ],
                     "name": "emailfolder",
                     "readFromDocValues": false,
@@ -594,6 +566,30 @@
                     "type": "string"
                 },
                 {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "infra.attack_scenario",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "infra.log_type",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
                     "aggregatable": false,
                     "count": 0,
                     "esTypes": [
@@ -624,7 +620,7 @@
                 },
                 {
                     "aggregatable": false,
-                    "count": 1,
+                    "count": 0,
                     "esTypes": [
                         "text"
                     ],
@@ -976,35 +972,6 @@
                     "esTypes": [
                         "text"
                     ],
-                    "name": "x-auto-response-suppress",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "x-auto-response-suppress.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "x-auto-response-suppress"
-                        }
-                    },
-                    "type": "string"
-                },
-                {
-                    "aggregatable": false,
-                    "count": 0,
-                    "esTypes": [
-                        "text"
-                    ],
                     "name": "x-eopattributedmessage",
                     "readFromDocValues": false,
                     "scripted": false,
@@ -1063,18 +1030,6 @@
                     "esTypes": [
                         "text"
                     ],
-                    "name": "x-forefront-antispam-report",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": false,
-                    "count": 0,
-                    "esTypes": [
-                        "text"
-                    ],
                     "name": "x-forefront-antispam-report-untrusted",
                     "readFromDocValues": false,
                     "scripted": false,
@@ -1094,23 +1049,6 @@
                     "subType": {
                         "multi": {
                             "parent": "x-forefront-antispam-report-untrusted"
-                        }
-                    },
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "x-forefront-antispam-report.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "x-forefront-antispam-report"
                         }
                     },
                     "type": "string"
@@ -1256,35 +1194,6 @@
                     "subType": {
                         "multi": {
                             "parent": "x-incomingtopheadermarker"
-                        }
-                    },
-                    "type": "string"
-                },
-                {
-                    "aggregatable": false,
-                    "count": 0,
-                    "esTypes": [
-                        "text"
-                    ],
-                    "name": "x-mailer",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "x-mailer.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "x-mailer"
                         }
                     },
                     "type": "string"
@@ -1534,6 +1443,35 @@
                     "type": "string"
                 },
                 {
+                    "aggregatable": false,
+                    "count": 0,
+                    "esTypes": [
+                        "text"
+                    ],
+                    "name": "x-ms-exchange-antispam-messagedata-original",
+                    "readFromDocValues": false,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "x-ms-exchange-antispam-messagedata-original.keyword",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "subType": {
+                        "multi": {
+                            "parent": "x-ms-exchange-antispam-messagedata-original"
+                        }
+                    },
+                    "type": "string"
+                },
+                {
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
@@ -1701,35 +1639,6 @@
                     "esTypes": [
                         "text"
                     ],
-                    "name": "x-ms-exchange-crosstenant-mailboxtype",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "x-ms-exchange-crosstenant-mailboxtype.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "x-ms-exchange-crosstenant-mailboxtype"
-                        }
-                    },
-                    "type": "string"
-                },
-                {
-                    "aggregatable": false,
-                    "count": 0,
-                    "esTypes": [
-                        "text"
-                    ],
                     "name": "x-ms-exchange-crosstenant-network-message-id",
                     "readFromDocValues": false,
                     "scripted": false,
@@ -1846,35 +1755,6 @@
                     "esTypes": [
                         "text"
                     ],
-                    "name": "x-ms-exchange-crosstenant-userprincipalname",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "x-ms-exchange-crosstenant-userprincipalname.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "x-ms-exchange-crosstenant-userprincipalname"
-                        }
-                    },
-                    "type": "string"
-                },
-                {
-                    "aggregatable": false,
-                    "count": 0,
-                    "esTypes": [
-                        "text"
-                    ],
                     "name": "x-ms-exchange-eopdirect",
                     "readFromDocValues": false,
                     "scripted": false,
@@ -1904,7 +1784,7 @@
                     "esTypes": [
                         "text"
                     ],
-                    "name": "x-ms-exchange-messagesentrepresentingtype",
+                    "name": "x-ms-exchange-minimumurldomainage",
                     "readFromDocValues": false,
                     "scripted": false,
                     "searchable": true,
@@ -1916,13 +1796,13 @@
                     "esTypes": [
                         "keyword"
                     ],
-                    "name": "x-ms-exchange-messagesentrepresentingtype.keyword",
+                    "name": "x-ms-exchange-minimumurldomainage.keyword",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
                     "subType": {
                         "multi": {
-                            "parent": "x-ms-exchange-messagesentrepresentingtype"
+                            "parent": "x-ms-exchange-minimumurldomainage"
                         }
                     },
                     "type": "string"
@@ -2770,7 +2650,7 @@
                 },
                 {
                     "aggregatable": false,
-                    "count": 1,
+                    "count": 0,
                     "esTypes": [
                         "text"
                     ],
@@ -2778,7 +2658,7 @@
                     "readFromDocValues": false,
                     "scripted": false,
                     "searchable": true,
-                    "type": "ip"
+                    "type": "string"
                 },
                 {
                     "aggregatable": true,
@@ -2857,7 +2737,7 @@
                 },
                 {
                     "aggregatable": false,
-                    "count": 1,
+                    "count": 0,
                     "esTypes": [
                         "text"
                     ],
@@ -2865,7 +2745,7 @@
                     "readFromDocValues": false,
                     "scripted": false,
                     "searchable": true,
-                    "type": "ip"
+                    "type": "string"
                 },
                 {
                     "aggregatable": true,
@@ -2938,122 +2818,6 @@
                     "subType": {
                         "multi": {
                             "parent": "x-sid-result"
-                        }
-                    },
-                    "type": "string"
-                },
-                {
-                    "aggregatable": false,
-                    "count": 0,
-                    "esTypes": [
-                        "text"
-                    ],
-                    "name": "x-tmn",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "x-tmn.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "x-tmn"
-                        }
-                    },
-                    "type": "string"
-                },
-                {
-                    "aggregatable": false,
-                    "count": 0,
-                    "esTypes": [
-                        "text"
-                    ],
-                    "name": "x-trustedpartner-originalip",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "x-trustedpartner-originalip.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "x-trustedpartner-originalip"
-                        }
-                    },
-                    "type": "string"
-                },
-                {
-                    "aggregatable": false,
-                    "count": 0,
-                    "esTypes": [
-                        "text"
-                    ],
-                    "name": "x-trustedpartner-systemmessage",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "x-trustedpartner-systemmessage.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "x-trustedpartner-systemmessage"
-                        }
-                    },
-                    "type": "string"
-                },
-                {
-                    "aggregatable": false,
-                    "count": 0,
-                    "esTypes": [
-                        "text"
-                    ],
-                    "name": "x-trustedpartner-tenantid",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "x-trustedpartner-tenantid.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "x-trustedpartner-tenantid"
                         }
                     },
                     "type": "string"

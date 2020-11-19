@@ -7,9 +7,6 @@
         "_meta": {},
         "_source": {},
         "properties": {
-            "attack_scenario": {
-                "type": "text"
-            },
             "bluechecktimestamp": {
                 "type": "text"
             },
@@ -17,10 +14,10 @@
                 "type": "text"
             },
             "classifier": {
-                "type": "text"
+                "type": "keyword"
             },
             "domain": {
-                "type": "text"
+                "type": "keyword"
             },
             "host": {
                 "properties": {
@@ -68,13 +65,18 @@
                 "type": "object"
             },
             "infra": {
+                "properties": {
+                    "attack_scenario": {
+                        "type": "keyword"
+                    }
+                },
                 "type": "object"
             },
             "message": {
                 "type": "text"
             },
             "path": {
-                "type": "text"
+                "type": "keyword"
             },
             "pstools": {
                 "properties": {
@@ -82,9 +84,15 @@
                         "properties": {
                             "edr_name": {
                                 "type": "text"
+                            },
+                            "security_product": {
+                                "type": "text"
                             }
                         },
                         "type": "object"
+                    },
+                    "tool": {
+                        "type": "text"
                     }
                 },
                 "type": "object"
@@ -93,10 +101,11 @@
                 "type": "text"
             },
             "type": {
-                "type": "text"
+                "type": "keyword"
             }
         }
     },
     "order": 0,
     "settings": {},
     "version": 1
+}
