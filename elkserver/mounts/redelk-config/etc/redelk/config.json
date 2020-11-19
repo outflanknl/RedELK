@@ -37,26 +37,34 @@
         },
         "alarm_filehash": {
             "enabled": false,
+            "interval": 300,
             "vt_api_key": "",
             "ibm_basic_auth": "Basic ",
             "ha_api_key": ""
         },
         "alarm_httptraffic": {
-            "enabled": false
+            "enabled": false,
+            "interval": 310
         },
         "alarm_useragent": {
-            "enabled": false
+            "enabled": false,
+            "interval": 320
         }
     },
     "enrich": {
         "enrich_csbeacon": {
             "enabled": false,
-            "interval": 360
+            "interval": 300
         },
         "enrich_greynoise": {
             "enabled": true,
-            "interval": 360,
+            "interval": 310,
             "cache": 86400
+        },
+        "enrich_tor": {
+            "enabled": true,
+            "interval": 320,
+            "cache": 3600
         }
     }
 }

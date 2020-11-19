@@ -16,7 +16,6 @@ import urllib3
 import json
 import logging
 import os
-import datetime
 from elasticsearch import Elasticsearch
 
 urllib3.disable_warnings()

@@ -225,11 +225,6 @@ if __name__ == '__main__':
     rTt = rTt +rT + rT2
   print("Summary: date: %s, tagsSet: %s, Function:sandboxes (total to tag is %s)"%(datetime.datetime.now(),tagsSet,rTt))
 
-  ipList = '/etc/redelk/torexitnodes.conf'
-  tagsSet = 0
-  tagsSet,rT = findIPLines(ipList,"torexitnodes_v01")
-  print("Summary: date: %s, tagsSet: %s, Function:torexitnodes (total to tag is %s)"%(datetime.datetime.now(),tagsSet,rT))
-
   ipList = '/etc/redelk/iplist_redteam.conf'
   tagsSet = 0
   tagsSet,rT = findIPLines(ipList,"iplist_redteam_v01")
