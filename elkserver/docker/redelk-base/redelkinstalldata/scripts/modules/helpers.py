@@ -7,13 +7,9 @@
 # - Lorenzo Bernardi (@fastlorenzo)
 #
 import json
-import sys
 import datetime
 import config
-import socket
-import traceback
 import urllib3
-import json
 import logging
 import os
 from elasticsearch import Elasticsearch
@@ -23,11 +19,13 @@ es = Elasticsearch(config.es_connection, verify_certs=False)
 
 logger = logging.getLogger('helpers')
 
+
 def pprint(r):
-    if isinstance(r, str):
+    if isinstance(r, type(str)):
         return(r)
     s = json.dumps(r, indent=2, sort_keys=True)
     return(s)
+
 
 def getValue(path, source):
     p = path.split('.')
@@ -36,7 +34,7 @@ def getValue(path, source):
             return getValue('.'.join(p[1:]), source[p[0]])
         else:
             if p[0] == 'ip':
-                if type(source[p[0]]) == type([]):
+                if isinstance(source[p[0]], type([])):
                     return source[p[0]][0]
                 else:
                     return source[p[0]]
@@ -45,6 +43,7 @@ def getValue(path, source):
     else:
         return None
 
+
 def getQuery(query, size=5000, index='redirtraffic-*'):
     q3 = {'query': {'query_string': {'query': query}}}
     r3 = es.search(index=index, body=q3, size=size)
@@ -52,29 +51,31 @@ def getQuery(query, size=5000, index='redirtraffic-*'):
         return([])
     return(r3['hits']['hits'])
 
-def guiQueryWindow(q,start,end):
+
+def guiQueryWindow(q, start, end):
     q = {
-  "query": {
-    "bool": {
-      "filter": [
-        {
-          "query_string": {
-            "query": "%s"%q
-          }
-        },
-        {
-          "range": {
-            "@timestamp": {
-              "from": "%s"%start,
-              "to": "%s"%end
+        "query": {
+            "bool": {
+                "filter": [
+                    {
+                        "query_string": {
+                            "query": "%s" % q
+                        }
+                    },
+                    {
+                        "range": {
+                            "@timestamp": {
+                                "from": "%s" % start,
+                                "to": "%s" % end
+                            }
+                        }
+                    }
+                ]
             }
-          }
         }
-      ]
     }
-  }
-}
     return(q)
+
 
 def countQuery(query, index="redirtraffic-*"):
     print('count')
@@ -82,20 +83,23 @@ def countQuery(query, index="redirtraffic-*"):
     r3 = es.search(index=index, body=q3, size=0)
     return(r3['hits']['total']['value'])
 
-def rawSearch(query, size="5000", index="redirtraffic-*"):
+
+def rawSearch(query, size=10000, index="redirtraffic-*"):
     r3 = es.search(index=index, body=query, size=size)
     if(r3['hits']['total']['value'] == 0):
         return(None)
     return(r3)
 
+
 # Sets tag to all objects in lst
 def setTags(tag, lst):
-    for l in lst:
-        if 'tags' in l['_source'] and tag not in l['_source']['tags']:
-            l['_source']['tags'].append(tag)
+    for doc in lst:
+        if 'tags' in doc['_source'] and tag not in doc['_source']['tags']:
+            doc['_source']['tags'].append(tag)
         else:
-            l['_source']['tags'] = [tag]
-        r = es.update(index=l['_index'], id=l['_id'], body={'doc': l['_source']})
+            doc['_source']['tags'] = [tag]
+        es.update(index=doc['_index'], id=doc['_id'], body={'doc': doc['_source']})
+
 
 # Adds alarm extra data to the source doc in ES
 def addAlarmData(doc, data, alarm_name, alarmed=True):
@@ -116,8 +120,9 @@ def addAlarmData(doc, data, alarm_name, alarmed=True):
     # Add the extra data
     doc['_source']['alarm'][alarm_name] = data
 
-    r = es.update(index=doc['_index'], id=doc['_id'], body={'doc': doc['_source']})
+    es.update(index=doc['_index'], id=doc['_id'], body={'doc': doc['_source']})
     return(doc)
+
 
 # Sets the alarm.last_checked date to an ES doc
 def setCheckedDate(doc):
@@ -127,8 +132,9 @@ def setCheckedDate(doc):
         doc['_source']['alarm'] = {
             'last_checked': datetime.datetime.utcnow().isoformat()
         }
-    r = es.update(index=doc['_index'], id=doc['_id'], body={'doc': doc['_source']})
+    es.update(index=doc['_index'], id=doc['_id'], body={'doc': doc['_source']})
     return(doc)
+
 
 # Takes a list of hits and a list of field names (dot notation) and returns a grouped list
 def groupHits(hits, groupby, res=None):
@@ -159,34 +165,54 @@ def groupHits(hits, groupby, res=None):
         else:
             tmpHits = []
             for k, v in res.items():
-#                v[0]['_groupby'] = k
+                #                v[0]['_groupby'] = k
                 tmpHits.append(v[0])
             return tmpHits
 
+
 def getLastRun(module_name):
     try:
-        f = open(os.path.join(config.tempDir, 'redelk_%s' % module_name), 'r')
-        dateTS = f.readline()
-        f.close()
-        return(datetime.datetime.fromtimestamp(float(dateTS)))
+        q = {'query':{'exists':{'field':'module.type'}}}
+        res = rawSearch(q, index='redelk-modules')
+        if len(res['hits']['hits']) > 0:
+            es_timestamp = getValue('_source.module.last_run.timestamp', res['hits']['hits'][0])
+            ts = datetime.datetime.strptime(es_timestamp, '%Y-%m-%dT%H:%M:%S.%f')
+            return(ts)
+        else:
+            return(datetime.datetime.fromtimestamp(0))
     except Exception as e:
         logger.debug('Error parsing last run time: %s' % e)
         return(datetime.datetime.fromtimestamp(0))
 
-def moduleDidRun(module_name):
+
+def moduleDidRun(module_name, module_type='unknown', status='unknown', message=None):
+    logger.debug('Module did run: %s:%s [%s] %s' % (module_type, module_name, status, message))
     try:
-        d = datetime.datetime.utcnow()
-        f = open(os.path.join(config.tempDir, 'redelk_%s' % module_name), 'w')
-        f.write(str(d.timestamp()))
-        f.close()
+        ts = datetime.datetime.utcnow().isoformat()
+        doc = {
+            "module": {
+                "name": module_name,
+                "type": module_type,
+                "last_run": {
+                    "timestamp": ts,
+                    "status": status
+                }
+            }
+        }
+        if message:
+            doc['module']['last_run']['message'] = message
+        es.index(index='redelk-modules', id=module_name, body=doc)
         return(True)
     except Exception as e:
-        logger.error('Error writting last run time for module %s: %s' % (module_name, os.path.join(config.tempDir, module_name)))
+        logger.error('Error writting last run time for module %s: %s' %
+                     (module_name, os.path.join(config.tempDir, module_name)))
         logger.exception(e)
         return(False)
 
 # The following function will check if the module is enabled and when is the last time the module ran.
 # If the last time is before now - interval, the module will be allowed to run
+
+
 def shouldModuleRun(module_name, module_type):
     if module_type == 'redelk_alarm':
 
@@ -230,7 +256,8 @@ def shouldModuleRun(module_name, module_type):
     should_run = last_run < last_run_max
 
     if not should_run:
-        logger.info('Module [%s] already ran within the interval of %s seconds (%s)' % (module_name, interval, last_run.isoformat()))
+        logger.info('Module [%s] already ran within the interval of %s seconds (%s)' %
+                    (module_name, interval, last_run.isoformat()))
     else:
         logger.info('All checks ok for module [%s]. Module should run.' % module_name)
         logger.debug('Last run: %s | Last run max: %s' % (last_run.isoformat(), last_run_max.isoformat()))

@@ -6,7 +6,7 @@
 # - Outflank B.V. / Mark Bergman (@xychix)
 # - Lorenzo Bernardi (@fastlorenzo)
 #
-from modules.helpers import *
+from modules.helpers import initial_alarm_result, getQuery, getValue, rawSearch, es
 from config import enrich
 from time import time
 import traceback
@@ -172,6 +172,6 @@ class Module():
             return(doc)
         except Exception as e:
             stackTrace = traceback.format_exc()
-            self.logger.error('Error adding greynoise data to document %s: %s' % (doc['_id'], traceback))
+            self.logger.error('Error adding greynoise data to document %s: %s' % (doc['_id'], stackTrace))
             self.logger.exception(e)
             return(False)

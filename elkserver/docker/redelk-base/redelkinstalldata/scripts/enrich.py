@@ -46,20 +46,6 @@ def getSet():
     return(None,0)
   return(r3['hits']['hits'],r3['hits']['total']['value'])
 
-def queryFromConfig(line,index="implantsdb"):
- lineA = line.split(';')
- q = lineA[0]
- f1 = lineA[1]
- f2 = lineA[2]
- f3 = lineA[3]
- q3 = {'query': {'query_string': {'query': 'FILLME'}}}
- query =  "NOT (tags:sandboxes_v01 OR tags:testsystems_v01) AND (user.name:%s %s host.name:%s %s host.ip:%s)"%(f1,q,f2,q,f3)
- q3['query']['query_string']['query'] = query
- #print(query)
- r3 = es.search(index=index, size=qSize, body=q3)
- #print("found %s items"%len(r3['hits']['hits']))
- return(r3['hits']['hits'],r3['hits']['total']['value'])
-
 def queryBIG_OR(array,field,index,prefix="",postfix=""):
   sep = prefix
   query = ""
@@ -121,19 +107,6 @@ def setTagByQuery(query,tag,index="redirtraffic-*"):
       r =  taskStatus['response']['updated']
   return(r,r)
 
-def readConfigLines(fname):
-  with open(fname) as f:
-    content = f.readlines()
-    content = [x.strip() for x in content]
-    out = []
-    for line in content:
-      if not line.startswith('#'):
-        if line.count(';') == 3:
-          ip = line.strip()
-          if isIP(ip):
-            out.append(line.strip())
-    return(out)
-
 def findIPLines(fname,tag,field="source.ip",fuzzy=False):
   # We will dig trough ALL data finding specific IP related lines and tag them
   with open(fname) as f:
@@ -193,37 +166,6 @@ def deleteTag(tag,size=qSize,index="redirtraffic-*"):
 
 ####
 if __name__ == '__main__':
-  testsystems = readConfigLines('/etc/redelk/known_testsystems.conf')
-  tagsSet = 0
-  rTt = 0
-  for item in testsystems:
-    numRes = 0
-    #while numRes > 0:
-    #sys.stdout.write('.')
-    #sys.stdout.flush()
-    r,rT=queryFromConfig(item,"implantsdb")
-    setTags('testsystems_v01',r)
-    r2,rT2=queryFromConfig(item,"rtops-*")
-    setTags('testsystems_v01',r2)
-    numRes = len(r) + len(r2)
-    tagsSet = tagsSet + numRes
-    rTt = rTt +rT + rT2
-    #time.sleep(10) #allow ES to process all updated before requerying
-  print("Summary: date: %s, tagsSet: %s, Function:testsystems (total to tag is %s)"%(datetime.datetime.now(),tagsSet,rTt))
-
-  sandboxes = readConfigLines('/etc/redelk/known_sandboxes.conf')
-  tagsSet = 0
-  rTt = 0
-  for item in sandboxes:
-    numRes = 0
-    r,rT=queryFromConfig(item,"implantsdb")
-    setTags('sandboxes_v01',r)
-    r2,rT2=queryFromConfig(item,"rtops-*")
-    setTags('sandboxes_v01',r2)
-    numRes = len(r) + len(r2)
-    tagsSet = tagsSet + numRes
-    rTt = rTt +rT + rT2
-  print("Summary: date: %s, tagsSet: %s, Function:sandboxes (total to tag is %s)"%(datetime.datetime.now(),tagsSet,rTt))
 
   ipList = '/etc/redelk/iplist_redteam.conf'
   tagsSet = 0

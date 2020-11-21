@@ -6,7 +6,7 @@
 # - Outflank B.V. / Mark Bergman (@xychix)
 # - Lorenzo Bernardi (@fastlorenzo)
 #
-from modules.helpers import *
+from modules.helpers import initial_alarm_result, countQuery, getQuery, rawSearch, getValue, addAlarmData, setTags
 from config import interval, alarms
 from iocsources import ioc_vt as vt
 from iocsources import ioc_ibm as ibm
@@ -43,7 +43,7 @@ class Module():
             stackTrace = traceback.format_exc()
             ret['error'] = stackTrace
             self.logger.exception(e)
-            pass
+            raise
         self.logger.info('finished running module. result: %s hits' % ret['hits']['total'])
         return(ret)
 
@@ -56,8 +56,8 @@ class Module():
                     "filter": {
                         "range": {
                             "alarm.last_checked": {
-                                "gte":"now-%ds" % interval,
-                                "lt":"now"
+                                "gte": "now-%ds" % interval,
+                                "lt": "now"
                             }
                         }
                     },
@@ -93,7 +93,7 @@ class Module():
         if i >= 10000:
             i = 10000
         iocs = getQuery(q, i, index='rtops-*')
-        if type(iocs) != type([]):
+        if not isinstance(iocs, type([])):
             iocs = []
         self.logger.debug('found ioc: %s' % iocs)
 
@@ -116,8 +116,6 @@ class Module():
         md5d = {}
         md5s = []
         md5ShouldCheck = {}
-        ival = timedelta(seconds=interval)
-        last_checked_max = (datetime.utcnow() - ival)
 
         # Group all hits per md5 hash value
         for ioc in iocs:
@@ -150,7 +148,7 @@ class Module():
 
         for hash in dict.copy(md5d):
             # If we should not check the hash, remove it from the list
-            if hash in md5ShouldCheck and md5ShouldCheck[hash] == False:
+            if hash in md5ShouldCheck and not md5ShouldCheck[hash]:
                 self.logger.debug('[%s] md5 hash already checked within interval or already alarmed previously, skipping' % hash)
                 del md5d[hash]
 
@@ -188,7 +186,7 @@ class Module():
         for engine in reportI.keys():
             # Loop through the hashes results
             for hash in reportI[engine].keys():
-                if type(reportI[engine][hash]) == type({}):
+                if isinstance(reportI[engine][hash], type({})):
                     if reportI[engine][hash]['result'] == 'newAlarm':
                         # If hash was already alarmed by an engine
                         if hash in alarmedHashes:
