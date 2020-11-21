@@ -172,7 +172,7 @@ def groupHits(hits, groupby, res=None):
 
 def getLastRun(module_name):
     try:
-        q = {'query':{'exists':{'field':'module.type'}}}
+        q = {'query':{'term':{'module.name':module_name}}}
         res = rawSearch(q, index='redelk-modules')
         if len(res['hits']['hits']) > 0:
             es_timestamp = getValue('_source.module.last_run.timestamp', res['hits']['hits'][0])
