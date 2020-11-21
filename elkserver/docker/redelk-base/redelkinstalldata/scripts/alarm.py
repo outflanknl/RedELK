@@ -8,15 +8,12 @@
 # - Lorenzo Bernardi (@fastlorenzo)
 #
 import os
-import traceback
 import importlib
-import datetime
 import logging
 import copy
 
-from modules.helpers import *
+from modules.helpers import shouldModuleRun, setTags, moduleDidRun, addAlarmData, groupHits
 from config import alarms, notifications, enrich
-import itertools
 
 LOG_LEVEL = logging.DEBUG
 
@@ -76,14 +73,15 @@ if __name__ == '__main__':
                 for rHit in eD[e]['result']['hits']['hits']:
                     setTags(eD[e]['info']['submodule'], [rHit])
 
+                hits = len(eD[e]['result']['hits']['hits'])
+                moduleDidRun(e, 'enrich', 'success', 'Enriched %s documents' % hits)
                 eD[e]['status'] = 'success'
-                moduleDidRun(e)
             except Exception as err:
-                logger.error('Error running enrichment %s: %s' % (e, err))
+                msg = 'Error running enrichment %s: %s' % (e, err)
+                logger.error(msg)
                 logger.exception(err)
+                moduleDidRun(e, 'enrich', 'error', msg)
                 eD[e]['status'] = 'error'
-
-
 
     logger.info('Looping module dict')
     # this means we've loaded the modules and will now loop over those one by one
@@ -94,11 +92,14 @@ if __name__ == '__main__':
                 moduleClass = aD[a]['m'].Module()
                 logger.info('[a] Running Run() from the Module class in %s' % a)
                 aD[a]['result'] = copy.deepcopy(moduleClass.run())
+                hits = len(aD[a]['result']['hits']['hits'])
+                moduleDidRun(a, 'alarm', 'success', 'Found %s documents to alarm' % hits)
                 aD[a]['status'] = 'success'
-                moduleDidRun(a)
             except Exception as e:
-                logger.error('Error running alarm %s: %s' % (a, e))
+                msg = 'Error running alarm %s: %s' % (a, e)
+                logger.error(msg)
                 logger.exception(e)
+                moduleDidRun(a, 'alarm', 'error', msg)
                 aD[a]['status'] = 'error'
 
     # now we can loop over the modules once again and log the lines
@@ -106,13 +107,13 @@ if __name__ == '__main__':
         if a in alarms and alarms[a]['enabled']:
 
             # If the alarm did fail to run, skip processing the notification and tagging as we are not sure of the results
-            if aD[a]['status'] == 'error':
-                self.logger.warning('Alarm %s did not run correctly, skipping processing' % a)
+            if aD[a]['status'] != 'success':
+                logger.info('Alarm %s did not run (correctly), skipping processing' % a)
                 continue
 
             logger.debug('Alarm %s enabled, processing hits' % a)
             r = aD[a]['result']
-            #logger.debug('Alarm results: %s' % aD[a]['result'])
+            # logger.debug('Alarm results: %s' % aD[a]['result'])
             for rHit in r['hits']['hits']:
                 alarm_name = aD[a]['info']['submodule']
                 # Let's tag the doc with the alarm name

@@ -6,16 +6,13 @@
 # - Outflank B.V. / Mark Bergman (@xychix)
 # - Lorenzo Bernardi (@fastlorenzo)
 #
-from modules.helpers import *
+from modules.helpers import initial_alarm_result, es, getQuery, getValue, rawSearch
 from elasticsearch import helpers
 from config import enrich
-from time import time
 import traceback
 import logging
 import requests
-import copy
 import datetime
-import uuid
 
 info = {
     'version': 0.1,
@@ -74,27 +71,31 @@ class Module():
             # 1. Get tor exit nodes
             r = requests.get(self.tor_exitlist_url)
             iplist_tor = r.text.split('\n')
-            iplist_tor.remove('')
+            iplist_es = []
+            for ip in iplist_tor:
+                if ip != '':
+                    iplist_es.append('%s/32' % ip)
 
             # 2. Delete existing nodes
-            es.delete_by_query(index='iplist-*', body={'query':{'bool':{'filter':{'term':{'list':'tor'}}}}})
+            es.delete_by_query(index='redelk-*', body={'query':{'bool':{'filter':{'term':{'iplist.name':'tor'}}}}})
 
             # 3. Add new data (index=l['_index'], id=l['_id'], body={'doc': l['_source']})
             now = datetime.datetime.utcnow().isoformat()
-            iplist_docs = [
+            iplist_doc = [
                 {
-                    "_id": uuid.uuid4(),
                     "_source": {
-                        "ip": ip,
-                        "source": "enrich",
-                        "@timestamp": now,
-                        "last_updated": now,
-                        "list": "tor"
+                        "iplist": {
+                            "ip": ip,
+                            "source": "enrich",
+                            "name": "tor"
+                        },
+                        "@timestamp": now
                     }
                 }
-                for ip in iplist_tor
+                for ip in iplist_es
             ]
-            helpers.bulk(es, iplist_docs, index='iplist-tor')
+
+            helpers.bulk(es, iplist_doc, index='redelk-iplist-tor')
             self.logger.info('Successfuly updated iplist tor exit nodes')
             return(iplist_tor)
 
@@ -118,15 +119,15 @@ class Module():
         return(hits)
 
     def get_es_tor_exitnodes(self):
-        q = {'query':{'bool':{'filter':{'term':{'list':'tor'}}}}}
-        res = rawSearch(q, index='iplist-*')
+        q = {'query':{'bool':{'filter':{'term':{'iplist.name':'tor'}}}}}
+        res = rawSearch(q, index='redelk-*')
 
         if not res:
             return []
 
         iplist = []
         for ipdoc in res['hits']['hits']:
-            ip = getValue('_source.ip', ipdoc)
+            ip = getValue('_source.iplist.ip', ipdoc)
             iplist.append(ip)
 
         return(iplist)
@@ -141,7 +142,7 @@ class Module():
                     "filter": [
                         {
                             "term": {
-                                "list": "tor"
+                                "iplist.name": "tor"
                             }
                         }
                     ]
@@ -149,7 +150,7 @@ class Module():
             }
         }
 
-        res = rawSearch(q, index='iplist-*')
+        res = rawSearch(q, index='redelk-*')
 
         self.logger.debug(res)
 
