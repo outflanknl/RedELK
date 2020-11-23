@@ -23,7 +23,7 @@ extendedKeyUsage = serverAuth
 subjectAltName = @alt_names
 
 [alt_names]
-# Enter the valid IP or DNS where the teamservers and redirectors can reach your ELK server in the fields below. If not done correclty, Logstash on your ELK server will crash with cryptic errors.
+# Enter the valid IP or DNS where the teamservers and redirectors can reach your ELK server in the fields below. If not done correctly, Logstash on your ELK server will crash with cryptic errors.
 DNS.1 = dnsnameofyourredelkserver
 DNS.2 = someseconddnsname
 IP.1 = 123.123.123.123
