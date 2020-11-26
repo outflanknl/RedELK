@@ -34,52 +34,22 @@ echo "This script will install and configure necessary components for RedELK on 
 echo ""
 echo ""
 
-if [[ $EUID -ne 0 ]]; then
-  echo "[X] Not running as root. Exiting"
-  exit 1
-fi
-
-if [ ${#} -ne 0 ] && [[ "$*" = *"dryrun"* ]]; then
-    echo "[*] Dry run mode, only running pre-req checks and creating initial .env file."  | tee -a $LOGFILE
+printinstallsummary() {
     echo ""
-    DRYRUN="yes"
-fi
-
-if [ ${#} -ne 0 ] && [[ $* = *"fixedmemory"* ]]; then
-    echo "[*] Fixed memory usage mode: 1G for ES, 1G for NEO4J and 1G for Jupyter."  | tee -a $LOGFILE
     echo ""
-    FIXEDMEMORY="yes"
-    ES_MEMORY=1g
-    NEO4J_MEMORY=1G
-fi
-
-if [ ${#} -ne 0 ] && [[ "$*" == *"limited"* ]]; then
-    echo "[*] Parameter 'limited' found. Going for the limited RedELK experience." | tee -a $LOGFILE
+    if [ $WHATTOINSTALL == "limited" ]; then
+        echo "[*] Parameter 'limited' found. Going for the limited RedELK experience." | tee -a $LOGFILE
+    else
+        echo "[*] No 'limited' parameter found. Going for the full RedELK installation including: " | tee -a $LOGFILE
+        echo "- RedELK"
+        echo "- Jupyter notebooks"
+        echo "- BloodHound / Neo4j"
+    fi
     echo ""
     echo "5 Seconds to abort"
     echo ""
     sleep 5
-    WHATTOINSTALL="limited"
-    DOCKERCONFFILE="redelk-limited.yml"
-elif [ ${#} -ne 0 ] && [[ "$*" == *"dev"* ]]; then
-    echo "[*] DEV MODE DEV MODE DEV MODE DEV MODE."  | tee -a $LOGFILE
-    echo ""
-    echo "5 Seconds to abort"
-    echo ""
-    sleep 5
-    DEV="yes"
-    DOCKERCONFFILE="redelk-dev.yml"
-else
-    echo "[*] No 'limited' parameter found. Going for the full RedELK installation including: " | tee -a $LOGFILE
-    echo "- RedELK"
-    echo "- Jupyter notebooks"
-    echo "- BloodHound / Neo4j"
-    echo ""
-    echo "5 Seconds to abort"
-    echo ""
-    sleep 5
-    DOCKERCONFFILE="redelk-full.yml"
-fi
+}
 
 echoerror() {
     printf "`date +'%b %e %R'` $INSTALLER - ${RC} * ERROR ${EC}: $@\n" >> $LOGFILE 2>&1
@@ -131,10 +101,12 @@ install_docker_compose(){
     fi
 }
 
+function sedescape {
+  echo $1 | sed -e 's/\([[\/.*]\|\]\)/\\&/g'
+}
+
 preinstallcheck() {
     echo "[*] Starting pre installation checks" | tee -a $LOGFILE
-
-    SHOULDEXIT=false
 
     # Checking if OS is Debian / APT based
     if [ ! -f  /etc/debian_version ]; then
@@ -171,79 +143,120 @@ preinstallcheck() {
         install_docker_compose
     fi
     
+}
+
+memcheck() {
     # checking system memory and setting variables
-    if [ ${FIXEDMEMORY} == "no" ]; then
-        AVAILABLE_MEMORY=$(awk '/MemAvailable/{printf "%.f", $2/1024}' /proc/meminfo)
-        ERROR=$?
-        echo "[*] Memory found available for RedELK: $AVAILABLE_MEMORY MB."
-        if [ $ERROR -ne 0 ]; then
-            echoerror "[X] Error getting memory configuration of this host. Exiting."
+    AVAILABLE_MEMORY=$(awk '/MemAvailable/{printf "%.f", $2/1024}' /proc/meminfo)
+    ERROR=$?
+    echo "[*] Memory found available for RedELK: $AVAILABLE_MEMORY MB."
+    if [ $ERROR -ne 0 ]; then
+        echoerror "[X] Error getting memory configuration of this host. Exiting."
+        if [ ${FIXEDMEMORY} == "yes" ]; then
+            echo "[*] Fixed memory mode. Not exiting."  | tee -a $LOGFILE
+        else    
             exit 1
         fi
+    fi
 
-        # check for full or limited install
-        if [ ${WHATTOINSTALL} = "limited" ]; then
-            if [ ${AVAILABLE_MEMORY} -le 3999 ]; then
-                echo "[!] Less than recommended 8GB memory found - yolo continuing" | tee -a $LOGFILE
-                ES_MEMORY=1g
-            elif [ ${AVAILABLE_MEMORY} -ge 4000 -a ${AVAILABLE_MEMORY} -le 7999 ]; then
-                echo "[!] Less than recommended 8GB memory found - yolo continuing" | tee -a $LOGFILE
-                ES_MEMORY=2g
-            elif [ ${AVAILABLE_MEMORY} -ge 8000 ]; then
-                echo "[*] 8GB or more memory found" | tee -a $LOGFILE
-                ES_MEMORY=4g
-            fi
-        else # going for full install means in check in determine how much memory NEO4J and ES get
-            if [ ${AVAILABLE_MEMORY} -le 7999 ]; then
-                echo "[X] Not enough memory for full install (less than 8GB). Exiting."
-                SHOULDEXIT=true
-            elif [ ${AVAILABLE_MEMORY} -ge 8000 ] &&  [ ${AVAILABLE_MEMORY} -le 8999 ]; then
-                echo "[*] 8-9GB memory found" | tee -a $LOGFILE
-                ES_MEMORY=1g
-                NEO4J_MEMORY=2G
-            elif [ ${AVAILABLE_MEMORY} -ge 9000 ] && [ ${AVAILABLE_MEMORY} -le 9999 ]; then
-                echo "[*] 9-10GB memory found" | tee -a $LOGFILE
-                ES_MEMORY=1g
-                NEO4J_MEMORY=3G
-            elif [ ${AVAILABLE_MEMORY} -ge 10000 ] && [ ${AVAILABLE_MEMORY} -le 10999 ]; then
-                echo "[*] 10-11GB memory found" | tee -a $LOGFILE
-                ES_MEMORY=2g
-                NEO4J_MEMORY=3G
-            elif [ ${AVAILABLE_MEMORY} -ge 11000 ] && [ ${AVAILABLE_MEMORY} -le 11999 ]; then
-                echo "[*] 11-12GB memory found" | tee -a $LOGFILE
-                ES_MEMORY=2g
-                NEO4J_MEMORY=4G
-            elif [ ${AVAILABLE_MEMORY} -ge 12000 ] && [ ${AVAILABLE_MEMORY} -le 12999 ]; then
-                echo "[*] 12-13GB memory found" | tee -a $LOGFILE
-                ES_MEMORY=3g
-                NEO4J_MEMORY=4G
-            elif [ ${AVAILABLE_MEMORY} -ge 13000 ] && [ ${AVAILABLE_MEMORY} -le 13999 ]; then
-                echo "[*] 13-14GB memory found" | tee -a $LOGFILE
-                ES_MEMORY=3g
-                NEO4J_MEMORY=4500M
-            elif [ ${AVAILABLE_MEMORY} -ge 14000 ] && [ ${AVAILABLE_MEMORY} -le 14999 ]; then
-                echo "[*] 14-15GB memory found" | tee -a $LOGFILE
-                ES_MEMORY=3g
-                NEO4J_MEMORY=5G
-            elif [ ${AVAILABLE_MEMORY} -ge 15000 ] && [ ${AVAILABLE_MEMORY} -le 15999 ]; then
-                echo "[*] 15-16GB memory found" | tee -a $LOGFILE
-                ES_MEMORY=4g
-                NEO4J_MEMORY=5G
-            elif [ ${AVAILABLE_MEMORY} -ge 16000 ]; then
-                echo "[*] 16GB or more memory found" | tee -a $LOGFILE
-                ES_MEMORY=5g
-                NEO4J_MEMORY=5G
-            fi
+    # check for full or limited install
+    if [ ${WHATTOINSTALL} = "limited" ]; then
+        if [ ${AVAILABLE_MEMORY} -le 3999 ]; then
+            echo "[!] Less than recommended 8GB memory found - yolo continuing" | tee -a $LOGFILE
+            ES_MEMORY=1g
+        elif [ ${AVAILABLE_MEMORY} -ge 4000 -a ${AVAILABLE_MEMORY} -le 7999 ]; then
+            echo "[!] Less than recommended 8GB memory found - yolo continuing" | tee -a $LOGFILE
+            ES_MEMORY=2g
+        elif [ ${AVAILABLE_MEMORY} -ge 8000 ]; then
+            echo "[*] 8GB or more memory found" | tee -a $LOGFILE
+            ES_MEMORY=4g
         fi
+    else # going for full install means in check in determine how much memory NEO4J and ES get
+        SHOULDEXIT=false
+        if [ ${AVAILABLE_MEMORY} -le 7999 ]; then
+            echo "[X] Not enough memory for full install (less than 8GB). Exiting."
+            SHOULDEXIT=true
+        elif [ ${AVAILABLE_MEMORY} -ge 8000 ] &&  [ ${AVAILABLE_MEMORY} -le 8999 ]; then
+            echo "[*] 8-9GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=1g
+            NEO4J_MEMORY=2G
+        elif [ ${AVAILABLE_MEMORY} -ge 9000 ] && [ ${AVAILABLE_MEMORY} -le 9999 ]; then
+            echo "[*] 9-10GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=1g
+            NEO4J_MEMORY=3G
+        elif [ ${AVAILABLE_MEMORY} -ge 10000 ] && [ ${AVAILABLE_MEMORY} -le 10999 ]; then
+            echo "[*] 10-11GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=2g
+            NEO4J_MEMORY=3G
+        elif [ ${AVAILABLE_MEMORY} -ge 11000 ] && [ ${AVAILABLE_MEMORY} -le 11999 ]; then
+            echo "[*] 11-12GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=2g
+            NEO4J_MEMORY=4G
+        elif [ ${AVAILABLE_MEMORY} -ge 12000 ] && [ ${AVAILABLE_MEMORY} -le 12999 ]; then
+            echo "[*] 12-13GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=3g
+            NEO4J_MEMORY=4G
+        elif [ ${AVAILABLE_MEMORY} -ge 13000 ] && [ ${AVAILABLE_MEMORY} -le 13999 ]; then
+            echo "[*] 13-14GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=3g
+            NEO4J_MEMORY=4500M
+        elif [ ${AVAILABLE_MEMORY} -ge 14000 ] && [ ${AVAILABLE_MEMORY} -le 14999 ]; then
+            echo "[*] 14-15GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=3g
+            NEO4J_MEMORY=5G
+        elif [ ${AVAILABLE_MEMORY} -ge 15000 ] && [ ${AVAILABLE_MEMORY} -le 15999 ]; then
+            echo "[*] 15-16GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=4g
+            NEO4J_MEMORY=5G
+        elif [ ${AVAILABLE_MEMORY} -ge 16000 ]; then
+            echo "[*] 16GB or more memory found" | tee -a $LOGFILE
+            ES_MEMORY=5g
+            NEO4J_MEMORY=5G
+        fi
+    fi
 
-        if [ "$SHOULDEXIT" = true ]; then
+    if [ "$SHOULDEXIT" = true ]; then
+        if [ ${FIXEDMEMORY} == "yes" ]; then
+            echo "[*] Fixed memory mode. Not exiting."  | tee -a $LOGFILE
+        else    
             exit 1
         fi
-    else # fixedmemory = yes
-        echo "[*] Fixed memory usage mode: 1G for ES, 1G for NEO4J and 1G for Jupyter."  | tee -a $LOGFILE
     fi
 }
 
+
+
+if [[ $EUID -ne 0 ]]; then
+  echo "[X] Not running as root. Exiting"
+  exit 1
+fi
+
+if [ ${#} -ne 0 ] && [[ "$*" = *"dryrun"* ]]; then
+    echo "[*] Dry run mode, only running pre-req checks and creating initial .env file."  | tee -a $LOGFILE
+    DRYRUN="yes"
+fi
+
+if [ ${#} -ne 0 ] && [[ $* = *"fixedmemory"* ]]; then
+    echo "[*] Fixed memory mode: 1G for ES, 1G for NEO4J and 1G for Jupyter."  | tee -a $LOGFILE
+    FIXEDMEMORY="yes"
+    ES_MEMORY=1g
+    NEO4J_MEMORY=1G
+fi
+
+if [ ${#} -ne 0 ] && [[ "$*" == *"limited"* ]]; then
+    WHATTOINSTALL="limited"
+    DOCKERCONFFILE="redelk-limited.yml"
+elif [ ${#} -ne 0 ] && [[ "$*" == *"dev"* ]]; then
+    echo "[*] DEV MODE DEV MODE DEV MODE DEV MODE."  | tee -a $LOGFILE
+    DEV="yes"
+    DOCKERCONFFILE="redelk-dev.yml"
+else
+    DOCKERCONFFILE="redelk-full.yml"
+fi
+
+echo ""
+memcheck
+printinstallsummary
 preinstallcheck
 
 # DEV specific things
@@ -516,31 +529,30 @@ if [ $ERROR -eq 0 ]; then
     exit 1
 fi
 
-
 echo "" | tee -a $LOGFILE
 echo "" | tee -a $LOGFILE
 if [ $DRYRUN == "no" ]; then
-  echo " Done with base setup of RedELK on ELK server" | tee -a $LOGFILE
-  echo " You can now login with on: " | tee -a $LOGFILE
-  echo "   - Main RedELK Kibana interface on port 80 (default redelk:$CREDS_redelk)" | tee -a $LOGFILE
-  if [ ${WHATTOINSTALL} != "limited" ]; then
-      echo "   - Jupyter notebooks on /jupyter" | tee -a $LOGFILE
-      echo "   - Neo4J Browser on /neo4jbrowser" | tee -a $LOGFILE
-      echo "   - Neo4J using the BloodHound app on port 7687 (neo4j:BloodHound)" | tee -a $LOGFILE
-  fi
-  echo "" | tee -a $LOGFILE
-  echo "" | tee -a $LOGFILE
-  echo " !!! WARNING" | tee -a $LOGFILE
-  echo " !!! WARNING - IF YOU WANT FULL FUNCTIONALITY YOU ARE NOT DONE YET !!!" | tee -a $LOGFILE
-  echo " !!! WARNING" | tee -a $LOGFILE
-  echo ""
-  echo " You should really:" | tee -a $LOGFILE
-  echo "   - adjust the mounts/redelk-config/etc/cron.d/redelk file to include your teamservers" | tee -a $LOGFILE
-  echo "   - adjust all config files in mounts/redelk-config/etc/redelk to include your specifics like VT API, email server details, etc" | tee -a $LOGFILE
-  echo "   - adjust the .env file to match any specifics you need (e.g. using custom certificate, etc.)" | tee -a $LOGFILE
+    echo " Done with base setup of RedELK on ELK server" | tee -a $LOGFILE
+    echo " You can now login with on: " | tee -a $LOGFILE
+    echo "   - Main RedELK Kibana interface on port 80 (default redelk:$CREDS_redelk)" | tee -a $LOGFILE
+    if [ ${WHATTOINSTALL} != "limited" ]; then
+        echo "   - Jupyter notebooks on /jupyter" | tee -a $LOGFILE
+        echo "   - Neo4J Browser on /neo4jbrowser" | tee -a $LOGFILE
+        echo "   - Neo4J using the BloodHound app on port 7687 (neo4j:BloodHound)" | tee -a $LOGFILE
+    fi
+    echo "" | tee -a $LOGFILE
+    echo "" | tee -a $LOGFILE
+    echo " !!! WARNING" | tee -a $LOGFILE
+    echo " !!! WARNING - IF YOU WANT FULL FUNCTIONALITY YOU ARE NOT DONE YET !!!" | tee -a $LOGFILE
+    echo " !!! WARNING" | tee -a $LOGFILE
+    echo ""
+    echo " You should really:" | tee -a $LOGFILE
+    echo "   - adjust the mounts/redelk-config/etc/cron.d/redelk file to include your teamservers" | tee -a $LOGFILE
+    echo "   - adjust all config files in mounts/redelk-config/etc/redelk to include your specifics like VT API, email server details, etc" | tee -a $LOGFILE
+    echo "   - adjust the .env file to match any specifics you need (e.g. using custom certificate, etc.)" | tee -a $LOGFILE
 else
-  echo "Done with dry-run checks and .env file creation." | tee -a $LOGFILE
-  echo "You can now adapt the .env file and then run the installer again with 'full' or 'limited' options." | tee -a $LOGFILE
+    echo "Done with dry-run checks and .env file creation." | tee -a $LOGFILE
+    echo "You can now adapt the .env file and then run the installer again without the 'dryrun' paramater" | tee -a $LOGFILE
 fi
 echo "" | tee -a $LOGFILE
 echo "" | tee -a $LOGFILE
