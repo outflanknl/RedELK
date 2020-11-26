@@ -386,29 +386,76 @@ if [ ${WHATTOINSTALL} = "full" ]; then
     fi
 fi
 
-EXTERNAL_DOMAIN=$(cat ./mounts/redelk-config/etc/redelk/config.json | jq -r .external_domain)
-echo "[*] Setting external domain name" | tee -a $LOGFILE
-sed -E -i.bak "s/\{\{EXTERNAL_DOMAIN\}\}/${EXTERNAL_DOMAIN}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
+echo "[*] Setting permissions on logstash configs" | tee -a $LOGFILE
+chown -R 1000 ./mounts/logstash-config/* >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "[X] Could not set external domain name (Error Code: $ERROR)."
+    echoerror "[X] Could not set permissions on logsatsh configs (Error Code: $ERROR)."
 fi
 
-LE_EMAIL=$(cat ./mounts/redelk-config/etc/redelk/config.json | jq -r .le_email)
-echo "[*] Setting Let's Encrypt email" | tee -a $LOGFILE
-sed -E -i.bak "s/\{\{LE_EMAIL\}\}/${LE_EMAIL}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
+echo "[*] Setting permissions on redelk logs" | tee -a $LOGFILE
+chown -R 1000 ./mounts/redelk-logs && chmod 664 ./mounts/redelk-logs/* >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "[X] Could not set Let's Encrypt email (Error Code: $ERROR)."
+    echoerror "[X] Could not set permissions on redelk logs (Error Code: $ERROR)."
+fi
+
+echo "[*] Setting permissions on Jupyter notebook work dir" | tee -a $LOGFILE
+chown -R 1000 ./mounts/jupyter-workbooks >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "[X] Could not set permissions on Jupyter notebook work dir (Error Code: $ERROR)."
+fi
+
+# Certificate things
+# check if letsencrypt is enabled in the config file
+DO_LETSENCRYPT=$(cat ./mounts/redelk-config/etc/redelk/config.json | jq -r .redelkserver_letsencrypt.enable_letsencrypt)
+if [ $DO_LETSENCRYPT == "true" ]; then
+    EXTERNAL_DOMAIN=$(cat ./mounts/redelk-config/etc/redelk/config.json | jq -r .redelkserver_letsencrypt.external_domain)
+    echo "[*] Validating configured external domain name $EXTERNAL_DOMAIN" | tee -a $LOGFILE
+    if [ `echo $EXTERNAL_DOMAIN|wc -w`  -eq 0 ] || [ `echo $EXTERNAL_DOMAIN | grep "\." > /dev/null ;echo $?` -eq 1 ] ; then
+        echoerror "[X] Error. Let's encrypt domain name seems empty. Exiting."
+        exit 1
+    else 
+        echo "[*] Domain $EXTERNAL_DOMAIN seems valid. Continuing."  | tee -a $LOGFILE
+        
+        echo "[*] Setting external domain name in Docker env file" | tee -a $LOGFILE
+        sed -E -i.bak "s/\{\{EXTERNAL_DOMAIN\}\}/${EXTERNAL_DOMAIN}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
+        ERROR=$?
+        if [ $ERROR -ne 0 ]; then
+            echoerror "[X] Could not set external domain name in Docker env file (Error Code: $ERROR)."
+        fi
+
+        LE_EMAIL=$(cat ./mounts/redelk-config/etc/redelk/config.json | jq -r .redelkserver_letsencrypt.le_email)
+        echo "[*] Setting Let's Encrypt email in Docker env file" | tee -a $LOGFILE
+        sed -E -i.bak "s/\{\{LE_EMAIL\}\}/${LE_EMAIL}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
+        ERROR=$?
+        if [ $ERROR -ne 0 ]; then
+            echoerror "[X] Could not set Let's Encrypt email in Docker env file (Error Code: $ERROR)."
+        fi
+    fi
+else # letsencrypt not enabled, take domain name from initial-setup certs config file
+    EXTERNAL_DOMAIN=`grep -E "^DNS\.|^IP\." ../certs/config.cnf|awk -F\= '{print $2}'|tr -d " "|head -n1`
+    echo "[*] Creating dummy certificate for $EXTERNAL_DOMAIN "
+    CERTPATH="mounts/certbot/conf/live/noletsencrypt"
+    mkdir -p $CERTPATH && openssl req -x509 -nodes -newkey rsa:4096 -days 365 -keyout $CERTPATH/privkey.pem -out $CERTPATH/fullchain.pem -subj /CN=${EXTERNAL_DOMAIN} > /dev/null | tee -a $LOGFILE && chown -R 1000 $CERTPATH
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echoerror "[X] Error creating dummy certificates (Error Code: $ERROR)."
+    fi
+
+    # after the cert is generated we set $EXTERNAL_DOMAIN and $LE_EMAIL to invalid values to have certbot fail on purpose
+    EXTERNAL_DOMAIN="noletsencrypt"
+    LE_EMAIL="noletsencrypt"
 fi
 
 # NGINX certificates config
+CERTS_DIR_NGINX_LOCAL=$(sedescape "./mounts/certbot/conf/live/${EXTERNAL_DOMAIN}")
+CERTS_DIR_NGINX_CA_LOCAL=$(sedescape "./mounts/certs/ca/")
+TLS_NGINX_CRT_PATH=$(sedescape "/etc/nginx/certs/fullchain.pem")
+TLS_NGINX_KEY_PATH=$(sedescape "/etc/nginx/certs/privkey.pem")
+TLS_NGINX_CA_PATH=$(sedescape "/etc/nginx/ca_certs/ca.crt")
 
-CERTS_DIR_NGINX_LOCAL="./mounts/certbot/conf/live/${EXTERNAL_DOMAIN}"
-CERTS_DIR_NGINX_CA_LOCAL="./mounts/certs/ca/"
-TLS_NGINX_CRT_PATH="/etc/nginx/certs/fullchain.pem"
-TLS_NGINX_KEY_PATH="/etc/nginx/certs/privkey.pem"
-TLS_NGINX_CA_PATH="/etc/nginx/ca_certs/ca.crt"
 echo "[*] Setting CERTS_DIR_NGINX_LOCAL" | tee -a $LOGFILE
 sed -E -i.bak "s/\{\{CERTS_DIR_NGINX_LOCAL\}\}/${CERTS_DIR_NGINX_LOCAL}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
 ERROR=$?
@@ -440,43 +487,26 @@ if [ $ERROR -ne 0 ]; then
     echoerror "[X] Could not set TLS_NGINX_CA_PATH (Error Code: $ERROR)."
 fi
 
-echo "[*] Setting permissions on logstash configs" | tee -a $LOGFILE
-chown -R 1000 ./mounts/logstash-config/* >> $LOGFILE 2>&1
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echoerror "[X] Could not set permissions on logsatsh configs (Error Code: $ERROR)."
-fi
-
-echo "[*] Setting permissions on redelk logs" | tee -a $LOGFILE
-chown -R 1000 ./mounts/redelk-logs && chmod 664 ./mounts/redelk-logs/* >> $LOGFILE 2>&1
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echoerror "[X] Could not set permissions on redelk logs (Error Code: $ERROR)."
-fi
-
-echo "[*] Setting permissions on Jupyter notebook work dir" | tee -a $LOGFILE
-chown -R 1000 ./mounts/jupyter-workbooks >> $LOGFILE 2>&1
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echoerror "[X] Could not set permissions on Jupyter notebook work dir (Error Code: $ERROR)."
-fi
-
 if [ $DRYRUN == "no" ]; then
-  echo "[*] Running initial Let's Encrypt script" | tee -a $LOGFILE
-  ./init-letsencrypt.sh # >>$LOGFILE 2>&1
-  ERROR=$?
-  if [ $ERROR -ne 0 ]; then
-      echoerror "[X] Could not run initial Let's Encrypt script (Error Code: $ERROR)."
-      #exit 1
-  fi
+    if [ $DO_LETSENCRYPT == "true" ]; then
+        echo "[*] Running initial Let's Encrypt script" | tee -a $LOGFILE
+        ./init-letsencrypt.sh $DOCKERCONFFILE $EXTERNAL_DOMAIN # >>$LOGFILE 2>&1
+        ERROR=$?
+        if [ $ERROR -ne 0 ]; then
+            echoerror "[X] Error running initial Let's Encrypt script (Error Code: $ERROR)."
+            #exit 1
+        fi
+    fi
 
-  echo "[*] Building RedELK from $DOCKERCONFFILE file" | tee -a $LOGFILE
+  echo "[*] Building RedELK from $DOCKERCONFFILE file. Docker output below." | tee -a $LOGFILE
+  echo ""
   docker-compose -f $DOCKERCONFFILE up --build -d # >>$LOGFILE 2>&1
   ERROR=$?
   if [ $ERROR -ne 0 ]; then
-      echoerror "[X] Could not build RedELK using docker-compose file $DOCKERCONFFILE (Error Code: $ERROR)."
+      echoerror "[X] Error building RedELK using docker-compose file $DOCKERCONFFILE (Error Code: $ERROR)."
       exit 1
   fi
+  echo ""
 fi
 
 grep "* ERROR " redelk-install.log
