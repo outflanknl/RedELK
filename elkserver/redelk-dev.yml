@@ -2,8 +2,9 @@
 # Part of RedELK
 # Docker compose config for RedELK development
 #
-# Author: Outflank B.V. / Marc Smeets
-#
+# Authors:
+# - Outflank B.V. / Marc Smeets
+# - Lorenzo Bernardi (@fastlorenzo)
 #
 
 version: "3.3"
@@ -156,6 +157,7 @@ services:
     restart: always
 
   certbot:
+    container_name: redelk-certbot
     image: certbot/certbot
     volumes:
       - ./mounts/certbot/conf:/etc/letsencrypt

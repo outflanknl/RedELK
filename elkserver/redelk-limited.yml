@@ -148,6 +148,7 @@ services:
     restart: always
 
   certbot:
+    container_name: redelk-certbot
     image: certbot/certbot
     volumes:
       - ./mounts/certbot/conf:/etc/letsencrypt
