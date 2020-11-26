@@ -310,17 +310,22 @@ if (grep "{{CREDS_redelk}}" $DOCKERENVFILE > /dev/null); then
     fi
 
     echo "[*] Installing apache2-utils for setting htaccess" | tee -a $LOGFILE
-    apt -y install apache2-utils >> $LOGFILE 2>&1
+    # check if already installed
+    dpkg -s apache2-utils|grep Status > /dev/null
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
-        echoerror "[X] Error installing apache2-utils package (Error Code: $ERROR)."
+        apt -y install apache2-utils >> $LOGFILE 2>&1
+        ERROR=$?
+        if [ $ERROR -ne 0 ]; then
+            echoerror "[X] Error installing apache2-utils package (Error Code: $ERROR)."
+        fi
     fi
 
     echo "[*] Setting redelk password in htaccess" | tee -a $LOGFILE
-    htpasswd -b -m mounts/nginx-config/htpasswd.users redelk ${CREDS_redelk} >> $LOGFILE 2>&1
+    htpasswd -b -m mounts/nginx-config/htpasswd.users.template redelk ${CREDS_redelk} >> $LOGFILE 2>&1
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
-        echoerror "[X] Error setitng redelk password in htaccess (Error Code: $ERROR)."
+        echoerror "[X] Error setting redelk password in htaccess (Error Code: $ERROR)."
     fi
 else
     echo "[*] Redelk password in elasticsearch already defined - skipping" | tee -a $LOGFILE
