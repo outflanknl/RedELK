@@ -346,8 +346,7 @@ if (grep "{{ELASTIC_PASSWORD}}" $DOCKERENVFILE > /dev/null); then
     fi
     rm mounts/redelk-config/etc/redelk/config.json.bak
 else
-    echo "[*] Elastic ES password in docker tempalte already defined - skipping" | tee -a $LOGFILE
-   ELASTIC_PASSWORD=$(grep -E ^ELASTIC_PASSWORD= .env|awk -F\= '{print $2}')
+    echo "[*] Elastic ES password in docker template already defined - skipping" | tee -a $LOGFILE
 fi
 
 KBN_XPACK_ENCRYPTEDSAVEDOBJECTS=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
