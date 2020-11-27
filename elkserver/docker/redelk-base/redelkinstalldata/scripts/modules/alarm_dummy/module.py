@@ -40,7 +40,7 @@ class Module():
         return(ret)
 
     def alarm_dummy(self):
-        q = "c2.log.type:ioc AND NOT tags:alarm_*"
+        q = "c2.log.type:ioc AND NOT tags:%s"%(info['submodule'])
         report = {}
         report['alarm'] = False
         report['fname'] = "alarm_check2"
