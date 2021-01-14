@@ -19,7 +19,7 @@ filebeat.inputs:
   enabled: true
   fields_under_root: true
   paths:
-    - /root/cobaltstrike/logs/*/weblog.log
+    - /root/cobaltstrike/logs/*/weblog*
   fields:
     infra:
       log:
