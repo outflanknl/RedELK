@@ -23,12 +23,13 @@ info = {
 class Module():
     def __init__(self):
         self.logger = logging.getLogger(info['submodule'])
+        #print("class init")
         pass
 
     def run(self):
         ret = initial_alarm_result
         ret['info'] = info
-        ret['fields'] = ['@timestamp','source.ip','http.headers.useragent','source.nat.ip','redir.frontend.name','redir.backend.name','infra.attack_scenario']
+        ret['fields'] = ['agent.hostname','@timestamp','source.ip','http.headers.useragent','source.nat.ip','redir.frontend.name','redir.backend.name','infra.attack_scenario']
         ret['groupby'] = ['source.ip','http.headers.useragent']
         try:
             report = self.alarm_check()
@@ -65,7 +66,7 @@ class Module():
                 qSub = qSub + " OR http.headers.useragent:%s" % keyword
         qSub = qSub + ") "
         #q = "%s AND redir.backendname:c2* AND tags:enrich_* AND NOT tags:alarm_* "%qSub
-        q = "%s AND redir.backend.name:c2* AND NOT tags:%s"%(qSub,info['submodule'])
+        q = "%s AND redir.backend.name:c2* AND NOT tags:alarm_useragent" % qSub
         i = countQuery(q)
         if i >= 10000:
             i = 10000

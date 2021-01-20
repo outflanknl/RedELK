@@ -28,7 +28,7 @@ class Module():
     def run(self):
         ret = initial_alarm_result
         ret['info'] = info
-        ret['fields'] = ['source.ip', 'source.nat.ip', 'source.geo.country_name', 'source.as.organization.name', 'redir.frontend.name', 'redir.backend.name', 'infra.attack_scenario', 'tags', 'redir.timestamp']
+        ret['fields'] = ['agent.hostname','source.ip', 'source.nat.ip', 'source.geo.country_name', 'source.as.organization.name', 'redir.frontend.name', 'redir.backend.name', 'infra.attack_scenario', 'tags', 'redir.timestamp']
         ret['groupby'] = ['source.ip']
         try:
             report = self.alarm_check()
