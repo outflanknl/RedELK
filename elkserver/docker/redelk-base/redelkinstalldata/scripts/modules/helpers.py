@@ -78,7 +78,6 @@ def guiQueryWindow(q,start,end):
     return(q)
 
 def countQuery(query, index="redirtraffic-*"):
-    print('count')
     q3 = {'query': {'query_string': {'query': query}}}
     r3 = es.search(index=index, body=q3, size=0)
     return(r3['hits']['total']['value'])

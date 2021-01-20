@@ -28,7 +28,7 @@ class Module():
     def run(self):
         ret = initial_alarm_result
         ret['info'] = info
-        ret['fields'] = ['source.ip', 'source.nat.ip', 'source.geo.country_name', 'source.as.organization.name', 'redir.frontend.name', 'redir.backend.name', 'infra.attack_scenario', 'tags', 'redir.timestamp']
+        ret['fields'] = ['agent.hostname','source.ip', 'source.nat.ip', 'source.geo.country_name', 'source.as.organization.name', 'redir.frontend.name', 'redir.backend.name', 'infra.attack_scenario', 'tags', 'redir.timestamp']
         ret['groupby'] = ['source.ip']
         try:
             report = self.alarm_check()
@@ -45,7 +45,7 @@ class Module():
 
     def alarm_check(self):
         # This check queries for IP's that aren't listed in any iplist* but do talk to c2* paths on redirectors\n
-        q = "NOT tags:iplist_* AND redir.backend.name:c2* AND tags:enriched_* AND NOT tags:%s"%(info['submodule'])
+        q = "NOT tags:iplist_* AND redir.backend.name:c2* AND NOT tags:alarm_httptraffic AND tags:enriched_*"
         i = countQuery(q)
         if i >= 10000:
             i = 10000
