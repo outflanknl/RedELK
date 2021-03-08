@@ -6,13 +6,9 @@
 # - Outflank B.V. / Mark Bergman (@xychix)
 # - Lorenzo Bernardi (@fastlorenzo)
 #
-from modules.helpers import initial_alarm_result, getQuery, getValue, rawSearch, es
-from config import enrich
-from time import time
+from modules.helpers import initial_alarm_result, getQuery, getValue, es
 import traceback
 import logging
-import requests
-import copy
 import re
 import datetime
 
@@ -44,8 +40,7 @@ class Module():
         try:
             hits = []
             for iplist in self.iplists:
-                res = self.sync_iplist(iplist)
-                # hits += res
+                self.sync_iplist(iplist)
             ret['hits']['hits'] = hits
             ret['hits']['total'] = len(hits)
         except Exception as e:

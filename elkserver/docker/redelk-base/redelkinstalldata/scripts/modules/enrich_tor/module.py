@@ -77,7 +77,7 @@ class Module():
                     iplist_es.append('%s/32' % ip)
 
             # 2. Delete existing nodes
-            es.delete_by_query(index='redelk-*', body={'query':{'bool':{'filter':{'term':{'iplist.name':'tor'}}}}})
+            es.delete_by_query(index='redelk-*', body={'query': {'bool': {'filter': {'term': {'iplist.name': 'tor'}}}}})
 
             # 3. Add new data (index=l['_index'], id=l['_id'], body={'doc': l['_source']})
             now = datetime.datetime.utcnow().isoformat()
@@ -119,7 +119,7 @@ class Module():
         return(hits)
 
     def get_es_tor_exitnodes(self):
-        q = {'query':{'bool':{'filter':{'term':{'iplist.name':'tor'}}}}}
+        q = {'query': {'bool': {'filter': {'term': {'iplist.name': 'tor'}}}}}
         res = rawSearch(q, index='redelk-*')
 
         if not res:
