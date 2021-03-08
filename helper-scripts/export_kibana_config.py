@@ -16,10 +16,10 @@ SCHEME = 'https'
 KIBANA_URL = SCHEME + '://localhost:5601'
 KIBANA_OBJECTS_EXPORT_URL = KIBANA_URL + '/api/saved_objects/_export'
 REDELK_OBJ_FILTER = 'RedELK'
-INDEX_PATTERNS_FILTER = 'rtops|redirtraffic|implantsdb|bluecheck|credentials|email|.siem-signals'
+INDEX_PATTERNS_FILTER = 'rtops|redirtraffic|implantsdb|bluecheck|credentials|email|redelk|.siem-signals'
 EXPORT_FILES_PREFIX_KIBANA = 'redelk_kibana_'
 ES_URL = SCHEME + '://localhost:9200'
-ES_TEMPLATES_LIST = [ 'rtops', 'redirtraffic', 'implantsdb', 'bluecheck', 'credentials', 'email' ]
+ES_TEMPLATES_LIST = [ 'rtops', 'redirtraffic', 'implantsdb', 'bluecheck', 'credentials', 'email', 'redelk' ]
 EXPORT_FILES_PREFIX_ES = 'redelk_elasticsearch_'
 DIFF_PATH = 'diff/' # path is relative to exportpath
 
