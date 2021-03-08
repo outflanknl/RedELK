@@ -6,7 +6,7 @@
 # - Outflank B.V. / Mark Bergman (@xychix)
 # - Lorenzo Bernardi (@fastlorenzo)
 #
-from modules.helpers import *
+from modules.helpers import getQuery, getValue, initial_alarm_result, es
 import traceback
 import logging
 
@@ -85,15 +85,15 @@ class Module():
     # Copy all data of [fields] from src to dst document and save it to ES
     def copy_data_fields(self, src, dst, fields):
         for f in fields:
-                if f in dst['_source']:
-                    self.logger.info('Field [%s] already exists in destination document, it will be overwritten' % f)
-                dst['_source'][f] = src['_source'][f]
+            if f in dst['_source']:
+                self.logger.info('Field [%s] already exists in destination document, it will be overwritten' % f)
+            dst['_source'][f] = src['_source'][f]
 
         try:
             es.update(index=dst['_index'], id=dst['_id'], body={'doc': dst['_source']})
             return(dst)
         except Exception as e:
-            stackTrace = traceback.format_exc()
+            # stackTrace = traceback.format_exc()
             self.logger.error('Error enriching beacon document %s: %s' % (dst['_id'], traceback))
             self.logger.exception(e)
             return(False)

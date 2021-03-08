@@ -8,7 +8,7 @@
 import config
 import pymsteams
 import logging
-from modules.helpers import *
+from modules.helpers import getValue, pprint
 
 info = {
     'version': 0.1,
@@ -17,6 +17,7 @@ info = {
     'type': 'redelk_connector',
     'submodule': 'msteams'
 }
+
 
 class Module():
     def __init__(self):
@@ -44,7 +45,7 @@ class Module():
                         title = '%s / %s' % (title, getValue('_source.%s' % alarm['groupby'][i], hit))
                     i += 1
                 tcs.activityTitle('Alarm on item: %s' % title)
-                #tcs.activitySubtitle(alarm['info']['description'])
+                # tcs.activitySubtitle(alarm['info']['description'])
                 for field in alarm['fields']:
                     val = getValue('_source.%s' % field, hit)
                     tcs.addFact(field, pprint(val))

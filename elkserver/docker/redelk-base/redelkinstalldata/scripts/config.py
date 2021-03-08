@@ -3,25 +3,22 @@ import json
 with open('/etc/redelk/config.json') as json_data:
     d = json.load(json_data)
 
-#### General
-Verbosity = 0 #Verbosity
-if "Verbosity" in d: Verbosity = int(d['Verbosity'])
+# -- General
+Verbosity = 0  # Verbosity
+if "Verbosity" in d:
+    Verbosity = int(d['Verbosity'])
 
-DEBUG = 0 #Debug 1 or 0
-if "DEBUG" in d: DEBUG = int(d['DEBUG'])
+DEBUG = 0  # Debug 1 or 0
+if "DEBUG" in d:
+    DEBUG = int(d['DEBUG'])
 
-interval = 3600 #interval for rechecking IOC's (in seconds)
-if "interval" in d: interval = int(d['interval'])
 
-#### HybridAnalysisAPIKEY
-HybridAnalysisAPIKEY = ""
-if "HybridAnalysisAPIKEY" in d: HybridAnalysisAPIKEY = d['HybridAnalysisAPIKEY']
+# -- directory for cache files (including shelves)
+tempDir = "/tmp"
+if "tempDir" in d:
+    tempDir = d['tempDir']
 
-#### directory for cache files (including shelves)
-tempDir="/tmp"
-if "tempDir" in d: tempDir = d['tempDir']
-
-#### Notifications
+# -- Notifications
 notifications = {
     'email': {
         'enabled': False,
@@ -47,14 +44,14 @@ if 'notifications' in d:
     for n in d['notifications']:
         notifications[n] = d['notifications'][n]
 
-#### Alarms
+# -- Alarms
 alarms = {
     'alarm_filehash': {
         'enabled': False,
         'interval': 300,
-        'vt_api_key': '', # Virustotal API
-        'ibm_basic_auth': '', # IBM X-Force API (can be retreived from a sample call on their swagger test site)
-        'ha_api_key': '' # Hybrid Analysis API
+        'vt_api_key': '',  # Virustotal API
+        'ibm_basic_auth': '',  # IBM X-Force API (can be retreived from a sample call on their swagger test site)
+        'ha_api_key': ''  # Hybrid Analysis API
     },
     'alarm_httptraffic': {
         'enabled': False,
@@ -73,7 +70,7 @@ if 'alarms' in d:
     for a in d['alarms']:
         alarms[a] = d['alarms'][a]
 
-#### Enrichments modules
+# -- Enrichments modules
 enrich = {
     'enrich_csbeacon': {
         'enabled': True,
@@ -88,6 +85,10 @@ enrich = {
         'enabled': True,
         'interval': 320,
         'cache': 3600
+    },
+    'enrich_synciplists': {
+        'enabled': True,
+        'interval': 360
     }
 }
 if 'enrich' in d:
@@ -95,4 +96,5 @@ if 'enrich' in d:
         enrich[e] = d['enrich'][e]
 
 es_connection = ['http://localhost:9200']
-if 'es_connection' in d: es_connection = d['es_connection']
+if 'es_connection' in d:
+    es_connection = d['es_connection']
