@@ -6,20 +6,19 @@
 # Authors:
 # - Outflank B.V. / Mark Bergman (@xychix)
 # - Lorenzo Bernardi (@fastlorenzo)
-#
+# 
 import os
 import importlib
 import logging
 import copy
 
 from modules.helpers import shouldModuleRun, setTags, moduleDidRun, addAlarmData, groupHits
-from config import alarms, notifications, enrich
-
-LOG_LEVEL = logging.DEBUG
+from config import alarms, notifications, enrich, LOGLEVEL
+import config as conf
 
 if __name__ == '__main__':
     logging.basicConfig(
-        format='%(asctime)s - %(levelname)s - %(name)s - %(filename)s - %(funcName)s -- %(message)s', level=LOG_LEVEL)
+        format='%(asctime)s - %(levelname)s - %(name)s - %(filename)s - %(funcName)s -- %(message)s', level=LOGLEVEL)
     logger = logging.getLogger('alarm')
     path = './modules/'
     module_folders = os.listdir(path)

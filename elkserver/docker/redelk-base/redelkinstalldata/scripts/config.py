@@ -1,4 +1,5 @@
 import json
+import logging
 
 with open('/etc/redelk/config.json') as json_data:
     d = json.load(json_data)
@@ -8,10 +9,22 @@ Verbosity = 0  # Verbosity
 if "Verbosity" in d:
     Verbosity = int(d['Verbosity'])
 
+
+# -- logging
+#CRITICAL, 50
+#ERROR, 40
+#WARNING, 30
+#INFO, 20
+#DEBUG, 10
+#NOTSET, 0
+
 DEBUG = 0  # Debug 1 or 0
 if "DEBUG" in d:
     DEBUG = int(d['DEBUG'])
 
+LOGLEVEL = logging.INFO
+if "LOGLEVEL" in d:
+    LOGLEVEL = int(d['LOGLEVEL'])
 
 # -- directory for cache files (including shelves)
 tempDir = "/tmp"

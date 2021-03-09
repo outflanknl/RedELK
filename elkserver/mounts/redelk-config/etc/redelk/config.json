@@ -1,5 +1,6 @@
 {
     "DEBUG": "0",
+    "LOGLEVEL": "20",
     "Verbosity": "0",
     "interval": 3600,
     "tempDir": "/tmp",
