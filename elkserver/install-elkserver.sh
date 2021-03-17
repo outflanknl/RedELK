@@ -55,51 +55,6 @@ echoerror() {
     printf "`date +'%b %e %R'` $INSTALLER - ${RC} * ERROR ${EC}: $@\n" >> $LOGFILE 2>&1
 }
 
-install_docker(){
-    echo "[*] Installing docker"
-    if [ -x "$(command -v apt)" ]; then
-        echo "[*] apt based system found, trying to install docker via apt" | tee -a $LOGFILE
-        apt -y install docker >> $LOGFILE 2>&1
-        ERROR=$?
-        if [ $ERROR -ne 0 ]; then
-            echoerror "[X] Could not install docker via apt. Exiting. (Error Code: $ERROR)."
-            exit 1
-        fi
-    else
-        echo "[*] Trying to install docker via Docker convenience script" | tee -a $LOGFILE
-        curl -fsSL get.docker.com -o get-docker.sh >> $LOGFILE 2>&1
-        chmod +x get-docker.sh >> $LOGFILE 2>&1
-        ./get-docker.sh >> $LOGFILE 2>&1
-        ERROR=$?
-        if [ $ERROR -ne 0 ]; then
-            echoerror "[X] Docker could not be installed. Exiting. (Error Code: $ERROR)."
-            exit 1
-        fi
-    fi
-}
-
-install_docker_compose(){
-    echo "[*] Installing docker-compose.."
-    if [ -x "$(command -v apt)" ]; then
-        echo "[*] apt based system found, trying to install docker via apt" | tee -a $LOGFILE
-        apt -y install docker-compose >> $LOGFILE 2>&1
-        ERROR=$?
-        if [ $ERROR -ne 0 ]; then
-            echoerror "[X] Could not install docker-compose via apt.  (Error Code: $ERROR)."
-            exit 1
-        fi
-    else
-        echo "[*] Non apt based system found, trying to install docker via install script from Docker GitHub" | tee -a $LOGFILE
-        COMPOSE_VERSION=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep 'tag_name' | cut -d\" -f4)
-        curl -L https://github.com/docker/compose/releases/download/$COMPOSE_VERSION/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose >> $LOGFILE 2>&1
-        chmod +x /usr/local/bin/docker-compose >> $LOGFILE 2>&1
-        ERROR=$?
-        if [ $ERROR -ne 0 ]; then
-            echoerror "[X] Could not install docker-compose (Error Code: $ERROR)."
-            exit 1
-        fi
-    fi
-}
 
 function sedescape {
   echo $1 | sed -e 's/\([[\/.*]\|\]\)/\\&/g'
@@ -110,39 +65,77 @@ preinstallcheck() {
 
     # Checking if OS is Debian / APT based
     if [ ! -f  /etc/debian_version ]; then
-        echo "[X] This system does not seem to be Debian/APT-based. RedELK installer only supports Debian/APT based systems."  | tee -a $LOGFILE
-        echoerror "System is not Debian/APT based. Not supported. Exiting."
+        echo "[X] This system is not Debian/APT-based. RedELK installer only supports Debian/APT based systems."  | tee -a $LOGFILE
+        echo "System is not Debian/APT based. Not supported. Exiting." | tee -a $LOGFILE
         exit 1
     fi
 
-    # Check if curl is installed
-    if [ ! -x "$(command -v curl)" ]; then
-        echo "[X] Curl is not installed. Please fix manually. Exiting" | tee -a $LOGFILE
-        exit 1
-    fi
+    # Check if installed: curl, jq, htpasswd, docker, docker-compose
+    # install if not already installed
+    if [ ! -x "$(command -v curl)" ] || [ ! -x "$(command -v jq)" ] || [ ! -x "$(command -v htpasswd)" ] || [ ! -x "$(command -v docker)" ] || [ ! -x "$(command -v docker-compose)" ]; then
+        echo "[*] Updating apt"  | tee -a $LOGFILE
+        apt -y update >> $LOGFILE 2>&1
+        ERROR=$?
+        if [ $ERROR -ne 0 ]; then
+            echo "[X] Error updating apt. Exiting. Please fix manually (Error Code: $ERROR)." | tee -a $LOGFILE
+            exit 1
+        fi
 
-    # Check if jq is installed
-    if [ ! -x "$(command -v jq)" ]; then
-        echo "[X] jq is not installed. Please fix manually. Exiting" | tee -a $LOGFILE
-        exit 1
-    fi
+        # curl
+        if [ ! -x "$(command -v curl)" ]; then
+            echo "[*] Installing curl"  | tee -a $LOGFILE
+            apt -y install curl >> $LOGFILE 2>&1
+            ERROR=$?
+            if [ $ERROR -ne 0 ]; then
+                echo "[X] Error installing curl via apt. Exiting. Please fix manually. (Error Code: $ERROR)." | tee -a $LOGFILE
+                exit 1
+            fi
+        fi
 
-    # Check if docker is installed
-    if [ ! -x "$(command -v docker)" ]; then
-        echo "[!] Docker is not installed. Please fix manually, or wait 5 seconds to auto-install with Docker convenience script" | tee -a $LOGFILE
-        sleep 5
-        install_docker
-    else # making sure that the service is running by starting it
-        service docker start
-    fi
+        # jq
+        if [ ! -x "$(command -v jq)" ]; then
+            echo "[*] Installing jq"  | tee -a $LOGFILE
+            apt -y install jq >> $LOGFILE 2>&1
+            ERROR=$?
+            if [ $ERROR -ne 0 ]; then
+                echo "[X] Error installing jq via apt. Exiting. Please fix manually. (Error Code: $ERROR)." | tee -a $LOGFILE
+                exit 1
+            fi
+        fi
 
-    # Check if docker-compose is installed
-    if [ ! -x "$(command -v docker-compose)" ]; then
-        echo "[!] Docker-compose is not installed. Please fix manually, or wait 5 seconds to auto-install with Docker GitHub install script" | tee -a $LOGFILE
-        sleep 5
-        install_docker_compose
+        # htpasswd
+        if [ ! -x "$(command -v htpasswd)" ]; then
+            echo "[*] Installing apache2-utils"  | tee -a $LOGFILE
+            apt -y install apache2-utils >> $LOGFILE 2>&1
+            ERROR=$?
+            if [ $ERROR -ne 0 ]; then
+                echo "[X] Error installing apache2-utils via apt. Exiting. Please fix manually. (Error Code: $ERROR)." | tee -a $LOGFILE
+                exit 1
+            fi
+        fi
+
+        # docker
+        if [ ! -x "$(command -v docker)" ]; then
+            echo "[*] Installing docker"  | tee -a $LOGFILE
+            apt -y install docker >> $LOGFILE 2>&1
+            ERROR=$?
+            if [ $ERROR -ne 0 ]; then
+                echo "[X] Error installing docker via apt. Exiting. Please fix manually. (Error Code: $ERROR)." | tee -a $LOGFILE
+                exit 1
+            fi
+        fi
+
+        # docker-compose
+        if [ ! -x "$(command -v docker-compose)" ]; then
+            echo "[*] Installing docker-compose"  | tee -a $LOGFILE
+            apt -y install docker-compose >> $LOGFILE 2>&1
+            ERROR=$?
+            if [ $ERROR -ne 0 ]; then
+                echo "[X] Could not install docker-compose via apt. Please fix manually. (Error Code: $ERROR)." | tee -a $LOGFILE
+                exit 1
+            fi
+        fi
     fi
-    
 }
 
 memcheck() {
