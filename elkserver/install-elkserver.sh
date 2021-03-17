@@ -500,6 +500,27 @@ if [ $ERROR -ne 0 ]; then
     echoerror "[X] Could not set TLS_NGINX_CA_PATH (Error Code: $ERROR)."
 fi
 
+echo "[*] Creating password file for easy reference" | tee -a $LOGFILE
+echo "# passwords used for RedELK installation" > redelk_passwords.cfg >> $LOGFILE 2>&1
+echo "CredHtaccessUsername = \"redelk\"" >> redelk_passwords.cfg && \
+echo "CredHtaccessPassword = \"$CREDS_redelk\"" >> redelk_passwords.cfg && \
+echo "CredESUsername = \"elastic\"" >> redelk_passwords.cfg && \
+echo "CredESPassword = \"$ELASTIC_PASSWORD\"" >> redelk_passwords.cfg && \
+echo "CredNeo4jUsername = \"neo4j\"" >> redelk_passwords.cfg && \
+echo "CredNeo4jPassword = \"$NEO4J_PASSWORD\"" >> redelk_passwords.cfg
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echo "[X] Error creating password file for easy reference (Error Code: $ERROR)." | tee -a $LOGFILE
+fi
+
+echo "[*] Copying password file for use with jupyter notebooks" | tee -a $LOGFILE
+cp redelk_passwords.cfg ./mounts/jupyter-workbooks/redelk_passwords.py >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echo "[X] Error copying password file for use with jupyter notebooks (Error Code: $ERROR)." | tee -a $LOGFILE
+fi
+
+
 if [ $DRYRUN == "no" ]; then
     if [ $DO_LETSENCRYPT == "true" ]; then
         echo "[*] Running initial Let's Encrypt script" | tee -a $LOGFILE
