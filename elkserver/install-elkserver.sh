@@ -341,6 +341,7 @@ if (grep "{{ELASTIC_PASSWORD}}" $DOCKERENVFILE > /dev/null); then
     rm mounts/redelk-config/etc/redelk/config.json.bak
 else
     echo "[*] Elastic ES password in docker template already defined - skipping" | tee -a $LOGFILE
+    ELASTIC_PASSWORD=$(grep -E ^ELASTIC_PASSWORD= .env|awk -F\= '{print $2}')
 fi
 
 KBN_XPACK_ENCRYPTEDSAVEDOBJECTS=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
@@ -366,12 +367,19 @@ if [ ${WHATTOINSTALL} = "full" ]; then
         echo "[X] Could not adjust ES memory settings (Error Code: $ERROR)." | tee -a $LOGFILE
     fi
 
-    NEO4J_PASSWORD=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
-    echo "[*] Setting neo4j password" | tee -a $LOGFILE
-    sed -E -i.bak "s/\{\{NEO4J_PASSWORD\}\}/${NEO4J_PASSWORD}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
-    ERROR=$?
-    if [ $ERROR -ne 0 ]; then
-        echo "[X] Could not set neo4j password (Error Code: $ERROR)." | tee -a $LOGFILE
+    # check if Neo4J password is already generated
+    if (grep "{{NEO4J_PASSWORD}}" $DOCKERENVFILE > /dev/null); then
+        NEO4J_PASSWORD=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
+        
+        echo "[*] Setting neo4j password" | tee -a $LOGFILE
+        sed -E -i.bak "s/\{\{NEO4J_PASSWORD\}\}/${NEO4J_PASSWORD}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
+        ERROR=$?
+        if [ $ERROR -ne 0 ]; then
+            echo "[X] Could not set neo4j password (Error Code: $ERROR)." | tee -a $LOGFILE
+        fi
+    else
+        echo "[*] Neo4j password in docker template already defined - skipping" | tee -a $LOGFILE
+        NEO4J_PASSWORD=$(grep -E ^NEO4J_AUTH= .env|awk -Fneo4j/ '{print $2}')
     fi
 fi
 
