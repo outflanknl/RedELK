@@ -404,7 +404,7 @@ if [ $ERROR -ne 0 ]; then
     echo "[X] Could not set permissions on Jupyter notebook working dir (Error Code: $ERROR)." | tee -a $LOGFILE
 fi
 
-# Certificate things
+# Certificate things for nginx
 # check if letsencrypt is enabled in the config file
 DO_LETSENCRYPT=$(cat ./mounts/redelk-config/etc/redelk/config.json | jq -r .redelkserver_letsencrypt.enable_letsencrypt)
 if [ $DO_LETSENCRYPT == "true" ]; then
@@ -431,16 +431,16 @@ if [ $DO_LETSENCRYPT == "true" ]; then
             echo "[X] Could not set Let's Encrypt email in Docker env file (Error Code: $ERROR)." | tee -a $LOGFILE
         fi
     fi
-else # letsencrypt not enabled, take domain name from initial-setup certs config file
+else # letsencrypt not enabled, but we still need a cert for nginx. So we create a self sigend cert using the domain name from initial-setup certs config file
     EXTERNAL_DOMAIN=`grep -E "^DNS\.|^IP\." ../certs/config.cnf|awk -F\= '{print $2}'|tr -d " "|head -n1`
-    echo "[*] Creating dummy certificate for $EXTERNAL_DOMAIN "
+    echo "[*] Creating custom certificate for $EXTERNAL_DOMAIN "
     CERTPATH="mounts/certbot/conf/live/noletsencrypt"
     mkdir -p $CERTPATH && \
     openssl req -x509 -nodes -newkey rsa:4096 -days 365 -keyout $CERTPATH/privkey.pem -out $CERTPATH/fullchain.pem -subj /CN=${EXTERNAL_DOMAIN} >> $LOGFILE 2>&1 && \
     chown -R 1000 $CERTPATH
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
-        echo "[X] Error creating dummy certificates (Error Code: $ERROR)." | tee -a $LOGFILE
+        echo "[X] Error creating custom certificates (Error Code: $ERROR)." | tee -a $LOGFILE
     fi
 
     # after the cert is generated we set $EXTERNAL_DOMAIN and $LE_EMAIL to invalid values to have certbot fail on purpose
@@ -448,7 +448,7 @@ else # letsencrypt not enabled, take domain name from initial-setup certs config
     LE_EMAIL="noletsencrypt"
 fi
 
-# NGINX certificates config
+# NGINX certificates vars
 CERTS_DIR_NGINX_LOCAL=$(sedescape "./mounts/certbot/conf/live/${EXTERNAL_DOMAIN}")
 CERTS_DIR_NGINX_CA_LOCAL=$(sedescape "./mounts/certs/ca/")
 TLS_NGINX_CRT_PATH=$(sedescape "/etc/nginx/certs/fullchain.pem")
