@@ -152,6 +152,8 @@ services:
   certbot:
     container_name: redelk-certbot
     image: certbot/certbot
+    networks:
+      - net  
     volumes:
       - ./mounts/certbot/conf:/etc/letsencrypt
       - ./mounts/certbot/www:/var/www/certbot
