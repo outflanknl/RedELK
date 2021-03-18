@@ -435,7 +435,9 @@ else # letsencrypt not enabled, take domain name from initial-setup certs config
     EXTERNAL_DOMAIN=`grep -E "^DNS\.|^IP\." ../certs/config.cnf|awk -F\= '{print $2}'|tr -d " "|head -n1`
     echo "[*] Creating dummy certificate for $EXTERNAL_DOMAIN "
     CERTPATH="mounts/certbot/conf/live/noletsencrypt"
-    mkdir -p $CERTPATH && openssl req -x509 -nodes -newkey rsa:4096 -days 365 -keyout $CERTPATH/privkey.pem -out $CERTPATH/fullchain.pem -subj /CN=${EXTERNAL_DOMAIN} > /dev/null | tee -a $LOGFILE && chown -R 1000 $CERTPATH
+    mkdir -p $CERTPATH && \
+    openssl req -x509 -nodes -newkey rsa:4096 -days 365 -keyout $CERTPATH/privkey.pem -out $CERTPATH/fullchain.pem -subj /CN=${EXTERNAL_DOMAIN} >> $LOGFILE 2>&1 && \
+    chown -R 1000 $CERTPATH
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echo "[X] Error creating dummy certificates (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -485,6 +487,9 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "[*] Linking docker-compose.yml to the docker file used" | tee -a $LOGFILE
+if [ -f docker-compose.yml ]; then
+    rm docker-compose.yml >> $LOGFILE 2>&1
+fi 
 ln -s $DOCKERCONFFILE docker-compose.yml >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
@@ -492,7 +497,7 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "[*] Creating password file for easy reference" | tee -a $LOGFILE
-echo "# passwords used for RedELK installation" > redelk_passwords.cfg >> $LOGFILE 2>&1
+echo "# passwords used for RedELK installation" > redelk_passwords.cfg
 echo "CredHtaccessUsername = \"redelk\"" >> redelk_passwords.cfg && \
 echo "CredHtaccessPassword = \"$CREDS_redelk\"" >> redelk_passwords.cfg && \
 echo "CredESUsername = \"elastic\"" >> redelk_passwords.cfg && \
@@ -545,12 +550,12 @@ echo "" | tee -a $LOGFILE
 echo "" | tee -a $LOGFILE
 if [ $DRYRUN == "no" ]; then
     echo " Done with base setup of RedELK on ELK server" | tee -a $LOGFILE
-    echo " You can now login with on: " | tee -a $LOGFILE
-    echo "   - Main RedELK Kibana interface on port 443 (default redelk:$CREDS_redelk)" | tee -a $LOGFILE
+    echo " You can now login to the following interfaces: " | tee -a $LOGFILE
+    echo "   - Main RedELK Kibana interface on port 443 (user: redelk, pass:$CREDS_redelk)" | tee -a $LOGFILE
     if [ ${WHATTOINSTALL} != "limited" ]; then
-        echo "   - Jupyter notebooks on /jupyter" | tee -a $LOGFILE
-        echo "   - Neo4J Browser on /neo4jbrowser" | tee -a $LOGFILE
-        echo "   - Neo4J using the BloodHound app on port 7687 (neo4j:BloodHound)" | tee -a $LOGFILE
+        echo "   - Jupyter notebooks on /jupyter (user: redelk, pass:$CREDS_redelk)" | tee -a $LOGFILE
+        echo "   - Neo4J Browser port 7473 (user: neo4j, pass:$NEO4J_PASSWORD)" | tee -a $LOGFILE
+        echo "   - Neo4J using the BloodHound app on port 7687 (user: neo4j, pass:$NEO4J_PASSWORD)" | tee -a $LOGFILE
     fi
     echo "" | tee -a $LOGFILE
     echo "" | tee -a $LOGFILE
