@@ -28,6 +28,8 @@ services:
     image: ${REDELKREPO}/redelk-elasticsearch:${REDELKVERSION}
     networks:
       - net
+    ports:
+      - "127.0.0.01:9200:9200"
     expose:
       - "9200"
     volumes:

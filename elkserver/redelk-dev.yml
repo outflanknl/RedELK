@@ -27,7 +27,7 @@ services:
     build: ./docker/redelk-elasticsearch
     networks:
       - net
-    # Only for dev purposes, expose ES port
+    # Only for dev purposes, expose ES port to everywhere
     ports:
       - "9200:9200"
     expose:
