@@ -28,7 +28,7 @@ info = {
 class Module():
     def __init__(self):
         self.logger = logging.getLogger(info['submodule'])
-        self.iplists = ['customer', 'redteam', 'unknown']
+        self.iplists = ['customer', 'redteam', 'unknown', 'blueteam']
 
     def run(self):
         ret = initial_alarm_result
