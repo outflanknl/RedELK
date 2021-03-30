@@ -121,6 +121,8 @@ elkserver/mounts/logstash-config/*
 elkserver/mounts/redelk-logs/*
 elkserver/mounts/certs/*
 elkserver/mounts/certbot/*
+elkserver/mounts/jupyter-workbooks/redelk_passwords.py
+elkserver/redelk_passwords.cfg
 elkserver/redelk-install.log
 redelk-inintialsetup.log
 redirs.tgz
