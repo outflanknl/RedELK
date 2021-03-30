@@ -5,7 +5,7 @@
     "interval": 3600,
     "tempDir": "/tmp",
     "redelkserver_letsencrypt": {
-        "enable_letsencrypt": true,
+        "enable_letsencrypt": false,
         "external_domain": "",
         "le_email": "",
         "staging": "0"
