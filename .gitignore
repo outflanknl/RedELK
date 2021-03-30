@@ -118,6 +118,7 @@ elkserver.tgz
 elkserver/VERSION
 elkserver/mounts/redelk-ssh/*
 elkserver/mounts/logstash-config/*
+elkserver/mounts/logstash-logs/*
 elkserver/mounts/certs/*
 elkserver/mounts/certbot/*
 elkserver/redelk-install.log
