@@ -28,6 +28,8 @@ services:
     image: ${REDELKREPO}/redelk-elasticsearch:${REDELKVERSION}
     networks:
       - net
+    ports:
+      - "127.0.0.01:9200:9200"
     expose:
       - "9200"
     volumes:
@@ -150,7 +152,10 @@ services:
     restart: always
 
   certbot:
+    container_name: redelk-certbot
     image: certbot/certbot
+    networks:
+      - net  
     volumes:
       - ./mounts/certbot/conf:/etc/letsencrypt
       - ./mounts/certbot/www:/var/www/certbot
@@ -197,9 +202,8 @@ services:
     volumes:
       - bloodhound_data:/var/lib/neo4j
     ports:
+      - "7473:7473"
       - "7687:7687"
-    expose:
-      - "7474"
     environment:
       - NEO4J_AUTH=${NEO4J_AUTH}
       - NEO4J_dbms_memory_heap_initial__size=${NEO4J_dbms_memory_heap_initial__size}

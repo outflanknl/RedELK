@@ -2,8 +2,9 @@
 # Part of RedELK
 # Docker compose config for RedELK development
 #
-# Author: Outflank B.V. / Marc Smeets
-#
+# Authors:
+# - Outflank B.V. / Marc Smeets
+# - Lorenzo Bernardi (@fastlorenzo)
 #
 
 version: "3.3"
@@ -26,7 +27,7 @@ services:
     build: ./docker/redelk-elasticsearch
     networks:
       - net
-    # Only for dev purposes, expose ES port
+    # Only for dev purposes, expose ES port to everywhere
     ports:
       - "9200:9200"
     expose:
@@ -156,7 +157,10 @@ services:
     restart: always
 
   certbot:
+    container_name: redelk-certbot
     image: certbot/certbot
+    networks:
+      - net
     volumes:
       - ./mounts/certbot/conf:/etc/letsencrypt
       - ./mounts/certbot/www:/var/www/certbot
@@ -203,9 +207,8 @@ services:
     volumes:
       - bloodhound_data:/var/lib/neo4j
     ports:
+      - "7473:7473"
       - "7687:7687"
-    expose:
-      - "7474"
     environment:
       - NEO4J_AUTH=${NEO4J_AUTH}
       - NEO4J_dbms_memory_heap_initial__size=${NEO4J_dbms_memory_heap_initial__size}

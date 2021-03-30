@@ -26,6 +26,8 @@ services:
     image: ${REDELKREPO}/redelk-elasticsearch:${REDELKVERSION}
     networks:
       - net
+    ports:
+      - "127.0.0.1:9200:9200"
     expose:
       - "9200"
     volumes:
@@ -148,6 +150,7 @@ services:
     restart: always
 
   certbot:
+    container_name: redelk-certbot
     image: certbot/certbot
     volumes:
       - ./mounts/certbot/conf:/etc/letsencrypt

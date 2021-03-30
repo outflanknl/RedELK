@@ -3,9 +3,13 @@
     "Verbosity": "0",
     "interval": 3600,
     "tempDir": "/tmp",
+    "redelkserver_letsencrypt": {
+        "enable_letsencrypt": true,
+        "external_domain": "",
+        "le_email": "",
+        "staging": "0"
+    },
     "es_connection": ["https://elastic:{{ELASTIC_PASSWORD}}@redelk-elasticsearch:9200"],
-    "external_domain": "",
-    "le_email": "",
     "notifications": {
         "email": {
             "enabled": false,
