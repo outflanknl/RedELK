@@ -11,7 +11,7 @@
 rsa_key_size=4096
 data_path="./mounts/certbot"
 email="$(cat ./mounts/redelk-config/etc/redelk/config.json | jq -r .redelkserver_letsencrypt.le_email)" # Adding a valid address is strongly recommended
-staging=0 # Set to 1 if you're testing your setup to avoid hitting request limits
+staging="$(cat ./mounts/redelk-config/etc/redelk/config.json | jq -r .redelkserver_letsencrypt.staging)"  # Set to 1 if you're testing your setup to avoid hitting request limits
 
 if ! [ -x "$(command -v docker-compose)" ]; then
   echo 'Error: docker-compose is not installed.' >&2
@@ -23,7 +23,7 @@ if [ ${#} -eq 2 ] && [[ -f $1  ]]; then
   domain=$2
 else
   echo "[X] Error: 1st parameter should be input file for docker-compose, 2nd the domain name. Exiting."
-  ecit 1
+  exit 1
 fi
 
 # if [ -d "$data_path" ]; then
@@ -80,6 +80,9 @@ esac
 
 # Enable staging mode if needed
 if [ $staging != "0" ]; then staging_arg="--staging"; fi
+
+echo "### Removing dummy certificate folder"
+rm -Rf "$data_path/conf/live/$domain"
 
 docker-compose -f $compose_file run --rm --entrypoint "\
   certbot certonly --webroot -w /var/www/certbot \

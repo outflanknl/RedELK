@@ -6,7 +6,8 @@
     "redelkserver_letsencrypt": {
         "enable_letsencrypt": true,
         "external_domain": "",
-        "le_email": ""
+        "le_email": "",
+        "staging": "0"
     },
     "es_connection": ["https://elastic:{{ELASTIC_PASSWORD}}@redelk-elasticsearch:9200"],
     "notifications": {
