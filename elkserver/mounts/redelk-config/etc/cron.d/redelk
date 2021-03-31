@@ -33,4 +33,4 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 */1 * * * * redelk /usr/share/redelk/bin/makethumbnail.py /var/www/html/c2logs/
 
 # Run the daemon that will process alarms, enrichments and notifications
-* * * * * redelk /usr/share/redelk/bin/run_alarm.sh
+* * * * * redelk /usr/share/redelk/bin/run_daemon.sh

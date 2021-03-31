@@ -7,10 +7,9 @@
 # - Lorenzo Bernardi (@fastlorenzo)
 #
 import requests
-import os
 import time
-import json
 import logging
+
 
 class HA():
     def __init__(self, api_key):
@@ -24,7 +23,6 @@ class HA():
         return(True)
 
     def HAreport(self, hashlist):
-        r = []
         headers = {'accept': 'application/json',
                    'user-agent': 'Falcon Sandbox',
                    'api-key': self.api_key,
@@ -43,7 +41,6 @@ class HA():
         return(json_response)
 
     def test(self, list):
-        l = list
         for md5 in list:
             self.report[md5] = {
                 'record': {},

@@ -7,9 +7,9 @@
 # - Lorenzo Bernardi (@fastlorenzo)
 #
 import requests
-import os
 import json
 import logging
+
 
 class IBM():
     def __init__(self, basic_auth):
@@ -37,7 +37,6 @@ class IBM():
         return(r)
 
     def test(self, list):
-        l = list
         for md5 in list:
             self.report[md5] = {
                 'record': {},
@@ -49,7 +48,7 @@ class IBM():
         # Looping over individual results
         for res in r:
             self.logger.debug('status code %s' % res[0])
-            if res[1] != None:  # We have json response!
+            if res[1] is not None:  # We have json response!
                 report = res[1]
                 md5 = report['query_hash']
                 if 'malware' in report:

@@ -67,6 +67,10 @@
             "interval": 360,
             "cache": 360
         },
+        "enrich_iplists": {
+            "enabled": true,
+            "interval": 30
+        },
         "enrich_synciplists": {
             "enabled": true,
             "interval": 360
