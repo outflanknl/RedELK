@@ -144,7 +144,7 @@
         },
         "id": "057076f0-d4e4-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {
@@ -286,7 +286,7 @@
         },
         "id": "0b5ffcd0-d317-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {
@@ -317,7 +317,7 @@
                 "aggs": [],
                 "params": {
                     "fontSize": 12,
-                    "markdown": "**Dashboards** : [Summary](/app/kibana#/dashboard/02486040-d355-11ea-9301-a30a04251ae9) | [Alarms](/app/kibana#/dashboard/53b69200-d4e3-11ea-9301-a30a04251ae9) | [Traffic](/app/kibana#/dashboard/0f8626d0-c6f4-11e8-a9c6-cd307b96b1ba) | [Implants](/app/kibana#/dashboard/117dbba0-c6f5-11e8-a9c6-cd307b96b1ba) | [Red Team Operations](/app/kibana#/dashboard/04b87c50-d028-11ea-9301-a30a04251ae9) | [Tasks](/app/kibana#/dashboard/0523c8a0-d025-11ea-9301-a30a04251ae9) | [Downloads](/app/kibana#/dashboard/643de010-d04c-11ea-9301-a30a04251ae9) | [Credentials](/app/kibana#/dashboard/82b865a0-d318-11ea-9301-a30a04251ae9) | [Screenshots](/app/kibana#/dashboard/a2dcebf0-d316-11ea-9301-a30a04251ae9) | [IOC](/app/kibana#/dashboard/86643e90-d4e4-11ea-9301-a30a04251ae9) | [TTP](/app/kibana#/dashboard/3ed7a630-d051-11ea-9301-a30a04251ae9)",
+                    "markdown": "**Dashboards** : [Summary](/app/kibana#/dashboard/02486040-d355-11ea-9301-a30a04251ae9) | [Alarms](/app/kibana#/dashboard/53b69200-d4e3-11ea-9301-a30a04251ae9) | [Traffic](/app/kibana#/dashboard/0f8626d0-c6f4-11e8-a9c6-cd307b96b1ba) | [Implants](/app/kibana#/dashboard/117dbba0-c6f5-11e8-a9c6-cd307b96b1ba) | [Red Team Operations](/app/kibana#/dashboard/04b87c50-d028-11ea-9301-a30a04251ae9) | [Tasks](/app/kibana#/dashboard/0523c8a0-d025-11ea-9301-a30a04251ae9) | [Downloads](/app/kibana#/dashboard/643de010-d04c-11ea-9301-a30a04251ae9) | [Credentials](/app/kibana#/dashboard/82b865a0-d318-11ea-9301-a30a04251ae9) | [Screenshots](/app/kibana#/dashboard/a2dcebf0-d316-11ea-9301-a30a04251ae9) | [IOC](/app/kibana#/dashboard/86643e90-d4e4-11ea-9301-a30a04251ae9) | [TTP](/app/kibana#/dashboard/3ed7a630-d051-11ea-9301-a30a04251ae9) | [Health](/app/kibana#/dashboard/509e6a80-926a-11eb-a753-9da683898c26)",
                     "openLinksInNewTab": false
                 },
                 "title": "RedELK - Dashboard links internal",
@@ -326,7 +326,7 @@
         },
         "id": "0f82b540-d237-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [],
         "type": "visualization",
@@ -435,7 +435,7 @@
         },
         "id": "10dcc4a0-b8e7-11e8-94dd-171ae5c1fd1a",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {
@@ -540,7 +540,7 @@
         },
         "id": "10dd40f0-b983-11e8-94dd-171ae5c1fd1a",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {
@@ -640,13 +640,103 @@
         },
         "id": "1d26da60-b983-11e8-94dd-171ae5c1fd1a",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {
                 "id": "redirtraffic",
                 "name": "kibanaSavedObjectMeta.searchSourceJSON.index",
                 "type": "index-pattern"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "savedSearchRefName": "search_0",
+            "title": "RedELK - IP Lists metrics",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {
+                            "customLabel": "IPs"
+                        },
+                        "schema": "metric",
+                        "type": "count"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "2",
+                        "params": {
+                            "field": "iplist.name",
+                            "missingBucket": false,
+                            "missingBucketLabel": "Missing",
+                            "order": "desc",
+                            "orderBy": "1",
+                            "otherBucket": true,
+                            "otherBucketLabel": "Other",
+                            "size": 30
+                        },
+                        "schema": "group",
+                        "type": "terms"
+                    }
+                ],
+                "params": {
+                    "addLegend": false,
+                    "addTooltip": true,
+                    "metric": {
+                        "colorSchema": "Green to Red",
+                        "colorsRange": [
+                            {
+                                "from": 0,
+                                "to": 10000
+                            }
+                        ],
+                        "invertColors": false,
+                        "labels": {
+                            "show": true
+                        },
+                        "metricColorMode": "None",
+                        "percentageMode": false,
+                        "style": {
+                            "bgColor": false,
+                            "bgFill": "#000",
+                            "fontSize": 60,
+                            "labelColor": false,
+                            "subText": ""
+                        },
+                        "useRanges": false
+                    },
+                    "type": "metric"
+                },
+                "title": "RedELK - IP Lists metrics",
+                "type": "metric"
+            }
+        },
+        "id": "20fac240-926c-11eb-a753-9da683898c26",
+        "migrationVersion": {
+            "visualization": "7.10.0"
+        },
+        "references": [
+            {
+                "id": "87530b40-9269-11eb-a753-9da683898c26",
+                "name": "search_0",
+                "type": "search"
             }
         ],
         "type": "visualization",
@@ -796,7 +886,7 @@
         },
         "id": "231792d0-d050-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {
@@ -952,11 +1042,192 @@
         },
         "id": "2f5a2760-d050-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {
                 "id": "dddbba20-d04f-11ea-9301-a30a04251ae9",
+                "name": "search_0",
+                "type": "search"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "savedSearchRefName": "search_0",
+            "title": "RedELK - IP Lists donut",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {},
+                        "schema": "metric",
+                        "type": "count"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "3",
+                        "params": {
+                            "field": "iplist.source",
+                            "missingBucket": false,
+                            "missingBucketLabel": "Missing",
+                            "order": "desc",
+                            "orderBy": "1",
+                            "otherBucket": false,
+                            "otherBucketLabel": "Other",
+                            "size": 5
+                        },
+                        "schema": "segment",
+                        "type": "terms"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "2",
+                        "params": {
+                            "field": "iplist.name",
+                            "missingBucket": false,
+                            "missingBucketLabel": "Missing",
+                            "order": "desc",
+                            "orderBy": "1",
+                            "otherBucket": true,
+                            "otherBucketLabel": "Other",
+                            "size": 30
+                        },
+                        "schema": "segment",
+                        "type": "terms"
+                    }
+                ],
+                "params": {
+                    "addLegend": true,
+                    "addTooltip": true,
+                    "isDonut": true,
+                    "labels": {
+                        "last_level": true,
+                        "show": true,
+                        "truncate": 100,
+                        "values": true
+                    },
+                    "legendPosition": "bottom",
+                    "type": "pie"
+                },
+                "title": "RedELK - IP Lists donut",
+                "type": "pie"
+            }
+        },
+        "id": "2f77a150-926a-11eb-a753-9da683898c26",
+        "migrationVersion": {
+            "visualization": "7.10.0"
+        },
+        "references": [
+            {
+                "id": "87530b40-9269-11eb-a753-9da683898c26",
+                "name": "search_0",
+                "type": "search"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "savedSearchRefName": "search_0",
+            "title": "RedELK - Modules results donut",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {},
+                        "schema": "metric",
+                        "type": "count"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "4",
+                        "params": {
+                            "customLabel": "Module type",
+                            "field": "module.type",
+                            "missingBucket": false,
+                            "missingBucketLabel": "Missing",
+                            "order": "desc",
+                            "orderBy": "1",
+                            "otherBucket": false,
+                            "otherBucketLabel": "Other",
+                            "size": 5
+                        },
+                        "schema": "split",
+                        "type": "terms"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "3",
+                        "params": {
+                            "customLabel": "Module type",
+                            "field": "module.last_run.status",
+                            "missingBucket": false,
+                            "missingBucketLabel": "Missing",
+                            "order": "desc",
+                            "orderBy": "1",
+                            "otherBucket": false,
+                            "otherBucketLabel": "Other",
+                            "size": 10
+                        },
+                        "schema": "segment",
+                        "type": "terms"
+                    }
+                ],
+                "params": {
+                    "addLegend": true,
+                    "addTooltip": true,
+                    "isDonut": true,
+                    "labels": {
+                        "last_level": true,
+                        "show": true,
+                        "truncate": 100,
+                        "values": true
+                    },
+                    "legendPosition": "bottom",
+                    "row": true,
+                    "type": "pie"
+                },
+                "title": "RedELK - Modules results donut",
+                "type": "pie"
+            }
+        },
+        "id": "2f971ac0-926b-11eb-a753-9da683898c26",
+        "migrationVersion": {
+            "visualization": "7.10.0"
+        },
+        "references": [
+            {
+                "id": "654f76a0-9269-11eb-a753-9da683898c26",
                 "name": "search_0",
                 "type": "search"
             }
@@ -1022,7 +1293,7 @@
         },
         "id": "3729cde0-d4e4-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {
@@ -1096,7 +1367,7 @@
         },
         "id": "389dddc0-d317-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {
@@ -1238,7 +1509,7 @@
         },
         "id": "3ae6c0c0-d4e2-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {
@@ -1306,7 +1577,7 @@
         },
         "id": "41f94ad0-d04c-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {
@@ -1346,7 +1617,7 @@
         },
         "id": "45491770-0886-11eb-a2d2-171dc8941414",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [],
         "type": "visualization",
@@ -1415,7 +1686,7 @@
         },
         "id": "464660c0-d360-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {
@@ -1489,7 +1760,7 @@
         },
         "id": "57626ad0-d355-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {
@@ -1563,7 +1834,7 @@
         },
         "id": "5ffe8850-d4e4-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {
@@ -1638,7 +1909,7 @@
         },
         "id": "62b61920-d4e2-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {
@@ -1711,7 +1982,7 @@
         },
         "id": "632081a0-d02a-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {
@@ -1778,7 +2049,7 @@
         },
         "id": "659280b0-d317-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {
@@ -1851,7 +2122,7 @@
         },
         "id": "6fcf1e70-d02a-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {
@@ -1925,7 +2196,7 @@
         },
         "id": "7d850b30-d4e2-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {
@@ -2069,7 +2340,7 @@
         },
         "id": "85446c80-d04b-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {
@@ -2184,7 +2455,7 @@
         },
         "id": "88003df0-b8ec-11e8-94dd-171ae5c1fd1a",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {
@@ -2259,7 +2530,7 @@
         },
         "id": "88db1280-d024-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {
@@ -2332,7 +2603,7 @@
         },
         "id": "a1efc620-b8e4-11e8-94dd-171ae5c1fd1a",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {
@@ -2421,7 +2692,7 @@
         },
         "id": "a5554e20-d025-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {
@@ -2563,7 +2834,7 @@
         },
         "id": "ab609c60-d319-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {
@@ -2630,7 +2901,7 @@
         },
         "id": "abdcd940-d050-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {
@@ -2788,7 +3059,7 @@
         },
         "id": "afb6ce00-d022-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {
@@ -2863,7 +3134,7 @@
         },
         "id": "b19d4790-d35f-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {
@@ -2937,7 +3208,7 @@
         },
         "id": "b5beb3c0-d04b-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {
@@ -3022,7 +3293,7 @@
         },
         "id": "ce581930-d361-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {
@@ -3094,7 +3365,7 @@
         },
         "id": "d2c7b720-d026-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {
@@ -3173,7 +3444,7 @@
         },
         "id": "dcf86190-d319-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {
@@ -3303,7 +3574,7 @@
         },
         "id": "e12434d0-b8e8-11e8-94dd-171ae5c1fd1a",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {
@@ -3403,7 +3674,7 @@
         },
         "id": "e97f6f10-b982-11e8-94dd-171ae5c1fd1a",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {
@@ -3583,7 +3854,7 @@
         },
         "id": "f0dcbda0-b8e5-11e8-94dd-171ae5c1fd1a",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {
@@ -3747,7 +4018,7 @@
         },
         "id": "f7141500-d4e1-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {
@@ -3814,7 +4085,7 @@
         },
         "id": "ff3c3b80-d050-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {
@@ -3881,7 +4152,7 @@
         },
         "id": "ff4497f0-d319-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.8.0"
+            "visualization": "7.10.0"
         },
         "references": [
             {

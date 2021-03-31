@@ -72,206 +72,6 @@
                     "type": "string"
                 },
                 {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "boolean"
-                    ],
-                    "name": "config.debug",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "boolean"
-                },
-                {
-                    "aggregatable": false,
-                    "count": 0,
-                    "esTypes": [
-                        "text"
-                    ],
-                    "name": "config.es_connection",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "config.external_domain",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "config.le_email",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "config.tempDir",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "integer"
-                    ],
-                    "name": "config.verbosity",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "number"
-                },
-                {
-                    "aggregatable": false,
-                    "count": 0,
-                    "esTypes": [
-                        "text"
-                    ],
-                    "name": "doc.module.last_run.status",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "doc.module.last_run.status.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "doc.module.last_run.status"
-                        }
-                    },
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "date"
-                    ],
-                    "name": "doc.module.last_run.timestamp",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "date"
-                },
-                {
-                    "aggregatable": false,
-                    "count": 0,
-                    "esTypes": [
-                        "text"
-                    ],
-                    "name": "doc.module.name",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "doc.module.name.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "doc.module.name"
-                        }
-                    },
-                    "type": "string"
-                },
-                {
-                    "aggregatable": false,
-                    "count": 0,
-                    "esTypes": [
-                        "text"
-                    ],
-                    "name": "doc.module.type",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "doc.module.type.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "doc.module.type"
-                        }
-                    },
-                    "type": "string"
-                },
-                {
-                    "aggregatable": false,
-                    "count": 1,
-                    "esTypes": [
-                        "text"
-                    ],
-                    "name": "iplist.comment",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "iplist.comment.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "iplist.comment"
-                        }
-                    },
-                    "type": "string"
-                },
-                {
                     "aggregatable": false,
                     "count": 0,
                     "esTypes": [
@@ -285,7 +85,7 @@
                 },
                 {
                     "aggregatable": true,
-                    "count": 1,
+                    "count": 0,
                     "esTypes": [
                         "ip_range"
                     ],
@@ -297,7 +97,7 @@
                 },
                 {
                     "aggregatable": true,
-                    "count": 1,
+                    "count": 0,
                     "esTypes": [
                         "keyword"
                     ],
@@ -309,7 +109,7 @@
                 },
                 {
                     "aggregatable": true,
-                    "count": 1,
+                    "count": 0,
                     "esTypes": [
                         "keyword"
                     ],
@@ -320,8 +120,20 @@
                     "type": "string"
                 },
                 {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "long"
+                    ],
+                    "name": "module.last_run.count",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "number"
+                },
+                {
                     "aggregatable": false,
-                    "count": 1,
+                    "count": 0,
                     "esTypes": [
                         "text"
                     ],
@@ -333,7 +145,7 @@
                 },
                 {
                     "aggregatable": true,
-                    "count": 3,
+                    "count": 0,
                     "esTypes": [
                         "keyword"
                     ],
@@ -345,7 +157,7 @@
                 },
                 {
                     "aggregatable": true,
-                    "count": 1,
+                    "count": 0,
                     "esTypes": [
                         "date"
                     ],
@@ -357,7 +169,7 @@
                 },
                 {
                     "aggregatable": true,
-                    "count": 1,
+                    "count": 0,
                     "esTypes": [
                         "keyword"
                     ],
