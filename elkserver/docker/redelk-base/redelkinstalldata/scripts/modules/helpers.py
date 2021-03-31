@@ -199,17 +199,18 @@ def getLastRun(module_name):
         return(datetime.datetime.fromtimestamp(0))
 
 
-def moduleDidRun(module_name, module_type='unknown', status='unknown', message=None):
+def moduleDidRun(module_name, module_type='unknown', status='unknown', message=None, count=0):
     logger.debug('Module did run: %s:%s [%s] %s' % (module_type, module_name, status, message))
     try:
         ts = datetime.datetime.utcnow().isoformat()
         doc = {
-            "module": {
-                "name": module_name,
-                "type": module_type,
-                "last_run": {
-                    "timestamp": ts,
-                    "status": status
+            'module': {
+                'name': module_name,
+                'type': module_type,
+                'last_run': {
+                    'timestamp': ts,
+                    'status': status,
+                    'count': count
                 }
             }
         }
