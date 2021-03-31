@@ -68,7 +68,7 @@ class Module():
         if i >= 10000:
             i = 10000
         r = getQuery(q, i)
-        if type(r) != type([]):
+        if not isinstance(r, type([])):
             r = []
         report = {}
         report['hits'] = r

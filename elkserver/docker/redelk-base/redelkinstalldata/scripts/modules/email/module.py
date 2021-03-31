@@ -8,25 +8,16 @@
 # - Lorenzo Bernardi (@fastlorenzo)
 #
 from config import notifications
-import socket
-import json
-import argparse
-import csv
-import hashlib
-import requests
+import logging
 import smtplib
-import os
-import shutil
-from json2html import *
+from json2html import json2html
 from email.mime.application import MIMEApplication
 from email.mime.multipart import MIMEMultipart
-from email.utils import COMMASPACE, formatdate
+from email.utils import formatdate
 from email.header import Header
 from email.utils import formataddr
 from email.mime.text import MIMEText
-from modules.helpers import *
-from subprocess import Popen, PIPE
-from time import sleep
+from modules.helpers import pprint, getValue
 
 info = {
     'version': 0.1,
@@ -59,7 +50,7 @@ class Module():
         msg['Date'] = formatdate()
         # DONE PREPARATION, BUILD MAIL
         msg.attach(MIMEText(html, 'html'))
-        if attachment != None:
+        if attachment is not None:
             msg = self.Attach(msg, attachment)
         # Sending the stuff
         s = smtplib.SMTP(smtpSrv, int(smtpPort))
@@ -153,7 +144,7 @@ class Module():
                 for field in alarm['fields']:
                     bgcolor = '#FAFAFA' if r % 2 == 0 else '#F1F1F1'
                     val = getValue('_source.%s' % field, hit)
-                    value = json2html.convert(json = val)
+                    value = json2html.convert(json=val)
                     mail += '''
                         <tr bgcolor="%s" style="color: #153643; font-family: Arial, sans-serif; font-size: 12px; line-height: 16px;">
                             <td style="padding: 10px 10px 10px 10px;"><b>%s</b></td>
@@ -169,5 +160,5 @@ class Module():
             self.logger.exception(e)
             pass
         mail += "</body></html>\n"
-        #self.logger.debug('Sending email: %s' % mail)
-        smtpResp = self.SendMail(notifications['email']['to'], mail, subject)
+        # self.logger.debug('Sending email: %s' % mail)
+        self.SendMail(notifications['email']['to'], mail, subject)

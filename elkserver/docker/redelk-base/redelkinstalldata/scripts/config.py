@@ -11,12 +11,12 @@ if "Verbosity" in d:
 
 
 # -- logging
-#CRITICAL, 50
-#ERROR, 40
-#WARNING, 30
-#INFO, 20
-#DEBUG, 10
-#NOTSET, 0
+# CRITICAL, 50
+# ERROR, 40
+# WARNING, 30
+# INFO, 20
+# DEBUG, 10
+# NOTSET, 0
 
 DEBUG = 0  # Debug 1 or 0
 if "DEBUG" in d:
