@@ -6,7 +6,7 @@
 # - Outflank B.V. / Mark Bergman (@xychix)
 # - Lorenzo Bernardi (@fastlorenzo)
 #
-from modules.helpers import initial_alarm_result, getQuery, getValue, es
+from modules.helpers import get_initial_alarm_result, getQuery, getValue, es
 import traceback
 import logging
 import re
@@ -31,12 +31,8 @@ class Module():
         self.iplists = ['customer', 'redteam', 'unknown', 'blueteam']
 
     def run(self):
-        ret = initial_alarm_result
+        ret = get_initial_alarm_result()
         ret['info'] = info
-        # Keep fields, mutations and groupby empty as we don't need them for an enrich script
-        ret['fields'] = []
-        ret['groupby'] = []
-        ret['mutations'] = []
         try:
             hits = []
             for iplist in self.iplists:

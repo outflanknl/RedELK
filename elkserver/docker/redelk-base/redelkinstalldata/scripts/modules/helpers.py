@@ -12,6 +12,7 @@ import config
 import urllib3
 import logging
 import os
+import copy
 from elasticsearch import Elasticsearch
 
 urllib3.disable_warnings()
@@ -98,6 +99,20 @@ def setTags(tag, lst):
         else:
             doc['_source']['tags'] = [tag]
         es.update(index=doc['_index'], id=doc['_id'], body={'doc': doc['_source']})
+
+
+# Add tags by DSL query in batch
+def addTagsByQuery(tags, query, index='redirtraffic-*'):
+    tags_string = ','.join(map(repr, tags))
+
+    update_q = {
+        'script': {
+            'source': 'ctx._source.tags.add([%s])' % tags_string,
+            'lang': 'painless'
+        },
+        'query': query
+    }
+    return(es.update_by_query(index=index, body=update_q))
 
 
 # Adds alarm extra data to the source doc in ES
@@ -262,6 +277,9 @@ def shouldModuleRun(module_name, module_type):
         logger.debug('Last run: %s | Last run max: %s' % (last_run.isoformat(), last_run_max.isoformat()))
     return(should_run)
 
+
+def get_initial_alarm_result():
+    return(copy.deepcopy(initial_alarm_result))
 
 initial_alarm_result = {
     'info': {

@@ -68,7 +68,8 @@ alarms = {
     },
     'alarm_httptraffic': {
         'enabled': False,
-        'interval': 310
+        'interval': 310,
+        'notify_interval': 86400  # Only notify on the same IP hit every 24h by default
     },
     'alarm_useragent': {
         'enabled': False,
@@ -98,6 +99,10 @@ enrich = {
         'enabled': True,
         'interval': 320,
         'cache': 3600
+    },
+    'enrich_iplists': {
+        'enabled': True,
+        'interval': 330
     },
     'enrich_synciplists': {
         'enabled': True,

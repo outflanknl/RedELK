@@ -5,7 +5,7 @@
 # Authors:
 # - Lorenzo Bernardi (@fastlorenzo)
 #
-from modules.helpers import *
+from modules.helpers import get_initial_alarm_result, countQuery, getQuery
 import traceback
 import config
 import logging
@@ -25,7 +25,7 @@ class Module():
         pass
 
     def run(self):
-        ret = initial_alarm_result
+        ret = get_initial_alarm_result()
         ret['info'] = info
         ret['fields'] = ['agent.hostname','@timestamp', 'host.name', 'user.name', 'ioc.type', 'file.name', 'file.hash.md5', 'ioc.domain', 'c2.message', 'alarm.alarm_filehash']
         ret['groupby'] = []

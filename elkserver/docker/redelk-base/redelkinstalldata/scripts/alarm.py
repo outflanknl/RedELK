@@ -13,8 +13,7 @@ import logging
 import copy
 
 from modules.helpers import shouldModuleRun, setTags, moduleDidRun, addAlarmData, groupHits
-from config import alarms, notifications, enrich, LOGLEVEL
-import config as conf
+from config import alarms, notifications, LOGLEVEL
 
 if __name__ == '__main__':
     logging.basicConfig(
@@ -113,9 +112,10 @@ if __name__ == '__main__':
             logger.debug('Alarm %s enabled, processing hits' % a)
             r = aD[a]['result']
             alarm_name = aD[a]['info']['submodule']
-            #logger.debug('Alarm results: %s' % aD[a]['result'])
+            # logger.debug('Alarm results: %s' % aD[a]['result'])
             for rHit in r['hits']['hits']:
                 # First check if there is a mutation data to add
+                logger.debug(rHit)
                 if rHit['_id'] in r['mutations']:
                     m = r['mutations'][rHit['_id']]
                 else:

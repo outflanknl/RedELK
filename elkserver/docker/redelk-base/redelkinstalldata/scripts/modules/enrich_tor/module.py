@@ -6,7 +6,7 @@
 # - Outflank B.V. / Mark Bergman (@xychix)
 # - Lorenzo Bernardi (@fastlorenzo)
 #
-from modules.helpers import initial_alarm_result, es, getQuery, getValue, rawSearch
+from modules.helpers import get_initial_alarm_result, es, getValue, rawSearch, getLastRun
 from elasticsearch import helpers
 from config import enrich
 import traceback
@@ -32,12 +32,8 @@ class Module():
         self.cache = enrich[info['submodule']]['cache'] if info['submodule'] in enrich else 3600
 
     def run(self):
-        ret = initial_alarm_result
+        ret = get_initial_alarm_result
         ret['info'] = info
-        # Keep fields, mutations and groupby empty as we don't need them for an enrich script
-        ret['fields'] = []
-        ret['groupby'] = []
-        ret['mutations'] = []
 
         try:
             # First check the last sync time
@@ -83,13 +79,13 @@ class Module():
             now = datetime.datetime.utcnow().isoformat()
             iplist_doc = [
                 {
-                    "_source": {
-                        "iplist": {
-                            "ip": ip,
-                            "source": "enrich",
-                            "name": "tor"
+                    '_source': {
+                        'iplist': {
+                            'ip': ip,
+                            'source': 'enrich',
+                            'name': 'tor'
                         },
-                        "@timestamp": now
+                        '@timestamp': now
                     }
                 }
                 for ip in iplist_es
@@ -106,8 +102,32 @@ class Module():
 
     def enrich_tor(self, iplist):
         # Get all lines in redirtraffic that have not been enriched with 'enrich_iplist' or 'enrich_tor'
-        query = 'NOT tags:%s AND NOT tags:enrich_iplist' % info['submodule']
-        notEnriched = getQuery(query, size=10000, index='redirtraffic-*')
+        # Filter documents that were before the last run time of enrich_iplist (to avoid race condition)
+        iplist_lastrun = getLastRun('enrich_iplists')
+        query = {
+            'sort': [{'@timestamp': {'order': 'desc'}}],
+            'query': {
+                'bool': {
+                    'filter': [
+                        {
+                            'range':  {
+                                '@timestamp': {
+                                    'lte': iplist_lastrun.isoformat()
+                                }
+                            }
+                        }
+                    ],
+                    'must_not': [
+                        {'match': {'tags': info['submodule']}}
+                    ]
+                }
+            }
+        }
+        res = rawSearch(query, index='redirtraffic-*')
+        if res is None:
+            notEnriched = []
+        else:
+            notEnriched = res['hits']['hits']
 
         # For each IP, check if it is in tor exit node data
         hits = []

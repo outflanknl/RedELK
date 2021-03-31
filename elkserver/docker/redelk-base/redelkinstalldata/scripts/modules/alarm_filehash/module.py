@@ -6,8 +6,8 @@
 # - Outflank B.V. / Mark Bergman (@xychix)
 # - Lorenzo Bernardi (@fastlorenzo)
 #
-from modules.helpers import initial_alarm_result, countQuery, getQuery, rawSearch, getValue, addAlarmData, setTags
-from config import interval, alarms
+from modules.helpers import get_initial_alarm_result, countQuery, getQuery, rawSearch, getValue, addAlarmData, setTags
+from config import alarms
 from iocsources import ioc_vt as vt
 from iocsources import ioc_ibm as ibm
 from iocsources import ioc_hybridanalysis as ha
@@ -27,10 +27,11 @@ info = {
 class Module():
     def __init__(self):
         self.logger = logging.getLogger(info['submodule'])
+        self.interval = alarms[info['submodule']]['interval'] if info['submodule'] in alarms else 360
         pass
 
     def run(self):
-        ret = initial_alarm_result
+        ret = get_initial_alarm_result()
         ret['info'] = info
         ret['fields'] = ['agent.hostname','@timestamp', 'host.name', 'user.name', 'ioc.type', 'file.name', 'file.hash.md5', 'c2.message', 'alarm.alarm_filehash']
         ret['groupby'] = ['file.hash.md5']
@@ -56,7 +57,7 @@ class Module():
                     "filter": {
                         "range": {
                             "alarm.last_checked": {
-                                "gte": "now-%ds" % interval,
+                                "gte": "now-%ds" % self.interval,
                                 "lt": "now"
                             }
                         }

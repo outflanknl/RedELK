@@ -6,9 +6,9 @@
 # - Outflank B.V. / Mark Bergman (@xychix)
 # - Lorenzo Bernardi (@fastlorenzo)
 #
-from modules.helpers import *
+from modules.helpers import get_initial_alarm_result, countQuery, getQuery
 import traceback
-import config
+import logging
 
 info = {
     'version': 0.1,
@@ -19,20 +19,20 @@ info = {
     'submodule': 'alarm_lastline'
 }
 
+
 class Module():
     def __init__(self):
         self.logger = logging.getLogger(info['submodule'])
         pass
 
     def run(self):
-        ret = initial_alarm_result
+        ret = get_initial_alarm_result()
         ret['info'] = info
         ret['fields'] = ['source.ip', 'source.nat.ip', 'source.geo.country_name', 'source.as.organization.name', 'redir.frontend.name', 'redir.backend.name', 'infra.attack_scenario', 'tags', 'redir.timestamp']
         ret['groupby'] = ['source.ip']
         try:
             report = self.alarm_check()
             ret['hits']['hits'] = report['hits']
-            ret['mutations'] = report['mutations'] # for this alarm this is an empty list
             ret['hits']['total'] = len(report['hits'])
         except Exception as e:
             stackTrace = traceback.format_exc()
@@ -53,5 +53,4 @@ class Module():
         report['hits'] = []
         report['hits'].append(r[0])
         report['hits'].append(r[1])
-        report['mutations'] = {}
         return(report)

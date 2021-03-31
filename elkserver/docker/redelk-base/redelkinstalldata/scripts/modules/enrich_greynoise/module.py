@@ -6,7 +6,7 @@
 # - Outflank B.V. / Mark Bergman (@xychix)
 # - Lorenzo Bernardi (@fastlorenzo)
 #
-from modules.helpers import initial_alarm_result, getQuery, getValue, rawSearch, es
+from modules.helpers import get_initial_alarm_result, getValue, rawSearch, es, getLastRun
 from config import enrich
 from time import time
 import traceback
@@ -32,12 +32,8 @@ class Module():
         self.cache = enrich[info['submodule']]['cache'] if info['submodule'] in enrich else 86400
 
     def run(self):
-        ret = initial_alarm_result
+        ret = get_initial_alarm_result()
         ret['info'] = info
-        # Keep fields, mutations and groupby empty as we don't need them for an enrich script
-        ret['fields'] = []
-        ret['groupby'] = []
-        ret['mutations'] = []
         try:
             hits = self.enrich_greynoise()
             ret['hits']['hits'] = hits
@@ -51,9 +47,33 @@ class Module():
         return(ret)
 
     def enrich_greynoise(self):
-        # Get all lines in redirtraffic that have not been enriched with 'enrich_iplist' or 'enrich_greynoise'
-        query = 'NOT tags:%s AND NOT tags:enrich_iplist' % info['submodule']
-        notEnriched = getQuery(query, size=10000, index='redirtraffic-*')
+        # Get all lines in redirtraffic that have not been enriched with 'enrich_greynoise'
+        # Filter documents that were before the last run time of enrich_iplist (to avoid race condition)
+        iplist_lastrun = getLastRun('enrich_iplists')
+        query = {
+            'sort': [{'@timestamp': {'order': 'desc'}}],
+            'query': {
+                'bool': {
+                    'filter': [
+                        {
+                            'range':  {
+                                '@timestamp': {
+                                    'lte': iplist_lastrun.isoformat()
+                                }
+                            }
+                        }
+                    ],
+                    'must_not': [
+                        {'match': {'tags': info['submodule']}}
+                    ]
+                }
+            }
+        }
+        res = rawSearch(query, index='redirtraffic-*')
+        if res is None:
+            notEnriched = []
+        else:
+            notEnriched = res['hits']['hits']
 
         # Created a dict grouped by IP address (from source.ip)
         ips = {}

@@ -6,7 +6,7 @@
 # - Outflank B.V. / Mark Bergman (@xychix)
 # - Lorenzo Bernardi (@fastlorenzo)
 #
-from modules.helpers import getQuery, getValue, initial_alarm_result, es
+from modules.helpers import getQuery, getValue, get_initial_alarm_result, es
 import traceback
 import logging
 
@@ -25,12 +25,8 @@ class Module():
         self.logger = logging.getLogger(info['submodule'])
 
     def run(self):
-        ret = initial_alarm_result
+        ret = get_initial_alarm_result()
         ret['info'] = info
-        # Keep fields, mutations and groupby empty as we don't need them for an enrich script
-        ret['fields'] = []
-        ret['groupby'] = []
-        ret['mutations'] = []
         try:
             hits = self.enrich_beacon_data()
             ret['hits']['hits'] = hits
