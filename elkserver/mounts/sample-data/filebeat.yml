@@ -175,5 +175,5 @@ fields:
 
 output.logstash:
   hosts: ["redelk-logstash:5044"]
-  ssl.certificate_authorities: ["/usr/share/filebeat/redelkCA.crt"]
+  ssl.certificate_authorities: ["/usr/share/filebeat/certs/ca/ca.crt"]
   ssl.verification_mode: none
