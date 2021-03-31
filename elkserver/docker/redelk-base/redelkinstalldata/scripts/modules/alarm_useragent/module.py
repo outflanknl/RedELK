@@ -28,7 +28,7 @@ class Module():
     def run(self):
         ret = get_initial_alarm_result()
         ret['info'] = info
-        ret['fields'] = ['agent.hostname', '@timestamp','source.ip', 'http.headers.useragent', 'source.nat.ip', 'redir.frontend.name', 'redir.backend.name', 'infra.attack_scenario']
+        ret['fields'] = ['agent.hostname', '@timestamp', 'source.ip', 'http.headers.useragent', 'source.nat.ip', 'redir.frontend.name', 'redir.backend.name', 'infra.attack_scenario']
         ret['groupby'] = ['source.ip', 'http.headers.useragent']
         try:
             report = self.alarm_check()
