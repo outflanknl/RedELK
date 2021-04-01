@@ -32,7 +32,7 @@ class Module():
         self.cache = enrich[info['submodule']]['cache'] if info['submodule'] in enrich else 3600
 
     def run(self):
-        ret = get_initial_alarm_result
+        ret = get_initial_alarm_result()
         ret['info'] = info
 
         try:
