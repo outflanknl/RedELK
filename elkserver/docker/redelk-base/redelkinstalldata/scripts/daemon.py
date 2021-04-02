@@ -140,13 +140,13 @@ def process_alarms(cD, aD):
                 gb = list(r['groupby'])
                 r['hits']['hits'] = groupHits(r['hits']['hits'], gb)
 
-            for c in cD:
-                # connector will process ['hits']['hits'] which contains a list of 'jsons' looking like an ES line
-                # connector will report the fields in ['hits']['fields'] for each of the lines in the list
-                if c in notifications and notifications[c]['enabled']:
-                    connector = cD[c]['m'].Module()
-                    logger.info('connector %s enabled, sending alarm (%d hits)' % (c, r['hits']['total']))
-                    connector.send_alarm(r)
+                for c in cD:
+                    # connector will process ['hits']['hits'] which contains a list of 'jsons' looking like an ES line
+                    # connector will report the fields in ['hits']['fields'] for each of the lines in the list
+                    if c in notifications and notifications[c]['enabled']:
+                        connector = cD[c]['m'].Module()
+                        logger.info('connector %s enabled, sending alarm (%d hits)' % (c, r['hits']['total']))
+                        connector.send_alarm(r)
 
 
 # Main entry point of the file
