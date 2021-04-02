@@ -11,6 +11,7 @@ import traceback
 import logging
 import re
 import datetime
+import os.path
 
 IP_RE = '^((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))(\s?#\s?(.*))?$'
 IP_CIDR_RE = '^((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/([1-2][0-9]|3[0-2]|[0-9])))(\s?#\s?(.*))?$'
@@ -51,6 +52,12 @@ class Module():
         # Get data from config file iplist
         cfg_iplist = []
         fname = '/etc/redelk/iplist_%s.conf' % iplist
+
+        # Check first if the local config file exists; if not, skip the sync
+        if not os.path.isfile(fname):
+            self.logger.warning('File %s doesn\'t exist, skipping IP list sync for this one.' % fname)
+            return
+
         with open(fname, 'r') as f:
             content = f.readlines()
 
