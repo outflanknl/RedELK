@@ -6,8 +6,8 @@
 # - Outflank B.V. / Mark Bergman (@xychix)
 # - Lorenzo Bernardi (@fastlorenzo)
 #
-from modules.helpers import *
-from config import interval, alarms
+from modules.helpers import get_initial_alarm_result, countQuery, getQuery, rawSearch, getValue, addAlarmData, setTags
+from config import alarms
 from iocsources import ioc_vt as vt
 from iocsources import ioc_ibm as ibm
 from iocsources import ioc_hybridanalysis as ha
@@ -27,12 +27,13 @@ info = {
 class Module():
     def __init__(self):
         self.logger = logging.getLogger(info['submodule'])
+        self.interval = alarms[info['submodule']]['interval'] if info['submodule'] in alarms else 360
         pass
 
     def run(self):
-        ret = initial_alarm_result
+        ret = get_initial_alarm_result()
         ret['info'] = info
-        ret['fields'] = ['@timestamp', 'host.name', 'user.name', 'ioc.type', 'file.name', 'file.hash.md5', 'c2.message', 'alarm.alarm_filehash']
+        ret['fields'] = ['agent.hostname', '@timestamp', 'host.name', 'user.name', 'ioc.type', 'file.name', 'file.hash.md5', 'c2.message', 'alarm.alarm_filehash']
         ret['groupby'] = ['file.hash.md5']
         try:
             report = self.alarm_check()
@@ -43,7 +44,7 @@ class Module():
             stackTrace = traceback.format_exc()
             ret['error'] = stackTrace
             self.logger.exception(e)
-            pass
+            raise
         self.logger.info('finished running module. result: %s hits' % ret['hits']['total'])
         return(ret)
 
@@ -56,8 +57,8 @@ class Module():
                     "filter": {
                         "range": {
                             "alarm.last_checked": {
-                                "gte":"now-%ds" % interval,
-                                "lt":"now"
+                                "gte": "now-%ds" % self.interval,
+                                "lt": "now"
                             }
                         }
                     },
@@ -93,7 +94,7 @@ class Module():
         if i >= 10000:
             i = 10000
         iocs = getQuery(q, i, index='rtops-*')
-        if type(iocs) != type([]):
+        if not isinstance(iocs, type([])):
             iocs = []
         self.logger.debug('found ioc: %s' % iocs)
 
@@ -116,8 +117,6 @@ class Module():
         md5d = {}
         md5s = []
         md5ShouldCheck = {}
-        ival = timedelta(seconds=interval)
-        last_checked_max = (datetime.utcnow() - ival)
 
         # Group all hits per md5 hash value
         for ioc in iocs:
@@ -150,7 +149,7 @@ class Module():
 
         for hash in dict.copy(md5d):
             # If we should not check the hash, remove it from the list
-            if hash in md5ShouldCheck and md5ShouldCheck[hash] == False:
+            if hash in md5ShouldCheck and not md5ShouldCheck[hash]:
                 self.logger.debug('[%s] md5 hash already checked within interval or already alarmed previously, skipping' % hash)
                 del md5d[hash]
 
@@ -188,7 +187,7 @@ class Module():
         for engine in reportI.keys():
             # Loop through the hashes results
             for hash in reportI[engine].keys():
-                if type(reportI[engine][hash]) == type({}):
+                if isinstance(reportI[engine][hash], type({})):
                     if reportI[engine][hash]['result'] == 'newAlarm':
                         # If hash was already alarmed by an engine
                         if hash in alarmedHashes:

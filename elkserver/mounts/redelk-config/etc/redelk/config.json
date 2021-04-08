@@ -1,10 +1,11 @@
 {
     "DEBUG": "0",
+    "LOGLEVEL": "20",
     "Verbosity": "0",
     "interval": 3600,
     "tempDir": "/tmp",
     "redelkserver_letsencrypt": {
-        "enable_letsencrypt": true,
+        "enable_letsencrypt": false,
         "external_domain": "",
         "le_email": "",
         "staging": "0"
@@ -36,16 +37,43 @@
             "enabled": false
         },
         "alarm_filehash": {
-            "enabled": false,
+            "enabled": true,
+            "interval": 300,
             "vt_api_key": "",
             "ibm_basic_auth": "Basic ",
             "ha_api_key": ""
         },
         "alarm_httptraffic": {
-            "enabled": false
+            "enabled": true,
+            "interval": 310
         },
         "alarm_useragent": {
-            "enabled": false
+            "enabled": true,
+            "interval": 320
+        }
+    },
+    "enrich": {
+        "enrich_csbeacon": {
+            "enabled": true,
+            "interval": 300
+        },
+        "enrich_greynoise": {
+            "enabled": true,
+            "interval": 310,
+            "cache": 86400
+        },
+        "enrich_tor": {
+            "enabled": true,
+            "interval": 360,
+            "cache": 360
+        },
+        "enrich_iplists": {
+            "enabled": true,
+            "interval": 30
+        },
+        "enrich_synciplists": {
+            "enabled": true,
+            "interval": 360
         }
     }
 }

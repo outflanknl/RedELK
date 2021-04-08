@@ -6,7 +6,7 @@
 # - Outflank B.V. / Mark Bergman (@xychix)
 # - Lorenzo Bernardi (@fastlorenzo)
 #
-from modules.helpers import *
+from modules.helpers import get_initial_alarm_result, countQuery, getQuery
 import traceback
 import logging
 
@@ -22,18 +22,17 @@ info = {
 
 class Module():
     def __init__(self):
-        #print("class init")
+        self.logger = logging.getLogger(info['submodule'])
         pass
 
     def run(self):
-        ret = initial_alarm_result
+        ret = get_initial_alarm_result()
         ret['info'] = info
-        ret['fields'] = ['@timestamp','source.ip','http.headers.useragent','source.nat.ip','redir.frontend.name','redir.backend.name','infra.attack_scenario']
-        ret['groupby'] = ['source.ip','http.headers.useragent']
+        ret['fields'] = ['@timestamp', 'source.ip', 'http.headers.useragent', 'source.nat.ip', 'redir.frontend.name', 'redir.backend.name', 'infra.attack_scenario']
+        ret['groupby'] = ['source.ip', 'http.headers.useragent']
         try:
             report = self.alarm_check()
             ret['hits']['hits'] = report['hits']
-            ret['mutations'] = report['mutations']
             ret['hits']['total'] = len(report['hits'])
         except Exception as e:
             stackTrace = traceback.format_exc()
@@ -45,14 +44,13 @@ class Module():
 
     def alarm_check(self):
         # This check queries for calls to backends that have *alarm* in their name\n
-        q = "redir.backend.name:*alarm* AND NOT tags:%s"%(info['submodule'])
+        q = "redir.backend.name:*alarm* AND NOT tags:%s" % (info['submodule'])
         i = countQuery(q)
         if i >= 10000:
             i = 10000
         r = getQuery(q, i)
-        if type(r) != type([]):
+        if not isinstance(r, type([])):
             r = []
         report = {}
-        report['mutations'] = {}
         report['hits'] = r
         return(report)

@@ -16,18 +16,18 @@ SCHEME = 'https'
 KIBANA_URL = SCHEME + '://localhost:5601'
 KIBANA_OBJECTS_EXPORT_URL = KIBANA_URL + '/api/saved_objects/_export'
 REDELK_OBJ_FILTER = 'RedELK'
-INDEX_PATTERNS_FILTER = 'rtops|redirtraffic|implantsdb|bluecheck|credentials|email|.siem-signals'
+INDEX_PATTERNS_FILTER = 'rtops|redirtraffic|implantsdb|bluecheck|credentials|email|redelk|.siem-signals'
 EXPORT_FILES_PREFIX_KIBANA = 'redelk_kibana_'
 ES_URL = SCHEME + '://localhost:9200'
-ES_TEMPLATES_LIST = [ 'rtops', 'redirtraffic', 'implantsdb', 'bluecheck', 'credentials', 'email' ]
+ES_TEMPLATES_LIST = ['rtops', 'redirtraffic', 'implantsdb', 'bluecheck', 'credentials', 'email', 'redelk']
 EXPORT_FILES_PREFIX_ES = 'redelk_elasticsearch_'
-DIFF_PATH = 'diff/' # path is relative to exportpath
+DIFF_PATH = 'diff/'  # path is relative to exportpath
 
 
 def fetch_kibana_object(obj_type, exportpath):
     try:
         print('# Fetching kibana objects: %s' % obj_type)
-        response = requests.post(KIBANA_OBJECTS_EXPORT_URL, json={'type':obj_type}, verify=False, auth=(KIBANA_USER,KIBANA_PASS), headers={'kbn-xsrf':'true'})
+        response = requests.post(KIBANA_OBJECTS_EXPORT_URL, json={'type': obj_type}, verify=False, auth=(KIBANA_USER, KIBANA_PASS), headers={'kbn-xsrf': 'true'})
         if response.status_code != 200:
             print('!!! Error fetching kibana object %s: HTTP status code %s' % (obj_type, response.status_code))
         else:
@@ -38,9 +38,9 @@ def fetch_kibana_object(obj_type, exportpath):
                 for ip in items:
                     if 'attributes' in ip.keys() and 'title' in ip['attributes']:
                         if re.match(REDELK_OBJ_FILTER, ip['attributes']['title'], re.IGNORECASE):
-                          ip.pop('updated_at', None)
-                          ip['version'] = '1'
-                          toExport.append(ip)
+                            ip.pop('updated_at', None)
+                            ip['version'] = '1'
+                            toExport.append(ip)
                 export_file = os.path.join(exportpath, '%s%s.ndjson' % (EXPORT_FILES_PREFIX_KIBANA, obj_type))
                 print('\tExporting %s: %s' % (obj_type, export_file))
                 with open(export_file, 'w') as f:
@@ -49,7 +49,7 @@ def fetch_kibana_object(obj_type, exportpath):
                 for ip in items:
                     if 'attributes' in ip.keys() and 'title' in ip['attributes']:
                         if re.match(INDEX_PATTERNS_FILTER, ip['attributes']['title'], re.IGNORECASE):
-                            #print('%s: %s' % (obj_type,ip['attributes']['title']))
+                            # print('%s: %s' % (obj_type,ip['attributes']['title']))
                             pn = ip['attributes']['title'][:-2] if ip['attributes']['title'].endswith('-*') else ip['attributes']['title']
                             ip.pop('updated_at', None)
                             ip['version'] = '1'

@@ -6,7 +6,7 @@
 # - Outflank B.V. / Mark Bergman (@xychix)
 # - Lorenzo Bernardi (@fastlorenzo)
 #
-from modules.helpers import *
+from modules.helpers import get_initial_alarm_result, countQuery, getQuery
 import traceback
 import logging
 
@@ -26,14 +26,13 @@ class Module():
         pass
 
     def run(self):
-        ret = initial_alarm_result
+        ret = get_initial_alarm_result()
         ret['info'] = info
-        ret['fields'] = ['@timestamp','source.ip','http.headers.useragent','source.nat.ip','redir.frontend.name','redir.backend.name','infra.attack_scenario']
-        ret['groupby'] = ['source.ip','http.headers.useragent']
+        ret['fields'] = ['agent.hostname', '@timestamp', 'source.ip', 'http.headers.useragent', 'source.nat.ip', 'redir.frontend.name', 'redir.backend.name', 'infra.attack_scenario']
+        ret['groupby'] = ['source.ip', 'http.headers.useragent']
         try:
             report = self.alarm_check()
             ret['hits']['hits'] = report['hits']
-            ret['mutations'] = report['mutations']
             ret['hits']['total'] = len(report['hits'])
         except Exception as e:
             stackTrace = traceback.format_exc()
@@ -53,26 +52,24 @@ class Module():
         uaList = []
         for line in content:
             if not line.startswith('#'):
-                ua = line.strip()
                 uaList.append(line.strip())
         keywords = uaList
         qSub = ""
-        #add keywords (UA's) to query
+        # add keywords (UA's) to query
         for keyword in keywords:
             if qSub == "":
                 qSub = "(http.headers.useragent:%s" % keyword
             else:
                 qSub = qSub + " OR http.headers.useragent:%s" % keyword
         qSub = qSub + ") "
-        #q = "%s AND redir.backendname:c2* AND tags:enrich_* AND NOT tags:alarm_* "%qSub
-        q = "%s AND redir.backend.name:c2* AND NOT tags:%s"%(qSub,info['submodule'])
+        # q = "%s AND redir.backendname:c2* AND tags:enrich_* AND NOT tags:alarm_* "%qSub
+        q = "%s AND redir.backend.name:c2* AND NOT tags:alarm_useragent" % qSub
         i = countQuery(q)
         if i >= 10000:
             i = 10000
         r = getQuery(q, i)
-        if type(r) != type([]):
+        if not isinstance(r, type([])):
             r = []
         report = {}
-        report['mutations'] = {}
         report['hits'] = r
         return(report)

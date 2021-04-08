@@ -142,7 +142,7 @@ memcheck() {
         echo "[X] Error getting memory configuration of this host. Exiting." | tee -a $LOGFILE
         if [ ${FIXEDMEMORY} == "yes" ]; then
             echo "[*] Fixed memory mode. Not exiting."  | tee -a $LOGFILE
-        else    
+        else
             exit 1
         fi
     fi
@@ -206,7 +206,7 @@ memcheck() {
     if [ "$SHOULDEXIT" = true ]; then
         if [ ${FIXEDMEMORY} == "yes" ]; then
             echo "[*] Fixed memory mode. Not exiting."  | tee -a $LOGFILE
-        else    
+        else
             exit 1
         fi
     fi
@@ -370,7 +370,7 @@ if [ ${WHATTOINSTALL} = "full" ]; then
     # check if Neo4J password is already generated
     if (grep "{{NEO4J_PASSWORD}}" $DOCKERENVFILE > /dev/null); then
         NEO4J_PASSWORD=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
-        
+
         echo "[*] Setting neo4j password" | tee -a $LOGFILE
         sed -E -i.bak "s/\{\{NEO4J_PASSWORD\}\}/${NEO4J_PASSWORD}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
         ERROR=$?
@@ -413,9 +413,9 @@ if [ $DO_LETSENCRYPT == "true" ]; then
     if [ `echo $EXTERNAL_DOMAIN|wc -w`  -eq 0 ] || [ `echo $EXTERNAL_DOMAIN | grep "\." > /dev/null ;echo $?` -eq 1 ] ; then
         echo "[X] Error. Let's encrypt domain name seems empty. Exiting." | tee -a $LOGFILE
         exit 1
-    else 
+    else
         echo "[*] Domain $EXTERNAL_DOMAIN seems valid. Continuing."  | tee -a $LOGFILE
-        
+
         echo "[*] Setting external domain name in Docker env file" | tee -a $LOGFILE
         sed -E -i.bak "s/\{\{EXTERNAL_DOMAIN\}\}/${EXTERNAL_DOMAIN}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
         ERROR=$?
@@ -489,7 +489,7 @@ fi
 echo "[*] Linking docker-compose.yml to the docker file used" | tee -a $LOGFILE
 if [ -f docker-compose.yml ]; then
     rm docker-compose.yml >> $LOGFILE 2>&1
-fi 
+fi
 ln -s $DOCKERCONFFILE docker-compose.yml >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then

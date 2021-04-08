@@ -101,7 +101,7 @@ echo "" >> $LOGFILE
 
 echo "[*] Installing Elasticsearch index templates" | tee -a $LOGFILE
 upcheck_elasticsearch
-for i in implantsdb rtops redirtraffic; do $CURL -X POST "https://redelk-elasticsearch:9200/_template/$i" -H "Content-Type: application/json" -d @./root/redelkinstalldata/templates/redelk_elasticsearch_template_$i.json; done >> $LOGFILE 2>&1
+for i in implantsdb rtops redirtraffic redelk email bluecheck credentials; do $CURL -X POST "https://redelk-elasticsearch:9200/_template/$i" -H "Content-Type: application/json" -d @./root/redelkinstalldata/templates/redelk_elasticsearch_template_$i.json; done >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echo "[X] Could not install Elasticsearch index templates (Error Code: $ERROR)."

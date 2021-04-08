@@ -180,6 +180,7 @@ services:
       - ./mounts/redelk-logs:/var/log/redelk
       - ./mounts/redelk-ssh:/home/redelk/.ssh
       - ./mounts/redelk-www/c2logs:/var/www/html/c2logs
+      - ./docker/redelk-base/redelkinstalldata/scripts:/usr/share/redelk/bin
     environment:
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
     restart: always
@@ -220,13 +221,13 @@ services:
 
   filebeat:
     container_name: redelk-sample-data
-    image: docker.elastic.co/beats/filebeat:7.9.2
+    image: docker.elastic.co/beats/filebeat:7.10.0
     networks:
       - net
     volumes:
       - ./mounts/sample-data/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
       - ./mounts/sample-data/logs:/var/log/sample-data:ro
-      - ./mounts/logstash-config/certs_inputs/redelkCA.crt:/usr/share/filebeat/redelkCA.crt:ro
+      - ./mounts/certs:/usr/share/filebeat/certs:ro
     command: ['filebeat', '-e', '-strict.perms=false']
     depends_on:
       - logstash

@@ -7,9 +7,8 @@
 # - Lorenzo Bernardi (@fastlorenzo)
 #
 import requests
-import os
-import json
 import logging
+
 
 class VT():
     def __init__(self, api_key):
@@ -37,7 +36,6 @@ class VT():
         return(response.status_code, json_response)
 
     def test(self, list):
-        l = list
         for md5 in list:
             self.report[md5] = {
                 'record': {},
@@ -46,7 +44,7 @@ class VT():
         r = self.virustotalReport(",".join(list))
         res = r[1]
         self.logger.debug('status code %s' % r[0])
-        if type(res) != type([]):
+        if not isinstance(res, type([])):
             res = [res]  # dirty?
             self.logger.debug('just emties resultlist is was %s' % r[1])
         if len(res) > 0:  # yeah really bad, no time now
@@ -58,5 +56,6 @@ class VT():
                         self.report[md5]['record'] = report
                     else:
                         self.report[md5]['result'] = 'clean'
-                except:
+                except Exception as e:
                     self.logger.error("[e] Error in %s" % r[1])
+                    self.logger.exception(e)

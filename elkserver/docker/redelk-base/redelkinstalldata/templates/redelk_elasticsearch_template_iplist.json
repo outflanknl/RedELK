@@ -1,0 +1,61 @@
+{
+    "aliases": {},
+    "index_patterns": [
+        "iplist-*"
+    ],
+    "mappings": {
+        "_routing": {
+            "required": false
+        },
+        "_source": {
+            "enabled": true,
+            "excludes": [],
+            "includes": []
+        },
+        "date_detection": true,
+        "dynamic": true,
+        "dynamic_date_formats": [
+            "strict_date_optional_time",
+            "yyyy/MM/dd HH:mm:ss Z||yyyy/MM/dd Z"
+        ],
+        "numeric_detection": false,
+        "properties": {
+            "@timestamp": {
+                "doc_values": true,
+                "ignore_malformed": false,
+                "index": true,
+                "store": false,
+                "type": "date"
+            },
+            "date_modified": {
+                "type": "date"
+            },
+            "ip": {
+                "type": "ip"
+            },
+            "list": {
+                "type": "keyword"
+            },
+            "source": {
+                "type": "keyword"
+            }
+        }
+    },
+    "order": 0,
+    "settings": {
+        "index": {
+            "mapping": {
+                "total_fields": {
+                    "limit": "10000"
+                }
+            },
+            "number_of_replicas": "0",
+            "number_of_shards": "1",
+            "query": {
+                "default_field": "*"
+            },
+            "refresh_interval": "5s"
+        }
+    },
+    "version": 1
+}
