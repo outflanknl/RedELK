@@ -486,6 +486,22 @@ if [ $ERROR -ne 0 ]; then
     echo "[X] Could not set TLS_NGINX_CA_PATH (Error Code: $ERROR)." | tee -a $LOGFILE
 fi
 
+if [ ${WHATTOINSTALL} = "limited" ]; then
+    echo "[*] Adjusting Nginx config file" | tee -a $LOGFILE
+    sed -i 's/^\s*include conf.d\/full.location-conf;\s*$/    # include conf.d\/full.location-conf;/g' ./mounts/nginx-config/default.conf.template
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echo "[X] Could not adjust Nginx config (Error Code: $ERROR)." | tee -a $LOGFILE
+    fi
+else
+    echo "[*] Adjusting Nginx config file" | tee -a $LOGFILE
+    sed -i 's/^\s*# include conf.d\/full.location-conf;\s*$/    include conf.d\/full.location-conf;/g' ./mounts/nginx-config/default.conf.template
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echo "[X] Could not adjust Nginx config (Error Code: $ERROR)." | tee -a $LOGFILE
+    fi
+fi
+
 echo "[*] Linking docker-compose.yml to the docker file used" | tee -a $LOGFILE
 if [ -f docker-compose.yml ]; then
     rm docker-compose.yml >> $LOGFILE 2>&1
