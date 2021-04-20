@@ -62,6 +62,11 @@ services:
       - CREDS_redelk=${CREDS_redelk}
       - ES_URL=${ES_URL}
     restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "${LOG_MAX_SIZE}"
+        max-file: "${LOG_MAX_FILE}"
 
   logstash:
     container_name: redelk-logstash
@@ -99,6 +104,11 @@ services:
       - XPACK_MONITORING_ELASTICSEARCH_PASSWORD=${CREDS_logstash_system}
       - XPACK_MONITORING_ELASTICSEARCH_SSL_CERTIFICATE_AUTHORITY=${CERTS_LOGSTASH_OUTPUT_CA}
     restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "${LOG_MAX_SIZE}"
+        max-file: "${LOG_MAX_FILE}"
     depends_on:
       - elasticsearch
 
@@ -124,6 +134,11 @@ services:
       - SERVER_SSL_KEY=${CERTS_DIR_KBN}/redelk-kibana/redelk-kibana.key
       - XPACK_ENCRYPTEDSAVEDOBJECTS_ENCRYPTIONKEY=${KBN_XPACK_ENCRYPTEDSAVEDOBJECTS}
     restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "${LOG_MAX_SIZE}"
+        max-file: "${LOG_MAX_FILE}"
     depends_on:
       - logstash
 
@@ -148,15 +163,27 @@ services:
       - TLS_NGINX_CA_PATH=${TLS_NGINX_CA_PATH}
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & /docker-entrypoint.d/20-envsubst-on-templates.sh; nginx -g \"daemon off;\"'"
     restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "${LOG_MAX_SIZE}"
+        max-file: "${LOG_MAX_FILE}"
 
   certbot:
     container_name: redelk-certbot
     image: certbot/certbot
+    networks:
+      - net
     volumes:
       - ./mounts/certbot/conf:/etc/letsencrypt
       - ./mounts/certbot/www:/var/www/certbot
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
     restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "${LOG_MAX_SIZE}"
+        max-file: "${LOG_MAX_FILE}"
     depends_on:
       - nginx
 
@@ -174,5 +201,10 @@ services:
     environment:
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
     restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "${LOG_MAX_SIZE}"
+        max-file: "${LOG_MAX_FILE}"
     depends_on:
       - nginx
