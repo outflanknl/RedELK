@@ -48,10 +48,6 @@ docker-compose -f $compose_file run --rm --entrypoint "\
     -subj '/CN=${domain}'" certbot
 echo
 
-if [ $mode == "dev" ]; then
-  echo "Dev mode, skipping Let's Encrypt"
-  exit 0
-fi
 echo "### Starting nginx ..."
 docker-compose -f $compose_file up --force-recreate -d nginx
 echo
