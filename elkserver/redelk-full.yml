@@ -170,6 +170,10 @@ services:
       options:
         max-size: "${LOG_MAX_SIZE}"
         max-file: "${LOG_MAX_FILE}"
+    depends_on:
+      - jupyter
+      - kibana
+      - bloodhound
 
   certbot:
     container_name: redelk-certbot
@@ -221,8 +225,6 @@ services:
     volumes:
       - ./mounts/jupyter-workbooks:/home/jovyan/work
     restart: always
-    depends_on:
-      - base
 
   bloodhound:
     container_name: redelk-bloodhound

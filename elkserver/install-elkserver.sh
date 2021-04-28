@@ -449,10 +449,10 @@ else # letsencrypt not enabled, but we still need a cert for nginx. So we create
 fi
 
 # NGINX certificates vars
-CERTS_DIR_NGINX_LOCAL=$(sedescape "./mounts/certbot/conf/live/${EXTERNAL_DOMAIN}")
+CERTS_DIR_NGINX_LOCAL=$(sedescape "./mounts/certbot/conf/")
 CERTS_DIR_NGINX_CA_LOCAL=$(sedescape "./mounts/certs/ca/")
-TLS_NGINX_CRT_PATH=$(sedescape "/etc/nginx/certs/fullchain.pem")
-TLS_NGINX_KEY_PATH=$(sedescape "/etc/nginx/certs/privkey.pem")
+TLS_NGINX_CRT_PATH=$(sedescape "/etc/nginx/certs/live/${EXTERNAL_DOMAIN}/fullchain.pem")
+TLS_NGINX_KEY_PATH=$(sedescape "/etc/nginx/certs/live/${EXTERNAL_DOMAIN}/privkey.pem")
 TLS_NGINX_CA_PATH=$(sedescape "/etc/nginx/ca_certs/ca.crt")
 
 echo "[*] Setting CERTS_DIR_NGINX_LOCAL" | tee -a $LOGFILE
