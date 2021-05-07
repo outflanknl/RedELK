@@ -226,11 +226,11 @@ services:
 
   bloodhound:
     container_name: redelk-bloodhound
-    image: neo4j:4.2
+    image: specterops/bloodhound-neo4j
     networks:
       - net
     volumes:
-      - bloodhound_data:/data
+      - bloodhound_data:/var/lib/neo4j
     ports:
       - "7473:7473"
       - "7687:7687"
