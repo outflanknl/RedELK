@@ -1,0 +1,21 @@
+location /neo4jbrowser {
+    return 301 https://$host:7473;
+
+}
+
+location /jupyter {
+    auth_basic "Restricted Access";
+    auth_basic_user_file /etc/nginx/conf.d/htpasswd.users;
+
+    proxy_pass http://redelk-jupyter:8888;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-Scheme $scheme;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+    # websocket headers
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade "websocket";
+    proxy_set_header Connection "Upgrade";
+    proxy_read_timeout 86400;
+}

@@ -168,6 +168,8 @@ services:
       options:
         max-size: "${LOG_MAX_SIZE}"
         max-file: "${LOG_MAX_FILE}"
+    depends_on:
+      - kibana
 
   certbot:
     container_name: redelk-certbot

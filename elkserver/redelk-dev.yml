@@ -168,11 +168,18 @@ services:
       - TLS_NGINX_CA_PATH=${TLS_NGINX_CA_PATH}
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & /docker-entrypoint.d/20-envsubst-on-templates.sh; nginx -g \"daemon off;\"'"
     restart: always
+<<<<<<< HEAD
     logging:
       driver: "json-file"
       options:
         max-size: "${LOG_MAX_SIZE}"
         max-file: "${LOG_MAX_FILE}"
+=======
+    depends_on:
+      - jupyter
+      - kibana
+      - bloodhound
+>>>>>>> Several small fixes
 
   certbot:
     container_name: redelk-certbot
@@ -230,8 +237,6 @@ services:
       options:
         max-size: "${LOG_MAX_SIZE}"
         max-file: "${LOG_MAX_FILE}"
-    depends_on:
-      - base
 
   bloodhound:
     container_name: redelk-bloodhound

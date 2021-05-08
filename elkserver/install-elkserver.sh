@@ -449,10 +449,10 @@ else # letsencrypt not enabled, but we still need a cert for nginx. So we create
 fi
 
 # NGINX certificates vars
-CERTS_DIR_NGINX_LOCAL=$(sedescape "./mounts/certbot/conf/live/${EXTERNAL_DOMAIN}")
+CERTS_DIR_NGINX_LOCAL=$(sedescape "./mounts/certbot/conf/")
 CERTS_DIR_NGINX_CA_LOCAL=$(sedescape "./mounts/certs/ca/")
-TLS_NGINX_CRT_PATH=$(sedescape "/etc/nginx/certs/fullchain.pem")
-TLS_NGINX_KEY_PATH=$(sedescape "/etc/nginx/certs/privkey.pem")
+TLS_NGINX_CRT_PATH=$(sedescape "/etc/nginx/certs/live/${EXTERNAL_DOMAIN}/fullchain.pem")
+TLS_NGINX_KEY_PATH=$(sedescape "/etc/nginx/certs/live/${EXTERNAL_DOMAIN}/privkey.pem")
 TLS_NGINX_CA_PATH=$(sedescape "/etc/nginx/ca_certs/ca.crt")
 
 echo "[*] Setting CERTS_DIR_NGINX_LOCAL" | tee -a $LOGFILE
@@ -484,6 +484,22 @@ sed -E -i.bak "s/\{\{TLS_NGINX_CA_PATH\}\}/${TLS_NGINX_CA_PATH}/g" ${DOCKERENVFI
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echo "[X] Could not set TLS_NGINX_CA_PATH (Error Code: $ERROR)." | tee -a $LOGFILE
+fi
+
+if [ ${WHATTOINSTALL} = "limited" ]; then
+    echo "[*] Adjusting Nginx config file" | tee -a $LOGFILE
+    sed -i 's/^\s*include conf.d\/full.location-conf;\s*$/    # include conf.d\/full.location-conf;/g' ./mounts/nginx-config/default.conf.template
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echo "[X] Could not adjust Nginx config (Error Code: $ERROR)." | tee -a $LOGFILE
+    fi
+else
+    echo "[*] Adjusting Nginx config file" | tee -a $LOGFILE
+    sed -i 's/^\s*# include conf.d\/full.location-conf;\s*$/    include conf.d\/full.location-conf;/g' ./mounts/nginx-config/default.conf.template
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echo "[X] Could not adjust Nginx config (Error Code: $ERROR)." | tee -a $LOGFILE
+    fi
 fi
 
 echo "[*] Linking docker-compose.yml to the docker file used" | tee -a $LOGFILE
