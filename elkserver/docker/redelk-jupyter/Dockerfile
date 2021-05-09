@@ -9,7 +9,7 @@ FROM jupyter/scipy-notebook:4a112c0f11eb
 LABEL maintainer="Outflank B.V. / Marc Smeets"
 LABEL description="RedELK Jupyter Notebooks"
 
-RUN pip3 install pandas py2neo==4.3.0 elasticsearch
+RUN pip3 install pandas py2neo==2021.1 elasticsearch
 
 CMD ["/bin/bash", "-o", "pipefail", "-c", "start-notebook.sh --NotebookApp.token='' --NotebookApp.password='' --NotebookApp.allow_remote_access='True' --NotebookApp.allow_origin='*' --NotebookApp.base_url='/jupyter/'"]
 
