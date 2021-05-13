@@ -162,7 +162,6 @@ services:
     ports:
       - "80:80"
       - "443:443"
-      - "7687:7687"
     environment:
       - TLS_NGINX_CRT_PATH=${TLS_NGINX_CRT_PATH}
       - TLS_NGINX_KEY_PATH=${TLS_NGINX_KEY_PATH}
@@ -243,10 +242,9 @@ services:
       - net
     volumes:
       - bloodhound_data:/data
-    expose:
-      - "7687"
     ports:
-      - "7473:7473"
+      - "7474:7474"
+      - "7687:7687"
     environment:
       - NEO4J_AUTH=${NEO4J_AUTH}
       - NEO4J_dbms_memory_heap_initial__size=${NEO4J_dbms_memory_heap_initial__size}
