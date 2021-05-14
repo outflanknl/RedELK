@@ -365,6 +365,22 @@
                     },
                     "geo": {
                         "properties": {
+                            "as": {
+                                "properties": {
+                                    "organization": {
+                                        "properties": {
+                                            "name": {
+                                                "type": "keyword"
+                                            },
+                                            "number": {
+                                                "type": "integer"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object"
+                            },
                             "city_name": {
                                 "type": "keyword"
                             },
