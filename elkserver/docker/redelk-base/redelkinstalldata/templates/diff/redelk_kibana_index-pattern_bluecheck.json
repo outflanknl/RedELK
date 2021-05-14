@@ -131,10 +131,11 @@
                     "type": "string"
                 },
                 {
-                    "aggregatable": false,
+                    "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text"
+                        "text",
+                        "keyword"
                     ],
                     "name": "bluechecktype",
                     "readFromDocValues": false,
@@ -160,10 +161,11 @@
                     "type": "string"
                 },
                 {
-                    "aggregatable": false,
-                    "count": 1,
+                    "aggregatable": true,
+                    "count": 0,
                     "esTypes": [
-                        "text"
+                        "text",
+                        "keyword"
                     ],
                     "name": "classifier",
                     "readFromDocValues": false,
@@ -189,10 +191,11 @@
                     "type": "string"
                 },
                 {
-                    "aggregatable": false,
-                    "count": 1,
+                    "aggregatable": true,
+                    "count": 0,
                     "esTypes": [
-                        "text"
+                        "text",
+                        "keyword"
                     ],
                     "name": "domain",
                     "readFromDocValues": false,
@@ -271,35 +274,6 @@
                     "subType": {
                         "multi": {
                             "parent": "event.type"
-                        }
-                    },
-                    "type": "string"
-                },
-                {
-                    "aggregatable": false,
-                    "count": 0,
-                    "esTypes": [
-                        "text"
-                    ],
-                    "name": "host",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "keyword"
-                    ],
-                    "name": "host.keyword",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "host"
                         }
                     },
                     "type": "string"
@@ -393,7 +367,7 @@
                 },
                 {
                     "aggregatable": false,
-                    "count": 1,
+                    "count": 0,
                     "esTypes": [
                         "text"
                     ],
@@ -421,10 +395,11 @@
                     "type": "string"
                 },
                 {
-                    "aggregatable": false,
+                    "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text"
+                        "text",
+                        "keyword"
                     ],
                     "name": "path",
                     "readFromDocValues": false,
@@ -538,7 +513,7 @@
                 },
                 {
                     "aggregatable": false,
-                    "count": 1,
+                    "count": 0,
                     "esTypes": [
                         "text"
                     ],
@@ -595,10 +570,11 @@
                     "type": "string"
                 },
                 {
-                    "aggregatable": false,
+                    "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "text"
+                        "text",
+                        "keyword"
                     ],
                     "name": "type",
                     "readFromDocValues": false,
