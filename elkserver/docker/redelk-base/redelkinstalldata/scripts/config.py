@@ -14,7 +14,7 @@ with open('/etc/redelk/config.json') as json_data:
 
 loglevel = logging.WARN
 if "loglevel" in d:
-    loglevel = int(d['loglevel'])
+    loglevel = d['loglevel']
 
 # -- directory for cache files (including shelves)
 tempDir = "/tmp"

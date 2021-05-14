@@ -1,5 +1,5 @@
 {
-    "loglevel": "30",
+    "loglevel": "WARNING",
     "interval": 3600,
     "tempDir": "/tmp",
     "redelkserver_letsencrypt": {
