@@ -1,6 +1,19 @@
 
 RedELK release notes
 
+### version 2.0.0 BETA4
+* Many bug fixes
+* Migrated background enrichment and alarm scripts to new modular setup
+* Added support for Cobalt Strike 4.2 and 4.3
+* Added sample data ingestor when running in dev mode
+* Made sure Kibana searches Red Team Operations and Redirector Traffic are presented on top of list
+* Included an ES password import for Jupyter notebooks
+* Maximized the logging of docker logs
+* Migrated to official Neo4j container instead of old BloodHound container
+* Updated the RedELK Kibana app to include management of IP lists inside Kibana
+
+
+
 ### version 2.0.0 BETA3
 * Dockerized the installation on the elkserver components
 * Enabled X-pack on ELK stack
