@@ -1,7 +1,5 @@
 {
-    "DEBUG": "0",
-    "LOGLEVEL": "20",
-    "Verbosity": "0",
+    "loglevel": "30",
     "interval": 3600,
     "tempDir": "/tmp",
     "redelkserver_letsencrypt": {

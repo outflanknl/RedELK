@@ -13,7 +13,7 @@ import logging
 import copy
 
 from modules.helpers import shouldModuleRun, setTags, moduleDidRun, addAlarmData, groupHits
-from config import alarms, notifications, LOGLEVEL
+from config import alarms, notifications, loglevel
 
 
 # Attempt to load the different modules in their respective dictionaries, and return them
@@ -59,9 +59,9 @@ def run_enrichments(eD):
     for e in eD:
         if shouldModuleRun(e, 'redelk_enrich'):
             try:
-                logger.info('[e] initiating class Module() in %s' % e)
+                logger.debug('[e] initiating class Module() in %s' % e)
                 moduleClass = eD[e]['m'].Module()
-                logger.info('[e] Running Run() from the Module class in %s' % e)
+                logger.debug('[e] Running Run() from the Module class in %s' % e)
                 eD[e]['result'] = copy.deepcopy(moduleClass.run())
 
                 # Now loop through the hits and tag them
@@ -87,9 +87,9 @@ def run_alarms(aD):
     for a in aD:
         if shouldModuleRun(a, 'redelk_alarm'):
             try:
-                logger.info('[a] initiating class Module() in %s' % a)
+                logger.debug('[a] initiating class Module() in %s' % a)
                 moduleClass = aD[a]['m'].Module()
-                logger.info('[a] Running Run() from the Module class in %s' % a)
+                logger.debug('[a] Running Run() from the Module class in %s' % a)
                 aD[a]['result'] = copy.deepcopy(moduleClass.run())
                 hits = len(aD[a]['result']['hits']['hits'])
                 moduleDidRun(a, 'alarm', 'success', 'Found %s documents to alarm' % hits, hits)
@@ -112,7 +112,7 @@ def process_alarms(cD, aD):
 
             # If the alarm did fail to run, skip processing the notification and tagging as we are not sure of the results
             if aD[a]['status'] != 'success':
-                logger.info('Alarm %s did not run (correctly), skipping processing' % a)
+                logger.warn('Alarm %s did not run (correctly), skipping processing' % a)
                 continue
 
             logger.debug('Alarm %s enabled, processing hits' % a)
@@ -131,7 +131,7 @@ def process_alarms(cD, aD):
 
             # Let's tag the docs with the alarm name
             setTags(alarm_name, r['hits']['hits'])
-            logger.info('calling settags %s (%d hits)' % (alarm_name, r['hits']['total']))
+            logger.debug('calling settags %s (%d hits)' % (alarm_name, r['hits']['total']))
 
             # Needed as groupHits will change r['hits']['hits'] and different alarms might do different grouping
             r = copy.deepcopy(aD[a]['result'])
@@ -152,7 +152,7 @@ def process_alarms(cD, aD):
 # Main entry point of the file
 if __name__ == '__main__':
     logging.basicConfig(
-        format='%(asctime)s - %(levelname)s - %(name)s - %(filename)s - %(funcName)s -- %(message)s', level=LOGLEVEL)
+        format='%(asctime)s - %(levelname)s - %(name)s - %(filename)s - %(funcName)s -- %(message)s', level=loglevel)
     logger = logging.getLogger('alarm')
     path = './modules/'
     module_folders = os.listdir(path)

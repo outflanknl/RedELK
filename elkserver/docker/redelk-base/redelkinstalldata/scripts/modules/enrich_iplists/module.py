@@ -133,7 +133,7 @@ class Module():
                 }
             }
 
-            self.logger.info('Tagging IPs matching IP list %s' % iplist_name)
+            self.logger.debug('Tagging IPs matching IP list %s' % iplist_name)
             # 2. For each IP list, update all documents not tagged already
             res = addTagsByQuery([iplist_tag], q, 'redirtraffic-*')
             updated_count += res['updated']

@@ -232,11 +232,11 @@ def shouldModuleRun(module_name, module_type):
     if module_type == 'redelk_alarm':
 
         if module_name not in config.alarms:
-            logger.warning('Missing configuration for alarm [%s]. Will not run!', module_name)
+            logger.warn('Missing configuration for alarm [%s]. Will not run!', module_name)
             return(False)
 
         if 'enabled' in config.alarms[module_name] and not config.alarms[module_name]['enabled']:
-            logger.info('Alarm module [%s] disabled in configuration file. Will not run!' % module_name)
+            logger.warn('Alarm module [%s] disabled in configuration file. Will not run!' % module_name)
             return(False)
 
         if 'interval' in config.alarms[module_name]:
@@ -247,11 +247,11 @@ def shouldModuleRun(module_name, module_type):
     elif module_type == 'redelk_enrich':
 
         if module_name not in config.enrich:
-            logger.warning('Missing configuration for enrichment module [%s]. Will not run!', module_name)
+            logger.warn('Missing configuration for enrichment module [%s]. Will not run!', module_name)
             return(False)
 
         if 'enabled' in config.enrich[module_name] and not config.enrich[module_name]['enabled']:
-            logger.info('Enrichment module [%s] disabled in configuration file. Will not run!' % module_name)
+            logger.warn('Enrichment module [%s] disabled in configuration file. Will not run!' % module_name)
             return(False)
 
         if 'interval' in config.enrich[module_name]:
@@ -260,7 +260,7 @@ def shouldModuleRun(module_name, module_type):
             interval = 360
 
     else:
-        logger.warning('Invalid module type for shouldModuleRun(%s, %s)' % (module_name, module_type))
+        logger.warn('Invalid module type for shouldModuleRun(%s, %s)' % (module_name, module_type))
         return(False)
 
     now = datetime.datetime.utcnow()
