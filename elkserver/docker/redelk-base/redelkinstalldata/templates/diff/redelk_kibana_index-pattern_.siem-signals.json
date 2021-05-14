@@ -671,6 +671,66 @@
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
+                        "boolean"
+                    ],
+                    "name": "code_signature.exists",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "boolean"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "code_signature.status",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "code_signature.subject_name",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "boolean"
+                    ],
+                    "name": "code_signature.trusted",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "boolean"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "boolean"
+                    ],
+                    "name": "code_signature.valid",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "boolean"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
                         "keyword"
                     ],
                     "name": "container.id",
@@ -1136,6 +1196,198 @@
                             "parent": "destination.user.name"
                         }
                     },
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "boolean"
+                    ],
+                    "name": "dll.code_signature.exists",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "boolean"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "dll.code_signature.status",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "dll.code_signature.subject_name",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "boolean"
+                    ],
+                    "name": "dll.code_signature.trusted",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "boolean"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "boolean"
+                    ],
+                    "name": "dll.code_signature.valid",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "boolean"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "dll.hash.md5",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "dll.hash.sha1",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "dll.hash.sha256",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "dll.hash.sha512",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "dll.name",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "dll.path",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "dll.pe.company",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "dll.pe.description",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "dll.pe.file_version",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "dll.pe.original_file_name",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "dll.pe.product",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
                     "type": "string"
                 },
                 {
@@ -1615,6 +1867,18 @@
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "event.reference",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
                         "float"
                     ],
                     "name": "event.risk_score",
@@ -1699,6 +1963,18 @@
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "event.url",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
                         "date"
                     ],
                     "name": "file.accessed",
@@ -1718,6 +1994,66 @@
                     "scripted": false,
                     "searchable": true,
                     "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "boolean"
+                    ],
+                    "name": "file.code_signature.exists",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "boolean"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "file.code_signature.status",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "file.code_signature.subject_name",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "boolean"
+                    ],
+                    "name": "file.code_signature.trusted",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "boolean"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "boolean"
+                    ],
+                    "name": "file.code_signature.valid",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "boolean"
                 },
                 {
                     "aggregatable": true,
@@ -1881,6 +2217,18 @@
                     "esTypes": [
                         "keyword"
                     ],
+                    "name": "file.mime_type",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
                     "name": "file.mode",
                     "readFromDocValues": true,
                     "scripted": false,
@@ -1950,6 +2298,66 @@
                             "parent": "file.path"
                         }
                     },
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "file.pe.company",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "file.pe.description",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "file.pe.file_version",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "file.pe.original_file_name",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "file.pe.product",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
                     "type": "string"
                 },
                 {
@@ -2809,6 +3217,42 @@
                     "esTypes": [
                         "keyword"
                     ],
+                    "name": "interface.alias",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "interface.id",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "interface.name",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
                     "name": "log.level",
                     "readFromDocValues": true,
                     "scripted": false,
@@ -3025,6 +3469,30 @@
                     "esTypes": [
                         "keyword"
                     ],
+                    "name": "network.inner.vlan.id",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "network.inner.vlan.name",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
                     "name": "network.name",
                     "readFromDocValues": true,
                     "scripted": false,
@@ -3074,6 +3542,102 @@
                         "keyword"
                     ],
                     "name": "network.type",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "network.vlan.id",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "network.vlan.name",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "observer.egress.interface.alias",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "observer.egress.interface.id",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "observer.egress.interface.name",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "observer.egress.vlan.id",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "observer.egress.vlan.name",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "observer.egress.zone",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
@@ -3182,6 +3746,78 @@
                         "keyword"
                     ],
                     "name": "observer.hostname",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "observer.ingress.interface.alias",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "observer.ingress.interface.id",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "observer.ingress.interface.name",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "observer.ingress.vlan.id",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "observer.ingress.vlan.name",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "observer.ingress.zone",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
@@ -3698,6 +4334,66 @@
                     "esTypes": [
                         "keyword"
                     ],
+                    "name": "pe.company",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "pe.description",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "pe.file_version",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "pe.original_file_name",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "pe.product",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
                     "name": "process.args",
                     "readFromDocValues": true,
                     "scripted": false,
@@ -3715,6 +4411,66 @@
                     "scripted": false,
                     "searchable": true,
                     "type": "number"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "boolean"
+                    ],
+                    "name": "process.code_signature.exists",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "boolean"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "process.code_signature.status",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "process.code_signature.subject_name",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "boolean"
+                    ],
+                    "name": "process.code_signature.trusted",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "boolean"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "boolean"
+                    ],
+                    "name": "process.code_signature.valid",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "boolean"
                 },
                 {
                     "aggregatable": true,
@@ -3743,6 +4499,18 @@
                             "parent": "process.command_line"
                         }
                     },
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "process.entity_id",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
                     "type": "string"
                 },
                 {
@@ -3891,6 +4659,66 @@
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
+                        "boolean"
+                    ],
+                    "name": "process.parent.code_signature.exists",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "boolean"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "process.parent.code_signature.status",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "process.parent.code_signature.subject_name",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "boolean"
+                    ],
+                    "name": "process.parent.code_signature.trusted",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "boolean"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "boolean"
+                    ],
+                    "name": "process.parent.code_signature.valid",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "boolean"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
                         "keyword"
                     ],
                     "name": "process.parent.command_line",
@@ -3914,6 +4742,18 @@
                             "parent": "process.parent.command_line"
                         }
                     },
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "process.parent.entity_id",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
                     "type": "string"
                 },
                 {
@@ -3956,6 +4796,54 @@
                     "scripted": false,
                     "searchable": true,
                     "type": "number"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "process.parent.hash.md5",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "process.parent.hash.sha1",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "process.parent.hash.sha256",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "process.parent.hash.sha512",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
                 },
                 {
                     "aggregatable": true,
@@ -4126,6 +5014,66 @@
                             "parent": "process.parent.working_directory"
                         }
                     },
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "process.pe.company",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "process.pe.description",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "process.pe.file_version",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "process.pe.original_file_name",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "process.pe.product",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
                     "type": "string"
                 },
                 {
@@ -4396,6 +5344,18 @@
                     "esTypes": [
                         "keyword"
                     ],
+                    "name": "rule.author",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
                     "name": "rule.category",
                     "readFromDocValues": true,
                     "scripted": false,
@@ -4421,6 +5381,18 @@
                         "keyword"
                     ],
                     "name": "rule.id",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "rule.license",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
@@ -5011,6 +5983,18 @@
                     "esTypes": [
                         "keyword"
                     ],
+                    "name": "signal.ancestors.index",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
                     "name": "signal.ancestors.rule",
                     "readFromDocValues": true,
                     "scripted": false,
@@ -5028,6 +6012,42 @@
                     "scripted": false,
                     "searchable": true,
                     "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "integer"
+                    ],
+                    "name": "signal.depth",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "number"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "signal.group.id",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "integer"
+                    ],
+                    "name": "signal.group.index",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "number"
                 },
                 {
                     "aggregatable": true,
@@ -5357,6 +6377,90 @@
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
+                        "long"
+                    ],
+                    "name": "signal.parents.depth",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "number"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "signal.parents.id",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "signal.parents.index",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "signal.parents.rule",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "signal.parents.type",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "signal.rule.author",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "signal.rule.building_block_type",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
                         "date"
                     ],
                     "name": "signal.rule.created_at",
@@ -5491,6 +6595,18 @@
                     "esTypes": [
                         "keyword"
                     ],
+                    "name": "signal.rule.license",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
                     "name": "signal.rule.max_signals",
                     "readFromDocValues": true,
                     "scripted": false,
@@ -5561,9 +6677,45 @@
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "keyword"
+                        "float"
                     ],
                     "name": "signal.rule.risk_score",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "number"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "signal.rule.risk_score_mapping.field",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "signal.rule.risk_score_mapping.operator",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "signal.rule.risk_score_mapping.value",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
@@ -5576,6 +6728,18 @@
                         "keyword"
                     ],
                     "name": "signal.rule.rule_id",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "signal.rule.rule_name_override",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
@@ -5600,6 +6764,54 @@
                         "keyword"
                     ],
                     "name": "signal.rule.severity",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "signal.rule.severity_mapping.field",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "signal.rule.severity_mapping.operator",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "signal.rule.severity_mapping.severity",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "signal.rule.severity_mapping.value",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
@@ -5719,6 +6931,30 @@
                     "esTypes": [
                         "keyword"
                     ],
+                    "name": "signal.rule.threshold.field",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "float"
+                    ],
+                    "name": "signal.rule.threshold.value",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "number"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
                     "name": "signal.rule.timeline_id",
                     "readFromDocValues": true,
                     "scripted": false,
@@ -5732,6 +6968,18 @@
                         "keyword"
                     ],
                     "name": "signal.rule.timeline_title",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "signal.rule.timestamp_override",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
@@ -5808,6 +7056,18 @@
                     "scripted": false,
                     "searchable": true,
                     "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "float"
+                    ],
+                    "name": "signal.threshold_count",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "number"
                 },
                 {
                     "aggregatable": true,
@@ -7203,6 +8463,30 @@
                         "keyword"
                     ],
                     "name": "user_agent.version",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "vlan.id",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "vlan.name",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,

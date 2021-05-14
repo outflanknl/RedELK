@@ -1012,39 +1012,22 @@
                     "type": "string"
                 },
                 {
-                    "aggregatable": false,
-                    "count": 0,
-                    "esTypes": [
-                        "text"
-                    ],
-                    "name": "host.geo.as.organization.name",
-                    "readFromDocValues": false,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "string"
-                },
-                {
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
                         "keyword"
                     ],
-                    "name": "host.geo.as.organization.name.keyword",
+                    "name": "host.geo.as.organization.name",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
-                    "subType": {
-                        "multi": {
-                            "parent": "host.geo.as.organization.name"
-                        }
-                    },
                     "type": "string"
                 },
                 {
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "long"
+                        "integer"
                     ],
                     "name": "host.geo.as.organization.number",
                     "readFromDocValues": true,

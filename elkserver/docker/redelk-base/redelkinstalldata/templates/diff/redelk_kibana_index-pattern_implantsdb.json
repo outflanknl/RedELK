@@ -871,7 +871,7 @@
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
-                        "long"
+                        "integer"
                     ],
                     "name": "host.geo.as.organization.number",
                     "readFromDocValues": true,
