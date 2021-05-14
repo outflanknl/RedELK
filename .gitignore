@@ -124,6 +124,7 @@ elkserver/mounts/certbot/*
 elkserver/mounts/jupyter-workbooks/redelk_passwords.py
 elkserver/redelk_passwords.cfg
 elkserver/redelk-install.log
+elkserver/docker-compose.yml
 redelk-inintialsetup.log
 redirs.tgz
 redirs/VERSION
