@@ -212,7 +212,6 @@ fi
 if [ ${#} -ne 0 ] && [[ $* = *"fixedmemory"* ]]; then
     echo "[*] Fixed memory mode: 1G for ES, 1G for NEO4J and 1G for Jupyter."  | tee -a $LOGFILE
     FIXEDMEMORY="yes"
-    ES_MEMORY=1g
     NEO4J_MEMORY=1G
 fi
 
@@ -335,13 +334,6 @@ sed -E -i.bak "s/\{\{KBN_XPACK_ENCRYPTEDSAVEDOBJECTS\}\}/${KBN_XPACK_ENCRYPTEDSA
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echo "[X] Could not set Kibana encryption key (Error Code: $ERROR)." | tee -a $LOGFILE
-fi
-
-echo "[*] Adjusting memory settings for ES" | tee -a $LOGFILE
-sed -E -i.bak "s/\{\{ES_MEMORY\}\}/${ES_MEMORY}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echo "[X] Could not adjust ES memory settings (Error Code: $ERROR)." | tee -a $LOGFILE
 fi
 
 if [ ${WHATTOINSTALL} = "full" ]; then
