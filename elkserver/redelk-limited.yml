@@ -38,7 +38,6 @@ services:
       - cluster.name=redelk-cluster
       - node.name=redelk-node1
       - bootstrap.memory_lock=true
-      - ES_JAVA_OPTS=${ES_JAVA_OPTS}
       - xpack.license.self_generated.type=basic
       - xpack.security.enabled=true
       - xpack.security.http.ssl.enabled=true
