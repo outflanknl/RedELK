@@ -150,56 +150,41 @@ memcheck() {
     # check for full or limited install
     if [ ${WHATTOINSTALL} = "limited" ]; then
         if [ ${AVAILABLE_MEMORY} -le 3999 ]; then
-            echo "[!] Less than recommended 8GB memory found - yolo continuing" | tee -a $LOGFILE
-            ES_MEMORY=1g
-        elif [ ${AVAILABLE_MEMORY} -ge 4000 -a ${AVAILABLE_MEMORY} -le 7999 ]; then
-            echo "[!] Less than recommended 8GB memory found - yolo continuing" | tee -a $LOGFILE
-            ES_MEMORY=2g
-        elif [ ${AVAILABLE_MEMORY} -ge 8000 ]; then
-            echo "[*] 8GB or more memory found" | tee -a $LOGFILE
-            ES_MEMORY=4g
+            echo "[!] Less than recommended 4GB memory found - not recommended but yolo continuing" | tee -a $LOGFILE
         fi
-    else # going for full install means in check in determine how much memory NEO4J and ES get
+    else 
+    # going for full install means some memory tuning is needed.
+    # ES memory is managed by ES and docker. No fixed values required
+    # NEO4j memory needs to be determined. We use the following mapping between total avail system mem and NEO4j value:
+    # 4GB or less -> exit
+    # 8GB or less -> 2GB for NEO4j
+    # 8-10GB -> 3GB for NEO4j
+    # 10-12GB -> 4GB for NEO4j
+    # 12-14GB -> 5GB for NEO4j
+    # 14-16GB -> 6GB for NEO4j
+    # 16GB+ -> 8GB for NEO4j
         SHOULDEXIT=false
-        if [ ${AVAILABLE_MEMORY} -le 7999 ]; then
-            echo "[X] Not enough memory for full install (less than 8GB). Exiting."
+        if [ ${AVAILABLE_MEMORY} -le 3999 ]; then
+            echo "[X] Less than 4GB found. Not enough for full install. Exiting."
             SHOULDEXIT=true
-        elif [ ${AVAILABLE_MEMORY} -ge 8000 ] &&  [ ${AVAILABLE_MEMORY} -le 8999 ]; then
-            echo "[*] 8-9GB memory found" | tee -a $LOGFILE
-            ES_MEMORY=1g
+        elif [ ${AVAILABLE_MEMORY} -le 7999 ]; then
+            echo "[X] Less than 8GB found. Not recommended for full install but yolo continuing."
             NEO4J_MEMORY=2G
-        elif [ ${AVAILABLE_MEMORY} -ge 9000 ] && [ ${AVAILABLE_MEMORY} -le 9999 ]; then
-            echo "[*] 9-10GB memory found" | tee -a $LOGFILE
-            ES_MEMORY=1g
+        elif [ ${AVAILABLE_MEMORY} -ge 8000 ] &&  [ ${AVAILABLE_MEMORY} -le 9999 ]; then
+            echo "[*] 8-10GB memory found" | tee -a $LOGFILE
             NEO4J_MEMORY=3G
-        elif [ ${AVAILABLE_MEMORY} -ge 10000 ] && [ ${AVAILABLE_MEMORY} -le 10999 ]; then
-            echo "[*] 10-11GB memory found" | tee -a $LOGFILE
-            ES_MEMORY=2g
-            NEO4J_MEMORY=3G
-        elif [ ${AVAILABLE_MEMORY} -ge 11000 ] && [ ${AVAILABLE_MEMORY} -le 11999 ]; then
-            echo "[*] 11-12GB memory found" | tee -a $LOGFILE
-            ES_MEMORY=2g
+        elif [ ${AVAILABLE_MEMORY} -ge 10000 ] && [ ${AVAILABLE_MEMORY} -le 11999 ]; then
+            echo "[*] 10-12GB memory found" | tee -a $LOGFILE
             NEO4J_MEMORY=4G
-        elif [ ${AVAILABLE_MEMORY} -ge 12000 ] && [ ${AVAILABLE_MEMORY} -le 12999 ]; then
-            echo "[*] 12-13GB memory found" | tee -a $LOGFILE
-            ES_MEMORY=3g
-            NEO4J_MEMORY=4G
-        elif [ ${AVAILABLE_MEMORY} -ge 13000 ] && [ ${AVAILABLE_MEMORY} -le 13999 ]; then
-            echo "[*] 13-14GB memory found" | tee -a $LOGFILE
-            ES_MEMORY=3g
-            NEO4J_MEMORY=4500M
-        elif [ ${AVAILABLE_MEMORY} -ge 14000 ] && [ ${AVAILABLE_MEMORY} -le 14999 ]; then
-            echo "[*] 14-15GB memory found" | tee -a $LOGFILE
-            ES_MEMORY=3g
-            NEO4J_MEMORY=5G
-        elif [ ${AVAILABLE_MEMORY} -ge 15000 ] && [ ${AVAILABLE_MEMORY} -le 15999 ]; then
-            echo "[*] 15-16GB memory found" | tee -a $LOGFILE
-            ES_MEMORY=4g
-            NEO4J_MEMORY=5G
+        elif [ ${AVAILABLE_MEMORY} -ge 12000 ] && [ ${AVAILABLE_MEMORY} -le 13999 ]; then
+            echo "[*] 12-14GB memory found" | tee -a $LOGFILE
+            NEO4J_MEMORY=5GB
+        elif [ ${AVAILABLE_MEMORY} -ge 14000 ] && [ ${AVAILABLE_MEMORY} -le 15999 ]; then
+            echo "[*] 14-16GB memory found" | tee -a $LOGFILE
+            NEO4J_MEMORY=6G
         elif [ ${AVAILABLE_MEMORY} -ge 16000 ]; then
             echo "[*] 16GB or more memory found" | tee -a $LOGFILE
-            ES_MEMORY=5g
-            NEO4J_MEMORY=5G
+            NEO4J_MEMORY=8G
         fi
     fi
 
