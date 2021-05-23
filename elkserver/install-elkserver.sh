@@ -210,7 +210,7 @@ if [ ${#} -ne 0 ] && [[ "$*" = *"dryrun"* ]]; then
 fi
 
 if [ ${#} -ne 0 ] && [[ $* = *"fixedmemory"* ]]; then
-    echo "[*] Fixed memory mode: 1G for ES, 1G for NEO4J and 1G for Jupyter."  | tee -a $LOGFILE
+    echo "[*] Fixed memory mode: skip memory check and appoint 1G to NEO4J."  | tee -a $LOGFILE
     FIXEDMEMORY="yes"
     NEO4J_MEMORY=1G
 fi
