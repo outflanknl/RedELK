@@ -6,7 +6,7 @@
 # - Outflank B.V. / Mark Bergman (@xychix)
 # - Lorenzo Bernardi (@fastlorenzo)
 #
-from modules.helpers import get_initial_alarm_result, getValue, rawSearch, addTagsByQuery
+from modules.helpers import get_initial_alarm_result, get_value, raw_search, add_tags_by_query
 import traceback
 import logging
 import datetime
@@ -58,14 +58,14 @@ class Module():
         ip_lists = {}
         # Get all IPs except from tor
         q = {'query': {'bool': {'must_not': [{'match': {'iplist.name': 'tor'}}]}}}
-        res = rawSearch(q, index='redelk-iplist-*')
+        res = raw_search(q, index='redelk-iplist-*')
 
         if not res:
             return(ip_lists)
 
         for ipdoc in res['hits']['hits']:
-            ip = getValue('_source.iplist.ip', ipdoc)
-            iplist_name = getValue('_source.iplist.name', ipdoc)
+            ip = get_value('_source.iplist.ip', ipdoc)
+            iplist_name = get_value('_source.iplist.name', ipdoc)
             # Already one IP found in this list, adding it
             if iplist_name in ip_lists:
                 ip_lists[iplist_name].append(ip)
@@ -95,7 +95,7 @@ class Module():
             }
         }
 
-        res = rawSearch(q, index='redirtraffic-*')
+        res = raw_search(q, index='redirtraffic-*')
 
         self.logger.debug(res)
 
@@ -135,7 +135,7 @@ class Module():
 
             self.logger.debug('Tagging IPs matching IP list %s' % iplist_name)
             # 2. For each IP list, update all documents not tagged already
-            res = addTagsByQuery([iplist_tag], q, 'redirtraffic-*')
+            res = add_tags_by_query([iplist_tag], q, 'redirtraffic-*')
             updated_count += res['updated']
 
         return(updated_count)

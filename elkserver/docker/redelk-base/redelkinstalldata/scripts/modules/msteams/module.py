@@ -8,7 +8,7 @@
 import config
 import pymsteams
 import logging
-from modules.helpers import getValue, pprint
+from modules.helpers import get_value, pprint
 
 info = {
     'version': 0.1,
@@ -40,14 +40,14 @@ class Module():
                 title = hit['_id']
                 while i < len(alarm['groupby']):
                     if i == 0:
-                        title = getValue('_source.%s' % alarm['groupby'][i], hit)
+                        title = get_value('_source.%s' % alarm['groupby'][i], hit)
                     else:
-                        title = '%s / %s' % (title, getValue('_source.%s' % alarm['groupby'][i], hit))
+                        title = '%s / %s' % (title, get_value('_source.%s' % alarm['groupby'][i], hit))
                     i += 1
                 tcs.activityTitle('Alarm on item: %s' % title)
                 # tcs.activitySubtitle(alarm['info']['description'])
                 for field in alarm['fields']:
-                    val = getValue('_source.%s' % field, hit)
+                    val = get_value('_source.%s' % field, hit)
                     tcs.addFact(field, pprint(val))
                 tmsg.addSection(tcs)
         except Exception as e:

@@ -6,9 +6,10 @@
 # - Outflank B.V. / Mark Bergman (@xychix)
 # - Lorenzo Bernardi (@fastlorenzo)
 #
-from modules.helpers import getQuery, getValue, get_initial_alarm_result, es
-import traceback
 import logging
+import traceback
+
+from modules.helpers import es, get_initial_alarm_result, get_query, get_value
 
 info = {
     'version': 0.1,
@@ -42,12 +43,12 @@ class Module():
     def enrich_beacon_data(self):
         # Get all lines in rtops that have not been enriched yet (for CS)
         query = 'implant.id:* AND c2.program: cobaltstrike AND NOT c2.log.type:implant_newimplant AND NOT tags:%s' % info['submodule']
-        notEnriched = getQuery(query, size=10000, index='rtops-*')
+        notEnriched = get_query(query, size=10000, index='rtops-*')
 
         # Created a dict grouped by implant ID
         implantIds = {}
         for ne in notEnriched:
-            implantId = getValue('_source.implant.id', ne)
+            implantId = get_value('_source.implant.id', ne)
             if implantId in implantIds:
                 implantIds[implantId].append(ne)
             else:
@@ -73,7 +74,7 @@ class Module():
     # Get the initial beacon document from cobaltstrike or return False if none found
     def get_initial_beacon_doc(self, implantId):
         query = 'implant.id:%s AND c2.program: cobaltstrike AND c2.log.type:implant_newimplant' % implantId
-        initialBeaconDoc = getQuery(query, size=1, index="rtops-*")
+        initialBeaconDoc = get_query(query, size=1, index="rtops-*")
         initialBeaconDoc = initialBeaconDoc[0] if len(initialBeaconDoc) > 0 else False
         self.logger.debug('Initial beacon line [%s]: %s' % (implantId, initialBeaconDoc))
         return(initialBeaconDoc)

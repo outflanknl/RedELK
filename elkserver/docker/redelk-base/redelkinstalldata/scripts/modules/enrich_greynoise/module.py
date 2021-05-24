@@ -6,7 +6,7 @@
 # - Outflank B.V. / Mark Bergman (@xychix)
 # - Lorenzo Bernardi (@fastlorenzo)
 #
-from modules.helpers import get_initial_alarm_result, getValue, rawSearch, es, getLastRun
+from modules.helpers import get_initial_alarm_result, get_value, raw_search, es, get_last_run
 from config import enrich
 from time import time
 import traceback
@@ -49,7 +49,7 @@ class Module():
     def enrich_greynoise(self):
         # Get all lines in redirtraffic that have not been enriched with 'enrich_greynoise'
         # Filter documents that were before the last run time of enrich_iplist (to avoid race condition)
-        iplist_lastrun = getLastRun('enrich_iplists')
+        iplist_lastrun = get_last_run('enrich_iplists')
         query = {
             'sort': [{'@timestamp': {'order': 'desc'}}],
             'query': {
@@ -69,7 +69,7 @@ class Module():
                 }
             }
         }
-        res = rawSearch(query, index='redirtraffic-*')
+        res = raw_search(query, index='redirtraffic-*')
         if res is None:
             notEnriched = []
         else:
@@ -78,7 +78,7 @@ class Module():
         # Created a dict grouped by IP address (from source.ip)
         ips = {}
         for ne in notEnriched:
-            ip = getValue('_source.source.ip', ne)
+            ip = get_value('_source.source.ip', ne)
             if ip in ips:
                 ips[ip].append(ne)
             else:
@@ -93,7 +93,7 @@ class Module():
             if not lastESData:
                 greynoiseData = self.get_greynoise_data(ip)
             else:
-                greynoiseData = getValue('_source.greynoise', lastESData)
+                greynoiseData = get_value('_source.greynoise', lastESData)
 
             # If no greynoise data found, skip the IP
             if not greynoiseData:
@@ -173,7 +173,7 @@ class Module():
             }
         }
 
-        res = rawSearch(q, index='redirtraffic-*')
+        res = raw_search(q, index='redirtraffic-*')
 
         self.logger.debug(res)
 

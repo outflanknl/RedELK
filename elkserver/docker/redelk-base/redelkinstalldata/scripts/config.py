@@ -1,3 +1,14 @@
+#!/usr/bin/python3
+"""
+Part of RedELK
+
+Script to load the config file
+
+Authors:
+- Outflank B.V. / Mark Bergman (@xychix)
+- Lorenzo Bernardi (@fastlorenzo)
+"""
+
 import json
 import logging
 
@@ -12,14 +23,14 @@ with open('/etc/redelk/config.json') as json_data:
 # DEBUG, 10
 # NOTSET, 0
 
-loglevel = logging.WARN
+LOGLEVEL = logging.WARN
 if "loglevel" in d:
-    loglevel = d['loglevel']
+    LOGLEVEL = d['loglevel']
 
 # -- directory for cache files (including shelves)
-tempDir = "/tmp"
+TEMP_DIR = "/tmp"
 if "tempDir" in d:
-    tempDir = d['tempDir']
+    TEMP_DIR = d['tempDir']
 
 # -- Notifications
 notifications = {

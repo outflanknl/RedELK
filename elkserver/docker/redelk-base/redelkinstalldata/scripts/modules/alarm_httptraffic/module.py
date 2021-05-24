@@ -1,14 +1,17 @@
 #!/usr/bin/python3
-#
-# Part of RedELK
-#
-# Authors:
-# - Outflank B.V. / Mark Bergman (@xychix)
-# - Lorenzo Bernardi (@fastlorenzo)
-#
-from modules.helpers import get_initial_alarm_result, getValue, rawSearch
-import traceback
+"""
+Part of RedELK
+
+This check queries for IP's that aren't listed in any iplist* but do talk to c2* paths on redirectors
+
+Authors:
+- Outflank B.V. / Mark Bergman (@xychix)
+- Lorenzo Bernardi (@fastlorenzo)
+"""
 import logging
+import traceback
+
+from modules.helpers import get_initial_alarm_result, get_value, raw_search
 
 info = {
     'version': 0.1,
@@ -21,11 +24,12 @@ info = {
 
 
 class Module():
+    """ HTTP Traffic module """
     def __init__(self):
         self.logger = logging.getLogger(info['submodule'])
-        pass
 
     def run(self):
+        """ Run the alarm module """
         ret = get_initial_alarm_result()
         ret['info'] = info
         ret['fields'] = ['agent.hostname', 'source.ip', 'source.nat.ip', 'source.geo.country_name', 'source.as.organization.name', 'redir.frontend.name', 'redir.backend.name', 'infra.attack_scenario', 'tags', 'redir.timestamp']
@@ -35,17 +39,17 @@ class Module():
             report = self.alarm_check(alarmed_ips)
             ret['hits']['hits'] = report
             ret['hits']['total'] = len(report)
-        except Exception as e:
-            stackTrace = traceback.format_exc()
-            ret['error'] = stackTrace
-            self.logger.exception(e)
-            pass
-        self.logger.info('finished running module. result: %s hits' % ret['hits']['total'])
-        return(ret)
+        # pylint: disable=broad-except
+        except Exception as error:
+            stack_trace = traceback.format_exc()
+            ret['error'] = stack_trace
+            self.logger.exception(error)
+        self.logger.info('finished running module. result: %s hits', ret['hits']['total'])
+        return ret
 
-    # Returns all previous IPs that have been alarmed already
     def get_alarmed_ips(self):
-        query = {
+        """ Returns all previous IPs that have been alarmed already """
+        es_query = {
             'sort': [{'@timestamp': {'order': 'desc'}}],
             'query': {
                 'bool': {
@@ -62,26 +66,27 @@ class Module():
                 }
             }
         }
-        res = rawSearch(query, index='redirtraffic-*')
+        res = raw_search(es_query, index='redirtraffic-*')
         if res is None:
-            alarmed = []
+            alarmed_hits = []
         else:
-            alarmed = res['hits']['hits']
+            alarmed_hits = res['hits']['hits']
 
         # Created a dict grouped by IP address (from source.ip)
         ips = {}
-        for al in alarmed:
-            ip = getValue('_source.source.ip', al)
+        for alarmed_hit in alarmed_hits:
+            # pylint: disable=invalid-name
+            ip = get_value('_source.source.ip', alarmed_hit)
             if ip in ips:
-                ips[ip].append(al)
+                ips[ip].append(alarmed_hit)
             else:
-                ips[ip] = [al]
+                ips[ip] = [alarmed_hit]
 
-        return(ips)
+        return ips
 
     def alarm_check(self, alarmed_ips):
-        # This check queries for IP's that aren't listed in any iplist* but do talk to c2* paths on redirectors
-        query = {
+        """ This check queries for IP's that aren't listed in any iplist* but do talk to c2* paths on redirectors """
+        es_query = {
             'sort': [{'@timestamp': {'order': 'desc'}}],
             'query': {
                 'bool': {
@@ -105,28 +110,30 @@ class Module():
                 }
             }
         }
-        res = rawSearch(query, index='redirtraffic-*')
+        res = raw_search(es_query, index='redirtraffic-*')
         if res is None:
-            notEnriched = []
+            not_enriched_hits = []
         else:
-            notEnriched = res['hits']['hits']
+            not_enriched_hits = res['hits']['hits']
 
         # Created a dict grouped by IP address (from source.ip)
         ips = {}
-        for ne in notEnriched:
-            ip = getValue('_source.source.ip', ne)
+        for not_enriched in not_enriched_hits:
+            # pylint: disable=invalid-name
+            ip = get_value('_source.source.ip', not_enriched)
             if ip in ips:
-                ips[ip].append(ne)
+                ips[ip].append(not_enriched)
             else:
-                ips[ip] = [ne]
+                ips[ip] = [not_enriched]
 
         hits = []
 
         # Now we check if the IPs have already been alarmed in the past timeframe defined in the config
+        # pylint: disable=invalid-name
         for ip in ips:
             # Not alarmed yet, process it
             if ip not in alarmed_ips:
                 hits += ips[ip]
 
         # Return the array of new IP documents to be alarmed
-        return(hits)
+        return hits
