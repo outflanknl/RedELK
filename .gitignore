@@ -101,6 +101,8 @@ venv.bak/
 # mkdocs documentation
 /site
 
+.vscode/
+
 # mypy
 .mypy_cache/
 elkserver/scripts/upload_redelkz.sh
