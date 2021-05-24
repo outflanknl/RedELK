@@ -101,18 +101,21 @@ class Module():
         # Then we get an aggregation of all md5 alarmed within the last 'interval' time
         self.logger.debug('Running query %s' % alarmed_md5_q)
         omd5 = rawSearch(alarmed_md5_q, index='rtops-*')
-        self.logger.debug(omd5['aggregations'])
 
         already_checked = []
         already_alarmed = []
 
-        # add md5 hashes that have been checked within the 'interval' in 'already_checked'
-        for h in omd5['aggregations']['interval_filter']['md5_interval']['buckets']:
-            already_checked.append(h['key'])
+        # Only if we have results
+        if omd5:
+            self.logger.debug(omd5['aggregations'])
 
-        # add md5 hashes that have been alarmed previously in 'already_alarmed'
-        for h in omd5['aggregations']['alarmed_filter']['md5_alarmed']['buckets']:
-            already_alarmed.append(h['key'])
+            # add md5 hashes that have been checked within the 'interval' in 'already_checked'
+            for h in omd5['aggregations']['interval_filter']['md5_interval']['buckets']:
+                already_checked.append(h['key'])
+
+            # add md5 hashes that have been alarmed previously in 'already_alarmed'
+            for h in omd5['aggregations']['alarmed_filter']['md5_alarmed']['buckets']:
+                already_alarmed.append(h['key'])
 
         md5d = {}
         md5s = []
