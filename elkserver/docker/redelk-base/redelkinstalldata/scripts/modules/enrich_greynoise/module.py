@@ -1,18 +1,23 @@
 #!/usr/bin/python3
-#
-# Part of RedELK
-#
-# Authors:
-# - Outflank B.V. / Mark Bergman (@xychix)
-# - Lorenzo Bernardi (@fastlorenzo)
-#
-from modules.helpers import get_initial_alarm_result, get_value, raw_search, es, get_last_run
-from config import enrich
-from time import time
-import traceback
-import logging
-import requests
+"""
+Part of RedELK
+
+This script enriches redirtraffic documents with data from Greynoise
+
+Authors:
+- Outflank B.V. / Mark Bergman (@xychix)
+- Lorenzo Bernardi (@fastlorenzo)
+"""
+
 import copy
+import logging
+import traceback
+from time import time
+
+import requests
+from config import enrich
+from modules.helpers import (es, get_initial_alarm_result, get_last_run,
+                             get_value, raw_search)
 
 info = {
     'version': 0.1,
@@ -25,6 +30,7 @@ info = {
 
 
 class Module():
+    """ Enrich redirtraffic lines with greynoise data """
     def __init__(self):
         self.logger = logging.getLogger(info['submodule'])
         self.greynoise_url = 'http://api.greynoise.io:8888/v1/query/ip'
@@ -32,25 +38,26 @@ class Module():
         self.cache = enrich[info['submodule']]['cache'] if info['submodule'] in enrich else 86400
 
     def run(self):
+        """ run the enrich module """
         ret = get_initial_alarm_result()
         ret['info'] = info
         try:
             hits = self.enrich_greynoise()
             ret['hits']['hits'] = hits
             ret['hits']['total'] = len(hits)
-        except Exception as e:
-            stackTrace = traceback.format_exc()
-            ret['error'] = stackTrace
-            self.logger.exception(e)
-            pass
-        self.logger.info('finished running module. result: %s hits' % ret['hits']['total'])
-        return(ret)
+        # pylint: disable=broad-except
+        except Exception as error:
+            stack_trace = traceback.format_exc()
+            ret['error'] = stack_trace
+            self.logger.exception(error)
+        self.logger.info('finished running module. result: %s hits', ret['hits']['total'])
+        return ret
 
     def enrich_greynoise(self):
-        # Get all lines in redirtraffic that have not been enriched with 'enrich_greynoise'
-        # Filter documents that were before the last run time of enrich_iplist (to avoid race condition)
+        """ Get all lines in redirtraffic that have not been enriched with 'enrich_greynoise'
+        Filter documents that were before the last run time of enrich_iplist (to avoid race condition) """
         iplist_lastrun = get_last_run('enrich_iplists')
-        query = {
+        es_query = {
             'sort': [{'@timestamp': {'order': 'desc'}}],
             'query': {
                 'bool': {
@@ -69,82 +76,85 @@ class Module():
                 }
             }
         }
-        res = raw_search(query, index='redirtraffic-*')
-        if res is None:
-            notEnriched = []
+        es_result = raw_search(es_query, index='redirtraffic-*')
+        if es_result is None:
+            not_enriched_results = []
         else:
-            notEnriched = res['hits']['hits']
+            not_enriched_results = es_result['hits']['hits']
 
         # Created a dict grouped by IP address (from source.ip)
         ips = {}
-        for ne in notEnriched:
-            ip = get_value('_source.source.ip', ne)
+        for not_enriched in not_enriched_results:
+            # pylint: disable=invalid-name
+            ip = get_value('_source.source.ip', not_enriched)
             if ip in ips:
-                ips[ip].append(ne)
+                ips[ip].append(not_enriched)
             else:
-                ips[ip] = [ne]
+                ips[ip] = [not_enriched]
 
         hits = []
         # For each IP, get the greynoise data
+        # pylint: disable=invalid-name
         for ip in ips:
             # Get data from redirtraffic if within interval
-            lastESData = self.get_last_es_data(ip)
+            last_es_data = self.get_last_es_data(ip)
 
-            if not lastESData:
-                greynoiseData = self.get_greynoise_data(ip)
+            if not last_es_data:
+                greynoise_data = self.get_greynoise_data(ip)
             else:
-                greynoiseData = get_value('_source.greynoise', lastESData)
+                greynoise_data = get_value('_source.greynoise', last_es_data)
 
             # If no greynoise data found, skip the IP
-            if not greynoiseData:
+            if not greynoise_data:
                 continue
 
             for doc in ips[ip]:
                 # Fields to copy: greynoise.*
-                res = self.add_greynoise_data(doc, greynoiseData)
-                if res:
-                    hits.append(res)
+                es_result = self.add_greynoise_data(doc, greynoise_data)
+                if es_result:
+                    hits.append(es_result)
 
-        return(hits)
+        return hits
 
-    # Get the data from greynoise for the IP
-    def get_greynoise_data(self, ip):
+    def get_greynoise_data(self, ip_address):
+        """ Get the data from greynoise for the IP """
         try:
-            data = {'ip': ip}
-            gnData = requests.post(self.greynoise_url, data=data)
-            r = {}
-            r['full_data'] = gnData.json()
-            tempOS = {}
-            tempName = {}
-            tempIntention = {}
-            if 'records' in r['full_data']:
-                for record in r['full_data']['records']:
-                    tempOS[record['metadata']['os']] = 0
-                    tempName[record['name']] = 0
-                    tempIntention[record['intention']] = 0
+            data = {'ip': ip_address}
+            gn_data = requests.post(self.greynoise_url, data=data)
+            result = {}
+            result['full_data'] = gn_data.json()
+            temp_os = {}
+            temp_name = {}
+            temp_intention = {}
+            if 'records' in result['full_data']:
+                for record in result['full_data']['records']:
+                    temp_os[record['metadata']['os']] = 0
+                    temp_name[record['name']] = 0
+                    temp_intention[record['intention']] = 0
                 # SORT RESULTS
-                r['full_data']['records'] = sorted(r['full_data']['records'],
+                result['full_data']['records'] = sorted(result['full_data']['records'],
                                                    key=lambda k: k['first_seen'], reverse=False)
-                r['first_seen'] = r['full_data']['records'][0]['first_seen']
-                r['full_data']['records'] = sorted(r['full_data']['records'],
+                result['first_seen'] = result['full_data']['records'][0]['first_seen']
+                result['full_data']['records'] = sorted(result['full_data']['records'],
                                                    key=lambda k: k['last_updated'], reverse=True)
-                r['last_result'] = r['full_data']['records'][0]
-                r['OS_list'] = list(tempOS.copy().keys())
-                r['Name_list'] = list(tempName.copy().keys())
-            r['ip'] = ip
-            r['query_timestamp'] = int(time())
-            r['status'] = r['full_data'].get('status', None)
-            x = copy.deepcopy(r)
-            x.pop('full_data')
-            return(x)
-        except Exception as e:
-            self.logger.error('Error getting greynoise IP %s' % ip)
-            self.logger.exception(e)
+                result['last_result'] = result['full_data']['records'][0]
+                result['OS_list'] = list(temp_os.copy().keys())
+                result['Name_list'] = list(temp_name.copy().keys())
+            result['ip'] = ip_address
+            result['query_timestamp'] = int(time())
+            result['status'] = result['full_data'].get('status', None)
+            cleaned_result = copy.deepcopy(result)
+            cleaned_result.pop('full_data')
+            return cleaned_result
+        # pylint: disable=broad-except
+        except Exception as error:
+            self.logger.error('Error getting greynoise IP %s', ip_address)
+            self.logger.exception(error)
             return False
 
-    def get_last_es_data(self, ip):
-        # Get greynoise data from ES if less than 1 day old
-        q = {
+    def get_last_es_data(self, ip_address):
+        """ Get greynoise data from ES if less than 1 day old """
+        es_query = {
             "size": 1,
             "sort": [{"@timestamp": {"order": "desc"}}],
             "query": {
@@ -165,7 +175,7 @@ class Module():
                         },
                         {
                             "term": {
-                                "host.ip": ip
+                                "host.ip": ip_address
                             }
                         }
                     ]
@@ -173,25 +183,26 @@ class Module():
             }
         }
 
-        res = raw_search(q, index='redirtraffic-*')
+        es_results = raw_search(es_query, index='redirtraffic-*')
 
-        self.logger.debug(res)
+        self.logger.debug(es_results)
 
         # Return the latest hit or False if not found
-        if res and len(res['hits']['hits']) > 0:
-            return(res['hits']['hits'][0])
+        if es_results and len(es_results['hits']['hits']) > 0:
+            return es_results['hits']['hits'][0]
         else:
-            return(False)
+            return False
 
-    # Add greynoise data to the doc
     def add_greynoise_data(self, doc, data):
+        """ Add greynoise data to the doc """
         doc['_source.greynoise'] = data
 
         try:
             es.update(index=doc['_index'], id=doc['_id'], body={'doc': doc['_source']})
-            return(doc)
-        except Exception as e:
-            stackTrace = traceback.format_exc()
-            self.logger.error('Error adding greynoise data to document %s: %s' % (doc['_id'], stackTrace))
-            self.logger.exception(e)
-            return(False)
+            return doc
+        # pylint: disable=broad-except
+        except Exception as error:
+            stack_trace = traceback.format_exc()
+            self.logger.error('Error adding greynoise data to document %s: %s', doc['_id'], stack_trace)
+            self.logger.exception(error)
+            return False

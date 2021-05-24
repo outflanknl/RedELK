@@ -1,13 +1,16 @@
 #!/usr/bin/python3
-#
-# Part of RedELK
-#
-# Authors:
-# - Lorenzo Bernardi (@fastlorenzo)
-#
-import config
-import pymsteams
+"""
+Part of RedELK
+
+This connector sends RedELK alerts via Microsoft Teams
+
+Authors:
+- Lorenzo Bernardi (@fastlorenzo)
+"""
 import logging
+import pymsteams
+
+import config
 from modules.helpers import get_value, pprint
 
 info = {
@@ -20,12 +23,12 @@ info = {
 
 
 class Module():
+    """ msteams connector module """
     def __init__(self):
         self.logger = logging.getLogger(info['submodule'])
-        pass
 
     def send_alarm(self, alarm):
-
+        """ Send the alarm notification """
         tmsg = pymsteams.connectorcard(config.notifications['msteams']['webhook_url'])
         description = alarm['info']['description']
         if len(alarm['groupby']) > 0:
@@ -50,9 +53,9 @@ class Module():
                     val = get_value('_source.%s' % field, hit)
                     tcs.addFact(field, pprint(val))
                 tmsg.addSection(tcs)
-        except Exception as e:
-            self.logger.exception(e)
-            pass
+        # pylint: disable=broad-except
+        except Exception as error:
+            self.logger.exception(error)
 
         tmsg.title('Alarm from %s [%s hits]' % (alarm['info']['name'], alarm['hits']['total']))
         tmsg.send()
