@@ -258,26 +258,6 @@ if [ $ERROR -ne 0 ]; then
     exit 1
 fi
 
-echo "[*] Setting vm.max_map_count to 262144" | tee -a $LOGFILE
-sysctl -w vm.max_map_count=262144 >> $LOGFILE 2>&1
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echo "[X] Could not set vm.max_map_count (Error Code: $ERROR)." | tee -a $LOGFILE
-    exit 1
-fi
-
-if ( ! grep -r "^vm.max_map_count" /etc/sysctl* > /dev/null ) ; then
-    echo "[*] Making vm.max_map_count setting persistent" | tee -a $LOGFILE
-    echo "vm.max_map_count=262144" >> /etc/sysctl.conf >> $LOGFILE 2>&1
-    ERROR=$?
-    if [ $ERROR -ne 0 ]; then
-        echo "[X] Could not make vm.max_map_count persistent (Error Code: $ERROR)." | tee -a $LOGFILE
-        exit 1
-    fi
-else
-    echo "[!] WARNING : existing vm.max_map_count setting found in /etc/systctl.conf - yolo continuing" | tee -a $LOGFILE
-fi
-
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echo "[X] Could not set kibana_system ES password (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -537,6 +517,27 @@ fi
 
 
 if [ $DRYRUN == "no" ]; then
+    
+    echo "[*] Setting vm.max_map_count to 262144" | tee -a $LOGFILE
+    sysctl -w vm.max_map_count=262144 >> $LOGFILE 2>&1
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echo "[X] Could not set vm.max_map_count (Error Code: $ERROR)." | tee -a $LOGFILE
+        exit 1
+    fi
+
+    if ( ! grep -r "^vm.max_map_count" /etc/sysctl* > /dev/null ) ; then
+        echo "[*] Making vm.max_map_count setting persistent" | tee -a $LOGFILE
+        echo "vm.max_map_count=262144" >> /etc/sysctl.conf >> $LOGFILE 2>&1
+        ERROR=$?
+        if [ $ERROR -ne 0 ]; then
+            echo "[X] Could not make vm.max_map_count persistent (Error Code: $ERROR)." | tee -a $LOGFILE
+            exit 1
+        fi
+    else
+        echo "[!] WARNING : existing vm.max_map_count setting found in /etc/systctl.conf - yolo continuing" | tee -a $LOGFILE
+    fi
+    
     if [ $DO_LETSENCRYPT == "true" ]; then
         echo "[*] Running initial Let's Encrypt script" | tee -a $LOGFILE
         ./init-letsencrypt.sh $DOCKERCONFFILE $EXTERNAL_DOMAIN # >>$LOGFILE 2>&1
@@ -547,15 +548,15 @@ if [ $DRYRUN == "no" ]; then
         fi
     fi
 
-  echo "[*] Building RedELK from $DOCKERCONFFILE file. Docker output below." | tee -a $LOGFILE
-  echo ""
-  docker-compose -f docker-compose.yml up --build -d # >>$LOGFILE 2>&1
-  ERROR=$?
-  if [ $ERROR -ne 0 ]; then
-      echo "[X] Error building RedELK using docker-compose file $DOCKERCONFFILE (Error Code: $ERROR)." | tee -a $LOGFILE
-      exit 1
-  fi
-  echo ""
+    echo "[*] Building RedELK from $DOCKERCONFFILE file. Docker output below." | tee -a $LOGFILE
+    echo ""
+    docker-compose -f docker-compose.yml up --build -d # >>$LOGFILE 2>&1
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echo "[X] Error building RedELK using docker-compose file $DOCKERCONFFILE (Error Code: $ERROR)." | tee -a $LOGFILE
+        exit 1
+    fi
+    echo ""
 fi
 
 grep "* ERROR " redelk-install.log
