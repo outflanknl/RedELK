@@ -1,0 +1,34 @@
+filebeat.inputs:
+- type: log
+  scan_frequency: 5s
+  enabled: true
+  json.fields_under_root: true
+  json.add_error_key: true
+  paths:
+    - /root/Mythic/mythic-docker/redelk.log
+  fields:
+    infra:
+      log:
+        type: rtops
+    c2:
+      program: mythicc2
+      log:
+        type: events
+
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: false
+
+setup.template.settings:
+  index.number_of_shards: 3
+
+name: "@@HOSTNAME@@"
+fields_under_root: true
+fields:
+  infra:
+    attack_scenario: @@ATTACKSCENARIO@@
+harvester.limit: 1
+
+output.logstash:
+  hosts: ["@@HOSTANDPORT@@"]
+  ssl.certificate_authorities: ["/etc/filebeat/redelkCA.crt"]
