@@ -91,7 +91,7 @@ class Module():
                     'must': {
                         'query_string': {
                             'fields': ['redir.backend.name'],
-                            'query': 'c2-*'
+                            'query': 'c2*'
                         }
                     },
                     'must_not': [{
