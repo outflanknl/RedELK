@@ -39,7 +39,6 @@ services:
       - cluster.name=redelk-cluster
       - node.name=redelk-node1
       - bootstrap.memory_lock=true
-      - ES_JAVA_OPTS=${ES_JAVA_OPTS}
       - xpack.license.self_generated.type=basic
       - xpack.security.enabled=true
       - xpack.security.http.ssl.enabled=true
@@ -62,6 +61,10 @@ services:
       - CREDS_redelk_ingest=${CREDS_redelk_ingest}
       - CREDS_redelk=${CREDS_redelk}
       - ES_URL=${ES_URL}
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
     restart: always
     logging:
       driver: "json-file"
