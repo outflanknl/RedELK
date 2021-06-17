@@ -5,7 +5,7 @@
 # Authors:
 # - Lorenzo Bernardi (@fastlorenzo)
 #
-from modules.helpers import get_initial_alarm_result, countQuery, getQuery
+from modules.helpers import get_initial_alarm_result, get_hits_count, get_query
 import traceback
 import config
 import logging
@@ -45,7 +45,7 @@ class Module():
         # iocs = []
         # i = countQuery(q, index="rtops-*")
         # self.logger.debug('Getting 1 document')
-        r = getQuery(q, 100, index="rtops-*")
+        r = get_query(q, 100, index="rtops-*")
         self.logger.debug(r)
 
         return(r)

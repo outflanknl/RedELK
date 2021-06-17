@@ -1,15 +1,19 @@
 #!/usr/bin/python3
-#
-# Part of RedELK
-#
-# Authors:
-# - Outflank B.V. / Mark Bergman (@xychix)
-# - Lorenzo Bernardi (@fastlorenzo)
-#
-from modules.helpers import get_initial_alarm_result, getValue, rawSearch, addTagsByQuery
-import traceback
-import logging
+"""
+Part of RedELK
+
+This script enriches redirtraffic documents with data from the different IP lists
+
+Authors:
+- Outflank B.V. / Mark Bergman (@xychix)
+- Lorenzo Bernardi (@fastlorenzo)
+"""
 import datetime
+import logging
+import traceback
+
+from modules.helpers import (add_tags_by_query, get_initial_alarm_result,
+                             get_value, raw_search)
 
 info = {
     'version': 0.1,
@@ -22,11 +26,13 @@ info = {
 
 
 class Module():
+    """ Enrich redirtraffic lines with data from IP lists """
     def __init__(self):
         self.logger = logging.getLogger(info['submodule'])
         self.now = datetime.datetime.utcnow()
 
     def run(self):
+        """ run the enrich module """
         ret = get_initial_alarm_result()
         ret['info'] = info
 
@@ -35,7 +41,7 @@ class Module():
 
             # 1. get all IPs from the different IP lists (except tor)
             ip_lists = self.get_iplists()
-            self.logger.info('IP Lists: %s' % ip_lists)
+            self.logger.debug('IP Lists: %s', ip_lists)
 
             # 2. Get all entries in redirtraffic that have not the enrich_iplist tag
             redirtraffic = self.get_redirtraffic()
@@ -46,26 +52,29 @@ class Module():
             # 4. Return all hits so they can be tagged
             ret['hits']['hits'] = redirtraffic
             ret['hits']['total'] = res
-        except Exception as e:
-            stackTrace = traceback.format_exc()
-            ret['error'] = stackTrace
-            self.logger.exception(e)
-            pass
-        self.logger.info('finished running module. result: %s hits' % ret['hits']['total'])
-        return(ret)
+
+        # pylint: disable=broad-except
+        except Exception as error:
+            stack_trace = traceback.format_exc()
+            ret['error'] = stack_trace
+            self.logger.exception(error)
+        self.logger.info('finished running module. result: %s hits', ret['hits']['total'])
+        return ret
 
     def get_iplists(self):
+        """ Get all IP lists """
         ip_lists = {}
         # Get all IPs except from tor
-        q = {'query': {'bool': {'must_not': [{'match': {'iplist.name': 'tor'}}]}}}
-        res = rawSearch(q, index='redelk-iplist-*')
+        es_query = {'query': {'bool': {'must_not': [{'match': {'iplist.name': 'tor'}}]}}}
+        es_results = raw_search(es_query, index='redelk-iplist-*')
 
-        if not res:
-            return(ip_lists)
+        if not es_results:
+            return ip_lists
 
-        for ipdoc in res['hits']['hits']:
-            ip = getValue('_source.iplist.ip', ipdoc)
-            iplist_name = getValue('_source.iplist.name', ipdoc)
+        for ip_doc in es_results['hits']['hits']:
+            #  pylint: disable=invalid-name
+            ip = get_value('_source.iplist.ip', ip_doc)
+            iplist_name = get_value('_source.iplist.name', ip_doc)
             # Already one IP found in this list, adding it
             if iplist_name in ip_lists:
                 ip_lists[iplist_name].append(ip)
@@ -73,11 +82,11 @@ class Module():
             else:
                 ip_lists[iplist_name] = [ip]
 
-        return(ip_lists)
+        return ip_lists
 
     def get_redirtraffic(self):
-        # Get all redirtraffic before 'now' that were not processed by previous run of the module
-        q = {
+        """ Get all redirtraffic before 'now' that were not processed by previous run of the module """
+        es_query = {
             'sort': [{'@timestamp': {'order': 'desc'}}],
             'query': {
                 'bool': {
@@ -95,17 +104,16 @@ class Module():
             }
         }
 
-        res = rawSearch(q, index='redirtraffic-*')
+        es_results = raw_search(es_query, index='redirtraffic-*')
 
-        self.logger.debug(res)
+        self.logger.debug(es_results)
 
-        if res is None:
-            return([])
-        else:
-            return(res['hits']['hits'])
+        if es_results is None:
+            return []
+        return es_results['hits']['hits']
 
     def update_traffic(self, ip_lists):
-
+        """ Update the documents """
         updated_count = 0
 
         # 1. Loop through each IP list
@@ -113,10 +121,11 @@ class Module():
             ip_match = []
             iplist_tag = 'iplist_%s' % iplist_name
 
+            #  pylint: disable=invalid-name
             for ip in ip_lists[iplist_name]:
                 ip_match.append({'match': {'source.ip': ip}})
 
-            q = {
+            es_query = {
                 'bool': {
                     'must_not': [{'match': {'tags': iplist_tag}}],
                     'should': ip_match,
@@ -133,9 +142,9 @@ class Module():
                 }
             }
 
-            self.logger.debug('Tagging IPs matching IP list %s' % iplist_name)
+            self.logger.debug('Tagging IPs matching IP list %s', iplist_name)
             # 2. For each IP list, update all documents not tagged already
-            res = addTagsByQuery([iplist_tag], q, 'redirtraffic-*')
-            updated_count += res['updated']
+            es_results = add_tags_by_query([iplist_tag], es_query, 'redirtraffic-*')
+            updated_count += es_results['updated']
 
-        return(updated_count)
+        return updated_count

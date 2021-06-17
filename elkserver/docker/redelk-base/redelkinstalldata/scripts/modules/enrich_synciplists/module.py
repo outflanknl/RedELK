@@ -6,7 +6,7 @@
 # - Outflank B.V. / Mark Bergman (@xychix)
 # - Lorenzo Bernardi (@fastlorenzo)
 #
-from modules.helpers import get_initial_alarm_result, getQuery, getValue, es
+from modules.helpers import get_initial_alarm_result, get_query, get_value, es
 import traceback
 import logging
 import re
@@ -72,12 +72,12 @@ class Module():
 
         # Get data from ES iplist
         query = 'iplist.name:%s' % iplist
-        es_iplist_docs = getQuery(query, size=10000, index='redelk-*')
+        es_iplist_docs = get_query(query, size=10000, index='redelk-*')
 
         # Check if config IP is in ES and source = config_file
         es_iplist = []
         for doc in es_iplist_docs:
-            ip = getValue('_source.iplist.ip', doc)
+            ip = get_value('_source.iplist.ip', doc)
             if ip:
                 es_iplist.append((ip, doc))
 
@@ -94,12 +94,12 @@ class Module():
             found = [item for item in cfg_iplist if ipe in item]
             if not found:
                 # if not, check if source = config_file
-                if getValue('_source.iplist.source', doc) == 'config_file':
+                if get_value('_source.iplist.source', doc) == 'config_file':
                     # if yes, remove IP from ES
                     self.remove_es_ip(doc, iplist)
                 else:
                     # if not, add it
-                    comment = getValue('_source.iplist.comment', doc)
+                    comment = get_value('_source.iplist.comment', doc)
                     if comment:
                         ipa = '%s # From ES -- %s' % (ipe, comment)
                     else:

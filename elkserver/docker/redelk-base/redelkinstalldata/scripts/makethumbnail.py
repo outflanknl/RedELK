@@ -1,30 +1,38 @@
 #!/usr/bin/python3
-#
-# Part of Red ELK
-# Script to generate thumbnails of images 
-# The output is saved next to input file as ".thumb.jpg" 
-#
-# Author: Outflank B.V. / Marc Smeets
-#
+"""
+Part of Red ELK
+
+Script to generate thumbnails of images
+The output is saved next to input file as ".thumb.jpg"
+
+Authors:
+- Outflank B.V. / Marc Smeets
+- Lorenzo Bernardi (@fastlorenzo)
+"""
+
+import sys
+import os
+import logging
+from PIL import Image
+
+logger = logging.getLogger('makethumbnail')
 
 try:
-  from PIL import Image
-  import sys, os, syslog#, fnmatch
 
-  path = sys.argv[1]
-  baseheight = 300
-  for root, dirs, files in os.walk(path):
-    for file in files:
-      if file.endswith(".jpg") and not file.endswith("thumb.jpg"):
-        filein = os.path.join(root, file)
-        fileout = (filein + ".thumb.jpg")
-        if not os.path.exists(fileout):
-          img = Image.open(filein)
-          wpercent = (baseheight/float(img.size[1]))
-          vsize = int((float(img.size[0])*float(wpercent)))
-          img = img.resize((vsize,baseheight), Image.ANTIALIAS)
-          img.save(fileout)
-
-except:
-  e = sys.exc_info()[1]
-  syslog.syslog('RedELK - makethumbnail.py : Error '+ str(e))
+    path = sys.argv[1]
+    BAS_HEIGHT = 300
+    for root, dirs, files in os.walk(path):
+        for file in files:
+            if file.endswith(".jpg") and not file.endswith("thumb.jpg"):
+                file_in = os.path.join(root, file)
+                file_out = (file_in + ".thumb.jpg")
+            if not os.path.exists(file_out):
+                img = Image.open(file_in)
+                w_percent = (BAS_HEIGHT/float(img.size[1]))
+                v_size = int((float(img.size[0])*float(w_percent)))
+                img = img.resize((v_size,BAS_HEIGHT), Image.ANTIALIAS)
+                img.save(file_out)
+# pylint: disable=broad-except
+except Exception as error:
+    error = sys.exc_info()[1]
+    logging.log('Error ', str(error))

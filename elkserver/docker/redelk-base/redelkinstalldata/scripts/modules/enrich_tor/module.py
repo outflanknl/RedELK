@@ -6,7 +6,7 @@
 # - Outflank B.V. / Mark Bergman (@xychix)
 # - Lorenzo Bernardi (@fastlorenzo)
 #
-from modules.helpers import get_initial_alarm_result, es, getValue, rawSearch, getLastRun
+from modules.helpers import get_initial_alarm_result, es, get_value, raw_search, get_last_run
 from elasticsearch import helpers
 from config import enrich
 import traceback
@@ -103,7 +103,7 @@ class Module():
     def enrich_tor(self, iplist):
         # Get all lines in redirtraffic that have not been enriched with 'enrich_iplist' or 'enrich_tor'
         # Filter documents that were before the last run time of enrich_iplist (to avoid race condition)
-        iplist_lastrun = getLastRun('enrich_iplists')
+        iplist_lastrun = get_last_run('enrich_iplists')
         query = {
             'sort': [{'@timestamp': {'order': 'desc'}}],
             'query': {
@@ -123,7 +123,7 @@ class Module():
                 }
             }
         }
-        res = rawSearch(query, index='redirtraffic-*')
+        res = raw_search(query, index='redirtraffic-*')
         if res is None:
             notEnriched = []
         else:
@@ -132,7 +132,7 @@ class Module():
         # For each IP, check if it is in tor exit node data
         hits = []
         for ne in notEnriched:
-            ip = getValue('_source.source.ip', ne)
+            ip = get_value('_source.source.ip', ne)
             if ip in iplist:
                 hits.append(ne)
 
@@ -140,14 +140,14 @@ class Module():
 
     def get_es_tor_exitnodes(self):
         q = {'query': {'bool': {'filter': {'term': {'iplist.name': 'tor'}}}}}
-        res = rawSearch(q, index='redelk-*')
+        res = raw_search(q, index='redelk-*')
 
         if not res:
             return []
 
         iplist = []
         for ipdoc in res['hits']['hits']:
-            ip = getValue('_source.iplist.ip', ipdoc)
+            ip = get_value('_source.iplist.ip', ipdoc)
             iplist.append(ip)
 
         return(iplist)
@@ -170,13 +170,13 @@ class Module():
             }
         }
 
-        res = rawSearch(q, index='redelk-*')
+        res = raw_search(q, index='redelk-*')
 
         self.logger.debug(res)
 
         # Return the latest hit or False if not found
         if res and len(res['hits']['hits']) > 0:
-            dt_str = getValue('_source.@timestamp', res['hits']['hits'][0])
+            dt_str = get_value('_source.@timestamp', res['hits']['hits'][0])
             dt = datetime.datetime.strptime(dt_str, '%Y-%m-%dT%H:%M:%S.%f')
             return(dt)
         else:

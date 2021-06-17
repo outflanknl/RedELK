@@ -1,14 +1,17 @@
 #!/usr/bin/python3
-#
-# Part of RedELK
-#
-# Authors:
-# - Outflank B.V. / Mark Bergman (@xychix)
-# - Lorenzo Bernardi (@fastlorenzo)
-#
-from modules.helpers import get_initial_alarm_result, countQuery, getQuery
-import traceback
+"""
+Part of RedELK
+
+This check queries for calls to backends that have alarm in their name
+
+Authors:
+- Outflank B.V. / Mark Bergman (@xychix)
+- Lorenzo Bernardi (@fastlorenzo)
+"""
 import logging
+import traceback
+
+from modules.helpers import get_initial_alarm_result, get_query
 
 info = {
     'version': 0.1,
@@ -21,11 +24,14 @@ info = {
 
 
 class Module():
+    """ backend alarm module
+    This check queries for calls to backends that have alarm in their name
+    """
     def __init__(self):
         self.logger = logging.getLogger(info['submodule'])
-        pass
 
     def run(self):
+        """ Run the alarm module """
         ret = get_initial_alarm_result()
         ret['info'] = info
         ret['fields'] = ['@timestamp', 'source.ip', 'http.headers.useragent', 'source.nat.ip', 'redir.frontend.name', 'redir.backend.name', 'infra.attack_scenario']
@@ -34,23 +40,20 @@ class Module():
             report = self.alarm_check()
             ret['hits']['hits'] = report['hits']
             ret['hits']['total'] = len(report['hits'])
-        except Exception as e:
-            stackTrace = traceback.format_exc()
-            ret['error'] = stackTrace
-            self.logger.exception(e)
-            pass
-        self.logger.info('finished running module. result: %s hits' % ret['hits']['total'])
-        return(ret)
+        # pylint: disable=broad-except
+        except Exception as error:
+            stack_trace = traceback.format_exc()
+            ret['error'] = stack_trace
+            self.logger.exception(error)
+        self.logger.info('finished running module. result: %s hits', ret['hits']['total'])
+        return ret
 
+    # pylint: disable=no-self-use
     def alarm_check(self):
-        # This check queries for calls to backends that have *alarm* in their name\n
-        q = "redir.backend.name:*alarm* AND NOT tags:%s" % (info['submodule'])
-        i = countQuery(q)
-        if i >= 10000:
-            i = 10000
-        r = getQuery(q, i)
-        if not isinstance(r, type([])):
-            r = []
-        report = {}
-        report['hits'] = r
-        return(report)
+        """ This check queries for calls to backends that have *alarm* in their name """
+        es_query = "redir.backend.name:*alarm* AND NOT tags:%s" % (info['submodule'])
+        es_results = get_query(es_query, 10000)
+        report = {
+            'hits': es_results
+        }
+        return report
