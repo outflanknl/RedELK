@@ -40,7 +40,7 @@ rm -rf /var/lib/filebeat
 echo "[-] Removing scponly user"
 userdel -f -r scponly
 
-echo "[-] Nuking /usr/share/redelk directorie"
+echo "[-] Nuking /usr/share/redelk directory"
 rm -rf /usr/share/redelk
 
 echo "[-] Removing python script dependencies"
