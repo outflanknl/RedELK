@@ -258,35 +258,47 @@ if [ $ERROR -ne 0 ]; then
     exit 1
 fi
 
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echo "[X] Could not set kibana_system ES password (Error Code: $ERROR)." | tee -a $LOGFILE
-    exit 1
+# check if we need to create a kibana system user account
+if (grep "{{CREDS_kibana_system}}" $DOCKERENVFILE > /dev/null); then
+    CREDS_kibana_system=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
+    echo "[*] Setting kibana_system ES password" | tee -a $LOGFILE
+    sed -E -i.bak "s/\{\{CREDS_kibana_system\}\}/${CREDS_kibana_system}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echo "[X] Could not set kibana_system ES password (Error Code: $ERROR)." | tee -a $LOGFILE
+        exit 1
+    fi
+else
+    echo "[*] kibana_system ES password already defined - skipping" | tee -a $LOGFILE
+    CREDS_kibana_system=$(grep -E ^CREDS_kibana_system= .env|awk -F\= '{print $2}')
 fi
 
-CREDS_kibana_system=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
-echo "[*] Setting kibana_system ES password" | tee -a $LOGFILE
-sed -E -i.bak "s/\{\{CREDS_kibana_system\}\}/${CREDS_kibana_system}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echo "[X] Could not set kibana_system ES password (Error Code: $ERROR)." | tee -a $LOGFILE
-    exit 1
+# check if we need to create a logstash system user account
+if (grep "{{CREDS_logstash_system}}" $DOCKERENVFILE > /dev/null); then
+    CREDS_logstash_system=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
+    echo "[*] Setting logstash_system ES password" | tee -a $LOGFILE
+    sed -E -i.bak "s/\{\{CREDS_logstash_system\}\}/${CREDS_logstash_system}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echo "[X] Could not set logstash_system ES password (Error Code: $ERROR)." | tee -a $LOGFILE
+    fi
+else
+    echo "[*] logstash_system ES password already defined - skipping" | tee -a $LOGFILE
+    CREDS_logstash_system=$(grep -E ^CREDS_logstash_system= .env|awk -F\= '{print $2}')
 fi
 
-CREDS_logstash_system=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
-echo "[*] Setting logstash_system ES password" | tee -a $LOGFILE
-sed -E -i.bak "s/\{\{CREDS_logstash_system\}\}/${CREDS_logstash_system}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echo "[X] Could not set logstash_system ES password (Error Code: $ERROR)." | tee -a $LOGFILE
-fi
-
-CREDS_redelk_ingest=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
-echo "[*] Setting redelk_ingest ES password" | tee -a $LOGFILE
-sed -E -i.bak "s/\{\{CREDS_redelk_ingest\}\}/${CREDS_redelk_ingest}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echo "[X] Could not set redelk_ingest ES password (Error Code: $ERROR)." | tee -a $LOGFILE
+# check if we need to create a redelk ingest account
+if (grep "{{CREDS_redelk_ingest}}" $DOCKERENVFILE > /dev/null); then
+    CREDS_redelk_ingest=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
+    echo "[*] Setting redelk_ingest ES password" | tee -a $LOGFILE
+    sed -E -i.bak "s/\{\{CREDS_redelk_ingest\}\}/${CREDS_redelk_ingest}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echo "[X] Could not set redelk_ingest ES password (Error Code: $ERROR)." | tee -a $LOGFILE
+    fi
+else
+    echo "[*] redlk_ingest ES password already defined - skipping" | tee -a $LOGFILE
+    CREDS_redelk_ingest=$(grep -E ^CREDS_redelk_ingest= .env|awk -F\= '{print $2}')
 fi
 
 # check if we need to create a redelk user account
