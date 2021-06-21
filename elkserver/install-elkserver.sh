@@ -478,7 +478,7 @@ if [ ${WHATTOINSTALL} = "limited" ]; then
     fi
 else
     echo "[*] Adjusting Nginx config file" | tee -a $LOGFILE
-    sed -i 's/^\s*# include conf.d\/full.location-conf;\s*$/    include conf.d\/full.location-conf;/g' ./mounts/nginx-config/default.conf.template
+    sed -i 's/^\s*#\s*include conf.d\/full.location-conf;\s*$/    include conf.d\/full.location-conf;/g' ./mounts/nginx-config/default.conf.template
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echo "[X] Could not adjust Nginx config (Error Code: $ERROR)." | tee -a $LOGFILE
