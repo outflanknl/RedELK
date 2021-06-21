@@ -11,7 +11,7 @@ filebeat.inputs:
       log:
         type: rtops
     c2:
-      program: mythicc2
+      program: mythic
       log:
         type: events
 
