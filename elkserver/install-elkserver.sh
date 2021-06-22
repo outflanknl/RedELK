@@ -438,7 +438,7 @@ else # letsencrypt not enabled, but we still need a cert for nginx. So we create
     echo "[*] Creating custom certificate for $EXTERNAL_DOMAIN "
     CERTPATH="mounts/certbot/conf/live/noletsencrypt"
     mkdir -p $CERTPATH && \
-    openssl req -x509 -nodes -newkey rsa:4096 -days 365 -keyout $CERTPATH/privkey.pem -out $CERTPATH/fullchain.pem -subj /CN=${EXTERNAL_DOMAIN} >> $LOGFILE 2>&1 && \
+    openssl req -x509 -nodes -newkey rsa:4096 -days 365 -keyout $CERTPATH/privkey.pem -out $CERTPATH/fullchain.pem -subj /CN=${EXTERNAL_DOMAIN} | tee -a $LOGFILE && \
     chown -R 1000 $CERTPATH
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
@@ -538,7 +538,7 @@ fi
 if [ $DRYRUN == "no" ]; then
     
     echo "[*] Setting vm.max_map_count to 262144" | tee -a $LOGFILE
-    sysctl -w vm.max_map_count=262144 >> $LOGFILE 2>&1
+    sysctl -w vm.max_map_count=262144 | tee -a $LOGFILE
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echo "[X] Could not set vm.max_map_count (Error Code: $ERROR)." | tee -a $LOGFILE
