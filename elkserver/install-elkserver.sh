@@ -346,13 +346,20 @@ else
     ELASTIC_PASSWORD=$(grep -E ^ELASTIC_PASSWORD= .env|awk -F\= '{print $2}')
 fi
 
-KBN_XPACK_ENCRYPTEDSAVEDOBJECTS=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
-echo "[*] Setting Kibana encryption key" | tee -a $LOGFILE
-sed -E -i.bak "s/\{\{KBN_XPACK_ENCRYPTEDSAVEDOBJECTS\}\}/${KBN_XPACK_ENCRYPTEDSAVEDOBJECTS}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echo "[X] Could not set Kibana encryption key (Error Code: $ERROR)." | tee -a $LOGFILE
+# check if we need to create the kibana encryption key
+if (grep "{{KBN_XPACK_ENCRYPTEDSAVEDOBJECTS}}" $DOCKERENVFILE > /dev/null); then
+    KBN_XPACK_ENCRYPTEDSAVEDOBJECTS=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
+    echo "[*] Setting Kibana encryption key" | tee -a $LOGFILE
+    sed -E -i.bak "s/\{\{KBN_XPACK_ENCRYPTEDSAVEDOBJECTS\}\}/${KBN_XPACK_ENCRYPTEDSAVEDOBJECTS}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echo "[X] Could not set Kibana encryption key (Error Code: $ERROR)." | tee -a $LOGFILE
+    fi
+else
+    echo "[*] Kibana encryption key in docker template already defined - skipping" | tee -a $LOGFILE
+    KBN_XPACK_ENCRYPTEDSAVEDOBJECTS=$(grep -E ^KBN_XPACK_ENCRYPTEDSAVEDOBJECTS= .env|awk -F\= '{print $2}')
 fi
+
 
 if [ ${WHATTOINSTALL} = "full" ]; then
     echo "[*] Adjusting memory settings for NEO4J" | tee -a $LOGFILE
