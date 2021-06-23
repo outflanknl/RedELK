@@ -54,7 +54,7 @@ def get_query(query, size=5000, index='redirtraffic-*'):
     return es_result['hits']['hits']
 
 
-def get_hits_count(query, index="redirtraffic-*"):
+def get_hits_count(query, index='redirtraffic-*'):
     """ Returns the total number of hits for a given query """
     es_query = {'query': {'query_string': {'query': query}}}
     # pylint: disable=unexpected-keyword-arg
@@ -62,7 +62,7 @@ def get_hits_count(query, index="redirtraffic-*"):
     return es_result['hits']['total']['value']
 
 
-def raw_search(query, size=10000, index="redirtraffic-*"):
+def raw_search(query, size=10000, index='redirtraffic-*'):
     """ Execute a raw ES query. Returns the hits or None if no results """
     # pylint: disable=unexpected-keyword-arg
     es_result = es.search(index=index, body=query, size=size)
@@ -173,8 +173,7 @@ def get_last_run(module_name):
             es_timestamp = get_value('_source.module.last_run.timestamp', es_result['hits']['hits'][0])
             es_date = datetime.datetime.strptime(es_timestamp, '%Y-%m-%dT%H:%M:%S.%f')
             return es_date
-        else:
-            return datetime.datetime.fromtimestamp(0)
+        return datetime.datetime.fromtimestamp(0)
     # pylint: disable=broad-except
     except Exception as error:
         logger.debug('Error parsing last run time: %s', error)
@@ -208,7 +207,8 @@ def module_did_run(module_name, module_type='unknown', status='unknown', message
         logger.exception(error)
         return False
 
-def module_should_run(module_name, module_type):
+
+def module_should_run(module_name, module_type):  # pylint: disable=too-many-branches
     """Check if the module is enabled and when is the last time the module ran.
     If the last time is before now - interval, the module will be allowed to run"""
     if module_type == 'redelk_alarm':

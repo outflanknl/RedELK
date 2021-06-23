@@ -1,14 +1,14 @@
 #!/usr/bin/python3
-#
-# Part of RedELK
-#
-# Authors:
-# - Lorenzo Bernardi (@fastlorenzo)
-#
-from modules.helpers import get_initial_alarm_result, get_hits_count, get_query
-import traceback
-import config
+"""
+Part of RedELK
+
+This alarm always triggers. Only use for testing purposes.
+
+Authors:
+- Lorenzo Bernardi (@fastlorenzo)
+"""
 import logging
+from modules.helpers import get_initial_alarm_result, get_query
 
 info = {
     'version': 0.1,
@@ -21,31 +21,31 @@ info = {
 
 
 class Module():
+    """ dummy alarm module
+    This check returns the last IOC in rtops-* that have not been alarmed yet
+    """
     def __init__(self):
         self.logger = logging.getLogger(info['submodule'])
-        pass
 
     def run(self):
+        """ Run the alarm module """
         ret = get_initial_alarm_result()
         ret['info'] = info
         ret['fields'] = ['agent.hostname', '@timestamp', 'host.name', 'user.name', 'ioc.type', 'file.name', 'file.hash.md5', 'ioc.domain', 'c2.message', 'alarm.alarm_filehash']
         ret['groupby'] = []
-        self.logger.debug('Running dummy alarm')
-        for r in self.alarm_dummy():
-            ret['hits']['hits'].append(r)
-            ret['mutations'][r['_id']] = {'test': 'extra_data'}
+        for result in self.alarm_dummy():
+            ret['hits']['hits'].append(result)
+            ret['mutations'][result['_id']] = {'test': 'extra_data'}
             ret['hits']['total'] += 1
 
-        self.logger.info('finished running module. result: %s hits' % ret['hits']['total'])
+        self.logger.info('finished running module. result: %s hits', ret['hits']['total'])
         self.logger.debug(ret)
-        return(ret)
+        return ret
 
     def alarm_dummy(self):
-        q = "c2.log.type:ioc AND NOT tags:alarm_*"
-        # iocs = []
-        # i = countQuery(q, index="rtops-*")
-        # self.logger.debug('Getting 1 document')
-        r = get_query(q, 100, index="rtops-*")
-        self.logger.debug(r)
+        """ This check returns the last IOC in rtops-* that have not been alarmed yet """
+        es_query = 'c2.log.type:ioc AND NOT tags:alarm_*'
+        es_results = get_query(es_query, 1, index='rtops-*')
+        self.logger.debug(es_results)
 
-        return(r)
+        return es_results

@@ -79,7 +79,7 @@ class Module():
     def get_initial_beacon_doc(self, implant_id):
         """ Get the initial beacon document from cobaltstrike or return False if none found """
         query = 'implant.id:%s AND c2.program: cobaltstrike AND c2.log.type:implant_newimplant' % implant_id
-        initial_beacon_doc = get_query(query, size=1, index="rtops-*")
+        initial_beacon_doc = get_query(query, size=1, index='rtops-*')
         initial_beacon_doc = initial_beacon_doc[0] if len(initial_beacon_doc) > 0 else False
         self.logger.debug('Initial beacon line [%s]: %s', implant_id, initial_beacon_doc)
         return initial_beacon_doc

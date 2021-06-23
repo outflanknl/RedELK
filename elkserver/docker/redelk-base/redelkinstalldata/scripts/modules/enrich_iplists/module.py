@@ -61,7 +61,7 @@ class Module():
         self.logger.info('finished running module. result: %s hits', ret['hits']['total'])
         return ret
 
-    def get_iplists(self):
+    def get_iplists(self):  # pylint: disable=no-self-use
         """ Get all IP lists """
         ip_lists = {}
         # Get all IPs except from tor

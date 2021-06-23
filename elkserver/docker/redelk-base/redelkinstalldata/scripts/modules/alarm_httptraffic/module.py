@@ -47,7 +47,7 @@ class Module():
         self.logger.info('finished running module. result: %s hits', ret['hits']['total'])
         return ret
 
-    def get_alarmed_ips(self):
+    def get_alarmed_ips(self):  # pylint: disable=no-self-use
         """ Returns all previous IPs that have been alarmed already """
         es_query = {
             'sort': [{'@timestamp': {'order': 'desc'}}],
@@ -84,7 +84,7 @@ class Module():
 
         return ips
 
-    def alarm_check(self, alarmed_ips):
+    def alarm_check(self, alarmed_ips):  # pylint: disable=no-self-use
         """ This check queries for IP's that aren't listed in any iplist* but do talk to c2* paths on redirectors """
         es_query = {
             'sort': [{'@timestamp': {'order': 'desc'}}],

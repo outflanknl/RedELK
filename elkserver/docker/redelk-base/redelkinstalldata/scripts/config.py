@@ -13,7 +13,8 @@ import json
 import logging
 
 with open('/etc/redelk/config.json') as json_data:
-    d = json.load(json_data)
+    # pylint: disable=invalid-name
+    data = json.load(json_data)
 
 # -- logging
 # CRITICAL, 50
@@ -24,15 +25,16 @@ with open('/etc/redelk/config.json') as json_data:
 # NOTSET, 0
 
 LOGLEVEL = logging.WARN
-if "loglevel" in d:
-    LOGLEVEL = d['loglevel']
+if 'loglevel' in data:
+    LOGLEVEL = data['loglevel']
 
 # -- directory for cache files (including shelves)
-TEMP_DIR = "/tmp"
-if "tempDir" in d:
-    TEMP_DIR = d['tempDir']
+TEMP_DIR = '/tmp'
+if 'tempDir' in data:
+    TEMP_DIR = data['tempDir']
 
 # -- Notifications
+# pylint: disable=invalid-name
 notifications = {
     'email': {
         'enabled': False,
@@ -54,11 +56,12 @@ notifications = {
         'webhook_url': ''
     }
 }
-if 'notifications' in d:
-    for n in d['notifications']:
-        notifications[n] = d['notifications'][n]
+if 'notifications' in data:
+    for n in data['notifications']:
+        notifications[n] = data['notifications'][n]
 
 # -- Alarms
+# pylint: disable=invalid-name
 alarms = {
     'alarm_filehash': {
         'enabled': False,
@@ -81,11 +84,12 @@ alarms = {
         'interval': 300
     }
 }
-if 'alarms' in d:
-    for a in d['alarms']:
-        alarms[a] = d['alarms'][a]
+if 'alarms' in data:
+    for a in data['alarms']:
+        alarms[a] = data['alarms'][a]
 
 # -- Enrichments modules
+# pylint: disable=invalid-name
 enrich = {
     'enrich_csbeacon': {
         'enabled': True,
@@ -111,10 +115,11 @@ enrich = {
         'interval': 360
     }
 }
-if 'enrich' in d:
-    for e in d['enrich']:
-        enrich[e] = d['enrich'][e]
+if 'enrich' in data:
+    for e in data['enrich']:
+        enrich[e] = data['enrich'][e]
 
+# pylint: disable=invalid-name
 es_connection = ['http://localhost:9200']
-if 'es_connection' in d:
-    es_connection = d['es_connection']
+if 'es_connection' in data:
+    es_connection = data['es_connection']

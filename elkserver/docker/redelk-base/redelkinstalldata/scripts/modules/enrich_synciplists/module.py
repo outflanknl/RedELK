@@ -1,20 +1,23 @@
 #!/usr/bin/python3
-#
-# Part of RedELK
-#
-# Authors:
-# - Outflank B.V. / Mark Bergman (@xychix)
-# - Lorenzo Bernardi (@fastlorenzo)
-#
-from modules.helpers import get_initial_alarm_result, get_query, get_value, es
+"""
+Part of RedELK
+
+Syncs iplists data between ES and legacy config files
+
+Authors:
+- Outflank B.V. / Mark Bergman (@xychix)
+- Lorenzo Bernardi (@fastlorenzo)
+"""
 import traceback
 import logging
 import re
 import datetime
 import os.path
 
-IP_RE = '^((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))(\s?#\s?(.*))?$'
-IP_CIDR_RE = '^((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/([1-2][0-9]|3[0-2]|[0-9])))(\s?#\s?(.*))?$'
+from modules.helpers import get_initial_alarm_result, get_query, get_value, es
+
+IP_RE = r'^((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))(\s?#\s?(.*))?$'
+IP_CIDR_RE = r'^((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/([1-2][0-9]|3[0-2]|[0-9])))(\s?#\s?(.*))?$'
 
 info = {
     'version': 0.1,
@@ -27,11 +30,13 @@ info = {
 
 
 class Module():
+    """ Syncs iplists data between ES and legacy config files """
     def __init__(self):
         self.logger = logging.getLogger(info['submodule'])
         self.iplists = ['customer', 'redteam', 'unknown', 'blueteam']
 
     def run(self):
+        """ run the module """
         ret = get_initial_alarm_result()
         ret['info'] = info
         try:
@@ -40,35 +45,22 @@ class Module():
                 self.sync_iplist(iplist)
             ret['hits']['hits'] = hits
             ret['hits']['total'] = len(hits)
-        except Exception as e:
-            stackTrace = traceback.format_exc()
-            ret['error'] = stackTrace
-            self.logger.exception(e)
-            pass
-        self.logger.info('finished running module. result: %s hits' % ret['hits']['total'])
-        return(ret)
+        except Exception as error:  # pylint: disable=broad-except
+            stack_trace = traceback.format_exc()
+            ret['error'] = stack_trace
+            self.logger.exception(error)
+
+        self.logger.info('finished running module. result: %s hits', ret['hits']['total'])
+        return ret
 
     def sync_iplist(self, iplist='redteam'):
+        """ Sync data between ES iplist and config files """
         # Get data from config file iplist
-        cfg_iplist = []
-        fname = '/etc/redelk/iplist_%s.conf' % iplist
+        cfg_iplist = self.get_cfg_ips(iplist)
 
-        # Check first if the local config file exists; if not, skip the sync
-        if not os.path.isfile(fname):
-            self.logger.warning('File %s doesn\'t exist, skipping IP list sync for this one.' % fname)
-            return
-
-        with open(fname, 'r') as f:
-            content = f.readlines()
-
-        for line in content:
-            m = re.match(IP_CIDR_RE, line)
-            if m:
-                cfg_iplist.append((m.group(1), m.group(len(m.groups()))))
-            else:
-                m = re.match(IP_RE, line)
-                if m:
-                    cfg_iplist.append(('%s/32' % m.group(1), m.group(len(m.groups()))))
+        # If the config file doesn't exist, skip the sync
+        if cfg_iplist is None:
+            return []
 
         # Get data from ES iplist
         query = 'iplist.name:%s' % iplist
@@ -77,14 +69,14 @@ class Module():
         # Check if config IP is in ES and source = config_file
         es_iplist = []
         for doc in es_iplist_docs:
-            ip = get_value('_source.iplist.ip', doc)
+            ip = get_value('_source.iplist.ip', doc)  # pylint: disable=invalid-name
             if ip:
                 es_iplist.append((ip, doc))
 
         for ipc, comment in cfg_iplist:
             found = [item for item in es_iplist if ipc in item]
             if not found:
-                self.logger.debug('IP not found in ES: %s' % ipc)
+                self.logger.debug('IP not found in ES: %s', ipc)
                 # if not, add it
                 self.add_es_ip(ipc, iplist, comment)
 
@@ -108,29 +100,55 @@ class Module():
 
         self.add_cfg_ips(toadd, iplist)
 
-        return(toadd)
+        return toadd
 
-    # Add IPs to cfg file
+    def get_cfg_ips(self, iplist):
+        """ Gets the list of IPs present in the config file """
+        cfg_iplist = []
+
+        fname = '/etc/redelk/iplist_%s.conf' % iplist
+
+        # Check first if the local config file exists; if not, skip the sync
+        if not os.path.isfile(fname):
+            self.logger.warning('File %s doesn\'t exist, skipping IP list sync for this one.', fname)
+            return None
+
+        with open(fname, 'r') as config_file:
+            content = config_file.readlines()
+
+        for line in content:
+            ip_match = re.match(IP_CIDR_RE, line)
+            if ip_match:
+                cfg_iplist.append((ip_match.group(1), ip_match.group(len(ip_match.groups()))))
+            else:
+                ip_match = re.match(IP_RE, line)
+                if ip_match:
+                    cfg_iplist.append(('%s/32' % ip_match.group(1), ip_match.group(len(ip_match.groups()))))
+
+        return cfg_iplist
+
     def add_cfg_ips(self, toadd, iplist):
+        """ Add IPs to cfg file """
         try:
             fname = '/etc/redelk/iplist_%s.conf' % iplist
-            with open(fname, 'a') as f:
+            with open(fname, 'a') as config_file:
                 for ipl in toadd:
-                    f.write('%s\n' % ipl)
-        except Exception as e:
-            self.logger.error('Failed to update %s: %s' % (fname, e))
-            self.logger.exception(e)
+                    config_file.write('%s\n' % ipl)
+        except Exception as error:  # pylint: disable=broad-except
+            self.logger.error('Failed to update %s: %s', fname, error)
+            self.logger.exception(error)
             raise
 
-    def add_es_ip(self, ip, iplist, comment=None):
+    def add_es_ip(self, ip, iplist, comment=None):  # pylint: disable=invalid-name
+        """ Add IP to ES IP list """
         try:
-            ts = datetime.datetime.utcnow().isoformat()
+            ts = datetime.datetime.utcnow().isoformat()  # pylint: disable=invalid-name
             doc = {
-                "@timestamp": ts,
-                "iplist": {
-                    "name": iplist,
-                    "source": "config_file",
-                    "ip": ip
+                '@timestamp': ts,
+                'iplist': {
+                    'name': iplist,
+                    'source': 'config_file',
+                    'ip': ip
                 }
             }
 
@@ -140,17 +158,18 @@ class Module():
             index = 'redelk-iplist-%s' % iplist
             es.index(index=index, body=doc)
 
-        except Exception as e:
-            self.logger.error('Failed to add IP %s in %s: %s' % (ip, iplist, e))
-            self.logger.exception(e)
+        except Exception as error:  # pylint: disable=broad-except
+            self.logger.error('Failed to add IP %s in %s: %s', ip, iplist, error)
+            self.logger.exception(error)
             raise
 
     def remove_es_ip(self, doc, iplist):
+        """ Remove IP from ES IP list """
         try:
             index = 'redelk-iplist-%s' % iplist
             es.delete(index=index, id=doc['_id'])
 
-        except Exception as e:
-            self.logger.error('Failed to delete doc %s from %s: %s' % (doc['_id'], iplist, e))
-            self.logger.exception(e)
+        except Exception as error:  # pylint: disable=broad-except
+            self.logger.error('Failed to delete doc %s from %s: %s', doc['_id'], iplist, error)
+            self.logger.exception(error)
             raise
