@@ -9,7 +9,6 @@ Authors:
 - Lorenzo Bernardi (@fastlorenzo)
 """
 
-import copy
 import logging
 import traceback
 from time import time
@@ -33,9 +32,10 @@ class Module():
     """ Enrich redirtraffic lines with greynoise data """
     def __init__(self):
         self.logger = logging.getLogger(info['submodule'])
-        self.greynoise_url = 'http://api.greynoise.io:8888/v1/query/ip'
+        self.greynoise_url = 'https://api.greynoise.io/v3/community/'
         # Re-query after 1 day by default
         self.cache = enrich[info['submodule']]['cache'] if info['submodule'] in enrich else 86400
+        self.api_key = enrich[info['submodule']]['api_key'] if info['submodule'] in enrich else ''
 
     def run(self):
         """ run the enrich module """
@@ -118,34 +118,52 @@ class Module():
 
     def get_greynoise_data(self, ip_address):
         """ Get the data from greynoise for the IP """
+        # Malicious sample
+        # {
+        #     "ip": "222.187.238.136",
+        #     "noise": true,
+        #     "riot": false,
+        #     "classification": "malicious",
+        #     "name": "unknown",
+        #     "link": "https://viz.greynoise.io/ip/222.187.238.136",
+        #     "last_seen": "2021-06-23",
+        #     "message": "Success"
+        # }
+        #
+        # Benign sample
+        # {
+        #     "ip": "8.8.8.8",
+        #     "noise": false,
+        #     "riot": true,
+        #     "classification": "benign",
+        #     "name": "Google Public DNS",
+        #     "link": "https://viz.greynoise.io/riot/8.8.8.8",
+        #     "last_seen": "2021-06-23",
+        #     "message": "Success"
+        # }
+        #
+        # Unknown sample
+        # {
+        #     "ip": "123.123.115.117",
+        #     "noise": false,
+        #     "riot": false,
+        #     "message": "IP not observed scanning the internet or contained in RIOT data set."
+        # }
         try:
-            data = {'ip': ip_address}
-            gn_data = requests.post(self.greynoise_url, data=data)
-            result = {}
-            result['full_data'] = gn_data.json()
-            temp_os = {}
-            temp_name = {}
-            temp_intention = {}
-            if 'records' in result['full_data']:
-                for record in result['full_data']['records']:
-                    temp_os[record['metadata']['os']] = 0
-                    temp_name[record['name']] = 0
-                    temp_intention[record['intention']] = 0
-                # SORT RESULTS
-                result['full_data']['records'] = sorted(result['full_data']['records'],
-                                                   key=lambda k: k['first_seen'], reverse=False)
-                result['first_seen'] = result['full_data']['records'][0]['first_seen']
-                result['full_data']['records'] = sorted(result['full_data']['records'],
-                                                   key=lambda k: k['last_updated'], reverse=True)
-                result['last_result'] = result['full_data']['records'][0]
-                result['OS_list'] = list(temp_os.copy().keys())
-                result['Name_list'] = list(temp_name.copy().keys())
-            result['ip'] = ip_address
-            result['query_timestamp'] = int(time())
-            result['status'] = result['full_data'].get('status', None)
-            cleaned_result = copy.deepcopy(result)
-            cleaned_result.pop('full_data')
-            return cleaned_result
+            gn_data = requests.get(self.greynoise_url + ip_address)
+            json_result = gn_data.json()
+            result = {
+                'ip': ip_address,
+                'noise': get_value('noise', json_result, False),
+                'riot': get_value('riot', json_result, False),
+                'classification': get_value('classification', json_result, 'unknown'),
+                'name': get_value('name', json_result, 'unknown'),
+                'link': get_value('link', json_result, 'unknown'),
+                'last_seen': get_value('last_seen', json_result, 'unknown'),
+                'message': get_value('message', json_result, 'unknown'),
+                'query_timestamp': int(time())
+            }
+            return result
         # pylint: disable=broad-except
         except Exception as error:
             self.logger.error('Error getting greynoise IP %s', ip_address)

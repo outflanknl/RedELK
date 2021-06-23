@@ -31,8 +31,8 @@ def pprint(to_print):
     return out_string
 
 
-def get_value(path, source):
-    """ Gets the value in source based on the provided path, or None (if not exists) """
+def get_value(path, source, default_value=None):
+    """ Gets the value in source based on the provided path, or 'default_value' if not exists (default: None) """
     split_path = path.split('.')
     if split_path[0] in source:
         if len(split_path) > 1:
@@ -41,7 +41,7 @@ def get_value(path, source):
             if isinstance(source[split_path[0]], type([])):
                 return source[split_path[0]][0]
         return source[split_path[0]]
-    return None
+    return default_value
 
 
 def get_query(query, size=5000, index='redirtraffic-*'):

@@ -94,7 +94,8 @@ enrich = {
     'enrich_greynoise': {
         'enabled': True,
         'interval': 310,
-        'cache': 86400
+        'cache': 86400,  # Only query for the same IP hit every 24h by default
+        'api_key': ''  # Greynoise Community API Key
     },
     'enrich_tor': {
         'enabled': True,
