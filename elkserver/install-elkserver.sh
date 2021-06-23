@@ -406,6 +406,13 @@ if [ $ERROR -ne 0 ]; then
     echo "[X] Could not set permissions on Jupyter notebook working dir (Error Code: $ERROR)." | tee -a $LOGFILE
 fi
 
+echo "[*] Setting permissions on elastic config" | tee -a $LOGFILE
+chown -R 1000 ./mounts/elasticsearch-config/* 2>&1 | tee -a $LOGFILE
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echo "[X] Could not set permissions on elasticsearch configs (Error Code: $ERROR)." | tee -a $LOGFILE
+fi
+
 # Certificate things for nginx
 # check if letsencrypt is enabled in the config file
 DO_LETSENCRYPT=$(cat ./mounts/redelk-config/etc/redelk/config.json | jq -r .redelkserver_letsencrypt.enable_letsencrypt)
