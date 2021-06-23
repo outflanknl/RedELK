@@ -13,7 +13,7 @@ LABEL description="RedELK Base"
 
 # Install required packages
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get -y install rsync python3-pil python3-pip && \
+    DEBIAN_FRONTEND=noninteractive apt-get -y install rsync python3-pil python3-pip python3-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Copy relevant install data
