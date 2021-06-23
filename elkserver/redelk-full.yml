@@ -51,7 +51,6 @@ services:
       - xpack.security.transport.ssl.certificate=${CERTS_DIR_ES}/redelk-elasticsearch/redelk-elasticsearch.crt
       - xpack.security.transport.ssl.key=${CERTS_DIR_ES}/redelk-elasticsearch/redelk-elasticsearch.key
       - xpack.security.authc.realms.native.redelk.order=1
-      - xpack.monitoring.collection.enabled=true
       - COMPOSE_PROJECT_NAME=redelk
       - CERTS_DIR_ES=${CERTS_DIR_ES}
       - CERTS_DIR_KBN=${CERTS_DIR_KBN}
