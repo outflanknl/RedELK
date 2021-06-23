@@ -135,9 +135,10 @@ preinstallcheck() {
 
 memcheck() {
     # checking system memory and setting variables
-    AVAILABLE_MEMORY=$(awk '/MemAvailable/{printf "%.f", $2/1024}' /proc/meminfo)
+    AVAILABLE_MEMORY=$(awk '/MemTotal/{printf "%.f", $2/1024}' /proc/meminfo)
     ERROR=$?
-    echo "[*] Memory found available for RedELK: $AVAILABLE_MEMORY MB."
+    echo "[!] We assume this host is dedicated for RedELK. All system memory found will be appointed to RedELK processes."
+    echo "[*] Total system memory found: $AVAILABLE_MEMORY MB."
     if [ $ERROR -ne 0 ]; then
         echo "[X] Error getting memory configuration of this host. Exiting." | tee -a $LOGFILE
         if [ ${FIXEDMEMORY} == "yes" ]; then
@@ -147,43 +148,131 @@ memcheck() {
         fi
     fi
 
-    # check for full or limited install
+    # check for full or limited install and set memory
     if [ ${WHATTOINSTALL} = "limited" ]; then
         if [ ${AVAILABLE_MEMORY} -le 3999 ]; then
             echo "[!] Less than recommended 4GB memory found - not recommended but yolo continuing" | tee -a $LOGFILE
+            ES_MEMORY=512m # catch all value kept low
+        fi
+        # Going for limited install. Only ES requiring significant memory. 
+        # Tuning memory to:
+        # - 3GB for non-ES Dockers and host OS
+        # - System memory minus 3GB is for ES, of which 50% of that is appointed to ES jvm heap. Rounded down.
+        #
+        elif [ ${AVAILABLE_MEMORY} -ge 4000 ] &&  [ ${AVAILABLE_MEMORY} -le 4999 ]; then
+            echo "[*] 4-5GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=1g
+        elif [ ${AVAILABLE_MEMORY} -ge 5000 ] &&  [ ${AVAILABLE_MEMORY} -le 5999 ]; then
+            echo "[*] 5-6GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=1g
+        elif [ ${AVAILABLE_MEMORY} -ge 6000 ] &&  [ ${AVAILABLE_MEMORY} -le 6999 ]; then
+            echo "[*] 6-7GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=2g
+        elif [ ${AVAILABLE_MEMORY} -ge 7000 ] &&  [ ${AVAILABLE_MEMORY} -le 7999 ]; then
+            echo "[*] 7-8GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=2g
+        elif [ ${AVAILABLE_MEMORY} -ge 8000 ] &&  [ ${AVAILABLE_MEMORY} -le 8999 ]; then
+            echo "[*] 8-9GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=3g
+        elif [ ${AVAILABLE_MEMORY} -ge 9000 ] &&  [ ${AVAILABLE_MEMORY} -le 9999 ]; then
+            echo "[*] 9-10GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=3g
+        elif [ ${AVAILABLE_MEMORY} -ge 10000 ] && [ ${AVAILABLE_MEMORY} -le 10999 ]; then
+            echo "[*] 10-11GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=4g
+        elif [ ${AVAILABLE_MEMORY} -ge 11000 ] && [ ${AVAILABLE_MEMORY} -le 11999 ]; then
+            echo "[*] 11-12GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=4g
+        elif [ ${AVAILABLE_MEMORY} -ge 12000 ] && [ ${AVAILABLE_MEMORY} -le 12999 ]; then
+            echo "[*] 12-13GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=5g
+        elif [ ${AVAILABLE_MEMORY} -ge 13000 ] && [ ${AVAILABLE_MEMORY} -le 13999 ]; then
+            echo "[*] 13-14GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=5g
+        elif [ ${AVAILABLE_MEMORY} -ge 14000 ] && [ ${AVAILABLE_MEMORY} -le 14999 ]; then
+            echo "[*] 14-15GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=6g
+        elif [ ${AVAILABLE_MEMORY} -ge 15000 ] && [ ${AVAILABLE_MEMORY} -le 15999 ]; then
+            echo "[*] 15-16GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=6g
+        elif [ ${AVAILABLE_MEMORY} -ge 16000 ] && [ ${AVAILABLE_MEMORY} -le 16999 ]; then
+            echo "[*] 16-17GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=7g
+        elif [ ${AVAILABLE_MEMORY} -ge 17000 ] && [ ${AVAILABLE_MEMORY} -le 17999 ]; then
+            echo "[*] 17-18GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=7g
+        elif [ ${AVAILABLE_MEMORY} -ge 18000 ] && [ ${AVAILABLE_MEMORY} -le 18999 ]; then
+            echo "[*] 18-19GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=8g
+        elif [ ${AVAILABLE_MEMORY} -ge 19000 ] && [ ${AVAILABLE_MEMORY} -le 19999 ]; then
+            echo "[*] 19-20GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=8g
+        elif [ ${AVAILABLE_MEMORY} -ge 20000 ]; then
+            echo "[*] 20GB or more memory found" | tee -a $LOGFILE
+            ES_MEMORY=9g
         fi
     else 
-    # going for full install means some memory tuning is needed.
-    # ES memory is managed by ES and docker. No fixed values required
-    # NEO4j memory needs to be determined. We use the following mapping between total avail system mem and NEO4j value:
-    # 4GB or less -> exit
-    # 8GB or less -> 2GB for NEO4j
-    # 8-10GB -> 3GB for NEO4j
-    # 10-12GB -> 4GB for NEO4j
-    # 12-14GB -> 5GB for NEO4j
-    # 14-16GB -> 6GB for NEO4j
-    # 16GB+ -> 8GB for NEO4j
+    # Going for full install. Both ES and Neo4j requiring significant memory. 
+    # Tuning memory to:
+    # - 4GB for non-ES Dockers and host OS
+    # - Of remainign memory (system mem minus 4GB), 50% is appointed to NEO4j
+    # - The other Remaining 50% is for ES. Here the 50% guideline of Elastic comes into play: 50% of that is for ES jvm heap. The other 50% for other non-heap ES processes. Rounded down.
+    #
         SHOULDEXIT=false
-        if [ ${AVAILABLE_MEMORY} -le 3999 ]; then
-            echo "[X] Less than 4GB found. Not enough for full install. Exiting."
+        if [ ${AVAILABLE_MEMORY} -le 7999 ]; then
+            echo "[X] Less than 8GB found. Not enough for full install. Consider 'limited' install. Exiting."
             SHOULDEXIT=true
-        elif [ ${AVAILABLE_MEMORY} -le 7999 ]; then
-            echo "[X] Less than 8GB found. Not recommended for full install but yolo continuing."
+        elif [ ${AVAILABLE_MEMORY} -ge 8000 ] &&  [ ${AVAILABLE_MEMORY} -le 8999 ]; then
+            echo "[*] 8-9GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=1g
             NEO4J_MEMORY=2G
-        elif [ ${AVAILABLE_MEMORY} -ge 8000 ] &&  [ ${AVAILABLE_MEMORY} -le 9999 ]; then
-            echo "[*] 8-10GB memory found" | tee -a $LOGFILE
+        elif [ ${AVAILABLE_MEMORY} -ge 9000 ] &&  [ ${AVAILABLE_MEMORY} -le 9999 ]; then
+            echo "[*] 9-10GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=1g
             NEO4J_MEMORY=3G
-        elif [ ${AVAILABLE_MEMORY} -ge 10000 ] && [ ${AVAILABLE_MEMORY} -le 11999 ]; then
-            echo "[*] 10-12GB memory found" | tee -a $LOGFILE
+        elif [ ${AVAILABLE_MEMORY} -ge 10000 ] && [ ${AVAILABLE_MEMORY} -le 10999 ]; then
+            echo "[*] 10-11GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=2g
+            NEO4J_MEMORY=3G
+        elif [ ${AVAILABLE_MEMORY} -ge 11000 ] && [ ${AVAILABLE_MEMORY} -le 11999 ]; then
+            echo "[*] 11-12GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=2g
             NEO4J_MEMORY=4G
-        elif [ ${AVAILABLE_MEMORY} -ge 12000 ] && [ ${AVAILABLE_MEMORY} -le 13999 ]; then
-            echo "[*] 12-14GB memory found" | tee -a $LOGFILE
+        elif [ ${AVAILABLE_MEMORY} -ge 12000 ] && [ ${AVAILABLE_MEMORY} -le 12999 ]; then
+            echo "[*] 12-13GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=2g
+            NEO4J_MEMORY=4GB
+        elif [ ${AVAILABLE_MEMORY} -ge 13000 ] && [ ${AVAILABLE_MEMORY} -le 13999 ]; then
+            echo "[*] 13-14GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=2g
             NEO4J_MEMORY=5GB
-        elif [ ${AVAILABLE_MEMORY} -ge 14000 ] && [ ${AVAILABLE_MEMORY} -le 15999 ]; then
-            echo "[*] 14-16GB memory found" | tee -a $LOGFILE
+        elif [ ${AVAILABLE_MEMORY} -ge 14000 ] && [ ${AVAILABLE_MEMORY} -le 14999 ]; then
+            echo "[*] 14-15GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=3g
+            NEO4J_MEMORY=5G
+        elif [ ${AVAILABLE_MEMORY} -ge 15000 ] && [ ${AVAILABLE_MEMORY} -le 15999 ]; then
+            echo "[*] 15-16GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=3g
             NEO4J_MEMORY=6G
-        elif [ ${AVAILABLE_MEMORY} -ge 16000 ]; then
-            echo "[*] 16GB or more memory found" | tee -a $LOGFILE
+        elif [ ${AVAILABLE_MEMORY} -ge 16000 ] && [ ${AVAILABLE_MEMORY} -le 16999 ]; then
+            echo "[*] 16-17GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=3g
+            NEO4J_MEMORY=6G
+        elif [ ${AVAILABLE_MEMORY} -ge 17000 ] && [ ${AVAILABLE_MEMORY} -le 17999 ]; then
+            echo "[*] 17-18GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=3g
+            NEO4J_MEMORY=7G
+        elif [ ${AVAILABLE_MEMORY} -ge 18000 ] && [ ${AVAILABLE_MEMORY} -le 18999 ]; then
+            echo "[*] 18-19GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=4g
+            NEO4J_MEMORY=7G
+        elif [ ${AVAILABLE_MEMORY} -ge 19000 ] && [ ${AVAILABLE_MEMORY} -le 19999 ]; then
+            echo "[*] 19-20GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=4g
+            NEO4J_MEMORY=8G
+        elif [ ${AVAILABLE_MEMORY} -ge 20000 ]; then
+            echo "[*] 20GB or more memory found" | tee -a $LOGFILE
+            ES_MEMORY=4g
             NEO4J_MEMORY=8G
         fi
     fi
@@ -191,6 +280,8 @@ memcheck() {
     if [ "$SHOULDEXIT" = true ]; then
         if [ ${FIXEDMEMORY} == "yes" ]; then
             echo "[*] Fixed memory mode. Not exiting."  | tee -a $LOGFILE
+            ES_MEMORY=1g
+            NEO4J_MEMORY=1G
         else
             exit 1
         fi
@@ -212,6 +303,7 @@ fi
 if [ ${#} -ne 0 ] && [[ $* = *"fixedmemory"* ]]; then
     echo "[*] Fixed memory mode: skip memory check and appoint 1G to NEO4J."  | tee -a $LOGFILE
     FIXEDMEMORY="yes"
+    ES_MEMORY=1g
     NEO4J_MEMORY=1G
 fi
 
@@ -360,13 +452,20 @@ else
     KBN_XPACK_ENCRYPTEDSAVEDOBJECTS=$(grep -E ^KBN_XPACK_ENCRYPTEDSAVEDOBJECTS= .env|awk -F\= '{print $2}')
 fi
 
+echo "[*] Adjusting memory settings for Elasticsearch" | tee -a $LOGFILE
+sed -E "s/^\-Xms.*$/\-Xms${ES_MEMORY}/g" mounts/elasticsearch-config/jvm.options.d/jvm.options 2>&1 && \
+sed -E "s/^\-Xmx.*$/\-Xmx${ES_MEMORY}/g" mounts/elasticsearch-config/jvm.options.d/jvm.options 2>&1 | tee -a $LOGFILE
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echo "[X] Could not adjust ES memory settings (Error Code: $ERROR)." | tee -a $LOGFILE
+fi
 
 if [ ${WHATTOINSTALL} = "full" ]; then
     echo "[*] Adjusting memory settings for NEO4J" | tee -a $LOGFILE
     sed -E -i.bak3 "s/\{\{NEO4J_MEMORY\}\}/${NEO4J_MEMORY}/g" ${DOCKERENVFILE}
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
-        echo "[X] Could not adjust ES memory settings (Error Code: $ERROR)." | tee -a $LOGFILE
+        echo "[X] Could not adjust NEO4J memory settings (Error Code: $ERROR)." | tee -a $LOGFILE
     fi
 
     # check if Neo4J password is already generated
