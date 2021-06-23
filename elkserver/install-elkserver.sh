@@ -69,7 +69,7 @@ preinstallcheck() {
     # install if not already installed
     if [ ! -x "$(command -v curl)" ] || [ ! -x "$(command -v jq)" ] || [ ! -x "$(command -v htpasswd)" ] || [ ! -x "$(command -v docker)" ] || [ ! -x "$(command -v docker-compose)" ]; then
         echo "[*] Updating apt"  | tee -a $LOGFILE
-        apt -y update >> $LOGFILE 2>&1
+        apt -y update 2>&1 | tee -a $LOGFILE
         ERROR=$?
         if [ $ERROR -ne 0 ]; then
             echo "[X] Error updating apt. Exiting. Please fix manually (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -79,7 +79,7 @@ preinstallcheck() {
         # curl
         if [ ! -x "$(command -v curl)" ]; then
             echo "[*] Installing curl"  | tee -a $LOGFILE
-            apt -y install curl >> $LOGFILE 2>&1
+            apt -y install curl 2>&1 | tee -a $LOGFILE
             ERROR=$?
             if [ $ERROR -ne 0 ]; then
                 echo "[X] Error installing curl via apt. Exiting. Please fix manually. (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -90,7 +90,7 @@ preinstallcheck() {
         # jq
         if [ ! -x "$(command -v jq)" ]; then
             echo "[*] Installing jq"  | tee -a $LOGFILE
-            apt -y install jq >> $LOGFILE 2>&1
+            apt -y install jq 2>&1 | tee -a $LOGFILE
             ERROR=$?
             if [ $ERROR -ne 0 ]; then
                 echo "[X] Error installing jq via apt. Exiting. Please fix manually. (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -101,7 +101,7 @@ preinstallcheck() {
         # htpasswd
         if [ ! -x "$(command -v htpasswd)" ]; then
             echo "[*] Installing apache2-utils"  | tee -a $LOGFILE
-            apt -y install apache2-utils >> $LOGFILE 2>&1
+            apt -y install apache2-utils 2>&1 | tee -a $LOGFILE
             ERROR=$?
             if [ $ERROR -ne 0 ]; then
                 echo "[X] Error installing apache2-utils via apt. Exiting. Please fix manually. (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -112,7 +112,7 @@ preinstallcheck() {
         # docker
         if [ ! -x "$(command -v docker)" ]; then
             echo "[*] Installing docker"  | tee -a $LOGFILE
-            apt -y install docker >> $LOGFILE 2>&1
+            apt -y install docker 2>&1 | tee -a $LOGFILE
             ERROR=$?
             if [ $ERROR -ne 0 ]; then
                 echo "[X] Error installing docker via apt. Exiting. Please fix manually. (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -123,7 +123,7 @@ preinstallcheck() {
         # docker-compose
         if [ ! -x "$(command -v docker-compose)" ]; then
             echo "[*] Installing docker-compose"  | tee -a $LOGFILE
-            apt -y install docker-compose >> $LOGFILE 2>&1
+            apt -y install docker-compose 2>&1 | tee -a $LOGFILE
             ERROR=$?
             if [ $ERROR -ne 0 ]; then
                 echo "[X] Could not install docker-compose via apt. Please fix manually. (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -239,7 +239,7 @@ fi
 
 if [ ! -f ${DOCKERENVFILE} ]; then
     echo "[*] .env file doesn't exist yet, copying from .env.tmpl"  | tee -a $LOGFILE
-    cp ${DOCKERENVTMPLFILE} ${DOCKERENVFILE} >> $LOGFILE 2>&1
+    cp ${DOCKERENVTMPLFILE} ${DOCKERENVFILE} 2>&1 | tee -a $LOGFILE
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echo "[X] Could copy .env file from template (Error Code: $ERROR)."  | tee -a $LOGFILE
@@ -251,42 +251,54 @@ fi
 
 REDELKVERSION=$(cat ./VERSION)
 echo "[*] Setting RedELK version in docker env file" | tee -a $LOGFILE
-sed -E -i.bak "s/\{\{REDELKVERSION\}\}/${REDELKVERSION}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
+sed -E -i.bak "s/\{\{REDELKVERSION\}\}/${REDELKVERSION}/g" ${DOCKERENVFILE} 2>&1 | tee -a $LOGFILE
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echo "[X] Could not set RedELK version in docker env file (Error Code: $ERROR)." | tee -a $LOGFILE
     exit 1
 fi
 
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echo "[X] Could not set kibana_system ES password (Error Code: $ERROR)." | tee -a $LOGFILE
-    exit 1
+# check if we need to create a kibana system user account
+if (grep "{{CREDS_kibana_system}}" $DOCKERENVFILE > /dev/null); then
+    CREDS_kibana_system=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
+    echo "[*] Setting kibana_system ES password" | tee -a $LOGFILE
+    sed -E -i.bak "s/\{\{CREDS_kibana_system\}\}/${CREDS_kibana_system}/g" ${DOCKERENVFILE} 2>&1 | tee -a $LOGFILE
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echo "[X] Could not set kibana_system ES password (Error Code: $ERROR)." | tee -a $LOGFILE
+        exit 1
+    fi
+else
+    echo "[*] kibana_system ES password already defined - skipping" | tee -a $LOGFILE
+    CREDS_kibana_system=$(grep -E ^CREDS_kibana_system= .env|awk -F\= '{print $2}')
 fi
 
-CREDS_kibana_system=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
-echo "[*] Setting kibana_system ES password" | tee -a $LOGFILE
-sed -E -i.bak "s/\{\{CREDS_kibana_system\}\}/${CREDS_kibana_system}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echo "[X] Could not set kibana_system ES password (Error Code: $ERROR)." | tee -a $LOGFILE
-    exit 1
+# check if we need to create a logstash system user account
+if (grep "{{CREDS_logstash_system}}" $DOCKERENVFILE > /dev/null); then
+    CREDS_logstash_system=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
+    echo "[*] Setting logstash_system ES password" | tee -a $LOGFILE
+    sed -E -i.bak "s/\{\{CREDS_logstash_system\}\}/${CREDS_logstash_system}/g" ${DOCKERENVFILE} 2>&1 | tee -a $LOGFILE
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echo "[X] Could not set logstash_system ES password (Error Code: $ERROR)." | tee -a $LOGFILE
+    fi
+else
+    echo "[*] logstash_system ES password already defined - skipping" | tee -a $LOGFILE
+    CREDS_logstash_system=$(grep -E ^CREDS_logstash_system= .env|awk -F\= '{print $2}')
 fi
 
-CREDS_logstash_system=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
-echo "[*] Setting logstash_system ES password" | tee -a $LOGFILE
-sed -E -i.bak "s/\{\{CREDS_logstash_system\}\}/${CREDS_logstash_system}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echo "[X] Could not set logstash_system ES password (Error Code: $ERROR)." | tee -a $LOGFILE
-fi
-
-CREDS_redelk_ingest=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
-echo "[*] Setting redelk_ingest ES password" | tee -a $LOGFILE
-sed -E -i.bak "s/\{\{CREDS_redelk_ingest\}\}/${CREDS_redelk_ingest}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echo "[X] Could not set redelk_ingest ES password (Error Code: $ERROR)." | tee -a $LOGFILE
+# check if we need to create a redelk ingest account
+if (grep "{{CREDS_redelk_ingest}}" $DOCKERENVFILE > /dev/null); then
+    CREDS_redelk_ingest=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
+    echo "[*] Setting redelk_ingest ES password" | tee -a $LOGFILE
+    sed -E -i.bak "s/\{\{CREDS_redelk_ingest\}\}/${CREDS_redelk_ingest}/g" ${DOCKERENVFILE} 2>&1 | tee -a $LOGFILE
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echo "[X] Could not set redelk_ingest ES password (Error Code: $ERROR)." | tee -a $LOGFILE
+    fi
+else
+    echo "[*] redlk_ingest ES password already defined - skipping" | tee -a $LOGFILE
+    CREDS_redelk_ingest=$(grep -E ^CREDS_redelk_ingest= .env|awk -F\= '{print $2}')
 fi
 
 # check if we need to create a redelk user account
@@ -294,14 +306,14 @@ if (grep "{{CREDS_redelk}}" $DOCKERENVFILE > /dev/null); then
     CREDS_redelk=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
 
     echo "[*] Setting redelk password in elasticsearch" | tee -a $LOGFILE
-    sed -E -i.bak "s/\{\{CREDS_redelk\}\}/${CREDS_redelk}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
+    sed -E -i.bak "s/\{\{CREDS_redelk\}\}/${CREDS_redelk}/g" ${DOCKERENVFILE} 2>&1 | tee -a $LOGFILE
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echo "[X] Could not set redelk ES password (Error Code: $ERROR)." | tee -a $LOGFILE
     fi
 
     echo "[*] Setting redelk password in htaccess" | tee -a $LOGFILE
-    htpasswd -b -m mounts/nginx-config/htpasswd.users.template redelk ${CREDS_redelk} >> $LOGFILE 2>&1
+    htpasswd -b -m mounts/nginx-config/htpasswd.users.template redelk ${CREDS_redelk} 2>&1 | tee -a $LOGFILE
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echo "[X] Error setting redelk password in htaccess (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -316,14 +328,14 @@ if (grep "{{ELASTIC_PASSWORD}}" $DOCKERENVFILE > /dev/null); then
     ELASTIC_PASSWORD=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
 
     echo "[*] Setting elastic ES password in Docker template" | tee -a $LOGFILE
-    sed -E -i.bak "s/\{\{ELASTIC_PASSWORD\}\}/${ELASTIC_PASSWORD}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
+    sed -E -i.bak "s/\{\{ELASTIC_PASSWORD\}\}/${ELASTIC_PASSWORD}/g" ${DOCKERENVFILE} 2>&1 | tee -a $LOGFILE
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echo "[X] Error setting elastic ES password in Docker template (Error Code: $ERROR)." | tee -a $LOGFILE
     fi
 
     echo "[*] Setting elastic ES password in redelk config.json" | tee -a $LOGFILE
-    sed -E -i.bak "s/\{\{ELASTIC_PASSWORD\}\}/${ELASTIC_PASSWORD}/g" mounts/redelk-config/etc/redelk/config.json >> $LOGFILE 2>&1
+    sed -E -i.bak "s/\{\{ELASTIC_PASSWORD\}\}/${ELASTIC_PASSWORD}/g" mounts/redelk-config/etc/redelk/config.json 2>&1 | tee -a $LOGFILE
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echo "[X] Error setting elastic ES password in redelk config.json (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -334,13 +346,20 @@ else
     ELASTIC_PASSWORD=$(grep -E ^ELASTIC_PASSWORD= .env|awk -F\= '{print $2}')
 fi
 
-KBN_XPACK_ENCRYPTEDSAVEDOBJECTS=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
-echo "[*] Setting Kibana encryption key" | tee -a $LOGFILE
-sed -E -i.bak "s/\{\{KBN_XPACK_ENCRYPTEDSAVEDOBJECTS\}\}/${KBN_XPACK_ENCRYPTEDSAVEDOBJECTS}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
-ERROR=$?
-if [ $ERROR -ne 0 ]; then
-    echo "[X] Could not set Kibana encryption key (Error Code: $ERROR)." | tee -a $LOGFILE
+# check if we need to create the kibana encryption key
+if (grep "{{KBN_XPACK_ENCRYPTEDSAVEDOBJECTS}}" $DOCKERENVFILE > /dev/null); then
+    KBN_XPACK_ENCRYPTEDSAVEDOBJECTS=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
+    echo "[*] Setting Kibana encryption key" | tee -a $LOGFILE
+    sed -E -i.bak "s/\{\{KBN_XPACK_ENCRYPTEDSAVEDOBJECTS\}\}/${KBN_XPACK_ENCRYPTEDSAVEDOBJECTS}/g" ${DOCKERENVFILE} 2>&1 | tee -a $LOGFILE
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echo "[X] Could not set Kibana encryption key (Error Code: $ERROR)." | tee -a $LOGFILE
+    fi
+else
+    echo "[*] Kibana encryption key in docker template already defined - skipping" | tee -a $LOGFILE
+    KBN_XPACK_ENCRYPTEDSAVEDOBJECTS=$(grep -E ^KBN_XPACK_ENCRYPTEDSAVEDOBJECTS= .env|awk -F\= '{print $2}')
 fi
+
 
 if [ ${WHATTOINSTALL} = "full" ]; then
     echo "[*] Adjusting memory settings for NEO4J" | tee -a $LOGFILE
@@ -355,7 +374,7 @@ if [ ${WHATTOINSTALL} = "full" ]; then
         NEO4J_PASSWORD=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
 
         echo "[*] Setting neo4j password" | tee -a $LOGFILE
-        sed -E -i.bak "s/\{\{NEO4J_PASSWORD\}\}/${NEO4J_PASSWORD}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
+        sed -E -i.bak "s/\{\{NEO4J_PASSWORD\}\}/${NEO4J_PASSWORD}/g" ${DOCKERENVFILE} 2>&1 | tee -a $LOGFILE
         ERROR=$?
         if [ $ERROR -ne 0 ]; then
             echo "[X] Could not set neo4j password (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -367,21 +386,21 @@ if [ ${WHATTOINSTALL} = "full" ]; then
 fi
 
 echo "[*] Setting permissions on logstash configs" | tee -a $LOGFILE
-chown -R 1000 ./mounts/logstash-config/* >> $LOGFILE 2>&1
+chown -R 1000 ./mounts/logstash-config/* 2>&1 | tee -a $LOGFILE
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echo "[X] Could not set permissions on logstash configs (Error Code: $ERROR)." | tee -a $LOGFILE
 fi
 
 echo "[*] Setting permissions on redelk logs" | tee -a $LOGFILE
-chown -R 1000 ./mounts/redelk-logs && chmod 664 ./mounts/redelk-logs/* >> $LOGFILE 2>&1
+chown -R 1000 ./mounts/redelk-logs && chmod 664 ./mounts/redelk-logs/* 2>&1 | tee -a $LOGFILE
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echo "[X] Could not set permissions on redelk logs (Error Code: $ERROR)." | tee -a $LOGFILE
 fi
 
 echo "[*] Setting permissions on Jupyter notebook working dir" | tee -a $LOGFILE
-chown -R 1000 ./mounts/jupyter-workbooks >> $LOGFILE 2>&1
+chown -R 1000 ./mounts/jupyter-workbooks 2>&1 | tee -a $LOGFILE
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echo "[X] Could not set permissions on Jupyter notebook working dir (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -400,7 +419,7 @@ if [ $DO_LETSENCRYPT == "true" ]; then
         echo "[*] Domain $EXTERNAL_DOMAIN seems valid. Continuing."  | tee -a $LOGFILE
 
         echo "[*] Setting external domain name in Docker env file" | tee -a $LOGFILE
-        sed -E -i.bak "s/\{\{EXTERNAL_DOMAIN\}\}/${EXTERNAL_DOMAIN}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
+        sed -E -i.bak "s/\{\{EXTERNAL_DOMAIN\}\}/${EXTERNAL_DOMAIN}/g" ${DOCKERENVFILE} 2>&1 | tee -a $LOGFILE
         ERROR=$?
         if [ $ERROR -ne 0 ]; then
             echo "[X] Could not set external domain name in Docker env file (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -408,7 +427,7 @@ if [ $DO_LETSENCRYPT == "true" ]; then
 
         LE_EMAIL=$(cat ./mounts/redelk-config/etc/redelk/config.json | jq -r .redelkserver_letsencrypt.le_email)
         echo "[*] Setting Let's Encrypt email in Docker env file" | tee -a $LOGFILE
-        sed -E -i.bak "s/\{\{LE_EMAIL\}\}/${LE_EMAIL}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
+        sed -E -i.bak "s/\{\{LE_EMAIL\}\}/${LE_EMAIL}/g" ${DOCKERENVFILE} 2>&1 | tee -a $LOGFILE
         ERROR=$?
         if [ $ERROR -ne 0 ]; then
             echo "[X] Could not set Let's Encrypt email in Docker env file (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -419,7 +438,7 @@ else # letsencrypt not enabled, but we still need a cert for nginx. So we create
     echo "[*] Creating custom certificate for $EXTERNAL_DOMAIN "
     CERTPATH="mounts/certbot/conf/live/noletsencrypt"
     mkdir -p $CERTPATH && \
-    openssl req -x509 -nodes -newkey rsa:4096 -days 365 -keyout $CERTPATH/privkey.pem -out $CERTPATH/fullchain.pem -subj /CN=${EXTERNAL_DOMAIN} >> $LOGFILE 2>&1 && \
+    openssl req -x509 -nodes -newkey rsa:4096 -days 365 -keyout $CERTPATH/privkey.pem -out $CERTPATH/fullchain.pem -subj /CN=${EXTERNAL_DOMAIN} | tee -a $LOGFILE && \
     chown -R 1000 $CERTPATH
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
@@ -439,31 +458,31 @@ TLS_NGINX_KEY_PATH=$(sedescape "/etc/nginx/certs/live/${EXTERNAL_DOMAIN}/privkey
 TLS_NGINX_CA_PATH=$(sedescape "/etc/nginx/ca_certs/ca.crt")
 
 echo "[*] Setting CERTS_DIR_NGINX_LOCAL" | tee -a $LOGFILE
-sed -E -i.bak "s/\{\{CERTS_DIR_NGINX_LOCAL\}\}/${CERTS_DIR_NGINX_LOCAL}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
+sed -E -i.bak "s/\{\{CERTS_DIR_NGINX_LOCAL\}\}/${CERTS_DIR_NGINX_LOCAL}/g" ${DOCKERENVFILE} 2>&1 | tee -a $LOGFILE
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echo "[X] Could not set CERTS_DIR_NGINX_LOCAL (Error Code: $ERROR)." | tee -a $LOGFILE
 fi
 echo "[*] Setting CERTS_DIR_NGINX_CA_LOCAL" | tee -a $LOGFILE
-sed -E -i.bak "s/\{\{CERTS_DIR_NGINX_CA_LOCAL\}\}/${CERTS_DIR_NGINX_CA_LOCAL}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
+sed -E -i.bak "s/\{\{CERTS_DIR_NGINX_CA_LOCAL\}\}/${CERTS_DIR_NGINX_CA_LOCAL}/g" ${DOCKERENVFILE} 2>&1 | tee -a $LOGFILE
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echo "[X] Could not set CERTS_DIR_NGINX_CA_LOCAL (Error Code: $ERROR)." | tee -a $LOGFILE
 fi
 echo "[*] Setting TLS_NGINX_CRT_PATH" | tee -a $LOGFILE
-sed -E -i.bak "s/\{\{TLS_NGINX_CRT_PATH\}\}/${TLS_NGINX_CRT_PATH}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
+sed -E -i.bak "s/\{\{TLS_NGINX_CRT_PATH\}\}/${TLS_NGINX_CRT_PATH}/g" ${DOCKERENVFILE} 2>&1 | tee -a $LOGFILE
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echo "[X] Could not set TLS_NGINX_CRT_PATH (Error Code: $ERROR)." | tee -a $LOGFILE
 fi
 echo "[*] Setting TLS_NGINX_KEY_PATH" | tee -a $LOGFILE
-sed -E -i.bak "s/\{\{TLS_NGINX_KEY_PATH\}\}/${TLS_NGINX_KEY_PATH}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
+sed -E -i.bak "s/\{\{TLS_NGINX_KEY_PATH\}\}/${TLS_NGINX_KEY_PATH}/g" ${DOCKERENVFILE} 2>&1 | tee -a $LOGFILE
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echo "[X] Could not set TLS_NGINX_KEY_PATH (Error Code: $ERROR)." | tee -a $LOGFILE
 fi
 echo "[*] Setting TLS_NGINX_CA_PATH" | tee -a $LOGFILE
-sed -E -i.bak "s/\{\{TLS_NGINX_CA_PATH\}\}/${TLS_NGINX_CA_PATH}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
+sed -E -i.bak "s/\{\{TLS_NGINX_CA_PATH\}\}/${TLS_NGINX_CA_PATH}/g" ${DOCKERENVFILE} 2>&1 | tee -a $LOGFILE
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echo "[X] Could not set TLS_NGINX_CA_PATH (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -478,7 +497,7 @@ if [ ${WHATTOINSTALL} = "limited" ]; then
     fi
 else
     echo "[*] Adjusting Nginx config file" | tee -a $LOGFILE
-    sed -i 's/^\s*# include conf.d\/full.location-conf;\s*$/    include conf.d\/full.location-conf;/g' ./mounts/nginx-config/default.conf.template
+    sed -i 's/^\s*#\s*include conf.d\/full.location-conf;\s*$/    include conf.d\/full.location-conf;/g' ./mounts/nginx-config/default.conf.template
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echo "[X] Could not adjust Nginx config (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -487,16 +506,16 @@ fi
 
 echo "[*] Linking docker-compose.yml to the docker file used" | tee -a $LOGFILE
 if [ -f docker-compose.yml ]; then
-    rm docker-compose.yml >> $LOGFILE 2>&1
+    rm docker-compose.yml 2>&1 | tee -a $LOGFILE
 fi
-ln -s $DOCKERCONFFILE docker-compose.yml >> $LOGFILE 2>&1
+ln -s $DOCKERCONFFILE docker-compose.yml 2>&1 | tee -a $LOGFILE
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echo "[X] Error linking docker-compose.yml to the docker file used (Error Code: $ERROR)." | tee -a $LOGFILE
 fi
 
 echo "[*] Creating password file for easy reference" | tee -a $LOGFILE
-echo "# passwords used for RedELK installation" > redelk_passwords.cfg
+echo "# passwords used for RedELK installation" > redelk_passwords.cfg && \
 echo "CredHtaccessUsername = \"redelk\"" >> redelk_passwords.cfg && \
 echo "CredHtaccessPassword = \"$CREDS_redelk\"" >> redelk_passwords.cfg && \
 echo "CredESUsername = \"elastic\"" >> redelk_passwords.cfg && \
@@ -509,7 +528,7 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "[*] Copying password file for use with jupyter notebooks" | tee -a $LOGFILE
-cp redelk_passwords.cfg ./mounts/jupyter-workbooks/redelk_passwords.py >> $LOGFILE 2>&1
+cp redelk_passwords.cfg ./mounts/jupyter-workbooks/redelk_passwords.py 2>&1 | tee -a $LOGFILE
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echo "[X] Error copying password file for use with jupyter notebooks (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -519,7 +538,7 @@ fi
 if [ $DRYRUN == "no" ]; then
     
     echo "[*] Setting vm.max_map_count to 262144" | tee -a $LOGFILE
-    sysctl -w vm.max_map_count=262144 >> $LOGFILE 2>&1
+    sysctl -w vm.max_map_count=262144 | tee -a $LOGFILE
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echo "[X] Could not set vm.max_map_count (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -528,7 +547,7 @@ if [ $DRYRUN == "no" ]; then
 
     if ( ! grep -r "^vm.max_map_count" /etc/sysctl* > /dev/null ) ; then
         echo "[*] Making vm.max_map_count setting persistent" | tee -a $LOGFILE
-        echo "vm.max_map_count=262144" >> /etc/sysctl.conf >> $LOGFILE 2>&1
+        echo "vm.max_map_count=262144" >> /etc/sysctl.conf 2>&1 | tee -a $LOGFILE
         ERROR=$?
         if [ $ERROR -ne 0 ]; then
             echo "[X] Could not make vm.max_map_count persistent (Error Code: $ERROR)." | tee -a $LOGFILE
