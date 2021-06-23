@@ -58,7 +58,8 @@
         "enrich_greynoise": {
             "enabled": true,
             "interval": 310,
-            "cache": 86400
+            "cache": 86400,
+            "api_key": ""
         },
         "enrich_tor": {
             "enabled": true,
