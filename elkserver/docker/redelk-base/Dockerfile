@@ -13,10 +13,7 @@ LABEL description="RedELK Base"
 
 # Install required packages
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get -y install rsync python3-pil python3-pip python3-dev python3-setuptools && \
-    apt-get -y install libtiff5-dev libjpeg8-dev libopenjp2-7-dev zlib1g-dev \
-    libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python3-tk \
-    libharfbuzz-dev libfribidi-dev libxcb1-dev && \
+    DEBIAN_FRONTEND=noninteractive apt-get -y install rsync python3-pil python3-pip python3-setuptools && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Copy relevant install data
