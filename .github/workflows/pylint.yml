@@ -3,7 +3,7 @@ name: Pylint
 on:
   push:
     paths:
-      - 'elkserver/docker/redelk-base/redelkinstalldata/scripts'
+      - 'elkserver/docker/redelk-base/redelkinstalldata/scripts/**'
   # pull_request_target:
   #   paths:
   #     - 'elkserver/docker/redelk-base/redelkinstalldata/scripts'
