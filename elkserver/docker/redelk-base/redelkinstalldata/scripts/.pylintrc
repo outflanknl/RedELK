@@ -19,7 +19,7 @@ ignore=CVS
 
 # Files or directories matching the regex patterns are skipped. The regex
 # matches against base names, not paths.
-ignore-patterns=".*(Chameleon|iocsources).*"
+ignore-patterns="Chameleon.*"
 
 # Python code to execute, usually for sys.path manipulation such as
 # pygtk.require().

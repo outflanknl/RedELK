@@ -26,5 +26,4 @@ jobs:
         pip install -r elkserver/docker/redelk-base/redelkinstalldata/scripts/requirements.txt
     - name: Analysing the code with pylint
       run: |
-        PYLINTRC=$(pwd)/elkserver/docker/redelk-base/redelkinstalldata/scripts/.pylintrc find elkserver/docker/redelk-base/redelkinstalldata/scripts -name '*.py' -exec echo pylint {} \; -exec pylint {} \;
-
+         for x in elkserver/docker/redelk-base/redelkinstalldata/scripts/**/*.py; do echo pylint $x; PYLINTRC=$(pwd)/elkserver/docker/redelk-base/redelkinstalldata/scripts/.pylintrc pylint $x; done
