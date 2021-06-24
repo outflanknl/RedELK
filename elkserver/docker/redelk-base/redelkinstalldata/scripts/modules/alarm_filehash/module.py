@@ -18,7 +18,7 @@ from iocsources import ioc_vt as vt
 from modules.helpers import (add_alarm_data, get_initial_alarm_result,
                              get_query, get_value, raw_search, set_tags)
 
-INFO = {
+info = {
     'version': 0.1,
     'name': 'Test file hash against public sources',
     'alarmmsg': 'MD5 HASH SEEN ONLINE',
@@ -31,13 +31,13 @@ INFO = {
 class Module():
     """ Test file hash against public sources """
     def __init__(self):
-        self.logger = logging.getLogger(INFO['submodule'])
-        self.interval = alarms[INFO['submodule']]['interval'] if INFO['submodule'] in alarms else 360
+        self.logger = logging.getLogger(info['submodule'])
+        self.interval = alarms[info['submodule']]['interval'] if info['submodule'] in alarms else 360
 
     def run(self):
         """ Run the alarm module """
         ret = get_initial_alarm_result()
-        ret['info'] = INFO
+        ret['info'] = info
         ret['fields'] = ['agent.hostname', '@timestamp', 'host.name', 'user.name', 'ioc.type', 'file.name', 'file.hash.md5', 'c2.message', 'alarm.alarm_filehash']
         ret['groupby'] = ['file.hash.md5']
         try:
@@ -157,9 +157,9 @@ class Module():
                 # Skip it
                 should_check = False
                 # Set the last checked date
-                add_alarm_data(ioc, {}, INFO['submodule'], False)
+                add_alarm_data(ioc, {}, info['submodule'], False)
                 # Tag the doc as alarmed
-                set_tags(INFO['submodule'], [ioc])
+                set_tags(info['submodule'], [ioc])
 
             # Check if the IOC has already been checked within 'interval'
             if md5 in already_checked:
@@ -187,21 +187,21 @@ class Module():
 
         # ioc VirusTotal
         self.logger.debug('Checking IOC against VirusTotal')
-        vt_check = vt.VT(alarms[INFO['submodule']]['vt_api_key'])
+        vt_check = vt.VT(alarms[info['submodule']]['vt_api_key'])
         vt_check.test(md5_list)
         results['VirusTotal'] = vt_check.report
         self.logger.debug('Results from VirusTotal: %s', vt_check.report)
 
         # ioc IBM x-force
         self.logger.debug('Checking IOC against IBM X-Force')
-        ibm_check = ibm.IBM(alarms[INFO['submodule']]['ibm_basic_auth'])
+        ibm_check = ibm.IBM(alarms[info['submodule']]['ibm_basic_auth'])
         ibm_check.test(md5_list)
         results['IBM X-Force'] = ibm_check.report
         self.logger.debug('Results from IBM X-Force: %s', ibm_check.report)
 
         # ioc Hybrid Analysis
         self.logger.debug('Checking IOC against Hybrid Analysis')
-        ha_check = ha.HA(alarms[INFO['submodule']]['ha_api_key'])
+        ha_check = ha.HA(alarms[info['submodule']]['ha_api_key'])
         ha_check.test(md5_list)
         results['Hybrid Analysis'] = ha_check.report
         self.logger.debug('Results from Hybrid Analysis: %s', ha_check.report)
@@ -245,6 +245,6 @@ class Module():
                 # Hash was not found so we update the last_checked date
                 else:
                     self.logger.debug('md5 hash not alarmed, updating last_checked date: [%s]', md5)
-                    add_alarm_data(ioc, {}, INFO['submodule'], False)
+                    add_alarm_data(ioc, {}, info['submodule'], False)
 
         return report
