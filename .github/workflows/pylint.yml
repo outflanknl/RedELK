@@ -21,9 +21,8 @@ jobs:
         python-version: 3.8
     - name: Install dependencies
       run: |
-        apt-get install python3-pil
         python -m pip install --upgrade pip
-        pip install pylint
+        pip install pylint Pillow
         pip install -r elkserver/docker/redelk-base/redelkinstalldata/scripts/requirements.txt
     - name: Analysing the code with pylint
       run: |
