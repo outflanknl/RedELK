@@ -40,7 +40,7 @@ limit-inference-results=100
 load-plugins=
 
 # Pickle collected data for later comparisons.
-persistent=yes
+persistent=no
 
 # When enabled, pylint would attempt to guess common misconfiguration and emit
 # user-friendly hints instead of false-positive error messages.
