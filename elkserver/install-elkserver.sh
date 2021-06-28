@@ -279,7 +279,7 @@ memcheck() {
 
     if [ "$SHOULDEXIT" = true ]; then
         if [ ${FIXEDMEMORY} == "yes" ]; then
-            echo "[*] Fixed memory mode. Not exiting."  | tee -a $LOGFILE
+            echo "[*] Fixed memory mode. Skipping memory check."  | tee -a $LOGFILE
             ES_MEMORY=1g
             NEO4J_MEMORY=1G
         else
