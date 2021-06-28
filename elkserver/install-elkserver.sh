@@ -150,15 +150,14 @@ memcheck() {
 
     # check for full or limited install and set memory
     if [ ${WHATTOINSTALL} = "limited" ]; then
-        if [ ${AVAILABLE_MEMORY} -le 3999 ]; then
-            echo "[!] Less than recommended 4GB memory found - not recommended but yolo continuing" | tee -a $LOGFILE
-            ES_MEMORY=512m # catch all value kept low
-        fi
         # Going for limited install. Only ES requiring significant memory. 
         # Tuning memory to:
         # - 3GB for non-ES Dockers and host OS
         # - System memory minus 3GB is for ES, of which 50% of that is appointed to ES jvm heap. Rounded down.
         #
+        if [ ${AVAILABLE_MEMORY} -le 3999 ]; then
+            echo "[!] Less than recommended 4GB memory found - not recommended but yolo continuing" | tee -a $LOGFILE
+            ES_MEMORY=512m # catch all value kept low
         elif [ ${AVAILABLE_MEMORY} -ge 4000 ] &&  [ ${AVAILABLE_MEMORY} -le 4999 ]; then
             echo "[*] 4-5GB memory found" | tee -a $LOGFILE
             ES_MEMORY=1g
@@ -211,7 +210,7 @@ memcheck() {
             echo "[*] 20GB or more memory found" | tee -a $LOGFILE
             ES_MEMORY=9g
         fi
-    else 
+    else
     # Going for full install. Both ES and Neo4j requiring significant memory. 
     # Tuning memory to:
     # - 4GB for non-ES Dockers and host OS
