@@ -69,7 +69,7 @@ preinstallcheck() {
     # install if not already installed
     if [ ! -x "$(command -v curl)" ] || [ ! -x "$(command -v jq)" ] || [ ! -x "$(command -v htpasswd)" ] || [ ! -x "$(command -v docker)" ] || [ ! -x "$(command -v docker-compose)" ]; then
         echo "[*] Updating apt"  | tee -a $LOGFILE
-        apt -y update 2>&1 | tee -a $LOGFILE
+        apt -y update >> $LOGFILE 2>&1
         ERROR=$?
         if [ $ERROR -ne 0 ]; then
             echo "[X] Error updating apt. Exiting. Please fix manually (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -79,7 +79,7 @@ preinstallcheck() {
         # curl
         if [ ! -x "$(command -v curl)" ]; then
             echo "[*] Installing curl"  | tee -a $LOGFILE
-            apt -y install curl 2>&1 | tee -a $LOGFILE
+            apt -y install curl >> $LOGFILE 2>&1
             ERROR=$?
             if [ $ERROR -ne 0 ]; then
                 echo "[X] Error installing curl via apt. Exiting. Please fix manually. (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -90,7 +90,7 @@ preinstallcheck() {
         # jq
         if [ ! -x "$(command -v jq)" ]; then
             echo "[*] Installing jq"  | tee -a $LOGFILE
-            apt -y install jq 2>&1 | tee -a $LOGFILE
+            apt -y install jq >> $LOGFILE 2>&1
             ERROR=$?
             if [ $ERROR -ne 0 ]; then
                 echo "[X] Error installing jq via apt. Exiting. Please fix manually. (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -101,7 +101,7 @@ preinstallcheck() {
         # htpasswd
         if [ ! -x "$(command -v htpasswd)" ]; then
             echo "[*] Installing apache2-utils"  | tee -a $LOGFILE
-            apt -y install apache2-utils 2>&1 | tee -a $LOGFILE
+            apt -y install apache2-utils >> $LOGFILE 2>&1
             ERROR=$?
             if [ $ERROR -ne 0 ]; then
                 echo "[X] Error installing apache2-utils via apt. Exiting. Please fix manually. (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -112,7 +112,7 @@ preinstallcheck() {
         # docker
         if [ ! -x "$(command -v docker)" ]; then
             echo "[*] Installing docker"  | tee -a $LOGFILE
-            apt -y install docker 2>&1 | tee -a $LOGFILE
+            apt -y install docker >> $LOGFILE 2>&1
             ERROR=$?
             if [ $ERROR -ne 0 ]; then
                 echo "[X] Error installing docker via apt. Exiting. Please fix manually. (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -123,7 +123,7 @@ preinstallcheck() {
         # docker-compose
         if [ ! -x "$(command -v docker-compose)" ]; then
             echo "[*] Installing docker-compose"  | tee -a $LOGFILE
-            apt -y install docker-compose 2>&1 | tee -a $LOGFILE
+            apt -y install docker-compose >> $LOGFILE 2>&1
             ERROR=$?
             if [ $ERROR -ne 0 ]; then
                 echo "[X] Could not install docker-compose via apt. Please fix manually. (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -135,9 +135,10 @@ preinstallcheck() {
 
 memcheck() {
     # checking system memory and setting variables
-    AVAILABLE_MEMORY=$(awk '/MemAvailable/{printf "%.f", $2/1024}' /proc/meminfo)
+    AVAILABLE_MEMORY=$(awk '/MemTotal/{printf "%.f", $2/1024}' /proc/meminfo)
     ERROR=$?
-    echo "[*] Memory found available for RedELK: $AVAILABLE_MEMORY MB."
+    echo "[!] We assume this host is dedicated for RedELK. All system memory found will be appointed to RedELK processes."
+    echo "[*] Total system memory found: $AVAILABLE_MEMORY MB."
     if [ $ERROR -ne 0 ]; then
         echo "[X] Error getting memory configuration of this host. Exiting." | tee -a $LOGFILE
         if [ ${FIXEDMEMORY} == "yes" ]; then
@@ -147,50 +148,139 @@ memcheck() {
         fi
     fi
 
-    # check for full or limited install
+    # check for full or limited install and set memory
     if [ ${WHATTOINSTALL} = "limited" ]; then
+        # Going for limited install. Only ES requiring significant memory. 
+        # Tuning memory to:
+        # - 3GB for non-ES Dockers and host OS
+        # - System memory minus 3GB is for ES, of which 50% of that is appointed to ES jvm heap. Rounded down.
+        #
         if [ ${AVAILABLE_MEMORY} -le 3999 ]; then
             echo "[!] Less than recommended 4GB memory found - not recommended but yolo continuing" | tee -a $LOGFILE
+            ES_MEMORY=512m # catch all value kept low
+        elif [ ${AVAILABLE_MEMORY} -ge 4000 ] &&  [ ${AVAILABLE_MEMORY} -le 4999 ]; then
+            echo "[*] 4-5GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=1g
+        elif [ ${AVAILABLE_MEMORY} -ge 5000 ] &&  [ ${AVAILABLE_MEMORY} -le 5999 ]; then
+            echo "[*] 5-6GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=1g
+        elif [ ${AVAILABLE_MEMORY} -ge 6000 ] &&  [ ${AVAILABLE_MEMORY} -le 6999 ]; then
+            echo "[*] 6-7GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=2g
+        elif [ ${AVAILABLE_MEMORY} -ge 7000 ] &&  [ ${AVAILABLE_MEMORY} -le 7999 ]; then
+            echo "[*] 7-8GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=2g
+        elif [ ${AVAILABLE_MEMORY} -ge 8000 ] &&  [ ${AVAILABLE_MEMORY} -le 8999 ]; then
+            echo "[*] 8-9GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=3g
+        elif [ ${AVAILABLE_MEMORY} -ge 9000 ] &&  [ ${AVAILABLE_MEMORY} -le 9999 ]; then
+            echo "[*] 9-10GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=3g
+        elif [ ${AVAILABLE_MEMORY} -ge 10000 ] && [ ${AVAILABLE_MEMORY} -le 10999 ]; then
+            echo "[*] 10-11GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=4g
+        elif [ ${AVAILABLE_MEMORY} -ge 11000 ] && [ ${AVAILABLE_MEMORY} -le 11999 ]; then
+            echo "[*] 11-12GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=4g
+        elif [ ${AVAILABLE_MEMORY} -ge 12000 ] && [ ${AVAILABLE_MEMORY} -le 12999 ]; then
+            echo "[*] 12-13GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=5g
+        elif [ ${AVAILABLE_MEMORY} -ge 13000 ] && [ ${AVAILABLE_MEMORY} -le 13999 ]; then
+            echo "[*] 13-14GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=5g
+        elif [ ${AVAILABLE_MEMORY} -ge 14000 ] && [ ${AVAILABLE_MEMORY} -le 14999 ]; then
+            echo "[*] 14-15GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=6g
+        elif [ ${AVAILABLE_MEMORY} -ge 15000 ] && [ ${AVAILABLE_MEMORY} -le 15999 ]; then
+            echo "[*] 15-16GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=6g
+        elif [ ${AVAILABLE_MEMORY} -ge 16000 ] && [ ${AVAILABLE_MEMORY} -le 16999 ]; then
+            echo "[*] 16-17GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=7g
+        elif [ ${AVAILABLE_MEMORY} -ge 17000 ] && [ ${AVAILABLE_MEMORY} -le 17999 ]; then
+            echo "[*] 17-18GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=7g
+        elif [ ${AVAILABLE_MEMORY} -ge 18000 ] && [ ${AVAILABLE_MEMORY} -le 18999 ]; then
+            echo "[*] 18-19GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=8g
+        elif [ ${AVAILABLE_MEMORY} -ge 19000 ] && [ ${AVAILABLE_MEMORY} -le 19999 ]; then
+            echo "[*] 19-20GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=8g
+        elif [ ${AVAILABLE_MEMORY} -ge 20000 ]; then
+            echo "[*] 20GB or more memory found" | tee -a $LOGFILE
+            ES_MEMORY=9g
         fi
-    else 
-    # going for full install means some memory tuning is needed.
-    # ES memory is managed by ES and docker. No fixed values required
-    # NEO4j memory needs to be determined. We use the following mapping between total avail system mem and NEO4j value:
-    # 4GB or less -> exit
-    # 8GB or less -> 2GB for NEO4j
-    # 8-10GB -> 3GB for NEO4j
-    # 10-12GB -> 4GB for NEO4j
-    # 12-14GB -> 5GB for NEO4j
-    # 14-16GB -> 6GB for NEO4j
-    # 16GB+ -> 8GB for NEO4j
+    else
+    # Going for full install. Both ES and Neo4j requiring significant memory. 
+    # Tuning memory to:
+    # - 4GB for non-ES Dockers and host OS
+    # - Of remainign memory (system mem minus 4GB), 50% is appointed to NEO4j
+    # - The other Remaining 50% is for ES. Here the 50% guideline of Elastic comes into play: 50% of that is for ES jvm heap. The other 50% for other non-heap ES processes. Rounded down.
+    #
         SHOULDEXIT=false
-        if [ ${AVAILABLE_MEMORY} -le 3999 ]; then
-            echo "[X] Less than 4GB found. Not enough for full install. Exiting."
+        if [ ${AVAILABLE_MEMORY} -le 7999 ]; then
+            echo "[X] Less than 8GB found. Not enough for full install. Consider 'limited' install. Exiting."
             SHOULDEXIT=true
-        elif [ ${AVAILABLE_MEMORY} -le 7999 ]; then
-            echo "[X] Less than 8GB found. Not recommended for full install but yolo continuing."
+        elif [ ${AVAILABLE_MEMORY} -ge 8000 ] &&  [ ${AVAILABLE_MEMORY} -le 8999 ]; then
+            echo "[*] 8-9GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=1g
             NEO4J_MEMORY=2G
-        elif [ ${AVAILABLE_MEMORY} -ge 8000 ] &&  [ ${AVAILABLE_MEMORY} -le 9999 ]; then
-            echo "[*] 8-10GB memory found" | tee -a $LOGFILE
+        elif [ ${AVAILABLE_MEMORY} -ge 9000 ] &&  [ ${AVAILABLE_MEMORY} -le 9999 ]; then
+            echo "[*] 9-10GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=1g
             NEO4J_MEMORY=3G
-        elif [ ${AVAILABLE_MEMORY} -ge 10000 ] && [ ${AVAILABLE_MEMORY} -le 11999 ]; then
-            echo "[*] 10-12GB memory found" | tee -a $LOGFILE
+        elif [ ${AVAILABLE_MEMORY} -ge 10000 ] && [ ${AVAILABLE_MEMORY} -le 10999 ]; then
+            echo "[*] 10-11GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=2g
+            NEO4J_MEMORY=3G
+        elif [ ${AVAILABLE_MEMORY} -ge 11000 ] && [ ${AVAILABLE_MEMORY} -le 11999 ]; then
+            echo "[*] 11-12GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=2g
             NEO4J_MEMORY=4G
-        elif [ ${AVAILABLE_MEMORY} -ge 12000 ] && [ ${AVAILABLE_MEMORY} -le 13999 ]; then
-            echo "[*] 12-14GB memory found" | tee -a $LOGFILE
+        elif [ ${AVAILABLE_MEMORY} -ge 12000 ] && [ ${AVAILABLE_MEMORY} -le 12999 ]; then
+            echo "[*] 12-13GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=2g
+            NEO4J_MEMORY=4GB
+        elif [ ${AVAILABLE_MEMORY} -ge 13000 ] && [ ${AVAILABLE_MEMORY} -le 13999 ]; then
+            echo "[*] 13-14GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=2g
             NEO4J_MEMORY=5GB
-        elif [ ${AVAILABLE_MEMORY} -ge 14000 ] && [ ${AVAILABLE_MEMORY} -le 15999 ]; then
-            echo "[*] 14-16GB memory found" | tee -a $LOGFILE
+        elif [ ${AVAILABLE_MEMORY} -ge 14000 ] && [ ${AVAILABLE_MEMORY} -le 14999 ]; then
+            echo "[*] 14-15GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=3g
+            NEO4J_MEMORY=5G
+        elif [ ${AVAILABLE_MEMORY} -ge 15000 ] && [ ${AVAILABLE_MEMORY} -le 15999 ]; then
+            echo "[*] 15-16GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=3g
             NEO4J_MEMORY=6G
-        elif [ ${AVAILABLE_MEMORY} -ge 16000 ]; then
-            echo "[*] 16GB or more memory found" | tee -a $LOGFILE
+        elif [ ${AVAILABLE_MEMORY} -ge 16000 ] && [ ${AVAILABLE_MEMORY} -le 16999 ]; then
+            echo "[*] 16-17GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=3g
+            NEO4J_MEMORY=6G
+        elif [ ${AVAILABLE_MEMORY} -ge 17000 ] && [ ${AVAILABLE_MEMORY} -le 17999 ]; then
+            echo "[*] 17-18GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=3g
+            NEO4J_MEMORY=7G
+        elif [ ${AVAILABLE_MEMORY} -ge 18000 ] && [ ${AVAILABLE_MEMORY} -le 18999 ]; then
+            echo "[*] 18-19GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=4g
+            NEO4J_MEMORY=7G
+        elif [ ${AVAILABLE_MEMORY} -ge 19000 ] && [ ${AVAILABLE_MEMORY} -le 19999 ]; then
+            echo "[*] 19-20GB memory found" | tee -a $LOGFILE
+            ES_MEMORY=4g
+            NEO4J_MEMORY=8G
+        elif [ ${AVAILABLE_MEMORY} -ge 20000 ]; then
+            echo "[*] 20GB or more memory found" | tee -a $LOGFILE
+            ES_MEMORY=4g
             NEO4J_MEMORY=8G
         fi
     fi
 
     if [ "$SHOULDEXIT" = true ]; then
         if [ ${FIXEDMEMORY} == "yes" ]; then
-            echo "[*] Fixed memory mode. Not exiting."  | tee -a $LOGFILE
+            echo "[*] Fixed memory mode. Skipping memory check."  | tee -a $LOGFILE
+            ES_MEMORY=1g
+            NEO4J_MEMORY=1G
         else
             exit 1
         fi
@@ -212,6 +302,7 @@ fi
 if [ ${#} -ne 0 ] && [[ $* = *"fixedmemory"* ]]; then
     echo "[*] Fixed memory mode: skip memory check and appoint 1G to NEO4J."  | tee -a $LOGFILE
     FIXEDMEMORY="yes"
+    ES_MEMORY=1g
     NEO4J_MEMORY=1G
 fi
 
@@ -239,7 +330,7 @@ fi
 
 if [ ! -f ${DOCKERENVFILE} ]; then
     echo "[*] .env file doesn't exist yet, copying from .env.tmpl"  | tee -a $LOGFILE
-    cp ${DOCKERENVTMPLFILE} ${DOCKERENVFILE} 2>&1 | tee -a $LOGFILE
+    cp ${DOCKERENVTMPLFILE} ${DOCKERENVFILE} >> $LOGFILE 2>&1
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echo "[X] Could copy .env file from template (Error Code: $ERROR)."  | tee -a $LOGFILE
@@ -251,7 +342,7 @@ fi
 
 REDELKVERSION=$(cat ./VERSION)
 echo "[*] Setting RedELK version in docker env file" | tee -a $LOGFILE
-sed -E -i.bak "s/\{\{REDELKVERSION\}\}/${REDELKVERSION}/g" ${DOCKERENVFILE} 2>&1 | tee -a $LOGFILE
+sed -E -i.bak "s/\{\{REDELKVERSION\}\}/${REDELKVERSION}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echo "[X] Could not set RedELK version in docker env file (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -262,7 +353,7 @@ fi
 if (grep "{{CREDS_kibana_system}}" $DOCKERENVFILE > /dev/null); then
     CREDS_kibana_system=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
     echo "[*] Setting kibana_system ES password" | tee -a $LOGFILE
-    sed -E -i.bak "s/\{\{CREDS_kibana_system\}\}/${CREDS_kibana_system}/g" ${DOCKERENVFILE} 2>&1 | tee -a $LOGFILE
+    sed -E -i.bak "s/\{\{CREDS_kibana_system\}\}/${CREDS_kibana_system}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echo "[X] Could not set kibana_system ES password (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -277,7 +368,7 @@ fi
 if (grep "{{CREDS_logstash_system}}" $DOCKERENVFILE > /dev/null); then
     CREDS_logstash_system=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
     echo "[*] Setting logstash_system ES password" | tee -a $LOGFILE
-    sed -E -i.bak "s/\{\{CREDS_logstash_system\}\}/${CREDS_logstash_system}/g" ${DOCKERENVFILE} 2>&1 | tee -a $LOGFILE
+    sed -E -i.bak "s/\{\{CREDS_logstash_system\}\}/${CREDS_logstash_system}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echo "[X] Could not set logstash_system ES password (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -291,7 +382,7 @@ fi
 if (grep "{{CREDS_redelk_ingest}}" $DOCKERENVFILE > /dev/null); then
     CREDS_redelk_ingest=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
     echo "[*] Setting redelk_ingest ES password" | tee -a $LOGFILE
-    sed -E -i.bak "s/\{\{CREDS_redelk_ingest\}\}/${CREDS_redelk_ingest}/g" ${DOCKERENVFILE} 2>&1 | tee -a $LOGFILE
+    sed -E -i.bak "s/\{\{CREDS_redelk_ingest\}\}/${CREDS_redelk_ingest}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echo "[X] Could not set redelk_ingest ES password (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -306,14 +397,14 @@ if (grep "{{CREDS_redelk}}" $DOCKERENVFILE > /dev/null); then
     CREDS_redelk=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
 
     echo "[*] Setting redelk password in elasticsearch" | tee -a $LOGFILE
-    sed -E -i.bak "s/\{\{CREDS_redelk\}\}/${CREDS_redelk}/g" ${DOCKERENVFILE} 2>&1 | tee -a $LOGFILE
+    sed -E -i.bak "s/\{\{CREDS_redelk\}\}/${CREDS_redelk}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echo "[X] Could not set redelk ES password (Error Code: $ERROR)." | tee -a $LOGFILE
     fi
 
     echo "[*] Setting redelk password in htaccess" | tee -a $LOGFILE
-    htpasswd -b -m mounts/nginx-config/htpasswd.users.template redelk ${CREDS_redelk} 2>&1 | tee -a $LOGFILE
+    htpasswd -b -m mounts/nginx-config/htpasswd.users.template redelk ${CREDS_redelk} >> $LOGFILE 2>&1
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echo "[X] Error setting redelk password in htaccess (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -328,14 +419,14 @@ if (grep "{{ELASTIC_PASSWORD}}" $DOCKERENVFILE > /dev/null); then
     ELASTIC_PASSWORD=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
 
     echo "[*] Setting elastic ES password in Docker template" | tee -a $LOGFILE
-    sed -E -i.bak "s/\{\{ELASTIC_PASSWORD\}\}/${ELASTIC_PASSWORD}/g" ${DOCKERENVFILE} 2>&1 | tee -a $LOGFILE
+    sed -E -i.bak "s/\{\{ELASTIC_PASSWORD\}\}/${ELASTIC_PASSWORD}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echo "[X] Error setting elastic ES password in Docker template (Error Code: $ERROR)." | tee -a $LOGFILE
     fi
 
     echo "[*] Setting elastic ES password in redelk config.json" | tee -a $LOGFILE
-    sed -E -i.bak "s/\{\{ELASTIC_PASSWORD\}\}/${ELASTIC_PASSWORD}/g" mounts/redelk-config/etc/redelk/config.json 2>&1 | tee -a $LOGFILE
+    sed -E -i.bak "s/\{\{ELASTIC_PASSWORD\}\}/${ELASTIC_PASSWORD}/g" mounts/redelk-config/etc/redelk/config.json >> $LOGFILE 2>&1
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echo "[X] Error setting elastic ES password in redelk config.json (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -350,7 +441,7 @@ fi
 if (grep "{{KBN_XPACK_ENCRYPTEDSAVEDOBJECTS}}" $DOCKERENVFILE > /dev/null); then
     KBN_XPACK_ENCRYPTEDSAVEDOBJECTS=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
     echo "[*] Setting Kibana encryption key" | tee -a $LOGFILE
-    sed -E -i.bak "s/\{\{KBN_XPACK_ENCRYPTEDSAVEDOBJECTS\}\}/${KBN_XPACK_ENCRYPTEDSAVEDOBJECTS}/g" ${DOCKERENVFILE} 2>&1 | tee -a $LOGFILE
+    sed -E -i.bak "s/\{\{KBN_XPACK_ENCRYPTEDSAVEDOBJECTS\}\}/${KBN_XPACK_ENCRYPTEDSAVEDOBJECTS}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echo "[X] Could not set Kibana encryption key (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -360,13 +451,20 @@ else
     KBN_XPACK_ENCRYPTEDSAVEDOBJECTS=$(grep -E ^KBN_XPACK_ENCRYPTEDSAVEDOBJECTS= .env|awk -F\= '{print $2}')
 fi
 
+echo "[*] Adjusting memory settings for Elasticsearch" | tee -a $LOGFILE
+sed -E -i "s/^\-Xms.*$/\-Xms${ES_MEMORY}/g" mounts/elasticsearch-config/jvm.options.d/jvm.options 2>&1 && \
+sed -E -i "s/^\-Xmx.*$/\-Xmx${ES_MEMORY}/g" mounts/elasticsearch-config/jvm.options.d/jvm.options >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echo "[X] Could not adjust ES memory settings (Error Code: $ERROR)." | tee -a $LOGFILE
+fi
 
 if [ ${WHATTOINSTALL} = "full" ]; then
     echo "[*] Adjusting memory settings for NEO4J" | tee -a $LOGFILE
     sed -E -i.bak3 "s/\{\{NEO4J_MEMORY\}\}/${NEO4J_MEMORY}/g" ${DOCKERENVFILE}
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
-        echo "[X] Could not adjust ES memory settings (Error Code: $ERROR)." | tee -a $LOGFILE
+        echo "[X] Could not adjust NEO4J memory settings (Error Code: $ERROR)." | tee -a $LOGFILE
     fi
 
     # check if Neo4J password is already generated
@@ -374,7 +472,7 @@ if [ ${WHATTOINSTALL} = "full" ]; then
         NEO4J_PASSWORD=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
 
         echo "[*] Setting neo4j password" | tee -a $LOGFILE
-        sed -E -i.bak "s/\{\{NEO4J_PASSWORD\}\}/${NEO4J_PASSWORD}/g" ${DOCKERENVFILE} 2>&1 | tee -a $LOGFILE
+        sed -E -i.bak "s/\{\{NEO4J_PASSWORD\}\}/${NEO4J_PASSWORD}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
         ERROR=$?
         if [ $ERROR -ne 0 ]; then
             echo "[X] Could not set neo4j password (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -386,24 +484,31 @@ if [ ${WHATTOINSTALL} = "full" ]; then
 fi
 
 echo "[*] Setting permissions on logstash configs" | tee -a $LOGFILE
-chown -R 1000 ./mounts/logstash-config/* 2>&1 | tee -a $LOGFILE
+chown -R 1000 ./mounts/logstash-config/* >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echo "[X] Could not set permissions on logstash configs (Error Code: $ERROR)." | tee -a $LOGFILE
 fi
 
 echo "[*] Setting permissions on redelk logs" | tee -a $LOGFILE
-chown -R 1000 ./mounts/redelk-logs && chmod 664 ./mounts/redelk-logs/* 2>&1 | tee -a $LOGFILE
+chown -R 1000 ./mounts/redelk-logs && chmod 664 ./mounts/redelk-logs/* >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echo "[X] Could not set permissions on redelk logs (Error Code: $ERROR)." | tee -a $LOGFILE
 fi
 
 echo "[*] Setting permissions on Jupyter notebook working dir" | tee -a $LOGFILE
-chown -R 1000 ./mounts/jupyter-workbooks 2>&1 | tee -a $LOGFILE
+chown -R 1000 ./mounts/jupyter-workbooks >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echo "[X] Could not set permissions on Jupyter notebook working dir (Error Code: $ERROR)." | tee -a $LOGFILE
+fi
+
+echo "[*] Setting permissions on elastic config" | tee -a $LOGFILE
+chown -R 1000 ./mounts/elasticsearch-config >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echo "[X] Could not set permissions on elasticsearch configs (Error Code: $ERROR)." | tee -a $LOGFILE
 fi
 
 # Certificate things for nginx
@@ -419,7 +524,7 @@ if [ $DO_LETSENCRYPT == "true" ]; then
         echo "[*] Domain $EXTERNAL_DOMAIN seems valid. Continuing."  | tee -a $LOGFILE
 
         echo "[*] Setting external domain name in Docker env file" | tee -a $LOGFILE
-        sed -E -i.bak "s/\{\{EXTERNAL_DOMAIN\}\}/${EXTERNAL_DOMAIN}/g" ${DOCKERENVFILE} 2>&1 | tee -a $LOGFILE
+        sed -E -i.bak "s/\{\{EXTERNAL_DOMAIN\}\}/${EXTERNAL_DOMAIN}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
         ERROR=$?
         if [ $ERROR -ne 0 ]; then
             echo "[X] Could not set external domain name in Docker env file (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -427,7 +532,7 @@ if [ $DO_LETSENCRYPT == "true" ]; then
 
         LE_EMAIL=$(cat ./mounts/redelk-config/etc/redelk/config.json | jq -r .redelkserver_letsencrypt.le_email)
         echo "[*] Setting Let's Encrypt email in Docker env file" | tee -a $LOGFILE
-        sed -E -i.bak "s/\{\{LE_EMAIL\}\}/${LE_EMAIL}/g" ${DOCKERENVFILE} 2>&1 | tee -a $LOGFILE
+        sed -E -i.bak "s/\{\{LE_EMAIL\}\}/${LE_EMAIL}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
         ERROR=$?
         if [ $ERROR -ne 0 ]; then
             echo "[X] Could not set Let's Encrypt email in Docker env file (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -437,9 +542,9 @@ else # letsencrypt not enabled, but we still need a cert for nginx. So we create
     EXTERNAL_DOMAIN=`grep -E "^DNS\.|^IP\." ../certs/config.cnf|awk -F\= '{print $2}'|tr -d " "|head -n1`
     echo "[*] Creating custom certificate for $EXTERNAL_DOMAIN "
     CERTPATH="mounts/certbot/conf/live/noletsencrypt"
-    mkdir -p $CERTPATH && \
-    openssl req -x509 -nodes -newkey rsa:4096 -days 365 -keyout $CERTPATH/privkey.pem -out $CERTPATH/fullchain.pem -subj /CN=${EXTERNAL_DOMAIN} | tee -a $LOGFILE && \
-    chown -R 1000 $CERTPATH
+    mkdir -p $CERTPATH >> $LOGFILE 2>&1 && \
+    openssl req -x509 -nodes -newkey rsa:4096 -days 365 -keyout $CERTPATH/privkey.pem -out $CERTPATH/fullchain.pem -subj /CN=${EXTERNAL_DOMAIN} >> $LOGFILE 2>&1 && \
+    chown -R 1000 $CERTPATH >> $LOGFILE 2>&1
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echo "[X] Error creating custom certificates (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -458,31 +563,31 @@ TLS_NGINX_KEY_PATH=$(sedescape "/etc/nginx/certs/live/${EXTERNAL_DOMAIN}/privkey
 TLS_NGINX_CA_PATH=$(sedescape "/etc/nginx/ca_certs/ca.crt")
 
 echo "[*] Setting CERTS_DIR_NGINX_LOCAL" | tee -a $LOGFILE
-sed -E -i.bak "s/\{\{CERTS_DIR_NGINX_LOCAL\}\}/${CERTS_DIR_NGINX_LOCAL}/g" ${DOCKERENVFILE} 2>&1 | tee -a $LOGFILE
+sed -E -i.bak "s/\{\{CERTS_DIR_NGINX_LOCAL\}\}/${CERTS_DIR_NGINX_LOCAL}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echo "[X] Could not set CERTS_DIR_NGINX_LOCAL (Error Code: $ERROR)." | tee -a $LOGFILE
 fi
 echo "[*] Setting CERTS_DIR_NGINX_CA_LOCAL" | tee -a $LOGFILE
-sed -E -i.bak "s/\{\{CERTS_DIR_NGINX_CA_LOCAL\}\}/${CERTS_DIR_NGINX_CA_LOCAL}/g" ${DOCKERENVFILE} 2>&1 | tee -a $LOGFILE
+sed -E -i.bak "s/\{\{CERTS_DIR_NGINX_CA_LOCAL\}\}/${CERTS_DIR_NGINX_CA_LOCAL}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echo "[X] Could not set CERTS_DIR_NGINX_CA_LOCAL (Error Code: $ERROR)." | tee -a $LOGFILE
 fi
 echo "[*] Setting TLS_NGINX_CRT_PATH" | tee -a $LOGFILE
-sed -E -i.bak "s/\{\{TLS_NGINX_CRT_PATH\}\}/${TLS_NGINX_CRT_PATH}/g" ${DOCKERENVFILE} 2>&1 | tee -a $LOGFILE
+sed -E -i.bak "s/\{\{TLS_NGINX_CRT_PATH\}\}/${TLS_NGINX_CRT_PATH}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echo "[X] Could not set TLS_NGINX_CRT_PATH (Error Code: $ERROR)." | tee -a $LOGFILE
 fi
 echo "[*] Setting TLS_NGINX_KEY_PATH" | tee -a $LOGFILE
-sed -E -i.bak "s/\{\{TLS_NGINX_KEY_PATH\}\}/${TLS_NGINX_KEY_PATH}/g" ${DOCKERENVFILE} 2>&1 | tee -a $LOGFILE
+sed -E -i.bak "s/\{\{TLS_NGINX_KEY_PATH\}\}/${TLS_NGINX_KEY_PATH}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echo "[X] Could not set TLS_NGINX_KEY_PATH (Error Code: $ERROR)." | tee -a $LOGFILE
 fi
 echo "[*] Setting TLS_NGINX_CA_PATH" | tee -a $LOGFILE
-sed -E -i.bak "s/\{\{TLS_NGINX_CA_PATH\}\}/${TLS_NGINX_CA_PATH}/g" ${DOCKERENVFILE} 2>&1 | tee -a $LOGFILE
+sed -E -i.bak "s/\{\{TLS_NGINX_CA_PATH\}\}/${TLS_NGINX_CA_PATH}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echo "[X] Could not set TLS_NGINX_CA_PATH (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -506,9 +611,9 @@ fi
 
 echo "[*] Linking docker-compose.yml to the docker file used" | tee -a $LOGFILE
 if [ -f docker-compose.yml ]; then
-    rm docker-compose.yml 2>&1 | tee -a $LOGFILE
+    rm docker-compose.yml >> $LOGFILE 2>&1
 fi
-ln -s $DOCKERCONFFILE docker-compose.yml 2>&1 | tee -a $LOGFILE
+ln -s $DOCKERCONFFILE docker-compose.yml >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echo "[X] Error linking docker-compose.yml to the docker file used (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -528,7 +633,7 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "[*] Copying password file for use with jupyter notebooks" | tee -a $LOGFILE
-cp redelk_passwords.cfg ./mounts/jupyter-workbooks/redelk_passwords.py 2>&1 | tee -a $LOGFILE
+cp redelk_passwords.cfg ./mounts/jupyter-workbooks/redelk_passwords.py >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echo "[X] Error copying password file for use with jupyter notebooks (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -538,7 +643,7 @@ fi
 if [ $DRYRUN == "no" ]; then
     
     echo "[*] Setting vm.max_map_count to 262144" | tee -a $LOGFILE
-    sysctl -w vm.max_map_count=262144 | tee -a $LOGFILE
+    sysctl -w vm.max_map_count=262144 >> $LOGFILE 2>&1
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echo "[X] Could not set vm.max_map_count (Error Code: $ERROR)." | tee -a $LOGFILE
@@ -547,7 +652,7 @@ if [ $DRYRUN == "no" ]; then
 
     if ( ! grep -r "^vm.max_map_count" /etc/sysctl* > /dev/null ) ; then
         echo "[*] Making vm.max_map_count setting persistent" | tee -a $LOGFILE
-        echo "vm.max_map_count=262144" >> /etc/sysctl.conf 2>&1 | tee -a $LOGFILE
+        echo "vm.max_map_count=262144" >> /etc/sysctl.conf >> $LOGFILE 2>&1
         ERROR=$?
         if [ $ERROR -ne 0 ]; then
             echo "[X] Could not make vm.max_map_count persistent (Error Code: $ERROR)." | tee -a $LOGFILE

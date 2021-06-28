@@ -33,6 +33,7 @@ services:
     volumes:
       - es_data:/usr/share/elasticsearch/data
       - ./mounts/certs:${CERTS_DIR_ES}
+      - ./mounts/elasticsearch-config/jvm.options.d:/usr/share/elasticsearch/config/jvm.options.d
     environment:
       - discovery.type=single-node
       - cluster.name=redelk-cluster
