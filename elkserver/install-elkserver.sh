@@ -539,7 +539,7 @@ if [ $DO_LETSENCRYPT == "true" ]; then
         fi
     fi
 else # letsencrypt not enabled, but we still need a cert for nginx. So we create a self sigend cert using the domain name from initial-setup certs config file
-    EXTERNAL_DOMAIN=`grep -E "^DNS\.|^IP\." ../certs/config.cnf|awk -F\= '{print $2}'|tr -d " "|head -n1`
+    EXTERNAL_DOMAIN=`grep -E "^DNS\.|^IP\." ./initial-setup-data/certs/config.cnf|awk -F\= '{print $2}'|tr -d " "|head -n1`
     echo "[*] Creating custom certificate for $EXTERNAL_DOMAIN "
     CERTPATH="mounts/certbot/conf/live/noletsencrypt"
     mkdir -p $CERTPATH >> $LOGFILE 2>&1 && \

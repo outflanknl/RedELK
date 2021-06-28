@@ -119,6 +119,9 @@ cp -r ./certs/* ./elkserver/mounts/logstash-config/certs_inputs/ >> $LOGFILE 2>&
 cp ./certs/redelkCA.crt ./c2servers/filebeat/ >> $LOGFILE 2>&1
 cp ./certs/redelkCA.crt ./redirs/filebeat/ >> $LOGFILE 2>&1
 
+echo "[*] Copying certificates to elkserver directory." | tee -a $LOGFILE
+mkdir elkserver/initial-setup-data && cp -r certs elkserver/initial-setup-data/ >> $LOGFILE 2>&1
+
 echo "[*] Creating ssh directories if necessary" | tee -a $LOGFILE
 if [ ! -d "./sshkey" ] || [ ! -d "./elkserver/mounts/redelk-ssh" ] || [ ! -d "./c2servers/ssh" ] ; then
     mkdir -p ./sshkey && mkdir -p ./elkserver/mounts/redelk-ssh && mkdir -p ./c2servers/ssh
