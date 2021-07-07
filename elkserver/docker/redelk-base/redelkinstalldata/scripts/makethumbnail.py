@@ -23,9 +23,9 @@ try:
     BAS_HEIGHT = 300
     for root, dirs, files in os.walk(path):
         for file in files:
-            if file.endswith(".jpg") and not file.endswith("thumb.jpg"):
+            if file.endswith('.jpg') and not file.endswith('thumb.jpg'):
                 file_in = os.path.join(root, file)
-                file_out = (file_in + ".thumb.jpg")
+                file_out = (f'{file_in}.thumb.jpg')
             if not os.path.exists(file_out):
                 img = Image.open(file_in)
                 w_percent = (BAS_HEIGHT/float(img.size[1]))
