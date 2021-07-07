@@ -14,7 +14,8 @@ import traceback
 from config import alarms
 from iocsources import ioc_hybridanalysis as ha
 from iocsources import ioc_ibm as ibm
-from iocsources import ioc_vt as vt
+
+from modules.alarm_filehash import ioc_vt  as vt
 from modules.helpers import (add_alarm_data, get_initial_alarm_result,
                              get_query, get_value, raw_search, set_tags)
 
@@ -94,7 +95,8 @@ class Module():
         report = {}
         iocs = []
         self.logger.debug('Running query %s', es_query)
-        # FIRST WE GET ALL IOC's
+
+        # First, get all IOCs of type 'file' that have not been alarmed yet
         iocs = get_query(es_query, 10000, index='rtops-*')
         self.logger.debug('found ioc: %s', iocs)
 
