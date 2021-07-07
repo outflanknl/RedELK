@@ -12,10 +12,10 @@ import logging
 import traceback
 
 from config import alarms
-from iocsources import ioc_hybridanalysis as ha
-from iocsources import ioc_ibm as ibm
 
-from modules.alarm_filehash import ioc_vt  as vt
+from modules.alarm_filehash import ioc_vt as vt
+from modules.alarm_filehash import ioc_ibm as ibm
+from modules.alarm_filehash import ioc_hybridanalysis as ha
 from modules.helpers import (add_alarm_data, get_initial_alarm_result,
                              get_query, get_value, raw_search, set_tags)
 
@@ -190,23 +190,23 @@ class Module():
         # ioc VirusTotal
         self.logger.debug('Checking IOC against VirusTotal')
         vt_check = vt.VT(alarms[info['submodule']]['vt_api_key'])
-        vt_check.test(md5_list)
-        results['VirusTotal'] = vt_check.report
-        self.logger.debug('Results from VirusTotal: %s', vt_check.report)
+        vt_results = vt_check.test(md5_list)
+        results['VirusTotal'] = vt_results
+        self.logger.debug('Results from VirusTotal: %s', vt_results)
 
         # ioc IBM x-force
         self.logger.debug('Checking IOC against IBM X-Force')
         ibm_check = ibm.IBM(alarms[info['submodule']]['ibm_basic_auth'])
-        ibm_check.test(md5_list)
-        results['IBM X-Force'] = ibm_check.report
-        self.logger.debug('Results from IBM X-Force: %s', ibm_check.report)
+        ibm_results = ibm_check.test(md5_list)
+        results['IBM X-Force'] = ibm_results
+        self.logger.debug('Results from IBM X-Force: %s', ibm_results)
 
         # ioc Hybrid Analysis
         self.logger.debug('Checking IOC against Hybrid Analysis')
         ha_check = ha.HA(alarms[info['submodule']]['ha_api_key'])
-        ha_check.test(md5_list)
-        results['Hybrid Analysis'] = ha_check.report
-        self.logger.debug('Results from Hybrid Analysis: %s', ha_check.report)
+        ha_results = ha_check.test(md5_list)
+        results['Hybrid Analysis'] = ha_results
+        self.logger.debug('Results from Hybrid Analysis: %s', ha_results)
 
         return results
 
