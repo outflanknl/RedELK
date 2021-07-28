@@ -31,9 +31,7 @@ RUN mkdir -p /usr/share/redelk/bin && \
     chmod -R 775 /usr/share/redelk/bin/*
 
 # Install python requirements
-RUN mkdir -p /usr/share/redelk/bin && \
-    cp -r /root/redelkinstalldata/scripts/ /usr/share/redelk/bin/ && \
-    pip3 install -r /usr/share/redelk/bin/Chameleon/requirements.txt && \
+RUN pip3 install -r /usr/share/redelk/bin/Chameleon/requirements.txt && \
     pip3 install -r /usr/share/redelk/bin/requirements.txt
 
 CMD ["/sbin/my_init"]

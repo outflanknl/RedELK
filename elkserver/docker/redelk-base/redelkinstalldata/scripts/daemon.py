@@ -27,32 +27,32 @@ def load_modules():
     enrich_dict = {}  # eD enrich Dict
     module_folders = os.listdir(MODULES_PATH)
 
-    for module in module_folders:
+    for module_name in module_folders:
         # only take folders and not '__pycache__'
-        if os.path.isdir(os.path.join(MODULES_PATH, module)) and module != '__pycache__':
+        if os.path.isdir(os.path.join(MODULES_PATH, module_name)) and module_name != '__pycache__':
             try:
                 module = importlib.import_module(
-                    'modules.%s.%s' % (module, 'module'))
+                    'modules.%s.%s' % (module_name, 'module'))
                 if (hasattr(module, 'info') and hasattr(module, 'Module')):
                     module_type = module.info.get('type', None)
                     if module_type == 'redelk_alarm':
-                        alarm_dict[module] = {}
-                        alarm_dict[module]['info'] = module.info
-                        alarm_dict[module]['m'] = module
-                        alarm_dict[module]['status'] = 'pending'
+                        alarm_dict[module_name] = {}
+                        alarm_dict[module_name]['info'] = module.info
+                        alarm_dict[module_name]['m'] = module
+                        alarm_dict[module_name]['status'] = 'pending'
                     elif module_type == 'redelk_connector':
-                        connector_dict[module] = {}
-                        connector_dict[module]['info'] = module.info
-                        connector_dict[module]['m'] = module
-                        connector_dict[module]['status'] = 'pending'
+                        connector_dict[module_name] = {}
+                        connector_dict[module_name]['info'] = module.info
+                        connector_dict[module_name]['m'] = module
+                        connector_dict[module_name]['status'] = 'pending'
                     elif module_type == 'redelk_enrich':
-                        enrich_dict[module] = {}
-                        enrich_dict[module]['info'] = module.info
-                        enrich_dict[module]['m'] = module
-                        enrich_dict[module]['status'] = 'pending'
+                        enrich_dict[module_name] = {}
+                        enrich_dict[module_name]['info'] = module.info
+                        enrich_dict[module_name]['m'] = module
+                        enrich_dict[module_name]['status'] = 'pending'
             # pylint: disable=broad-except
             except Exception as error:
-                logger.error('Error in module %s: %s', module, error)
+                logger.error('Error in module %s: %s', module_name, error)
                 logger.exception(error)
     return(alarm_dict, connector_dict, enrich_dict)
 
