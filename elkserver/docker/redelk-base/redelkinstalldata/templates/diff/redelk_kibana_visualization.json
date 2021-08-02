@@ -1710,6 +1710,123 @@
                     }
                 }
             },
+            "title": "RedELK - HTTP Redir filters",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [],
+                "params": {
+                    "controls": [
+                        {
+                            "fieldName": "redir.backend.name",
+                            "id": "1627506187584",
+                            "indexPatternRefName": "control_0_index_pattern",
+                            "label": "Backend",
+                            "options": {
+                                "dynamicOptions": true,
+                                "multiselect": true,
+                                "order": "desc",
+                                "size": 5,
+                                "type": "terms"
+                            },
+                            "parent": "",
+                            "type": "list"
+                        },
+                        {
+                            "fieldName": "source.as.organization.name",
+                            "id": "1627507362404",
+                            "indexPatternRefName": "control_1_index_pattern",
+                            "label": "ASN",
+                            "options": {
+                                "dynamicOptions": true,
+                                "multiselect": true,
+                                "order": "desc",
+                                "size": 5,
+                                "type": "terms"
+                            },
+                            "parent": "",
+                            "type": "list"
+                        },
+                        {
+                            "fieldName": "source.geo.country_iso_code",
+                            "id": "1627507398459",
+                            "indexPatternRefName": "control_2_index_pattern",
+                            "label": "Country",
+                            "options": {
+                                "dynamicOptions": true,
+                                "multiselect": true,
+                                "order": "desc",
+                                "size": 5,
+                                "type": "terms"
+                            },
+                            "parent": "",
+                            "type": "list"
+                        },
+                        {
+                            "fieldName": "tags",
+                            "id": "1627507415074",
+                            "indexPatternRefName": "control_3_index_pattern",
+                            "label": "Tags",
+                            "options": {
+                                "dynamicOptions": true,
+                                "multiselect": true,
+                                "order": "desc",
+                                "size": 5,
+                                "type": "terms"
+                            },
+                            "parent": "",
+                            "type": "list"
+                        }
+                    ],
+                    "pinFilters": false,
+                    "updateFiltersOnChange": true,
+                    "useTimeFilter": true
+                },
+                "title": "RedELK - HTTP Redir filters",
+                "type": "input_control_vis"
+            }
+        },
+        "id": "56350050-efe7-11eb-8a9f-2572da287875",
+        "migrationVersion": {
+            "visualization": "7.10.0"
+        },
+        "references": [
+            {
+                "id": "redirtraffic",
+                "name": "control_0_index_pattern",
+                "type": "index-pattern"
+            },
+            {
+                "id": "redirtraffic",
+                "name": "control_1_index_pattern",
+                "type": "index-pattern"
+            },
+            {
+                "id": "redirtraffic",
+                "name": "control_2_index_pattern",
+                "type": "index-pattern"
+            },
+            {
+                "id": "redirtraffic",
+                "name": "control_3_index_pattern",
+                "type": "index-pattern"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
             "savedSearchRefName": "search_0",
             "title": "RedELK - Implants total count ",
             "uiStateJSON": "{}",
@@ -3233,6 +3350,292 @@
                 }
             },
             "savedSearchRefName": "search_0",
+            "title": "RedELK - HTTP Redir traffic over time",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {},
+                        "schema": "metric",
+                        "type": "count"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "2",
+                        "params": {
+                            "filters": [
+                                {
+                                    "input": {
+                                        "language": "kuery",
+                                        "query": "redir.backend.name : c2* and tags : \"iplist_customer\""
+                                    },
+                                    "label": "C2 traffic - Customer"
+                                },
+                                {
+                                    "input": {
+                                        "language": "kuery",
+                                        "query": "redir.backend.name : c2* and tags : \"iplist_redteam\" "
+                                    },
+                                    "label": "C2 traffic - Red team tests"
+                                },
+                                {
+                                    "input": {
+                                        "language": "kuery",
+                                        "query": "redir.backend.name : c2* and not tags: \"iplist_customer\" and not tags : \"iplist_redteam\" "
+                                    },
+                                    "label": "C2 traffic - Other"
+                                },
+                                {
+                                    "input": {
+                                        "language": "kuery",
+                                        "query": "not redir.backend.name : c2*"
+                                    },
+                                    "label": "Non-C2 traffic"
+                                }
+                            ]
+                        },
+                        "schema": "group",
+                        "type": "filters"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "3",
+                        "params": {
+                            "drop_partials": false,
+                            "extended_bounds": {},
+                            "field": "@timestamp",
+                            "interval": "auto",
+                            "min_doc_count": 1,
+                            "scaleMetricValues": false,
+                            "timeRange": {
+                                "from": "now-1w",
+                                "to": "now"
+                            },
+                            "useNormalizedEsInterval": true
+                        },
+                        "schema": "segment",
+                        "type": "date_histogram"
+                    }
+                ],
+                "params": {
+                    "addLegend": true,
+                    "addTimeMarker": false,
+                    "addTooltip": true,
+                    "categoryAxes": [
+                        {
+                            "id": "CategoryAxis-1",
+                            "labels": {
+                                "filter": true,
+                                "show": true,
+                                "truncate": 100
+                            },
+                            "position": "bottom",
+                            "scale": {
+                                "type": "linear"
+                            },
+                            "show": true,
+                            "style": {},
+                            "title": {},
+                            "type": "category"
+                        }
+                    ],
+                    "grid": {
+                        "categoryLines": false
+                    },
+                    "labels": {},
+                    "legendPosition": "right",
+                    "seriesParams": [
+                        {
+                            "data": {
+                                "id": "1",
+                                "label": "Count"
+                            },
+                            "drawLinesBetweenPoints": true,
+                            "interpolate": "linear",
+                            "lineWidth": 2,
+                            "mode": "normal",
+                            "show": true,
+                            "showCircles": true,
+                            "type": "line",
+                            "valueAxis": "ValueAxis-1"
+                        }
+                    ],
+                    "thresholdLine": {
+                        "color": "#E7664C",
+                        "show": false,
+                        "style": "full",
+                        "value": 10,
+                        "width": 1
+                    },
+                    "times": [],
+                    "type": "line",
+                    "valueAxes": [
+                        {
+                            "id": "ValueAxis-1",
+                            "labels": {
+                                "filter": false,
+                                "rotate": 0,
+                                "show": true,
+                                "truncate": 100
+                            },
+                            "name": "LeftAxis-1",
+                            "position": "left",
+                            "scale": {
+                                "mode": "normal",
+                                "type": "linear"
+                            },
+                            "show": true,
+                            "style": {},
+                            "title": {
+                                "text": "Count"
+                            },
+                            "type": "value"
+                        }
+                    ]
+                },
+                "title": "RedELK - HTTP Redir traffic over time",
+                "type": "line"
+            }
+        },
+        "id": "be08d380-efe9-11eb-8a9f-2572da287875",
+        "migrationVersion": {
+            "visualization": "7.10.0"
+        },
+        "references": [
+            {
+                "id": "0f7dcd70-b982-11e8-94dd-171ae5c1fd1a",
+                "name": "search_0",
+                "type": "search"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "savedSearchRefName": "search_0",
+            "title": "RedELK - HTTP Redir traffic source table",
+            "uiStateJSON": "{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {
+                            "customLabel": "Hits"
+                        },
+                        "schema": "metric",
+                        "type": "count"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "2",
+                        "params": {
+                            "customLabel": "Source IP",
+                            "field": "source.ip",
+                            "missingBucket": false,
+                            "missingBucketLabel": "Missing",
+                            "order": "desc",
+                            "orderBy": "1",
+                            "otherBucket": true,
+                            "otherBucketLabel": "Other",
+                            "size": 100
+                        },
+                        "schema": "bucket",
+                        "type": "terms"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "3",
+                        "params": {
+                            "customLabel": "AS Organisation",
+                            "field": "source.as.organization.name",
+                            "missingBucket": true,
+                            "missingBucketLabel": "Missing",
+                            "order": "desc",
+                            "orderBy": "1",
+                            "otherBucket": false,
+                            "otherBucketLabel": "Other",
+                            "size": 1
+                        },
+                        "schema": "bucket",
+                        "type": "terms"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "4",
+                        "params": {
+                            "customLabel": "Country",
+                            "field": "source.geo.country_iso_code",
+                            "missingBucket": true,
+                            "missingBucketLabel": "Missing",
+                            "order": "desc",
+                            "orderBy": "1",
+                            "otherBucket": false,
+                            "otherBucketLabel": "Other",
+                            "size": 1
+                        },
+                        "schema": "bucket",
+                        "type": "terms"
+                    }
+                ],
+                "params": {
+                    "perPage": 10,
+                    "percentageCol": "Hits",
+                    "showMetricsAtAllLevels": false,
+                    "showPartialRows": true,
+                    "showTotal": true,
+                    "sort": {
+                        "columnIndex": null,
+                        "direction": null
+                    },
+                    "totalFunc": "sum"
+                },
+                "title": "RedELK - HTTP Redir traffic source table",
+                "type": "table"
+            }
+        },
+        "id": "cbb7d710-efee-11eb-8a9f-2572da287875",
+        "migrationVersion": {
+            "visualization": "7.10.0"
+        },
+        "references": [
+            {
+                "id": "0f7dcd70-b982-11e8-94dd-171ae5c1fd1a",
+                "name": "search_0",
+                "type": "search"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "savedSearchRefName": "search_0",
             "title": "RedELK - Tasks execution timeframe",
             "uiStateJSON": "{}",
             "version": 1,
@@ -3377,6 +3780,104 @@
                 "id": "rtops",
                 "name": "control_1_index_pattern",
                 "type": "index-pattern"
+            }
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "savedSearchRefName": "search_0",
+            "title": "RedELK - HTTP Redir traffic per backend",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {},
+                        "schema": "metric",
+                        "type": "count"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "2",
+                        "params": {
+                            "filters": [
+                                {
+                                    "input": {
+                                        "language": "kuery",
+                                        "query": "redir.backend.name : c2*"
+                                    },
+                                    "label": "C2 traffic"
+                                },
+                                {
+                                    "input": {
+                                        "language": "kuery",
+                                        "query": "not redir.backend.name : c2*"
+                                    },
+                                    "label": "Non-C2 traffic"
+                                }
+                            ]
+                        },
+                        "schema": "segment",
+                        "type": "filters"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "3",
+                        "params": {
+                            "customLabel": "Backend",
+                            "field": "redir.backend.name",
+                            "missingBucket": false,
+                            "missingBucketLabel": "Missing",
+                            "order": "desc",
+                            "orderBy": "1",
+                            "otherBucket": false,
+                            "otherBucketLabel": "Other",
+                            "size": 20
+                        },
+                        "schema": "segment",
+                        "type": "terms"
+                    }
+                ],
+                "params": {
+                    "addLegend": true,
+                    "addTooltip": true,
+                    "isDonut": true,
+                    "labels": {
+                        "last_level": true,
+                        "show": false,
+                        "truncate": 100,
+                        "values": true
+                    },
+                    "legendPosition": "right",
+                    "type": "pie"
+                },
+                "title": "RedELK - HTTP Redir traffic per backend",
+                "type": "pie"
+            }
+        },
+        "id": "d625ba60-efe8-11eb-8a9f-2572da287875",
+        "migrationVersion": {
+            "visualization": "7.10.0"
+        },
+        "references": [
+            {
+                "id": "0f7dcd70-b982-11e8-94dd-171ae5c1fd1a",
+                "name": "search_0",
+                "type": "search"
             }
         ],
         "type": "visualization",

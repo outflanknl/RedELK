@@ -309,7 +309,7 @@
                     },
                     "panelIndex": "9af964d0-b9c5-4fa0-81d7-6e7cf9657757",
                     "panelRefName": "panel_0",
-                    "version": "7.8.0"
+                    "version": "7.10.0"
                 },
                 {
                     "embeddableConfig": {
@@ -325,7 +325,7 @@
                     "panelIndex": "09cb7bd6-8162-4141-8a0c-807ee57a4603",
                     "panelRefName": "panel_1",
                     "title": "Target host(s) and user(s) filter",
-                    "version": "7.8.0"
+                    "version": "7.10.0"
                 },
                 {
                     "embeddableConfig": {
@@ -341,7 +341,7 @@
                     "panelIndex": "fcd3a5bc-91d9-46a2-b08c-92958c5b6089",
                     "panelRefName": "panel_2",
                     "title": "Implants per host",
-                    "version": "7.8.0"
+                    "version": "7.10.0"
                 },
                 {
                     "embeddableConfig": {
@@ -357,12 +357,12 @@
                     "panelIndex": "47710d04-18f9-4563-bf0d-73b4dc24f9e5",
                     "panelRefName": "panel_3",
                     "title": "Implants per user",
-                    "version": "7.8.0"
+                    "version": "7.10.0"
                 },
                 {
                     "embeddableConfig": {},
                     "gridData": {
-                        "h": 16,
+                        "h": 51,
                         "i": "30674424-d470-4b93-80c1-260d16f987ab",
                         "w": 48,
                         "x": 0,
@@ -370,7 +370,7 @@
                     },
                     "panelIndex": "30674424-d470-4b93-80c1-260d16f987ab",
                     "panelRefName": "panel_4",
-                    "version": "7.8.0"
+                    "version": "7.10.0"
                 }
             ],
             "timeRestore": false,
@@ -553,7 +553,50 @@
             "hits": 0,
             "kibanaSavedObjectMeta": {
                 "searchSourceJSON": {
-                    "filter": [],
+                    "filter": [
+                        {
+                            "$state": {
+                                "store": "appState"
+                            },
+                            "meta": {
+                                "alias": null,
+                                "disabled": true,
+                                "indexRefName": "kibanaSavedObjectMeta.searchSourceJSON.filter[0].meta.index",
+                                "key": "tags",
+                                "negate": false,
+                                "params": {
+                                    "query": "iplist_redteam"
+                                },
+                                "type": "phrase"
+                            },
+                            "query": {
+                                "match_phrase": {
+                                    "tags": "iplist_redteam"
+                                }
+                            }
+                        },
+                        {
+                            "$state": {
+                                "store": "appState"
+                            },
+                            "meta": {
+                                "alias": null,
+                                "disabled": true,
+                                "indexRefName": "kibanaSavedObjectMeta.searchSourceJSON.filter[1].meta.index",
+                                "key": "tags",
+                                "negate": false,
+                                "params": {
+                                    "query": "iplist_customer"
+                                },
+                                "type": "phrase"
+                            },
+                            "query": {
+                                "match_phrase": {
+                                    "tags": "iplist_customer"
+                                }
+                            }
+                        }
+                    ],
                     "query": {
                         "language": "lucene",
                         "query": ""
@@ -568,63 +611,6 @@
             "panelsJSON": [
                 {
                     "embeddableConfig": {
-                        "mapCenter": [
-                            29.53522956294847,
-                            3.5156250000000004
-                        ],
-                        "mapZoom": 2
-                    },
-                    "gridData": {
-                        "h": 16,
-                        "i": "1",
-                        "w": 48,
-                        "x": 0,
-                        "y": 2
-                    },
-                    "panelIndex": "1",
-                    "panelRefName": "panel_0",
-                    "version": "7.8.0"
-                },
-                {
-                    "embeddableConfig": {
-                        "mapCenter": [
-                            37.16031654673677,
-                            11.601562500000002
-                        ],
-                        "mapZoom": 1
-                    },
-                    "gridData": {
-                        "h": 15,
-                        "i": "2",
-                        "w": 24,
-                        "x": 0,
-                        "y": 18
-                    },
-                    "panelIndex": "2",
-                    "panelRefName": "panel_1",
-                    "version": "7.8.0"
-                },
-                {
-                    "embeddableConfig": {
-                        "mapCenter": [
-                            36.06353184297193,
-                            -36.90032958984376
-                        ],
-                        "mapZoom": 1
-                    },
-                    "gridData": {
-                        "h": 15,
-                        "i": "3",
-                        "w": 24,
-                        "x": 24,
-                        "y": 18
-                    },
-                    "panelIndex": "3",
-                    "panelRefName": "panel_2",
-                    "version": "7.8.0"
-                },
-                {
-                    "embeddableConfig": {
                         "title": ""
                     },
                     "gridData": {
@@ -635,15 +621,117 @@
                         "y": 0
                     },
                     "panelIndex": "948c1286-d4de-44a6-8fb2-95bf9252ed00",
+                    "panelRefName": "panel_0",
+                    "version": "7.10.0"
+                },
+                {
+                    "embeddableConfig": {
+                        "hidePanelTitles": false,
+                        "title": "Filters"
+                    },
+                    "gridData": {
+                        "h": 5,
+                        "i": "ab9eb0fb-a164-4295-8177-865a2a67dccb",
+                        "w": 36,
+                        "x": 0,
+                        "y": 2
+                    },
+                    "panelIndex": "ab9eb0fb-a164-4295-8177-865a2a67dccb",
+                    "panelRefName": "panel_1",
+                    "title": "Filters",
+                    "version": "7.10.0"
+                },
+                {
+                    "embeddableConfig": {
+                        "hidePanelTitles": false,
+                        "title": "HTTP Redir traffic per backend"
+                    },
+                    "gridData": {
+                        "h": 5,
+                        "i": "c630a33e-6a98-466d-8223-fd83e6947b8c",
+                        "w": 12,
+                        "x": 36,
+                        "y": 2
+                    },
+                    "panelIndex": "c630a33e-6a98-466d-8223-fd83e6947b8c",
+                    "panelRefName": "panel_2",
+                    "title": "HTTP Redir traffic per backend",
+                    "version": "7.10.0"
+                },
+                {
+                    "embeddableConfig": {
+                        "hiddenLayers": [],
+                        "hidePanelTitles": false,
+                        "isLayerTOCOpen": false,
+                        "mapCenter": {
+                            "lat": 14.5701,
+                            "lon": 121.0254,
+                            "zoom": 17
+                        },
+                        "openTOCDetails": [],
+                        "title": "HTTP redir traffic map"
+                    },
+                    "gridData": {
+                        "h": 15,
+                        "i": "1d1c2c6a-85ff-4b82-9b8d-d172b6e1a57a",
+                        "w": 24,
+                        "x": 0,
+                        "y": 7
+                    },
+                    "panelIndex": "1d1c2c6a-85ff-4b82-9b8d-d172b6e1a57a",
                     "panelRefName": "panel_3",
-                    "version": "7.8.0"
+                    "title": "HTTP redir traffic map",
+                    "version": "7.10.0"
+                },
+                {
+                    "embeddableConfig": {
+                        "hidePanelTitles": false,
+                        "title": "HTTP Redir traffic over time"
+                    },
+                    "gridData": {
+                        "h": 15,
+                        "i": "fc254327-57ac-4e5f-88f7-a32d48570289",
+                        "w": 24,
+                        "x": 24,
+                        "y": 7
+                    },
+                    "panelIndex": "fc254327-57ac-4e5f-88f7-a32d48570289",
+                    "panelRefName": "panel_4",
+                    "title": "HTTP Redir traffic over time",
+                    "version": "7.10.0"
+                },
+                {
+                    "embeddableConfig": {},
+                    "gridData": {
+                        "h": 15,
+                        "i": "829f61cf-9374-4bb5-8214-34e6875e79da",
+                        "w": 24,
+                        "x": 0,
+                        "y": 22
+                    },
+                    "panelIndex": "829f61cf-9374-4bb5-8214-34e6875e79da",
+                    "panelRefName": "panel_5",
+                    "version": "7.10.0"
+                },
+                {
+                    "embeddableConfig": {},
+                    "gridData": {
+                        "h": 22,
+                        "i": "0bc5f60b-f940-451a-886b-edff3512d180",
+                        "w": 48,
+                        "x": 0,
+                        "y": 37
+                    },
+                    "panelIndex": "0bc5f60b-f940-451a-886b-edff3512d180",
+                    "panelRefName": "panel_6",
+                    "version": "7.10.0"
                 }
             ],
             "refreshInterval": {
                 "pause": false,
                 "value": 30000
             },
-            "timeFrom": "now-1y",
+            "timeFrom": "now-1d",
             "timeRestore": true,
             "timeTo": "now",
             "title": "RedELK - Traffic dashboard",
@@ -655,24 +743,49 @@
         },
         "references": [
             {
-                "id": "e97f6f10-b982-11e8-94dd-171ae5c1fd1a",
+                "id": "redirtraffic",
+                "name": "kibanaSavedObjectMeta.searchSourceJSON.filter[0].meta.index",
+                "type": "index-pattern"
+            },
+            {
+                "id": "redirtraffic",
+                "name": "kibanaSavedObjectMeta.searchSourceJSON.filter[1].meta.index",
+                "type": "index-pattern"
+            },
+            {
+                "id": "0f82b540-d237-11ea-9301-a30a04251ae9",
                 "name": "panel_0",
                 "type": "visualization"
             },
             {
-                "id": "10dd40f0-b983-11e8-94dd-171ae5c1fd1a",
+                "id": "56350050-efe7-11eb-8a9f-2572da287875",
                 "name": "panel_1",
                 "type": "visualization"
             },
             {
-                "id": "1d26da60-b983-11e8-94dd-171ae5c1fd1a",
+                "id": "d625ba60-efe8-11eb-8a9f-2572da287875",
                 "name": "panel_2",
                 "type": "visualization"
             },
             {
-                "id": "0f82b540-d237-11ea-9301-a30a04251ae9",
+                "id": "dd9e9510-efec-11eb-8a9f-2572da287875",
                 "name": "panel_3",
+                "type": "map"
+            },
+            {
+                "id": "be08d380-efe9-11eb-8a9f-2572da287875",
+                "name": "panel_4",
                 "type": "visualization"
+            },
+            {
+                "id": "cbb7d710-efee-11eb-8a9f-2572da287875",
+                "name": "panel_5",
+                "type": "visualization"
+            },
+            {
+                "id": "0f7dcd70-b982-11e8-94dd-171ae5c1fd1a",
+                "name": "panel_6",
+                "type": "search"
             }
         ],
         "type": "dashboard",
