@@ -4,9 +4,11 @@ on:
   push:
     paths:
       - 'elkserver/docker/redelk-base/redelkinstalldata/scripts/**'
-  pull_request_target:
+      - .github/workflows/pylint.yml
+  pull_request:
     paths:
       - 'elkserver/docker/redelk-base/redelkinstalldata/scripts/**'
+      - .github/workflows/pylint.yml
 
 jobs:
   build:
