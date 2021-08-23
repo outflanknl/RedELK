@@ -47,7 +47,7 @@ curl -XPOST  $ES_URL/_security/role/redelk_ingest --cacert $CERTS_DIR_ES/ca/ca.c
   "cluster": ["monitor","cluster:admin/xpack/monitoring/bulk","manage_ilm"],
   "indices": [
     {
-      "names": ["rtops*","redirtraffic*","credentials-*","bluecheck-*","email-*","implantsdb","auditbeat*","filebeat*","packetbeat*","apm*","heartbeat*","nagioscheckbeat*","metricbeat*"],
+      "names": ["rtops*","redirtraffic*","credentials-*","bluecheck-*","email-*","implantsdb","auditbeat*","filebeat*","packetbeat*","apm*","heartbeat*","nagioscheckbeat*","metricbeat*",".monitor*"],
       "privileges": ["create","read","write","monitor","index","manage","delete","manage_ilm"]
     }
   ],

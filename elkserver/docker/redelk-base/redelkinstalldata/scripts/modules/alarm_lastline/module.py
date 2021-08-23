@@ -49,7 +49,7 @@ class Module():
     # pylint: disable=no-self-use
     def alarm_check(self):
         """ This check queries for IP's that aren't listed in any iplist* but do talk to c2* paths on redirectors """
-        es_query = "*"
+        es_query = '*'
         i = get_hits_count(es_query)
         i = min(i, 10000)
         es_result = get_query(es_query, i)

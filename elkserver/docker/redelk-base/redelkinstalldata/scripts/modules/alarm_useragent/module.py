@@ -46,10 +46,10 @@ class Module():
         self.logger.info('finished running module. result: %s hits', ret['hits']['total'])
         return ret
 
-    def alarm_check(self):
+    def alarm_check(self): # pylint: disable=no-self-use
         """ This check queries for UA's that are listed in any blacklist_useragents.conf and do talk to c2* paths on redirectors
         We will dig trough ALL data finding specific IP related lines and tag them reading the useragents we trigger on. """
-        file_name = "/etc/redelk/rogue_useragents.conf"
+        file_name = '/etc/redelk/rogue_useragents.conf'
         with open(file_name) as file:
             content = file.readlines()
         ua_list = []
@@ -57,16 +57,16 @@ class Module():
             if not line.startswith('#'):
                 ua_list.append(line.strip())
         keywords = ua_list
-        es_subquery = ""
+        es_subquery = ''
         # add keywords (UA's) to query
         for keyword in keywords:
-            if es_subquery == "":
-                es_subquery = "(http.headers.useragent:%s" % keyword
+            if es_subquery == '':
+                es_subquery = '(http.headers.useragent:%s' % keyword
             else:
-                es_subquery = es_subquery + " OR http.headers.useragent:%s" % keyword
-        es_subquery = es_subquery + ") "
+                es_subquery = es_subquery + ' OR http.headers.useragent:%s' % keyword
+        es_subquery = es_subquery + ') '
         # q = "%s AND redir.backendname:c2* AND tags:enrich_* AND NOT tags:alarm_* "%qSub
-        es_query = "%s AND redir.backend.name:c2* AND NOT tags:alarm_useragent" % es_subquery
+        es_query = '%s AND redir.backend.name:c2* AND NOT tags:alarm_useragent' % es_subquery
 
         es_results = get_query(es_query, 10000)
         report = {}

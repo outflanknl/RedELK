@@ -173,27 +173,27 @@ class Module():
     def get_last_es_data(self, ip_address):
         """ Get greynoise data from ES if less than 1 day old """
         es_query = {
-            "size": 1,
-            "sort": [{"@timestamp": {"order": "desc"}}],
-            "query": {
-                "bool": {
-                    "filter": [
+            'size': 1,
+            'sort': [{'@timestamp': {'order': 'desc'}}],
+            'query': {
+                'bool': {
+                    'filter': [
                         {
-                            "range":  {
-                                "greynoise.query_timestamp": {
-                                    "gte": "now-%ss" % self.cache,
-                                    "lte": "now"
+                            'range':  {
+                                'greynoise.query_timestamp': {
+                                    'gte': 'now-%ss' % self.cache,
+                                    'lte': 'now'
                                 }
                             }
                         },
                         {
-                            "term": {
-                                "tags": "enrich_greynoise"
+                            'term': {
+                                'tags': 'enrich_greynoise'
                             }
                         },
                         {
-                            "term": {
-                                "host.ip": ip_address
+                            'term': {
+                                'host.ip': ip_address
                             }
                         }
                     ]
@@ -208,7 +208,6 @@ class Module():
         # Return the latest hit or False if not found
         if es_results and len(es_results['hits']['hits']) > 0:
             return es_results['hits']['hits'][0]
-
         return False
 
     def add_greynoise_data(self, doc, data):

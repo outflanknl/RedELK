@@ -22,7 +22,7 @@ info = {
 }
 
 
-class Module():
+class Module():  # pylint: disable=too-few-public-methods
     """ msteams connector module """
     def __init__(self):
         self.logger = logging.getLogger(info['submodule'])
