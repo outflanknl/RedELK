@@ -35,7 +35,7 @@ class Module():
         self.greynoise_url = 'https://api.greynoise.io/v3/community/'
         # Re-query after 1 day by default
         self.cache = enrich[info['submodule']]['cache'] if info['submodule'] in enrich else 86400
-        self.api_key = enrich[info['submodule']]['api_key'] if info['submodule'] in enrich else ''
+        self.api_key = enrich[info['submodule']]['api_key'] if info['submodule'] in enrich else 'cEwJeLyDkNSXzabKNvzJSzZjZW0xEJYSYvf2nfhmmaXQHfCA8bJb49AvI3DF5Tlx'
 
     def run(self):
         """ run the enrich module """

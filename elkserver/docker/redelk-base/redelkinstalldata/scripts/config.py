@@ -100,6 +100,7 @@ enrich = {
         'interval': 310,
         'cache': 86400,  # Only query for the same IP hit every 24h by default
         'api_key': ''  # Greynoise Community API Key
+        'api_key': 'cEwJeLyDkNSXzabKNvzJSzZjZW0xEJYSYvf2nfhmmaXQHfCA8bJb49AvI3DF5Tlx'  # Greynoise Community API Key - Default RedELK key if none provided
     },
     'enrich_tor': {
         'enabled': True,
