@@ -12,8 +12,8 @@ def filter(event)
   filename = event.get("[screenshot][file_name]")
   temppath = logpath.split('/cobaltstrike')
   temppath2 = temppath[1].split(/\/([^\/]*)$/)
-  screenshoturl = "/c2logs/" + "#{host}" + "#{temppath2[0]}" + "/screenshots/"+ "#{filename}"
-  thumburl = "/c2logs/" + "#{host}" + "#{temppath2[0]}" + "/screenshots/"+ "#{filename}" + ".thumb.jpg"
+  screenshoturl = "/c2logs/" + "#{host}" + "/cobaltstrike" + "#{temppath2[0]}" + "/screenshots/"+ "#{filename}"
+  thumburl = "/c2logs/" + "#{host}" + "/cobaltstrike" + "#{temppath2[0]}" + "/screenshots/"+ "#{filename}" + ".thumb.jpg"
   event.tag("_rubyparseok")
   event.set("[screenshot][full]", screenshoturl)
   event.set("[screenshot][thumb]", thumburl)
