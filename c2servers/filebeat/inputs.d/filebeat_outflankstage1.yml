@@ -1,0 +1,179 @@
+filebeat.inputs:
+- type: log
+  scan_frequency: 5s
+  enabled: true
+  fields_under_root: true
+  paths:
+    - /root/stage1c2server/shared/logs/main.log
+  fields:
+    infra:
+      attack_scenario: @@ATTACKSCENARIO@@
+      log:
+        type: rtops
+    c2:
+      program: stage1
+      log:
+        type: events
+
+- type: log
+  scan_frequency: 5s
+  enabled: true
+  fields_under_root: true
+  paths:
+    - /root/stage1c2server/shared/logs/stage1/*.log
+  multiline.pattern: '^\d\d\d\d\-\d\d\-\d\d\s\d\d\:\d\d\:\d\d\sUTC\s' # match "2020-04-26 19:49:03 UTC
+  multiline.negate: true
+  multiline.match: after
+  fields:
+    infra:
+      attack_scenario: @@ATTACKSCENARIO@@
+      log:
+        type: rtops
+    c2:
+      program: stage1
+      log:
+        type: implant
+
+- type: log
+  scan_frequency: 5s
+  enabled: true
+  fields_under_root: true
+  paths:
+    - /root/cobaltstrike/logs/*/events.log
+  fields:
+    infra:
+      attack_scenario: @@ATTACKSCENARIO@@
+      log:
+        type: rtops
+    c2:
+      program: cobaltstrike
+      log:
+        type: events
+
+- type: log
+  scan_frequency: 5s
+  enabled: true
+  fields_under_root: true
+  paths:
+    - /root/cobaltstrike/logs/*/weblog*
+  fields:
+    infra:
+      attack_scenario: @@ATTACKSCENARIO@@
+      log:
+        type: rtops
+    c2:
+      program: cobaltstrike
+      log:
+        type: weblog
+
+- type: log
+  scan_frequency: 5s
+  enabled: true
+  fields_under_root: true
+  paths:
+    - /root/cobaltstrike/logs/*/downloads.log
+  fields:
+    infra:
+      attack_scenario: @@ATTACKSCENARIO@@
+      log:
+        type: rtops
+    c2:
+      program: cobaltstrike
+      log:
+        type: downloads
+
+- type: log
+  scan_frequency: 5s
+  enabled: true
+  fields_under_root: true
+  paths:
+    - /root/cobaltstrike/data/export_credentials.tsv
+  fields:
+    infra:
+      attack_scenario: @@ATTACKSCENARIO@@
+      log:
+        type: rtops
+    c2:
+      program: cobaltstrike
+      log:
+        type: credentials
+
+
+- type: log
+  scan_frequency: 5s
+  enabled: true
+  fields_under_root: true
+  paths:
+    - /root/cobaltstrike/logs/*/*/beacon_*.log
+    - /root/cobaltstrike/logs/*/*/ssh_*.log
+  # Since Cobalt Strike version 3.14 the time format in the logs is changed. Here we use regex 'or' function (expr1)|(expr2) to match new or old format
+  multiline.pattern: '(^\d\d\/\d\d\s\d\d\:\d\d\:\d\d\sUTC\s\[)|(^\d\d\/\d\d\s\d\d\:\d\d\:\d\d\s\[)' # match "06/19 12:32:56 UTC [" or "06/19 12:32:56 ["
+  multiline.negate: true
+  multiline.match: after
+  multiline.max_lines: 100000
+  fields:
+    infra:
+      attack_scenario: @@ATTACKSCENARIO@@
+      log:
+        type: rtops
+    c2:
+      program: cobaltstrike
+      log:
+        type: beacon
+
+- type: log
+  scan_frequency: 5s
+  enabled: true
+  fields_under_root: true
+  paths:
+    - /root/cobaltstrike/logs/*/*/keystrokes/keystrokes_*.txt
+  # Since Cobalt Strike version 3.14 the time format in the logs is changed. Here we use regex 'or' function (expr1)|(expr2) to match new or old format
+  multiline.pattern: '(^\d\d\/\d\d\s\d\d\:\d\d\:\d\d\sUTC\s\[)|(^\d\d\/\d\d\s\d\d\:\d\d\:\d\d\s\[)' # match "06/19 12:32:56 UTC [" or "06/19 12:32:56 ["
+  multiline.negate: true
+  multiline.match: after
+  multiline.max_lines: 100000
+  fields:
+    infra:
+      attack_scenario: @@ATTACKSCENARIO@@
+      log:
+        type: rtops
+    c2:
+      program: cobaltstrike
+      log:
+        type: keystrokes
+
+- type: log
+  scan_frequency: 5s
+  enabled: true
+  fields_under_root: true
+  paths:
+    - /root/cobaltstrike/logs/*/*/screenshots.log
+  # Since Cobalt Strike version 3.14 the time format in the logs is changed. Here we use regex 'or' function (expr1)|(expr2) to match new or old format
+  multiline.pattern: '(^\d\d\/\d\d\s\d\d\:\d\d\:\d\d\sUTC\s\[)|(^\d\d\/\d\d\s\d\d\:\d\d\:\d\d\s\[)' # match "06/19 12:32:56 UTC [" or "06/19 12:32:56 ["
+  multiline.negate: true
+  multiline.match: after
+  multiline.max_lines: 100000
+  fields:
+    infra:
+      attack_scenario: @@ATTACKSCENARIO@@
+      log:
+        type: rtops
+    c2:
+      program: cobaltstrike
+      log:
+        type: screenshots
+
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: false
+
+setup.template.settings:
+  index.number_of_shards: 3
+
+name: "@@HOSTNAME@@"
+fields_under_root: true
+harvester.limit: 1
+
+output.logstash:
+  hosts: ["@@HOSTANDPORT@@"]
+  ssl.certificate_authorities: ["/etc/filebeat/redelkCA.crt"]

@@ -1,0 +1,14 @@
+#
+# Part of RedELK
+# cron.d script for periodic actions related to RedELK and Outflank Stage1
+#
+# Author: Outflank B.V. / Marc Smeets
+#
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+# Command to sync the logs from Stage1 to our scponly user's home directory
+# m h dom mon dow user  command
+* * * * * root /usr/bin/rsync -ax --delete /root/stage1/shared/logs /home/scponly/stage1/; /bin/chown -R scponly:scponly /home/scponly/stage1/*
+* * * * * root /usr/share/redelk/bin/copydownloads_outflankstage1.sh
