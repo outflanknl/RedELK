@@ -13,9 +13,6 @@ setup.template.settings:
 
 name: "@@HOSTNAME@@"
 fields_under_root: true
-fields:
-  infra:
-    attack_scenario: @@ATTACKSCENARIO@@
 harvester.limit: 1
 
 output.logstash:
