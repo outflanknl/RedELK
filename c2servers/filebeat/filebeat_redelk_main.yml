@@ -1,0 +1,23 @@
+filebeat.config.inputs:
+  enabled: true
+  path: inputs.d/*.yml
+  reload.enabled: true
+  reload.period: 10s
+
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: false
+
+setup.template.settings:
+  index.number_of_shards: 3
+
+name: "@@HOSTNAME@@"
+fields_under_root: true
+fields:
+  infra:
+    attack_scenario: @@ATTACKSCENARIO@@
+harvester.limit: 1
+
+output.logstash:
+  hosts: ["@@HOSTANDPORT@@"]
+  ssl.certificate_authorities: ["/etc/filebeat/redelkCA.crt"]
