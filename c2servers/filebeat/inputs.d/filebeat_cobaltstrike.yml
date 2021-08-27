@@ -7,6 +7,7 @@ filebeat.inputs:
     - /root/cobaltstrike/logs/*/events.log
   fields:
     infra:
+      attack_scenario: @@ATTACKSCENARIO@@
       log:
         type: rtops
     c2:
@@ -22,6 +23,7 @@ filebeat.inputs:
     - /root/cobaltstrike/logs/*/weblog*
   fields:
     infra:
+      attack_scenario: @@ATTACKSCENARIO@@
       log:
         type: rtops
     c2:
@@ -37,6 +39,7 @@ filebeat.inputs:
     - /root/cobaltstrike/logs/*/downloads.log
   fields:
     infra:
+      attack_scenario: @@ATTACKSCENARIO@@
       log:
         type: rtops
     c2:
@@ -52,6 +55,7 @@ filebeat.inputs:
     - /root/cobaltstrike/data/export_credentials.tsv
   fields:
     infra:
+      attack_scenario: @@ATTACKSCENARIO@@
       log:
         type: rtops
     c2:
@@ -74,6 +78,7 @@ filebeat.inputs:
   multiline.max_lines: 100000
   fields:
     infra:
+      attack_scenario: @@ATTACKSCENARIO@@
       log:
         type: rtops
     c2:
@@ -94,6 +99,7 @@ filebeat.inputs:
   multiline.max_lines: 100000
   fields:
     infra:
+      attack_scenario: @@ATTACKSCENARIO@@
       log:
         type: rtops
     c2:
@@ -114,28 +120,10 @@ filebeat.inputs:
   multiline.max_lines: 100000
   fields:
     infra:
+      attack_scenario: @@ATTACKSCENARIO@@
       log:
         type: rtops
     c2:
       program: cobaltstrike
       log:
         type: screenshots
-
-
-filebeat.config.modules:
-  path: ${path.config}/modules.d/*.yml
-  reload.enabled: false
-
-setup.template.settings:
-  index.number_of_shards: 3
-
-name: "@@HOSTNAME@@"
-fields_under_root: true
-fields:
-  infra:
-    attack_scenario: @@ATTACKSCENARIO@@
-harvester.limit: 1
-
-output.logstash:
-  hosts: ["@@HOSTANDPORT@@"]
-  ssl.certificate_authorities: ["/etc/filebeat/redelkCA.crt"]

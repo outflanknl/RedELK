@@ -151,18 +151,18 @@ if [ $ERROR -ne 0 ]; then
     echoerror "[X] Could not copy ca file (Error Code: $ERROR)."
 fi
 
-echo "[*] Altering hostname field in filebeat config" | tee -a $LOGFILE
+echo "[*] Altering hostname field in filebeat configx" | tee -a $LOGFILE
 sed -i s/'@@HOSTNAME@@'/$1/g /etc/filebeat/filebeat.yml  >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echoerror "[X] Could not change hostname field in filebeat config (Error Code: $ERROR)."
 fi
 
-echo "[*] Altering attackscenario field in filebeat config" | tee -a $LOGFILE
-sed -i s/'@@ATTACKSCENARIO@@'/$2/g /etc/filebeat/filebeat.yml >> $LOGFILE 2>&1
+echo "[*] Altering attackscenario field in filebeat C2 config files" | tee -a $LOGFILE
+sed -i s/'@@ATTACKSCENARIO@@'/$2/g /etc/filebeat/inputs.d/*.yml >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "[X] Could not change attackscenario field in filebeat config (Error Code: $ERROR)."
+    echoerror "[X] Could not change attackscenario field in filebeat C2 config files (Error Code: $ERROR)."
 fi
 
 echo "[*] Altering log destination field in filebeat config" | tee -a $LOGFILE
