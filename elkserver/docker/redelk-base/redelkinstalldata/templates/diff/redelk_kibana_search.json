@@ -3,6 +3,7 @@
         "attributes": {
             "columns": [
                 "infra.attack_scenario",
+                "agent.hostname",
                 "redir.backend.name",
                 "source.ip",
                 "source.domain",

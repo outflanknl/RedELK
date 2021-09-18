@@ -1,7 +1,7 @@
 [
     {
         "attributes": {
-            "fieldFormatMap": "{\"@timestamp\":{\"id\":\"date\",\"params\":{\"parsedUrl\":{\"basePath\":\"\"},\"pattern\":\"MMM D Y, HH:mm:ss\"}},\"event.url\":{\"id\":\"url\",\"params\":{\"parsedUrl\":{\"pathname\":\"/app/kibana\",\"basePath\":\"\"},\"urlTemplate\":\"/../..{{rawValue}}\",\"labelTemplate\":\"Event  URL\"}},\"file.url\":{\"id\":\"url\",\"params\":{\"parsedUrl\":{\"pathname\":\"/app/kibana\",\"basePath\":\"/\"},\"urlTemplate\":\"/../..{{rawValue}}\",\"labelTemplate\":\"File download\"}},\"implant.log_file\":{\"id\":\"url\",\"params\":{\"parsedUrl\":{\"pathname\":\"/app/kibana\",\"basePath\":\"\"},\"urlTemplate\":\"/../..{{rawValue}}\",\"labelTemplate\":\"Implant URL\"}},\"keystrokes.url\":{\"id\":\"url\",\"params\":{\"parsedUrl\":{\"pathname\":\"/app/kibana\",\"basePath\":\"\"},\"urlTemplate\":\"/../..{{rawValue}}\",\"labelTemplate\":\"Full keystrokes\"}},\"screenshot.full\":{\"id\":\"url\",\"params\":{\"parsedUrl\":{\"pathname\":\"/app/kibana\",\"basePath\":\"\"},\"urlTemplate\":\"/../..{{rawValue}}\",\"labelTemplate\":\"Full screenshot\"}},\"screenshot.thumb\":{\"id\":\"url\",\"params\":{\"parsedUrl\":{\"pathname\":\"/app/kibana\",\"basePath\":\"\"},\"type\":\"img\",\"urlTemplate\":\"/../..{{rawValue}}\"}}}",
+            "fieldFormatMap": "{\"@timestamp\":{\"id\":\"date\",\"params\":{\"parsedUrl\":{\"basePath\":\"\"},\"pattern\":\"MMM D Y, HH:mm:ss\"}},\"event.url\":{\"id\":\"url\",\"params\":{\"parsedUrl\":{\"pathname\":\"/app/kibana\",\"basePath\":\"\"},\"urlTemplate\":\"/../..{{rawValue}}\",\"labelTemplate\":\"Event  URL\"}},\"file.url\":{\"id\":\"url\",\"params\":{\"parsedUrl\":{\"pathname\":\"/app/kibana\",\"basePath\":\"/\"},\"urlTemplate\":\"/../..{{rawValue}}\",\"labelTemplate\":\"File download\"}},\"implant.log_file\":{\"id\":\"url\",\"params\":{\"parsedUrl\":{\"pathname\":\"/app/kibana\",\"basePath\":\"\"},\"urlTemplate\":\"/../..{{rawValue}}\",\"labelTemplate\":\"Implant URL\"}},\"keystrokes.url\":{\"id\":\"url\",\"params\":{\"parsedUrl\":{\"pathname\":\"/app/kibana\",\"basePath\":\"\"},\"urlTemplate\":\"/../..{{rawValue}}\",\"labelTemplate\":\"Full keystrokes\"}},\"screenshot.full\":{\"id\":\"url\",\"params\":{\"parsedUrl\":{\"pathname\":\"/app/kibana\",\"basePath\":\"\"},\"urlTemplate\":\"/../..{{rawValue}}\",\"labelTemplate\":\"Full screenshot\"}},\"screenshot.thumb\":{\"id\":\"url\",\"params\":{\"parsedUrl\":{\"pathname\":\"/app/kibana\",\"basePath\":\"\"},\"type\":\"img\",\"urlTemplate\":\"/../..{{rawValue}}\"}},\"implant.url\":{\"id\":\"url\",\"params\":{\"parsedUrl\":{\"pathname\":\"/app/kibana\",\"basePath\":\"\"},\"urlTemplate\":\"/../..{{rawValue}}\",\"labelTemplate\":\"Implant URL\"}}}",
             "fields": [
                 {
                     "aggregatable": true,
@@ -1205,7 +1205,7 @@
                 },
                 {
                     "aggregatable": true,
-                    "count": 0,
+                    "count": 1,
                     "esTypes": [
                         "keyword"
                     ],
