@@ -9,7 +9,7 @@
 
 LOGFILE="/var/log/redelk/copydownloads.log"
 
-mkdir -p /home/scponly/downloads >> $LOGFILE 2>&1
+mkdir -p /home/scponly/stage1/downloads >> $LOGFILE 2>&1
 
 echo "`date` ######## Start downloads copy" >> $LOGFILE 2>&1
 
