@@ -86,7 +86,7 @@ class VT():
                 vt_result = self.get_vt_file_results(md5)
 
                 if vt_result is not None:
-                    if vt_result is isinstance({}) and 'data' in vt_result:
+                    if isinstance(vt_result, type({})) and 'data' in vt_result:
 
                         # Get first submission date
                         first_submitted_ts = get_value('data.attributes.first_submission_date', vt_result, None)
