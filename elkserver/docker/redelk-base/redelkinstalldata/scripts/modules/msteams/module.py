@@ -32,7 +32,7 @@ class Module():  # pylint: disable=too-few-public-methods
         tmsg = pymsteams.connectorcard(config.notifications['msteams']['webhook_url'])
         description = alarm['info']['description']
         if len(alarm['groupby']) > 0:
-            description += '\n *Please note that the items below have been grouped by: %s*' % pprint(alarm['groupby'])
+            description += f'\n *Please note that the items below have been grouped by: {pprint(alarm["groupby"])}*'
         tmsg.text(description)
         tmsg.color('red')
         try:
@@ -42,20 +42,21 @@ class Module():  # pylint: disable=too-few-public-methods
                 i = 0
                 title = hit['_id']
                 while i < len(alarm['groupby']):
+                    val = get_value(f'_source.{alarm["groupby"][i]}', hit)
                     if i == 0:
-                        title = get_value('_source.%s' % alarm['groupby'][i], hit)
+                        title = val
                     else:
-                        title = '%s / %s' % (title, get_value('_source.%s' % alarm['groupby'][i], hit))
+                        title = f'{title} / {val}'
                     i += 1
-                tcs.activityTitle('Alarm on item: %s' % title)
+                tcs.activityTitle(f'Alarm on item: {title}')
                 # tcs.activitySubtitle(alarm['info']['description'])
                 for field in alarm['fields']:
-                    val = get_value('_source.%s' % field, hit)
+                    val = get_value(f'_source.{field}', hit)
                     tcs.addFact(field, pprint(val))
                 tmsg.addSection(tcs)
         # pylint: disable=broad-except
         except Exception as error:
             self.logger.exception(error)
 
-        tmsg.title('Alarm from %s [%s hits]' % (alarm['info']['name'], alarm['hits']['total']))
+        tmsg.title(f'Alarm from {alarm["info"]["name"]} [{alarm["hits"]["total"]} hits]')
         tmsg.send()

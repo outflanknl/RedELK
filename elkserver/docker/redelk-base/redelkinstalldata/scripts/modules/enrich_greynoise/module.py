@@ -95,7 +95,7 @@ class Module():
         hits = []
         # For each IP, get the greynoise data
         # pylint: disable=invalid-name
-        for ip in ips:
+        for ip, ip_val in ips.items():
             # Get data from redirtraffic if within interval
             last_es_data = self.get_last_es_data(ip)
 
@@ -108,7 +108,7 @@ class Module():
             if not greynoise_data:
                 continue
 
-            for doc in ips[ip]:
+            for doc in ip_val:
                 # Fields to copy: greynoise.*
                 es_result = self.add_greynoise_data(doc, greynoise_data)
                 if es_result:
@@ -181,7 +181,7 @@ class Module():
                         {
                             'range':  {
                                 'greynoise.query_timestamp': {
-                                    'gte': 'now-%ss' % self.cache,
+                                    'gte': f'now-{self.cache}s',
                                     'lte': 'now'
                                 }
                             }

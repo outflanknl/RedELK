@@ -76,7 +76,7 @@ class Module():
             iplist_es = []
             for ip in iplist_tor:  # pylint: disable=invalid-name
                 if ip != '':
-                    iplist_es.append('%s/32' % ip)
+                    iplist_es.append(f'{ip}/32')
 
             # 2. Delete existing nodes
             es.delete_by_query(index='redelk-*', body={'query': {'bool': {'filter': {'term': {'iplist.name': 'tor'}}}}})

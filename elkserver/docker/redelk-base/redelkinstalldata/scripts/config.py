@@ -12,7 +12,7 @@ Authors:
 import json
 import logging
 
-with open('/etc/redelk/config.json') as json_data:
+with open('/etc/redelk/config.json', encoding='utf-8') as json_data:
     # pylint: disable=invalid-name
     data = json.load(json_data)
 

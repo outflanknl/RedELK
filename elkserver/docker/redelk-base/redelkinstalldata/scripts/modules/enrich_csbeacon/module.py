@@ -47,7 +47,7 @@ class Module():
 
     def enrich_beacon_data(self):
         """ Get all lines in rtops that have not been enriched yet (for CS) """
-        es_query = 'implant.id:* AND c2.program: cobaltstrike AND NOT c2.log.type:implant_newimplant AND NOT tags:%s' % info['submodule']
+        es_query = f'implant.id:* AND c2.program: cobaltstrike AND NOT c2.log.type:implant_newimplant AND NOT tags:{info["submodule"]}'
         not_enriched_results = get_query(es_query, size=10000, index='rtops-*')
 
         # Created a dict grouped by implant ID
@@ -61,14 +61,14 @@ class Module():
 
         hits = []
         # For each implant ID, get the initial beacon line
-        for implant_id in implant_ids:
+        for implant_id, implant_val in implant_ids.items():
             initial_beacon_doc = self.get_initial_beacon_doc(implant_id)
 
             # If not initial beacon line found, skip the beacon ID
             if not initial_beacon_doc:
                 continue
 
-            for doc in implant_ids[implant_id]:
+            for doc in implant_val:
                 # Fields to copy: host.*, implant.*, process.*, user.*
                 res = self.copy_data_fields(initial_beacon_doc, doc, ['host', 'implant', 'user', 'process'])
                 if res:
@@ -78,7 +78,7 @@ class Module():
 
     def get_initial_beacon_doc(self, implant_id):
         """ Get the initial beacon document from cobaltstrike or return False if none found """
-        query = 'implant.id:%s AND c2.program: cobaltstrike AND c2.log.type:implant_newimplant' % implant_id
+        query = f'implant.id:{implant_id} AND c2.program: cobaltstrike AND c2.log.type:implant_newimplant'
         initial_beacon_doc = get_query(query, size=1, index='rtops-*')
         initial_beacon_doc = initial_beacon_doc[0] if len(initial_beacon_doc) > 0 else False
         self.logger.debug('Initial beacon line [%s]: %s', implant_id, initial_beacon_doc)

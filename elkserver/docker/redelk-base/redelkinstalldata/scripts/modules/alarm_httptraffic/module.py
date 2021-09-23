@@ -130,10 +130,10 @@ class Module():
 
         # Now we check if the IPs have already been alarmed in the past timeframe defined in the config
         # pylint: disable=invalid-name
-        for ip in ips:
+        for ip, ip_val in ips.items():
             # Not alarmed yet, process it
             if ip not in alarmed_ips:
-                hits += ips[ip]
+                hits += ip_val
 
         # Return the array of new IP documents to be alarmed
         return hits

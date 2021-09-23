@@ -87,7 +87,7 @@ def add_tags_by_query(tags, query, index='redirtraffic-*'):
 
     update_q = {
         'script': {
-            'source': 'ctx._source.tags.add([%s])' % tags_string,
+            'source': f'ctx._source.tags.add([{tags_string}])',
             'lang': 'painless'
         },
         'query': query
@@ -133,11 +133,11 @@ def set_checked_date(doc):
 def group_hits(hits, groupby, res=None):
     """ Takes a list of hits and a list of field names (dot notation) and returns a grouped list """
     if len(groupby) > 0:
-        hits_list = dict()
+        hits_list = {}
         # First time in the loop
         if res is None:
             for hit in hits:
-                value = get_value('_source.%s' % groupby[0], hit)
+                value = get_value(f'_source.{groupby[0]}', hit)
                 if value in hits_list:
                     hits_list[value].append(hit)
                 else:
@@ -145,8 +145,8 @@ def group_hits(hits, groupby, res=None):
         else:
             for key, val in res.items():
                 for hit in val:
-                    value = get_value('_source.%s' % groupby[0], hit)
-                    tmp_key = '%s / %s' % (key, value)
+                    value = get_value(f'_source.{groupby[0]}', hit)
+                    tmp_key = f'{key} / {value}'
                     if tmp_key in hits_list:
                         hits_list[tmp_key].append(hit)
                     else:

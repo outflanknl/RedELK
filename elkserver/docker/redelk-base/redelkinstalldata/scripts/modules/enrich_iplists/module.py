@@ -119,7 +119,7 @@ class Module():
         # 1. Loop through each IP list
         for iplist_name in ip_lists:
             ip_match = []
-            iplist_tag = 'iplist_%s' % iplist_name
+            iplist_tag = f'iplist_{iplist_name}'
 
             #  pylint: disable=invalid-name
             for ip in ip_lists[iplist_name]:
