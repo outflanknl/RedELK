@@ -51,7 +51,7 @@ class Module():
     # pylint: disable=no-self-use
     def alarm_check(self):
         """ This check queries for calls to backends that have *alarm* in their name """
-        es_query = 'redir.backend.name:*alarm* AND NOT tags:%s' % (info['submodule'])
+        es_query = f'redir.backend.name:*alarm* AND NOT tags:{info["submodule"]}'
         es_results = get_query(es_query, 10000)
         report = {
             'hits': es_results

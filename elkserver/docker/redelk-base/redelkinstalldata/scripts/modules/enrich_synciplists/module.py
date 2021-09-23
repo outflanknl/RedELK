@@ -63,7 +63,7 @@ class Module():
             return []
 
         # Get data from ES iplist
-        query = 'iplist.name:%s' % iplist
+        query = f'iplist.name:{iplist}'
         es_iplist_docs = get_query(query, size=10000, index='redelk-*')
 
         # Check if config IP is in ES and source = config_file
@@ -93,9 +93,9 @@ class Module():
                     # if not, add it
                     comment = get_value('_source.iplist.comment', doc)
                     if comment:
-                        ipa = '%s # From ES -- %s' % (ipe, comment)
+                        ipa = f'{ipe} # From ES -- {comment}'
                     else:
-                        ipa = '%s # From ES' % ipe
+                        ipa = f'{ipe} # From ES'
                     toadd.append(ipa)
 
         self.add_cfg_ips(toadd, iplist)
@@ -106,14 +106,14 @@ class Module():
         """ Gets the list of IPs present in the config file """
         cfg_iplist = []
 
-        fname = '/etc/redelk/iplist_%s.conf' % iplist
+        fname = f'/etc/redelk/iplist_{iplist}.conf'
 
         # Check first if the local config file exists; if not, skip the sync
         if not os.path.isfile(fname):
             self.logger.warning('File %s doesn\'t exist, skipping IP list sync for this one.', fname)
             return None
 
-        with open(fname, 'r') as config_file:
+        with open(fname, 'r', encoding='utf-8') as config_file:
             content = config_file.readlines()
 
         for line in content:
@@ -123,17 +123,17 @@ class Module():
             else:
                 ip_match = re.match(IP_RE, line)
                 if ip_match:
-                    cfg_iplist.append(('%s/32' % ip_match.group(1), ip_match.group(len(ip_match.groups()))))
+                    cfg_iplist.append((f'{ip_match.group(1)}/32', ip_match.group(len(ip_match.groups()))))
 
         return cfg_iplist
 
     def add_cfg_ips(self, toadd, iplist):
         """ Add IPs to cfg file """
         try:
-            fname = '/etc/redelk/iplist_%s.conf' % iplist
-            with open(fname, 'a') as config_file:
+            fname = f'/etc/redelk/iplist_{iplist}.conf'
+            with open(fname, 'a', encoding='utf-8') as config_file:
                 for ipl in toadd:
-                    config_file.write('%s\n' % ipl)
+                    config_file.write(f'{ipl}\n')
         except Exception as error:  # pylint: disable=broad-except
             self.logger.error('Failed to update %s: %s', fname, error)
             self.logger.exception(error)
@@ -155,7 +155,7 @@ class Module():
             if comment:
                 doc['iplist']['comment'] = comment
 
-            index = 'redelk-iplist-%s' % iplist
+            index = f'redelk-iplist-{iplist}'
             es.index(index=index, body=doc)
 
         except Exception as error:  # pylint: disable=broad-except
@@ -166,7 +166,7 @@ class Module():
     def remove_es_ip(self, doc, iplist):
         """ Remove IP from ES IP list """
         try:
-            index = 'redelk-iplist-%s' % iplist
+            index = f'redelk-iplist-{iplist}'
             es.delete(index=index, id=doc['_id'])
 
         except Exception as error:  # pylint: disable=broad-except

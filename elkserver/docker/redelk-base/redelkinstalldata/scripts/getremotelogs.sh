@@ -21,8 +21,5 @@ fi
 mkdir -p /var/www/html/c2logs/"$2" >> $LOGFILE 2>&1
 
 echo "$(date) ######## Start of rsync to $1" >> $LOGFILE 2>&1
-rsync -axv -e 'ssh -p '"${4:-22}"' -o "StrictHostKeyChecking=no" -i /home/redelk/.ssh/id_rsa' "$3"@"$1":${5:-"~"}/logs /var/www/html/c2logs/"$2" >> $LOGFILE 2>&1
-rsync -axv -e 'ssh -p '"${4:-22}"' -o "StrictHostKeyChecking=no" -i /home/redelk/.ssh/id_rsa' "$3"@"$1":${5:-"~"}/downloads /var/www/html/c2logs/"$2" >> $LOGFILE 2>&1
-rsync -axv -e 'ssh -p '"${4:-22}"' -o "StrictHostKeyChecking=no" -i /home/redelk/.ssh/id_rsa' "$3"@"$1":${5:-"~"}/profiles /var/www/html/c2logs/"$2" >> $LOGFILE 2>&1
-rsync -axv -e 'ssh -p '"${4:-22}"' -o "StrictHostKeyChecking=no" -i /home/redelk/.ssh/id_rsa' "$3"@"$1":${5:-"~"}/data /var/www/html/c2logs/"$2" >> $LOGFILE 2>&1
+rsync -rxv -e 'ssh -p '"${4:-22}"' -o "StrictHostKeyChecking=no" -i /home/redelk/.ssh/id_rsa' "$3"@"$1":${5:-"~"}/ /var/www/html/c2logs/"$2" >> $LOGFILE 2>&1
 echo "$(date) ######## Done with rsync" >> $LOGFILE 2>&1

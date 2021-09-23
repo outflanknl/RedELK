@@ -31,8 +31,7 @@ def load_modules():
         # only take folders and not '__pycache__'
         if os.path.isdir(os.path.join(MODULES_PATH, module_name)) and module_name != '__pycache__':
             try:
-                module = importlib.import_module(
-                    'modules.%s.%s' % (module_name, 'module'))
+                module = importlib.import_module(f'modules.{module_name}.module')
                 if (hasattr(module, 'info') and hasattr(module, 'Module')):
                     module_type = module.info.get('type', None)
                     if module_type == 'redelk_alarm':
@@ -73,11 +72,11 @@ def run_enrichments(enrich_dict):
                     set_tags(enrich_dict[enrich_module]['info']['submodule'], [hit])
 
                 hits = len(enrich_dict[enrich_module]['result']['hits']['hits'])
-                module_did_run(enrich_module, 'enrich', 'success', 'Enriched %s documents' % hits, hits)
+                module_did_run(enrich_module, 'enrich', 'success', f'Enriched {hits} documents', hits)
                 enrich_dict[enrich_module]['status'] = 'success'
             # pylint: disable=broad-except
             except Exception as err:
-                msg = 'Error running enrichment %s: %s' % (enrich_module, err)
+                msg = f'Error running enrichment {enrich_module}: {err}'
                 logger.error(msg)
                 logger.exception(err)
                 module_did_run(enrich_module, 'enrich', 'error', msg)
@@ -96,11 +95,11 @@ def run_alarms(alarm_dict):
                 logger.debug('[a] Running Run() from the Module class in %s', alarm_module)
                 alarm_dict[alarm_module]['result'] = copy.deepcopy(module_class.run())
                 hits = len(alarm_dict[alarm_module]['result']['hits']['hits'])
-                module_did_run(alarm_module, 'alarm', 'success', 'Found %s documents to alarm' % hits, hits)
+                module_did_run(alarm_module, 'alarm', 'success', f'Found {hits} documents to alarm', hits)
                 alarm_dict[alarm_module]['status'] = 'success'
             # pylint: disable=broad-except
             except Exception as error:
-                msg = 'Error running alarm %s: %s' % (alarm_module, error)
+                msg = f'Error running alarm {alarm_module}: {error}'
                 logger.error(msg)
                 logger.exception(error)
                 module_did_run(alarm_module, 'alarm', 'error', msg)

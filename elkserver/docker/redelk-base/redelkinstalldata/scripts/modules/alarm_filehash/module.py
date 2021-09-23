@@ -63,7 +63,7 @@ class Module():
                     'filter': {
                         'range': {
                             'alarm.last_checked': {
-                                'gte': 'now-%ds' % self.interval,
+                                'gte': f'now-{self.interval}s',
                                 'lt': 'now'
                             }
                         }
