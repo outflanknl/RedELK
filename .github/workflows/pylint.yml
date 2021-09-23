@@ -29,4 +29,5 @@ jobs:
         pip install -r elkserver/docker/redelk-base/redelkinstalldata/scripts/requirements.txt
     - name: Analysing the code with pylint
       run: |
+        echo "PWD: $(PWD)";
         find elkserver/docker/redelk-base/redelkinstalldata/scripts -not -path '*/Chameleon/*' -name '*.py' -print0 | xargs -0 -i sh -c 'echo pylint {}; PYLINTRC=$(pwd)/elkserver/docker/redelk-base/redelkinstalldata/scripts/.pylintrc pylint {}'
