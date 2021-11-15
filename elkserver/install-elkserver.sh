@@ -351,7 +351,7 @@ fi
 
 # check if we need to create a kibana system user account
 if (grep "{{CREDS_kibana_system}}" $DOCKERENVFILE > /dev/null); then
-    CREDS_kibana_system=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
+    CREDS_kibana_system=$(< /dev/urandom tr -dc _A-Za-z0-9 | head -c32)
     echo "[*] Setting kibana_system ES password" | tee -a $LOGFILE
     sed -E -i.bak "s/\{\{CREDS_kibana_system\}\}/${CREDS_kibana_system}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
     ERROR=$?
@@ -366,7 +366,7 @@ fi
 
 # check if we need to create a logstash system user account
 if (grep "{{CREDS_logstash_system}}" $DOCKERENVFILE > /dev/null); then
-    CREDS_logstash_system=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
+    CREDS_logstash_system=$(< /dev/urandom tr -dc _A-Za-z0-9 | head -c32)
     echo "[*] Setting logstash_system ES password" | tee -a $LOGFILE
     sed -E -i.bak "s/\{\{CREDS_logstash_system\}\}/${CREDS_logstash_system}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
     ERROR=$?
@@ -380,7 +380,7 @@ fi
 
 # check if we need to create a redelk ingest account
 if (grep "{{CREDS_redelk_ingest}}" $DOCKERENVFILE > /dev/null); then
-    CREDS_redelk_ingest=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
+    CREDS_redelk_ingest=$(< /dev/urandom tr -dc _A-Za-z0-9 | head -c32)
     echo "[*] Setting redelk_ingest ES password" | tee -a $LOGFILE
     sed -E -i.bak "s/\{\{CREDS_redelk_ingest\}\}/${CREDS_redelk_ingest}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
     ERROR=$?
@@ -394,7 +394,7 @@ fi
 
 # check if we need to create a redelk user account
 if (grep "{{CREDS_redelk}}" $DOCKERENVFILE > /dev/null); then
-    CREDS_redelk=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
+    CREDS_redelk=$(< /dev/urandom tr -dc _A-Za-z0-9 | head -c32)
 
     echo "[*] Setting redelk password in elasticsearch" | tee -a $LOGFILE
     sed -E -i.bak "s/\{\{CREDS_redelk\}\}/${CREDS_redelk}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
@@ -416,7 +416,7 @@ fi
 
 # check if we need to create a elastic user password
 if (grep "{{ELASTIC_PASSWORD}}" $DOCKERENVFILE > /dev/null); then
-    ELASTIC_PASSWORD=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
+    ELASTIC_PASSWORD=$(< /dev/urandom tr -dc _A-Za-z0-9 | head -c32)
 
     echo "[*] Setting elastic ES password in Docker template" | tee -a $LOGFILE
     sed -E -i.bak "s/\{\{ELASTIC_PASSWORD\}\}/${ELASTIC_PASSWORD}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
@@ -439,7 +439,7 @@ fi
 
 # check if we need to create the kibana encryption key
 if (grep "{{KBN_XPACK_ENCRYPTEDSAVEDOBJECTS}}" $DOCKERENVFILE > /dev/null); then
-    KBN_XPACK_ENCRYPTEDSAVEDOBJECTS=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
+    KBN_XPACK_ENCRYPTEDSAVEDOBJECTS=$(< /dev/urandom tr -dc _A-Za-z0-9 | head -c32)
     echo "[*] Setting Kibana encryption key" | tee -a $LOGFILE
     sed -E -i.bak "s/\{\{KBN_XPACK_ENCRYPTEDSAVEDOBJECTS\}\}/${KBN_XPACK_ENCRYPTEDSAVEDOBJECTS}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
     ERROR=$?
@@ -469,7 +469,7 @@ if [ ${WHATTOINSTALL} = "full" ]; then
 
     # check if Neo4J password is already generated
     if (grep "{{NEO4J_PASSWORD}}" $DOCKERENVFILE > /dev/null); then
-        NEO4J_PASSWORD=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
+        NEO4J_PASSWORD=$(< /dev/urandom tr -dc _A-Za-z0-9 | head -c32)
 
         echo "[*] Setting neo4j password" | tee -a $LOGFILE
         sed -E -i.bak "s/\{\{NEO4J_PASSWORD\}\}/${NEO4J_PASSWORD}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
