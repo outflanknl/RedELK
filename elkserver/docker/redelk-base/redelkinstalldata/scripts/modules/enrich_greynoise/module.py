@@ -150,7 +150,11 @@ class Module():
         #     "message": "IP not observed scanning the internet or contained in RIOT data set."
         # }
         try:
-            gn_data = requests.get(self.greynoise_url + ip_address)
+            gn_headers = {
+                'key': self.api_key,
+                'User-Agent': 'greynoise-redelk-enrichment'
+            }
+            gn_data = requests.get(f'{self.greynoise_url}{ip_address}', headers=gn_headers)
             json_result = gn_data.json()
             result = {
                 'ip': ip_address,
