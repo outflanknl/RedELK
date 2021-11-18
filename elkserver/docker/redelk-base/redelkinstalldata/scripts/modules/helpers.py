@@ -280,5 +280,6 @@ initial_alarm_result = {
     },
     'mutations': {},
     'fields': ['host.name', 'user.name', '@timestamp', 'c2.message'],
-    'groupby': []
+    'groupby': [],
+    'status': 'unknown'
 }

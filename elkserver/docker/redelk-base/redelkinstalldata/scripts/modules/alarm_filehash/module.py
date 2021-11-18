@@ -9,7 +9,6 @@ Authors:
 - Lorenzo Bernardi (@fastlorenzo)
 """
 import logging
-import traceback
 
 from config import alarms
 
@@ -41,16 +40,10 @@ class Module():
         ret['info'] = info
         ret['fields'] = ['agent.hostname', '@timestamp', 'host.name', 'user.name', 'ioc.type', 'file.name', 'file.hash.md5', 'c2.message', 'alarm.alarm_filehash']
         ret['groupby'] = ['file.hash.md5']
-        try:
-            report = self.alarm_check()
-            ret['hits']['hits'] = report['hits']
-            ret['mutations'] = report['mutations']
-            ret['hits']['total'] = len(report['hits'])
-        except Exception as error:
-            stack_trace = traceback.format_exc()
-            ret['error'] = stack_trace
-            self.logger.exception(error)
-            raise
+        report = self.alarm_check()
+        ret['hits']['hits'] = report['hits']
+        ret['mutations'] = report['mutations']
+        ret['hits']['total'] = len(report['hits'])
         self.logger.info('finished running module. result: %s hits', ret['hits']['total'])
         return ret
 

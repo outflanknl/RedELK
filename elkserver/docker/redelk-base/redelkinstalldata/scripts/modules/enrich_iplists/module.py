@@ -10,7 +10,6 @@ Authors:
 """
 import datetime
 import logging
-import traceback
 
 from modules.helpers import (add_tags_by_query, get_initial_alarm_result,
                              get_value, raw_search)
@@ -36,28 +35,22 @@ class Module():
         ret = get_initial_alarm_result()
         ret['info'] = info
 
-        try:
-            self.now = datetime.datetime.utcnow()
+        self.now = datetime.datetime.utcnow()
 
-            # 1. get all IPs from the different IP lists (except tor)
-            ip_lists = self.get_iplists()
-            self.logger.debug('IP Lists: %s', ip_lists)
+        # 1. get all IPs from the different IP lists (except tor)
+        ip_lists = self.get_iplists()
+        self.logger.debug('IP Lists: %s', ip_lists)
 
-            # 2. Get all entries in redirtraffic that have not the enrich_iplist tag
-            redirtraffic = self.get_redirtraffic()
+        # 2. Get all entries in redirtraffic that have not the enrich_iplist tag
+        redirtraffic = self.get_redirtraffic()
 
-            # 3. loop through each result and find all IPs that matches in redirtraffic
-            res = self.update_traffic(ip_lists)
+        # 3. loop through each result and find all IPs that matches in redirtraffic
+        res = self.update_traffic(ip_lists)
 
-            # 4. Return all hits so they can be tagged
-            ret['hits']['hits'] = redirtraffic
-            ret['hits']['total'] = res
+        # 4. Return all hits so they can be tagged
+        ret['hits']['hits'] = redirtraffic
+        ret['hits']['total'] = res
 
-        # pylint: disable=broad-except
-        except Exception as error:
-            stack_trace = traceback.format_exc()
-            ret['error'] = stack_trace
-            self.logger.exception(error)
         self.logger.info('finished running module. result: %s hits', ret['hits']['total'])
         return ret
 

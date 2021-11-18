@@ -8,7 +8,6 @@ Authors:
 - Outflank B.V. / Mark Bergman (@xychix)
 - Lorenzo Bernardi (@fastlorenzo)
 """
-import traceback
 import logging
 import datetime
 import requests
@@ -40,29 +39,24 @@ class Module():
         ret = get_initial_alarm_result()
         ret['info'] = info
 
-        try:
-            # First check the last sync time
-            now = datetime.datetime.utcnow()
-            last_sync = self.get_last_sync()
-            ival = datetime.timedelta(seconds=self.cache)
-            last_sync_max = now - ival
+        # First check the last sync time
+        now = datetime.datetime.utcnow()
+        last_sync = self.get_last_sync()
+        ival = datetime.timedelta(seconds=self.cache)
+        last_sync_max = now - ival
 
-            should_sync = last_sync < last_sync_max
+        should_sync = last_sync < last_sync_max
 
-            if should_sync:
-                self.logger.info('Tor cache expired, fetching latest exit nodes list. Will skip enrichment (will be run next time)')
-                iplist = self.sync_tor_exitnodes()
-            else:
-                iplist = self.get_es_tor_exitnodes()
+        if should_sync:
+            self.logger.info('Tor cache expired, fetching latest exit nodes list. Will skip enrichment (will be run next time)')
+            iplist = self.sync_tor_exitnodes()
+        else:
+            iplist = self.get_es_tor_exitnodes()
 
-            if iplist:
-                hits = self.enrich_tor(iplist)
-                ret['hits']['hits'] = hits
-                ret['hits']['total'] = len(hits)
-        except Exception as error:  # pylint: disable=broad-except
-            stack_trace = traceback.format_exc()
-            ret['error'] = stack_trace
-            self.logger.exception(error)
+        if iplist:
+            hits = self.enrich_tor(iplist)
+            ret['hits']['hits'] = hits
+            ret['hits']['total'] = len(hits)
 
         self.logger.info('finished running module. result: %s hits', ret['hits']['total'])
         return ret
