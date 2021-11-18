@@ -8,7 +8,6 @@ Authors:
 - Outflank B.V. / Mark Bergman (@xychix)
 - Lorenzo Bernardi (@fastlorenzo)
 """
-import traceback
 import logging
 import re
 import datetime
@@ -39,16 +38,12 @@ class Module():
         """ run the module """
         ret = get_initial_alarm_result()
         ret['info'] = info
-        try:
-            hits = []
-            for iplist in self.iplists:
-                self.sync_iplist(iplist)
-            ret['hits']['hits'] = hits
-            ret['hits']['total'] = len(hits)
-        except Exception as error:  # pylint: disable=broad-except
-            stack_trace = traceback.format_exc()
-            ret['error'] = stack_trace
-            self.logger.exception(error)
+
+        hits = []
+        for iplist in self.iplists:
+            self.sync_iplist(iplist)
+        ret['hits']['hits'] = hits
+        ret['hits']['total'] = len(hits)
 
         self.logger.info('finished running module. result: %s hits', ret['hits']['total'])
         return ret

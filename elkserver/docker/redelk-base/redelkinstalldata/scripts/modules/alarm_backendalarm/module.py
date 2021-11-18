@@ -9,7 +9,6 @@ Authors:
 - Lorenzo Bernardi (@fastlorenzo)
 """
 import logging
-import traceback
 
 from modules.helpers import get_initial_alarm_result, get_query
 
@@ -36,15 +35,9 @@ class Module():
         ret['info'] = info
         ret['fields'] = ['@timestamp', 'source.ip', 'http.headers.useragent', 'source.nat.ip', 'redir.frontend.name', 'redir.backend.name', 'infra.attack_scenario']
         ret['groupby'] = ['source.ip', 'http.headers.useragent']
-        try:
-            report = self.alarm_check()
-            ret['hits']['hits'] = report['hits']
-            ret['hits']['total'] = len(report['hits'])
-        # pylint: disable=broad-except
-        except Exception as error:
-            stack_trace = traceback.format_exc()
-            ret['error'] = stack_trace
-            self.logger.exception(error)
+        report = self.alarm_check()
+        ret['hits']['hits'] = report['hits']
+        ret['hits']['total'] = len(report['hits'])
         self.logger.info('finished running module. result: %s hits', ret['hits']['total'])
         return ret
 

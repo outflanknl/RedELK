@@ -13,6 +13,7 @@ import copy
 import importlib
 import logging
 import os
+import traceback
 
 from config import alarms, LOGLEVEL, notifications
 from modules.helpers import (add_alarm_data, group_hits, module_did_run, set_tags,
@@ -75,12 +76,15 @@ def run_enrichments(enrich_dict):
                 module_did_run(enrich_module, 'enrich', 'success', f'Enriched {hits} documents', hits)
                 enrich_dict[enrich_module]['status'] = 'success'
             # pylint: disable=broad-except
-            except Exception as err:
-                msg = f'Error running enrichment {enrich_module}: {err}'
+            except Exception as error:
+                stack_trace = traceback.format_exc()
+                msg = f'Error running enrichment {enrich_module}: {error} | StackTrace: {stack_trace}'
                 logger.error(msg)
-                logger.exception(err)
+                logger.exception(error)
                 module_did_run(enrich_module, 'enrich', 'error', msg)
                 enrich_dict[enrich_module]['status'] = 'error'
+        else:
+            enrich_dict[enrich_module]['status'] = 'did_not_run'
     return enrich_dict
 
 def run_alarms(alarm_dict):
@@ -99,11 +103,14 @@ def run_alarms(alarm_dict):
                 alarm_dict[alarm_module]['status'] = 'success'
             # pylint: disable=broad-except
             except Exception as error:
-                msg = f'Error running alarm {alarm_module}: {error}'
+                stack_trace = traceback.format_exc()
+                msg = f'Error running alarm {alarm_module}: {error} | StackTrace: {stack_trace}'
                 logger.error(msg)
                 logger.exception(error)
                 module_did_run(alarm_module, 'alarm', 'error', msg)
                 alarm_dict[alarm_module]['status'] = 'error'
+        else:
+            alarm_dict[alarm_module]['status'] = 'did_not_run'
     return alarm_dict
 
 def process_alarms(connector_dict, alarm_dict):
@@ -113,9 +120,16 @@ def process_alarms(connector_dict, alarm_dict):
     for alarm in alarm_dict:
         if alarm in alarms and alarms[alarm]['enabled']:
 
+            alarm_status = alarm_dict[alarm]['status']
             # If the alarm did fail to run, skip processing the notification and tagging as we are not sure of the results
-            if alarm_dict[alarm]['status'] != 'success':
-                logger.warning('Alarm %s did not run (correctly), skipping processing', alarm)
+            if alarm_status == 'error':
+                logger.warning('Alarm %s did not run correctly, skipping processing (status: %s)', alarm, alarm_status)
+                continue
+            elif alarm_status == 'did_not_run':
+                logger.debug('Alarm %s did not run (this was expected), skipping processing (status: %s)', alarm, alarm_status)
+                continue
+            elif alarm_status == 'unknown':
+                logger.warning('Alarm %s returned and unknown status (this should never happen), skipping processing (status: %s)', alarm, alarm_status)
                 continue
 
             logger.debug('Alarm %s enabled, processing hits', alarm)

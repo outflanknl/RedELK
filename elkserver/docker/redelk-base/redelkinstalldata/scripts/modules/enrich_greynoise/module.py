@@ -41,15 +41,9 @@ class Module():
         """ run the enrich module """
         ret = get_initial_alarm_result()
         ret['info'] = info
-        try:
-            hits = self.enrich_greynoise()
-            ret['hits']['hits'] = hits
-            ret['hits']['total'] = len(hits)
-        # pylint: disable=broad-except
-        except Exception as error:
-            stack_trace = traceback.format_exc()
-            ret['error'] = stack_trace
-            self.logger.exception(error)
+        hits = self.enrich_greynoise()
+        ret['hits']['hits'] = hits
+        ret['hits']['total'] = len(hits)
         self.logger.info('finished running module. result: %s hits', ret['hits']['total'])
         return ret
 

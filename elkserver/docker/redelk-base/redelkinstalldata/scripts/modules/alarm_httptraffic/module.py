@@ -9,7 +9,6 @@ Authors:
 - Lorenzo Bernardi (@fastlorenzo)
 """
 import logging
-import traceback
 
 from modules.helpers import get_initial_alarm_result, get_value, raw_search
 
@@ -34,16 +33,10 @@ class Module():
         ret['info'] = info
         ret['fields'] = ['agent.hostname', 'source.ip', 'source.nat.ip', 'source.geo.country_name', 'source.as.organization.name', 'redir.frontend.name', 'redir.backend.name', 'infra.attack_scenario', 'tags', 'redir.timestamp']
         ret['groupby'] = ['source.ip']
-        try:
-            alarmed_ips = self.get_alarmed_ips()
-            report = self.alarm_check(alarmed_ips)
-            ret['hits']['hits'] = report
-            ret['hits']['total'] = len(report)
-        # pylint: disable=broad-except
-        except Exception as error:
-            stack_trace = traceback.format_exc()
-            ret['error'] = stack_trace
-            self.logger.exception(error)
+        alarmed_ips = self.get_alarmed_ips()
+        report = self.alarm_check(alarmed_ips)
+        ret['hits']['hits'] = report
+        ret['hits']['total'] = len(report)
         self.logger.info('finished running module. result: %s hits', ret['hits']['total'])
         return ret
 
