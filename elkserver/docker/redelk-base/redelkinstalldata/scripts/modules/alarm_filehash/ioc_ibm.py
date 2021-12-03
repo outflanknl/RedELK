@@ -49,7 +49,7 @@ class IBM():
             if 'subscriptionType' in result and result['subscriptionType'] == 'api' and 'usageData' in result:
                 # Get the monthly quota (limit)
                 entitlement = get_value('usageData.entitlement', result, 0)
-                remaining_quota += entitlement
+                remaining_quota += int(entitlement)
 
                 # Get the usage array (per cycle)
                 usage = get_value('usageData.usage', result, [])
@@ -59,7 +59,7 @@ class IBM():
                     cycle = get_value('cycle', usage_cycle, 0)
                     if cycle == datetime.now().strftime('%Y-%m'):
                         current_usage = get_value('usage', usage_cycle, 0)
-                        remaining_quota -= current_usage
+                        remaining_quota -= int(current_usage)
 
         self.logger.debug('Remaining quota (monthly): %d', remaining_quota)
 
