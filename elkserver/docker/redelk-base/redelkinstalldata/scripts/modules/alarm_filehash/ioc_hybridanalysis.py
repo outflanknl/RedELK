@@ -9,7 +9,8 @@ Authors:
 - Lorenzo Bernardi (@fastlorenzo)
 """
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
+from dateutil import parser
 import json
 import requests
 
@@ -107,11 +108,11 @@ class HA():
                     }
                 else:
                     # Loop through the results to get the first analysis (submission) date
-                    first_analysis_time = datetime.utcnow()
+                    first_analysis_time = datetime.now(timezone.utc)
                     for result in ha_result:
                         analysis_start_time = get_value('analysis_start_time', result, None)
                         if analysis_start_time is not None:
-                            analysis_start_time_date = datetime.fromisoformat(analysis_start_time).replace(tzinfo=None)
+                            analysis_start_time_date = parser.isoparse(analysis_start_time).replace(tzinfo=None)
                             first_analysis_time = first_analysis_time if first_analysis_time < analysis_start_time_date else analysis_start_time_date
                     # Found
                     ha_results[md5] = {
