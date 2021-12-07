@@ -119,7 +119,6 @@ class VT():
                     vt_results[md5] = {
                         'result': 'clean'
                     }
-                vt_results[md5] = vt_result
             else:
                 # Quota reached, skip the check
                 vt_results[md5] = {
