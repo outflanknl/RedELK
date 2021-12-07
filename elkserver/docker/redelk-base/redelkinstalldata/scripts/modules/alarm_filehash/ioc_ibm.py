@@ -100,7 +100,7 @@ class IBM():
                 ibm_result = self.get_ibm_xforce_file_results(md5)
 
                 if ibm_result is not None:
-                    if ibm_result is isinstance({}) and 'malware' in ibm_result:
+                    if isinstance(ibm_result, {}) and 'malware' in ibm_result:
 
                         # Get first submission date
                         first_submitted_date = get_value('malware.created', ibm_results, None)
