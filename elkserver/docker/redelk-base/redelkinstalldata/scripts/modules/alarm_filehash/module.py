@@ -212,7 +212,7 @@ class Module():
             # Loop through the hashes results
             for md5 in check_results[engine].keys():
                 if isinstance(check_results[engine][md5], type({})):
-                    if check_results[engine][md5]['result'] == 'newAlarm':
+                    if 'result' in check_results[engine][md5] and check_results[engine][md5]['result'] == 'newAlarm':
                         # If hash was already alarmed by an engine
                         if md5 in alarmed_hashes:
                             alarmed_hashes[md5][engine] = check_results[engine][md5]
