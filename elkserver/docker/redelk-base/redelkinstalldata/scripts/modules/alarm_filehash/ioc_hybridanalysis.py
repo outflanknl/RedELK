@@ -9,9 +9,9 @@ Authors:
 - Lorenzo Bernardi (@fastlorenzo)
 """
 import logging
-from datetime import datetime, timezone
-from dateutil import parser
+from datetime import datetime
 import json
+from dateutil import parser
 import requests
 
 from modules.helpers import get_value
@@ -108,7 +108,7 @@ class HA():
                     }
                 else:
                     # Loop through the results to get the first analysis (submission) date
-                    first_analysis_time = datetime.now(timezone.utc)
+                    first_analysis_time = datetime.utcnow()
                     for result in ha_result:
                         analysis_start_time = get_value('analysis_start_time', result, None)
                         if analysis_start_time is not None:
