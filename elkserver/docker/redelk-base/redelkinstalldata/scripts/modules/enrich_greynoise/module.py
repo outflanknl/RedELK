@@ -90,6 +90,10 @@ class Module():
         # For each IP, get the greynoise data
         # pylint: disable=invalid-name
         for ip, ip_val in ips.items():
+            # If no ip, skip it
+            if not ip:
+                continue
+
             # Get data from redirtraffic if within interval
             last_es_data = self.get_last_es_data(ip)
 
