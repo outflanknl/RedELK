@@ -8,7 +8,7 @@
 
 LOGFILE="redelk-install.log"
 INSTALLER="RedELK teamserver installer"
-ELKVERSION="7.16.1"
+ELKVERSION="7.16.2"
 
 echoerror() {
     printf "`date +'%b %e %R'` $INSTALLER - ${RC} * ERROR ${EC}: $@\n" >> $LOGFILE 2>&1
