@@ -8,7 +8,7 @@
 
 LOGFILE="redelk-install.log"
 INSTALLER="RedELK redirector installer"
-ELKVERSION="7.16.1"
+ELKVERSION="7.16.2"
 
 #set default locale
 export LC_ALL="en_US.UTF-8"
