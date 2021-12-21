@@ -5,7 +5,7 @@
 # Author: Outflank B.V. / Marc Smeets
 #
 
-FROM jupyter/scipy-notebook:4a112c0f11eb
+FROM jupyter/scipy-notebook:403b17920563
 LABEL maintainer="Outflank B.V. / Marc Smeets"
 LABEL description="RedELK Jupyter Notebooks"
 
