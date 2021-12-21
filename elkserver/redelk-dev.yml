@@ -241,7 +241,7 @@ services:
 
   bloodhound:
     container_name: redelk-bloodhound
-    image: neo4j:4.2
+    image: neo4j:4.2.13
     networks:
       - net
     volumes:
