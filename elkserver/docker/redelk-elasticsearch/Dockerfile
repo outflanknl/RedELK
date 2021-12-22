@@ -19,5 +19,5 @@ COPY --chown=elasticsearch:elasticsearch ./redelkinstalldata/instances.yml /usr/
 
 RUN chmod 755 /usr/local/bin/init-elasticsearch.sh /usr/local/bin/redelk-entrypoint.sh
 
-ENTRYPOINT ["/tini", "--", "/usr/local/bin/redelk-entrypoint.sh"]
+ENTRYPOINT ["/bin/tini", "--", "/usr/local/bin/redelk-entrypoint.sh"]
 CMD ["eswrapper"]
