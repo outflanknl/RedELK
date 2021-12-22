@@ -240,11 +240,11 @@ memcheck() {
         elif [ ${AVAILABLE_MEMORY} -ge 12000 ] && [ ${AVAILABLE_MEMORY} -le 12999 ]; then
             echo "[*] 12-13GB memory found" | tee -a $LOGFILE
             ES_MEMORY=2g
-            NEO4J_MEMORY=4GB
+            NEO4J_MEMORY=4G
         elif [ ${AVAILABLE_MEMORY} -ge 13000 ] && [ ${AVAILABLE_MEMORY} -le 13999 ]; then
             echo "[*] 13-14GB memory found" | tee -a $LOGFILE
             ES_MEMORY=2g
-            NEO4J_MEMORY=5GB
+            NEO4J_MEMORY=5G
         elif [ ${AVAILABLE_MEMORY} -ge 14000 ] && [ ${AVAILABLE_MEMORY} -le 14999 ]; then
             echo "[*] 14-15GB memory found" | tee -a $LOGFILE
             ES_MEMORY=3g
