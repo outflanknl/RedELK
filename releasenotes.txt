@@ -1,6 +1,18 @@
 
 RedELK release notes
 
+### version 2.0.0 BETA5
+* log4shell fix: bumped ELK stack to 7.16.2
+* Further Docker and memory tunings
+* Moved Greynoise support to community API and allowing a custom API key in config file
+* Fixed bug on updated API for VirusTotal and IBM X-Force alarms
+* Moved Filebeat config files to config directory for easier support of multiple C2s on same machine
+* Installer script enhancement, a.o. to check if accounts already exist on elkserver
+* Numerous enhancement for easier development, e.g. pylint and Kibana port accessible from localhost
+* Many bug fixes
+
+
+
 ### version 2.0.0 BETA4
 * Many bug fixes
 * Migrated background enrichment and alarm scripts to new modular setup
