@@ -95,6 +95,10 @@ enrich = {
         'enabled': True,
         'interval': 300
     },
+    'enrich_stage1': {
+        'enabled': True,
+        'interval': 300
+    },
     'enrich_greynoise': {
         'enabled': True,
         'interval': 310,

@@ -2,7 +2,7 @@
 """
 Part of RedELK
 
-This script enriches rtops lines with data from initial Cobalt Strike beacon
+This script enriches rtops lines with data from initial Stage1 beacon
 
 Authors:
 - Outflank B.V. / Mark Bergman (@xychix)
@@ -25,7 +25,7 @@ info = {
 
 
 class Module():
-    """ enrich cs beacon module """
+    """ enrich s1 beacon module """
     def __init__(self):
         self.logger = logging.getLogger(info['submodule'])
 
