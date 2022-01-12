@@ -55,6 +55,10 @@
             "enabled": true,
             "interval": 300
         },
+        "enrich_stage1": {
+            "enabled": true,
+            "interval": 300
+        },
         "enrich_greynoise": {
             "enabled": true,
             "interval": 310,
