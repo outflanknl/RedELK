@@ -2,7 +2,7 @@
 RedELK release notes
 
 ### version 2.0.0 BETA5
-* log4shell fix: bumped ELK stack to 7.16.2
+* log4shell fix: bumped ELK stack to 7.16.3
 * Further Docker and memory tunings
 * Moved Greynoise support to community API and allowing a custom API key in config file
 * Fixed bug on updated API for VirusTotal and IBM X-Force alarms
