@@ -7,7 +7,7 @@
 # - Lorenzo Bernardi
 #
 
-FROM docker.elastic.co/kibana/kibana:7.16.2
+FROM docker.elastic.co/kibana/kibana:7.16.3
 LABEL maintainer="Outflank B.V. / Marc Smeets"
 LABEL description="RedELK Kibana"
 
