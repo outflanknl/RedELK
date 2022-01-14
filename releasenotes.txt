@@ -6,6 +6,7 @@ RedELK release notes
 * Further Docker and memory tunings
 * Moved Greynoise support to community API and allowing a custom API key in config file
 * Fixed bug on updated API for VirusTotal and IBM X-Force alarms
+* Fixed bug to make domain classifications via Chameleon.py work again.
 * Moved Filebeat config files to config directory for easier support of multiple C2s on same machine
 * Installer script enhancement, a.o. to check if accounts already exist on elkserver
 * Numerous enhancement for easier development, e.g. pylint and Kibana port accessible from localhost
