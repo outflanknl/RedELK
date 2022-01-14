@@ -513,6 +513,9 @@
                     "input": {
                         "type": "text"
                     },
+                    "kill_date": {
+                        "type": "text"
+                    },
                     "link_mode": {
                         "type": "keyword"
                     },
@@ -535,6 +538,12 @@
                         "type": "keyword"
                     },
                     "task": {
+                        "type": "keyword"
+                    },
+                    "task_id": {
+                        "type": "keyword"
+                    },
+                    "task_parameters": {
                         "type": "keyword"
                     },
                     "url": {

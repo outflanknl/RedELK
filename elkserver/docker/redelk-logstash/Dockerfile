@@ -7,7 +7,7 @@
 # - Lorenzo Bernardi
 #
 
-FROM docker.elastic.co/logstash/logstash:7.10.0
+FROM docker.elastic.co/logstash/logstash:7.16.3
 LABEL maintainer="Outflank B.V. / Marc Smeets"
 LABEL description="RedELK Logstash"
 
