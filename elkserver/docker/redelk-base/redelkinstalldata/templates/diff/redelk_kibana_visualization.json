@@ -83,15 +83,22 @@
                             "type": "category"
                         }
                     ],
+                    "detailedTooltip": true,
                     "grid": {
                         "categoryLines": false
                     },
+                    "isVislibVis": true,
                     "labels": {
                         "show": false
                     },
                     "legendPosition": "right",
+                    "palette": {
+                        "name": "kibana_palette",
+                        "type": "palette"
+                    },
                     "seriesParams": [
                         {
+                            "circlesRadius": 1,
                             "data": {
                                 "id": "1",
                                 "label": "Count"
@@ -142,9 +149,10 @@
                 "type": "histogram"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "057076f0-d4e4-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -152,6 +160,10 @@
                 "name": "search_0",
                 "type": "search"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2209
         ],
         "type": "visualization",
         "version": "1"
@@ -225,15 +237,22 @@
                             "type": "category"
                         }
                     ],
+                    "detailedTooltip": true,
                     "grid": {
                         "categoryLines": false
                     },
+                    "isVislibVis": true,
                     "labels": {
                         "show": false
                     },
                     "legendPosition": "top",
+                    "palette": {
+                        "name": "kibana_palette",
+                        "type": "palette"
+                    },
                     "seriesParams": [
                         {
+                            "circlesRadius": 1,
                             "data": {
                                 "id": "1",
                                 "label": "Screenshots"
@@ -284,9 +303,10 @@
                 "type": "histogram"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "0b5ffcd0-d317-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -294,6 +314,10 @@
                 "name": "search_0",
                 "type": "search"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2211
         ],
         "type": "visualization",
         "version": "1"
@@ -324,11 +348,16 @@
                 "type": "markdown"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "0f82b540-d237-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [],
+        "sort": [
+            1642152856829,
+            2212
+        ],
         "type": "visualization",
         "version": "1"
     },
@@ -419,6 +448,7 @@
                 "params": {
                     "addLegend": true,
                     "addTooltip": true,
+                    "distinctColors": true,
                     "isDonut": true,
                     "labels": {
                         "last_level": true,
@@ -427,15 +457,20 @@
                         "values": true
                     },
                     "legendPosition": "right",
+                    "palette": {
+                        "name": "kibana_palette",
+                        "type": "palette"
+                    },
                     "type": "pie"
                 },
                 "title": "RedELK - Top computers with new implants",
                 "type": "pie"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "10dcc4a0-b8e7-11e8-94dd-171ae5c1fd1a",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -448,6 +483,10 @@
                 "name": "kibanaSavedObjectMeta.searchSourceJSON.filter[0].meta.index",
                 "type": "index-pattern"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2215
         ],
         "type": "visualization",
         "version": "1"
@@ -538,9 +577,10 @@
                 "type": "tile_map"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "10dd40f0-b983-11e8-94dd-171ae5c1fd1a",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -548,6 +588,10 @@
                 "name": "kibanaSavedObjectMeta.searchSourceJSON.index",
                 "type": "index-pattern"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2217
         ],
         "type": "visualization",
         "version": "1"
@@ -638,9 +682,10 @@
                 "type": "tile_map"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "1d26da60-b983-11e8-94dd-171ae5c1fd1a",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -648,6 +693,10 @@
                 "name": "kibanaSavedObjectMeta.searchSourceJSON.index",
                 "type": "index-pattern"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2219
         ],
         "type": "visualization",
         "version": "1"
@@ -728,9 +777,10 @@
                 "type": "metric"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "20fac240-926c-11eb-a753-9da683898c26",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -738,6 +788,10 @@
                 "name": "search_0",
                 "type": "search"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2221
         ],
         "type": "visualization",
         "version": "1"
@@ -825,15 +879,22 @@
                             "type": "category"
                         }
                     ],
+                    "detailedTooltip": true,
                     "grid": {
                         "categoryLines": false
                     },
+                    "isVislibVis": true,
                     "labels": {
                         "show": false
                     },
                     "legendPosition": "right",
+                    "palette": {
+                        "name": "kibana_palette",
+                        "type": "palette"
+                    },
                     "seriesParams": [
                         {
+                            "circlesRadius": 1,
                             "data": {
                                 "id": "1",
                                 "label": "Count"
@@ -884,9 +945,10 @@
                 "type": "histogram"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "231792d0-d050-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -894,6 +956,10 @@
                 "name": "search_0",
                 "type": "search"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2223
         ],
         "type": "visualization",
         "version": "1"
@@ -981,15 +1047,22 @@
                             "type": "category"
                         }
                     ],
+                    "detailedTooltip": true,
                     "grid": {
                         "categoryLines": false
                     },
+                    "isVislibVis": true,
                     "labels": {
                         "show": false
                     },
                     "legendPosition": "right",
+                    "palette": {
+                        "name": "kibana_palette",
+                        "type": "palette"
+                    },
                     "seriesParams": [
                         {
+                            "circlesRadius": 1,
                             "data": {
                                 "id": "1",
                                 "label": "Count"
@@ -1040,9 +1113,10 @@
                 "type": "histogram"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "2f5a2760-d050-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -1050,6 +1124,10 @@
                 "name": "search_0",
                 "type": "search"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2225
         ],
         "type": "visualization",
         "version": "1"
@@ -1115,6 +1193,7 @@
                 "params": {
                     "addLegend": true,
                     "addTooltip": true,
+                    "distinctColors": true,
                     "isDonut": true,
                     "labels": {
                         "last_level": true,
@@ -1123,15 +1202,20 @@
                         "values": true
                     },
                     "legendPosition": "bottom",
+                    "palette": {
+                        "name": "kibana_palette",
+                        "type": "palette"
+                    },
                     "type": "pie"
                 },
                 "title": "RedELK - IP Lists donut",
                 "type": "pie"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "2f77a150-926a-11eb-a753-9da683898c26",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -1139,6 +1223,10 @@
                 "name": "search_0",
                 "type": "search"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2227
         ],
         "type": "visualization",
         "version": "1"
@@ -1206,6 +1294,7 @@
                 "params": {
                     "addLegend": true,
                     "addTooltip": true,
+                    "distinctColors": true,
                     "isDonut": true,
                     "labels": {
                         "last_level": true,
@@ -1214,6 +1303,10 @@
                         "values": true
                     },
                     "legendPosition": "bottom",
+                    "palette": {
+                        "name": "kibana_palette",
+                        "type": "palette"
+                    },
                     "row": true,
                     "type": "pie"
                 },
@@ -1221,9 +1314,10 @@
                 "type": "pie"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "2f971ac0-926b-11eb-a753-9da683898c26",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -1231,6 +1325,10 @@
                 "name": "search_0",
                 "type": "search"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2229
         ],
         "type": "visualization",
         "version": "1"
@@ -1284,6 +1382,10 @@
                     "maxFontSize": 72,
                     "minFontSize": 18,
                     "orientation": "single",
+                    "palette": {
+                        "name": "kibana_palette",
+                        "type": "palette"
+                    },
                     "scale": "linear",
                     "showLabel": true
                 },
@@ -1291,9 +1393,10 @@
                 "type": "tagcloud"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "3729cde0-d4e4-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -1301,6 +1404,10 @@
                 "name": "search_0",
                 "type": "search"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2231
         ],
         "type": "visualization",
         "version": "1"
@@ -1365,9 +1472,10 @@
                 "type": "metric"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "389dddc0-d317-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -1375,6 +1483,10 @@
                 "name": "search_0",
                 "type": "search"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2233
         ],
         "type": "visualization",
         "version": "1"
@@ -1448,15 +1560,22 @@
                             "type": "category"
                         }
                     ],
+                    "detailedTooltip": true,
                     "grid": {
                         "categoryLines": false
                     },
+                    "isVislibVis": true,
                     "labels": {
                         "show": false
                     },
                     "legendPosition": "right",
+                    "palette": {
+                        "name": "kibana_palette",
+                        "type": "palette"
+                    },
                     "seriesParams": [
                         {
+                            "circlesRadius": 1,
                             "data": {
                                 "id": "1",
                                 "label": "Alarmed IOC"
@@ -1507,9 +1626,10 @@
                 "type": "histogram"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "3ae6c0c0-d4e2-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -1517,6 +1637,10 @@
                 "name": "search_0",
                 "type": "search"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2235
         ],
         "type": "visualization",
         "version": "1"
@@ -1568,6 +1692,10 @@
                     "maxFontSize": 72,
                     "minFontSize": 18,
                     "orientation": "single",
+                    "palette": {
+                        "name": "kibana_palette",
+                        "type": "palette"
+                    },
                     "scale": "linear",
                     "showLabel": false
                 },
@@ -1575,9 +1703,10 @@
                 "type": "tagcloud"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "41f94ad0-d04c-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -1585,6 +1714,10 @@
                 "name": "search_0",
                 "type": "search"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2237
         ],
         "type": "visualization",
         "version": "1"
@@ -1615,11 +1748,16 @@
                 "type": "markdown"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "45491770-0886-11eb-a2d2-171dc8941414",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [],
+        "sort": [
+            1642152856829,
+            2238
+        ],
         "type": "visualization",
         "version": "1"
     },
@@ -1684,9 +1822,10 @@
                 "type": "metric"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "464660c0-d360-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -1694,6 +1833,10 @@
                 "name": "search_0",
                 "type": "search"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2240
         ],
         "type": "visualization",
         "version": "1"
@@ -1786,9 +1929,10 @@
                 "type": "input_control_vis"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "56350050-efe7-11eb-8a9f-2572da287875",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -1811,6 +1955,10 @@
                 "name": "control_3_index_pattern",
                 "type": "index-pattern"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2245
         ],
         "type": "visualization",
         "version": "1"
@@ -1875,9 +2023,10 @@
                 "type": "metric"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "57626ad0-d355-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -1885,6 +2034,10 @@
                 "name": "search_0",
                 "type": "search"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2247
         ],
         "type": "visualization",
         "version": "1"
@@ -1949,9 +2102,10 @@
                 "type": "metric"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "5ffe8850-d4e4-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -1959,6 +2113,10 @@
                 "name": "search_0",
                 "type": "search"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2249
         ],
         "type": "visualization",
         "version": "1"
@@ -2024,9 +2182,10 @@
                 "type": "metric"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "62b61920-d4e2-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -2034,6 +2193,10 @@
                 "name": "search_0",
                 "type": "search"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2251
         ],
         "type": "visualization",
         "version": "1"
@@ -2083,6 +2246,7 @@
                 "params": {
                     "addLegend": true,
                     "addTooltip": true,
+                    "distinctColors": true,
                     "isDonut": true,
                     "labels": {
                         "last_level": true,
@@ -2091,15 +2255,20 @@
                         "values": true
                     },
                     "legendPosition": "right",
+                    "palette": {
+                        "name": "kibana_palette",
+                        "type": "palette"
+                    },
                     "type": "pie"
                 },
                 "title": "RedELK - Beacons per host",
                 "type": "pie"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "632081a0-d02a-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -2107,6 +2276,10 @@
                 "name": "search_0",
                 "type": "search"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2253
         ],
         "type": "visualization",
         "version": "1"
@@ -2157,6 +2330,10 @@
                     "maxFontSize": 72,
                     "minFontSize": 18,
                     "orientation": "single",
+                    "palette": {
+                        "name": "kibana_palette",
+                        "type": "palette"
+                    },
                     "scale": "linear",
                     "showLabel": false
                 },
@@ -2164,9 +2341,10 @@
                 "type": "tagcloud"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "659280b0-d317-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -2174,6 +2352,10 @@
                 "name": "search_0",
                 "type": "search"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2255
         ],
         "type": "visualization",
         "version": "1"
@@ -2223,6 +2405,7 @@
                 "params": {
                     "addLegend": true,
                     "addTooltip": true,
+                    "distinctColors": true,
                     "isDonut": true,
                     "labels": {
                         "last_level": true,
@@ -2231,15 +2414,20 @@
                         "values": true
                     },
                     "legendPosition": "right",
+                    "palette": {
+                        "name": "kibana_palette",
+                        "type": "palette"
+                    },
                     "type": "pie"
                 },
                 "title": "RedELK - Beacons per user",
                 "type": "pie"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "6fcf1e70-d02a-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -2247,6 +2435,10 @@
                 "name": "search_0",
                 "type": "search"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2257
         ],
         "type": "visualization",
         "version": "1"
@@ -2311,9 +2503,10 @@
                 "type": "metric"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "7d850b30-d4e2-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -2321,6 +2514,10 @@
                 "name": "search_0",
                 "type": "search"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2259
         ],
         "type": "visualization",
         "version": "1"
@@ -2394,15 +2591,22 @@
                             "type": "category"
                         }
                     ],
+                    "detailedTooltip": true,
                     "grid": {
                         "categoryLines": false
                     },
+                    "isVislibVis": true,
                     "labels": {
                         "show": false
                     },
                     "legendPosition": "right",
+                    "palette": {
+                        "name": "kibana_palette",
+                        "type": "palette"
+                    },
                     "seriesParams": [
                         {
+                            "circlesRadius": 1,
                             "data": {
                                 "id": "1",
                                 "label": "Downloads"
@@ -2455,9 +2659,10 @@
                 "type": "histogram"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "85446c80-d04b-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -2465,6 +2670,10 @@
                 "name": "search_0",
                 "type": "search"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2261
         ],
         "type": "visualization",
         "version": "1"
@@ -2556,6 +2765,7 @@
                 "params": {
                     "addLegend": true,
                     "addTooltip": true,
+                    "distinctColors": true,
                     "isDonut": false,
                     "labels": {
                         "last_level": false,
@@ -2564,15 +2774,20 @@
                         "values": true
                     },
                     "legendPosition": "top",
+                    "palette": {
+                        "name": "kibana_palette",
+                        "type": "palette"
+                    },
                     "type": "pie"
                 },
                 "title": "RedELK - Top new implants by ext IP address and scenario",
                 "type": "pie"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "88003df0-b8ec-11e8-94dd-171ae5c1fd1a",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -2585,6 +2800,10 @@
                 "name": "kibanaSavedObjectMeta.searchSourceJSON.filter[0].meta.index",
                 "type": "index-pattern"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2264
         ],
         "type": "visualization",
         "version": "1"
@@ -2638,6 +2857,10 @@
                     "maxFontSize": 72,
                     "minFontSize": 18,
                     "orientation": "single",
+                    "palette": {
+                        "name": "kibana_palette",
+                        "type": "palette"
+                    },
                     "scale": "linear",
                     "showLabel": false
                 },
@@ -2645,9 +2868,10 @@
                 "type": "tagcloud"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "88db1280-d024-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -2655,6 +2879,10 @@
                 "name": "search_0",
                 "type": "search"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2266
         ],
         "type": "visualization",
         "version": "1"
@@ -2704,6 +2932,7 @@
                 "params": {
                     "addLegend": true,
                     "addTooltip": false,
+                    "distinctColors": true,
                     "isDonut": true,
                     "labels": {
                         "last_level": true,
@@ -2712,15 +2941,20 @@
                         "values": true
                     },
                     "legendPosition": "right",
+                    "palette": {
+                        "name": "kibana_palette",
+                        "type": "palette"
+                    },
                     "type": "pie"
                 },
                 "title": "RedELK - Top users with new implants",
                 "type": "pie"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "a1efc620-b8e4-11e8-94dd-171ae5c1fd1a",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -2728,6 +2962,10 @@
                 "name": "kibanaSavedObjectMeta.searchSourceJSON.index",
                 "type": "index-pattern"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2268
         ],
         "type": "visualization",
         "version": "1"
@@ -2793,6 +3031,7 @@
                 "params": {
                     "addLegend": true,
                     "addTooltip": true,
+                    "distinctColors": true,
                     "isDonut": true,
                     "labels": {
                         "last_level": true,
@@ -2801,15 +3040,20 @@
                         "values": true
                     },
                     "legendPosition": "right",
+                    "palette": {
+                        "name": "kibana_palette",
+                        "type": "palette"
+                    },
                     "type": "pie"
                 },
                 "title": "RedELK - Tasks per host and user",
                 "type": "pie"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "a5554e20-d025-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -2817,6 +3061,10 @@
                 "name": "search_0",
                 "type": "search"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2270
         ],
         "type": "visualization",
         "version": "1"
@@ -2890,15 +3138,22 @@
                             "type": "category"
                         }
                     ],
+                    "detailedTooltip": true,
                     "grid": {
                         "categoryLines": false
                     },
+                    "isVislibVis": true,
                     "labels": {
                         "show": false
                     },
                     "legendPosition": "bottom",
+                    "palette": {
+                        "name": "kibana_palette",
+                        "type": "palette"
+                    },
                     "seriesParams": [
                         {
+                            "circlesRadius": 1,
                             "data": {
                                 "id": "1",
                                 "label": "Credentials captured"
@@ -2949,9 +3204,10 @@
                 "type": "histogram"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "ab609c60-d319-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -2959,6 +3215,10 @@
                 "name": "search_0",
                 "type": "search"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2272
         ],
         "type": "visualization",
         "version": "1"
@@ -3009,6 +3269,10 @@
                     "maxFontSize": 58,
                     "minFontSize": 14,
                     "orientation": "single",
+                    "palette": {
+                        "name": "kibana_palette",
+                        "type": "palette"
+                    },
                     "scale": "linear",
                     "showLabel": false
                 },
@@ -3016,9 +3280,10 @@
                 "type": "tagcloud"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "abdcd940-d050-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -3026,6 +3291,10 @@
                 "name": "search_0",
                 "type": "search"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2274
         ],
         "type": "visualization",
         "version": "1"
@@ -3115,15 +3384,22 @@
                             "type": "category"
                         }
                     ],
+                    "detailedTooltip": true,
                     "grid": {
                         "categoryLines": false
                     },
+                    "isVislibVis": true,
                     "labels": {
                         "show": false
                     },
                     "legendPosition": "right",
+                    "palette": {
+                        "name": "kibana_palette",
+                        "type": "palette"
+                    },
                     "seriesParams": [
                         {
+                            "circlesRadius": 1,
                             "data": {
                                 "id": "1",
                                 "label": "Tasks launched"
@@ -3174,9 +3450,10 @@
                 "type": "histogram"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "afb6ce00-d022-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -3184,6 +3461,10 @@
                 "name": "search_0",
                 "type": "search"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2276
         ],
         "type": "visualization",
         "version": "1"
@@ -3249,9 +3530,10 @@
                 "type": "metric"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "b19d4790-d35f-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -3259,6 +3541,10 @@
                 "name": "search_0",
                 "type": "search"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2278
         ],
         "type": "visualization",
         "version": "1"
@@ -3323,9 +3609,10 @@
                 "type": "metric"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "b5beb3c0-d04b-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -3333,6 +3620,10 @@
                 "name": "search_0",
                 "type": "search"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2280
         ],
         "type": "visualization",
         "version": "1"
@@ -3442,13 +3733,21 @@
                             "type": "category"
                         }
                     ],
+                    "detailedTooltip": true,
+                    "fittingFunction": "linear",
                     "grid": {
                         "categoryLines": false
                     },
+                    "isVislibVis": true,
                     "labels": {},
                     "legendPosition": "right",
+                    "palette": {
+                        "name": "kibana_palette",
+                        "type": "palette"
+                    },
                     "seriesParams": [
                         {
+                            "circlesRadius": 1,
                             "data": {
                                 "id": "1",
                                 "label": "Count"
@@ -3500,9 +3799,10 @@
                 "type": "line"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "be08d380-efe9-11eb-8a9f-2572da287875",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -3510,6 +3810,10 @@
                 "name": "search_0",
                 "type": "search"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2282
         ],
         "type": "visualization",
         "version": "1"
@@ -3598,6 +3902,7 @@
                     "percentageCol": "Hits",
                     "showMetricsAtAllLevels": false,
                     "showPartialRows": true,
+                    "showToolbar": true,
                     "showTotal": true,
                     "sort": {
                         "columnIndex": null,
@@ -3609,9 +3914,10 @@
                 "type": "table"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "cbb7d710-efee-11eb-8a9f-2572da287875",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -3619,6 +3925,10 @@
                 "name": "search_0",
                 "type": "search"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2284
         ],
         "type": "visualization",
         "version": "1"
@@ -3694,9 +4004,10 @@
                 "type": "metric"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "ce581930-d361-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -3704,6 +4015,10 @@
                 "name": "search_0",
                 "type": "search"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2286
         ],
         "type": "visualization",
         "version": "1"
@@ -3766,9 +4081,10 @@
                 "type": "input_control_vis"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "d2c7b720-d026-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -3781,6 +4097,10 @@
                 "name": "control_1_index_pattern",
                 "type": "index-pattern"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2289
         ],
         "type": "visualization",
         "version": "1"
@@ -3855,6 +4175,7 @@
                 "params": {
                     "addLegend": true,
                     "addTooltip": true,
+                    "distinctColors": true,
                     "isDonut": true,
                     "labels": {
                         "last_level": true,
@@ -3863,15 +4184,20 @@
                         "values": true
                     },
                     "legendPosition": "right",
+                    "palette": {
+                        "name": "kibana_palette",
+                        "type": "palette"
+                    },
                     "type": "pie"
                 },
                 "title": "RedELK - HTTP Redir traffic per backend",
                 "type": "pie"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "d625ba60-efe8-11eb-8a9f-2572da287875",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -3879,6 +4205,10 @@
                 "name": "search_0",
                 "type": "search"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2291
         ],
         "type": "visualization",
         "version": "1"
@@ -3943,9 +4273,10 @@
                 "type": "metric"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "dcf86190-d319-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -3953,6 +4284,10 @@
                 "name": "search_0",
                 "type": "search"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2293
         ],
         "type": "visualization",
         "version": "1"
@@ -4005,6 +4340,7 @@
                         {
                             "id": "CategoryAxis-1",
                             "labels": {
+                                "filter": true,
                                 "rotate": 0,
                                 "show": true,
                                 "truncate": 100
@@ -4019,6 +4355,8 @@
                             "type": "category"
                         }
                     ],
+                    "detailedTooltip": true,
+                    "fittingFunction": "linear",
                     "grid": {
                         "categoryLines": true,
                         "style": {
@@ -4026,9 +4364,15 @@
                         },
                         "valueAxis": null
                     },
+                    "isVislibVis": true,
                     "legendPosition": "top",
+                    "palette": {
+                        "name": "kibana_palette",
+                        "type": "palette"
+                    },
                     "seriesParams": [
                         {
+                            "circlesRadius": 1,
                             "data": {
                                 "id": "1",
                                 "label": "Amount of implants"
@@ -4073,9 +4417,10 @@
                 "type": "line"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "e12434d0-b8e8-11e8-94dd-171ae5c1fd1a",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -4083,6 +4428,10 @@
                 "name": "kibanaSavedObjectMeta.searchSourceJSON.index",
                 "type": "index-pattern"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2295
         ],
         "type": "visualization",
         "version": "1"
@@ -4173,9 +4522,10 @@
                 "type": "tile_map"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "e97f6f10-b982-11e8-94dd-171ae5c1fd1a",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -4183,6 +4533,10 @@
                 "name": "kibanaSavedObjectMeta.searchSourceJSON.index",
                 "type": "index-pattern"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2297
         ],
         "type": "visualization",
         "version": "1"
@@ -4294,16 +4648,23 @@
                             "type": "category"
                         }
                     ],
+                    "detailedTooltip": true,
                     "grid": {
                         "categoryLines": false,
                         "style": {
                             "color": "#eee"
                         }
                     },
+                    "isVislibVis": true,
                     "labels": {},
                     "legendPosition": "right",
+                    "palette": {
+                        "name": "kibana_palette",
+                        "type": "palette"
+                    },
                     "seriesParams": [
                         {
+                            "circlesRadius": 1,
                             "data": {
                                 "id": "1",
                                 "label": "Amount of implants"
@@ -4353,9 +4714,10 @@
                 "type": "horizontal_bar"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "f0dcbda0-b8e5-11e8-94dd-171ae5c1fd1a",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -4368,6 +4730,10 @@
                 "name": "kibanaSavedObjectMeta.searchSourceJSON.filter[0].meta.index",
                 "type": "index-pattern"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2300
         ],
         "type": "visualization",
         "version": "1"
@@ -4458,15 +4824,22 @@
                             "type": "category"
                         }
                     ],
+                    "detailedTooltip": true,
                     "grid": {
                         "categoryLines": false
                     },
+                    "isVislibVis": true,
                     "labels": {
                         "show": false
                     },
                     "legendPosition": "right",
+                    "palette": {
+                        "name": "kibana_palette",
+                        "type": "palette"
+                    },
                     "seriesParams": [
                         {
+                            "circlesRadius": 1,
                             "data": {
                                 "id": "1",
                                 "label": "Total hits"
@@ -4517,9 +4890,10 @@
                 "type": "histogram"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "f7141500-d4e1-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -4527,6 +4901,10 @@
                 "name": "search_0",
                 "type": "search"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2302
         ],
         "type": "visualization",
         "version": "1"
@@ -4577,6 +4955,10 @@
                     "maxFontSize": 64,
                     "minFontSize": 18,
                     "orientation": "single",
+                    "palette": {
+                        "name": "kibana_palette",
+                        "type": "palette"
+                    },
                     "scale": "linear",
                     "showLabel": false
                 },
@@ -4584,9 +4966,10 @@
                 "type": "tagcloud"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "ff3c3b80-d050-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -4594,6 +4977,10 @@
                 "name": "search_0",
                 "type": "search"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2304
         ],
         "type": "visualization",
         "version": "1"
@@ -4644,6 +5031,10 @@
                     "maxFontSize": 72,
                     "minFontSize": 18,
                     "orientation": "single",
+                    "palette": {
+                        "name": "kibana_palette",
+                        "type": "palette"
+                    },
                     "scale": "linear",
                     "showLabel": false
                 },
@@ -4651,9 +5042,10 @@
                 "type": "tagcloud"
             }
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "ff4497f0-d319-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "visualization": "7.10.0"
+            "visualization": "7.14.0"
         },
         "references": [
             {
@@ -4661,6 +5053,10 @@
                 "name": "search_0",
                 "type": "search"
             }
+        ],
+        "sort": [
+            1642152856829,
+            2306
         ],
         "type": "visualization",
         "version": "1"

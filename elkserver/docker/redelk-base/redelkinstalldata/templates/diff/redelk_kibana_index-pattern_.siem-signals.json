@@ -8669,11 +8669,16 @@
             "timeFieldName": "@timestamp",
             "title": ".siem-signals-*"
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "195a3f00-d04f-11ea-9301-a30a04251ae9",
         "migrationVersion": {
-            "index-pattern": "7.6.0"
+            "index-pattern": "7.11.0"
         },
         "references": [],
+        "sort": [
+            1642152853649,
+            1942
+        ],
         "type": "index-pattern",
         "version": "1"
     }

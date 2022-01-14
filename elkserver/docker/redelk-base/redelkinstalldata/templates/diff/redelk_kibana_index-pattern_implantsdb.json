@@ -1879,11 +1879,16 @@
             ],
             "title": "implantsdb"
         },
+        "coreMigrationVersion": "7.16.2",
         "id": "implantsdb",
         "migrationVersion": {
-            "index-pattern": "7.6.0"
+            "index-pattern": "7.11.0"
         },
         "references": [],
+        "sort": [
+            1642152843417,
+            1817
+        ],
         "type": "index-pattern",
         "version": "1"
     }
