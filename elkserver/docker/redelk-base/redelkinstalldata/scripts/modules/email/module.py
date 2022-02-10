@@ -17,9 +17,11 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.utils import formataddr, formatdate
 from json2html import json2html
+import os
 
 from config import notifications
 from modules.helpers import get_value, pprint
+
 
 info = {
     'version': 0.1,
@@ -29,6 +31,7 @@ info = {
     'submodule': 'email'
 }
 
+FILEDIR = os.path.abspath(os.path.dirname(__file__))
 
 class Module():
     """ email connector module """
@@ -78,7 +81,7 @@ class Module():
         """ Send the alarm """
 
         # Read the RedELK logo from file and base64 encode it
-        with open('redelk_white.png', 'rb') as logo_file:
+        with open('%s/redelk_white.png'%FILEDIR, 'rb') as logo_file:
             redelk_logo_b64 = base64.b64encode(logo_file.read()).decode('utf-8')
 
         mail = f'''
