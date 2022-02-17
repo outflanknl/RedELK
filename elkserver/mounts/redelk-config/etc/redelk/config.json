@@ -48,6 +48,10 @@
         "alarm_useragent": {
             "enabled": true,
             "interval": 320
+        },
+        "alarm_backendalarm": {
+            "enabled": true,
+            "interval": 320
         }
     },
     "enrich": {
