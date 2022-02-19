@@ -1,0 +1,146 @@
+[
+    {
+        "attributes": {
+            "fields": [
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "date"
+                    ],
+                    "name": "@timestamp",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "date"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "_id"
+                    ],
+                    "name": "_id",
+                    "readFromDocValues": false,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "_index"
+                    ],
+                    "name": "_index",
+                    "readFromDocValues": false,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": false,
+                    "count": 0,
+                    "name": "_score",
+                    "readFromDocValues": false,
+                    "scripted": false,
+                    "searchable": false,
+                    "type": "number"
+                },
+                {
+                    "aggregatable": false,
+                    "count": 0,
+                    "esTypes": [
+                        "_source"
+                    ],
+                    "name": "_source",
+                    "readFromDocValues": false,
+                    "scripted": false,
+                    "searchable": false,
+                    "type": "_source"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "_type"
+                    ],
+                    "name": "_type",
+                    "readFromDocValues": false,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "date"
+                    ],
+                    "name": "date_modified",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "date"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 1,
+                    "esTypes": [
+                        "ip"
+                    ],
+                    "name": "ip",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "ip"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "date"
+                    ],
+                    "name": "last_updated",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "date"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "list",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 1,
+                    "esTypes": [
+                        "keyword"
+                    ],
+                    "name": "source",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "string"
+                }
+            ],
+            "timeFieldName": "@timestamp",
+            "title": "iplist-*"
+        },
+        "id": "789bb360-2ab1-11eb-bc47-53169c986c81",
+        "migrationVersion": {
+            "index-pattern": "7.6.0"
+        },
+        "references": [],
+        "type": "index-pattern",
+        "version": "1"
+    }
+]
