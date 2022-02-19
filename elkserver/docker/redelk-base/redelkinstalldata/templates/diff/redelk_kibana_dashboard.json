@@ -221,7 +221,7 @@
             "title": "RedELK - Summary dashboard",
             "version": 1
         },
-        "coreMigrationVersion": "7.16.2",
+        "coreMigrationVersion": "7.16.3",
         "id": "02486040-d355-11ea-9301-a30a04251ae9",
         "migrationVersion": {
             "dashboard": "7.16.0"
@@ -289,8 +289,8 @@
             }
         ],
         "sort": [
-            1642152857910,
-            2054
+            1642171876916,
+            34
         ],
         "type": "dashboard",
         "version": "1"
@@ -401,7 +401,7 @@
             "title": "RedELK - Red Team Operations",
             "version": 1
         },
-        "coreMigrationVersion": "7.16.2",
+        "coreMigrationVersion": "7.16.3",
         "id": "04b87c50-d028-11ea-9301-a30a04251ae9",
         "migrationVersion": {
             "dashboard": "7.16.0"
@@ -434,8 +434,8 @@
             }
         ],
         "sort": [
-            1642152857910,
-            2060
+            1642171876916,
+            40
         ],
         "type": "dashboard",
         "version": "1"
@@ -547,7 +547,7 @@
             "title": "RedELK - Tasks",
             "version": 1
         },
-        "coreMigrationVersion": "7.16.2",
+        "coreMigrationVersion": "7.16.3",
         "id": "0523c8a0-d025-11ea-9301-a30a04251ae9",
         "migrationVersion": {
             "dashboard": "7.16.0"
@@ -580,8 +580,8 @@
             }
         ],
         "sort": [
-            1642152857910,
-            2066
+            1642171876916,
+            46
         ],
         "type": "dashboard",
         "version": "1"
@@ -653,7 +653,7 @@
                         "enhancements": {}
                     },
                     "gridData": {
-                        "h": 2,
+                        "h": 4,
                         "i": "948c1286-d4de-44a6-8fb2-95bf9252ed00",
                         "w": 48,
                         "x": 0,
@@ -662,7 +662,7 @@
                     "panelIndex": "948c1286-d4de-44a6-8fb2-95bf9252ed00",
                     "panelRefName": "panel_948c1286-d4de-44a6-8fb2-95bf9252ed00",
                     "type": "visualization",
-                    "version": "7.10.0"
+                    "version": "7.16.3"
                 },
                 {
                     "embeddableConfig": {
@@ -674,31 +674,34 @@
                         "i": "ab9eb0fb-a164-4295-8177-865a2a67dccb",
                         "w": 36,
                         "x": 0,
-                        "y": 2
+                        "y": 4
                     },
                     "panelIndex": "ab9eb0fb-a164-4295-8177-865a2a67dccb",
                     "panelRefName": "panel_ab9eb0fb-a164-4295-8177-865a2a67dccb",
                     "title": "Filters",
                     "type": "visualization",
-                    "version": "7.10.0"
+                    "version": "7.16.3"
                 },
                 {
                     "embeddableConfig": {
                         "enhancements": {},
-                        "hidePanelTitles": false
+                        "hidePanelTitles": false,
+                        "vis": {
+                            "legendOpen": true
+                        }
                     },
                     "gridData": {
                         "h": 5,
                         "i": "c630a33e-6a98-466d-8223-fd83e6947b8c",
                         "w": 12,
                         "x": 36,
-                        "y": 2
+                        "y": 4
                     },
                     "panelIndex": "c630a33e-6a98-466d-8223-fd83e6947b8c",
                     "panelRefName": "panel_c630a33e-6a98-466d-8223-fd83e6947b8c",
                     "title": "HTTP Redir traffic per backend",
                     "type": "visualization",
-                    "version": "7.10.0"
+                    "version": "7.16.3"
                 },
                 {
                     "embeddableConfig": {
@@ -718,13 +721,13 @@
                         "i": "1d1c2c6a-85ff-4b82-9b8d-d172b6e1a57a",
                         "w": 24,
                         "x": 0,
-                        "y": 7
+                        "y": 9
                     },
                     "panelIndex": "1d1c2c6a-85ff-4b82-9b8d-d172b6e1a57a",
                     "panelRefName": "panel_1d1c2c6a-85ff-4b82-9b8d-d172b6e1a57a",
                     "title": "HTTP redir traffic map",
                     "type": "map",
-                    "version": "7.10.0"
+                    "version": "7.16.3"
                 },
                 {
                     "embeddableConfig": {
@@ -736,13 +739,13 @@
                         "i": "fc254327-57ac-4e5f-88f7-a32d48570289",
                         "w": 24,
                         "x": 24,
-                        "y": 7
+                        "y": 9
                     },
                     "panelIndex": "fc254327-57ac-4e5f-88f7-a32d48570289",
                     "panelRefName": "panel_fc254327-57ac-4e5f-88f7-a32d48570289",
                     "title": "HTTP Redir traffic over time",
                     "type": "visualization",
-                    "version": "7.10.0"
+                    "version": "7.16.3"
                 },
                 {
                     "embeddableConfig": {
@@ -753,12 +756,12 @@
                         "i": "829f61cf-9374-4bb5-8214-34e6875e79da",
                         "w": 24,
                         "x": 0,
-                        "y": 22
+                        "y": 24
                     },
                     "panelIndex": "829f61cf-9374-4bb5-8214-34e6875e79da",
                     "panelRefName": "panel_829f61cf-9374-4bb5-8214-34e6875e79da",
                     "type": "visualization",
-                    "version": "7.10.0"
+                    "version": "7.16.3"
                 },
                 {
                     "embeddableConfig": {
@@ -769,12 +772,12 @@
                         "i": "0bc5f60b-f940-451a-886b-edff3512d180",
                         "w": 48,
                         "x": 0,
-                        "y": 37
+                        "y": 39
                     },
                     "panelIndex": "0bc5f60b-f940-451a-886b-edff3512d180",
                     "panelRefName": "panel_0bc5f60b-f940-451a-886b-edff3512d180",
                     "type": "search",
-                    "version": "7.10.0"
+                    "version": "7.16.3"
                 }
             ],
             "refreshInterval": {
@@ -787,7 +790,7 @@
             "title": "RedELK - Traffic dashboard",
             "version": 1
         },
-        "coreMigrationVersion": "7.16.2",
+        "coreMigrationVersion": "7.16.3",
         "id": "0f8626d0-c6f4-11e8-a9c6-cd307b96b1ba",
         "migrationVersion": {
             "dashboard": "7.16.0"
@@ -840,8 +843,8 @@
             }
         ],
         "sort": [
-            1642152857910,
-            2076
+            1643016059071,
+            291
         ],
         "type": "dashboard",
         "version": "1"
@@ -1031,7 +1034,7 @@
             "title": "RedELK - Implants dashboard",
             "version": 1
         },
-        "coreMigrationVersion": "7.16.2",
+        "coreMigrationVersion": "7.16.3",
         "id": "117dbba0-c6f5-11e8-a9c6-cd307b96b1ba",
         "migrationVersion": {
             "dashboard": "7.16.0"
@@ -1084,8 +1087,8 @@
             }
         ],
         "sort": [
-            1642152857910,
-            2086
+            1642171876916,
+            56
         ],
         "type": "dashboard",
         "version": "1"
@@ -1211,7 +1214,7 @@
             "title": "RedELK - MITRE ATT&CK",
             "version": 1
         },
-        "coreMigrationVersion": "7.16.2",
+        "coreMigrationVersion": "7.16.3",
         "id": "3ed7a630-d051-11ea-9301-a30a04251ae9",
         "migrationVersion": {
             "dashboard": "7.16.0"
@@ -1249,8 +1252,8 @@
             }
         ],
         "sort": [
-            1642152857910,
-            2093
+            1642171876916,
+            63
         ],
         "type": "dashboard",
         "version": "1"
@@ -1398,7 +1401,7 @@
             "title": "RedELK - Health",
             "version": 1
         },
-        "coreMigrationVersion": "7.16.2",
+        "coreMigrationVersion": "7.16.3",
         "id": "509e6a80-926a-11eb-a753-9da683898c26",
         "migrationVersion": {
             "dashboard": "7.16.0"
@@ -1441,8 +1444,8 @@
             }
         ],
         "sort": [
-            1642152857910,
-            2101
+            1642171876916,
+            71
         ],
         "type": "dashboard",
         "version": "1"
@@ -1586,7 +1589,7 @@
             "title": "RedELK - Alarms dashboard",
             "version": 1
         },
-        "coreMigrationVersion": "7.16.2",
+        "coreMigrationVersion": "7.16.3",
         "id": "53b69200-d4e3-11ea-9301-a30a04251ae9",
         "migrationVersion": {
             "dashboard": "7.16.0"
@@ -1629,8 +1632,8 @@
             }
         ],
         "sort": [
-            1642152857910,
-            2109
+            1642171876916,
+            79
         ],
         "type": "dashboard",
         "version": "1"
@@ -1658,7 +1661,7 @@
                         "enhancements": {}
                     },
                     "gridData": {
-                        "h": 2,
+                        "h": 3,
                         "i": "80f94a01-4e80-42c2-b67e-971bab6e0526",
                         "w": 48,
                         "x": 0,
@@ -1667,23 +1670,7 @@
                     "panelIndex": "80f94a01-4e80-42c2-b67e-971bab6e0526",
                     "panelRefName": "panel_80f94a01-4e80-42c2-b67e-971bab6e0526",
                     "type": "visualization",
-                    "version": "7.8.0"
-                },
-                {
-                    "embeddableConfig": {
-                        "enhancements": {}
-                    },
-                    "gridData": {
-                        "h": 11,
-                        "i": "55aca97f-b1f0-43b1-af44-756fe59be5fc",
-                        "w": 17,
-                        "x": 31,
-                        "y": 2
-                    },
-                    "panelIndex": "55aca97f-b1f0-43b1-af44-756fe59be5fc",
-                    "panelRefName": "panel_55aca97f-b1f0-43b1-af44-756fe59be5fc",
-                    "type": "visualization",
-                    "version": "7.8.0"
+                    "version": "7.16.3"
                 },
                 {
                     "embeddableConfig": {
@@ -1694,12 +1681,12 @@
                         "i": "8375955c-eab4-48d9-ac8a-e4de3dd6fab2",
                         "w": 24,
                         "x": 0,
-                        "y": 2
+                        "y": 3
                     },
                     "panelIndex": "8375955c-eab4-48d9-ac8a-e4de3dd6fab2",
                     "panelRefName": "panel_8375955c-eab4-48d9-ac8a-e4de3dd6fab2",
                     "type": "visualization",
-                    "version": "7.8.0"
+                    "version": "7.16.3"
                 },
                 {
                     "embeddableConfig": {
@@ -1710,12 +1697,28 @@
                         "i": "1e1864e7-1cbf-41bf-a9a5-8afadce8cadf",
                         "w": 7,
                         "x": 24,
-                        "y": 2
+                        "y": 3
                     },
                     "panelIndex": "1e1864e7-1cbf-41bf-a9a5-8afadce8cadf",
                     "panelRefName": "panel_1e1864e7-1cbf-41bf-a9a5-8afadce8cadf",
                     "type": "visualization",
-                    "version": "7.8.0"
+                    "version": "7.16.3"
+                },
+                {
+                    "embeddableConfig": {
+                        "enhancements": {}
+                    },
+                    "gridData": {
+                        "h": 11,
+                        "i": "55aca97f-b1f0-43b1-af44-756fe59be5fc",
+                        "w": 17,
+                        "x": 31,
+                        "y": 3
+                    },
+                    "panelIndex": "55aca97f-b1f0-43b1-af44-756fe59be5fc",
+                    "panelRefName": "panel_55aca97f-b1f0-43b1-af44-756fe59be5fc",
+                    "type": "visualization",
+                    "version": "7.16.3"
                 },
                 {
                     "embeddableConfig": {
@@ -1734,19 +1737,19 @@
                         "i": "9a987436-c698-4236-9b92-bfab81de8cc1",
                         "w": 48,
                         "x": 0,
-                        "y": 13
+                        "y": 14
                     },
                     "panelIndex": "9a987436-c698-4236-9b92-bfab81de8cc1",
                     "panelRefName": "panel_9a987436-c698-4236-9b92-bfab81de8cc1",
                     "type": "search",
-                    "version": "7.8.0"
+                    "version": "7.16.3"
                 }
             ],
             "timeRestore": false,
             "title": "RedELK - Downloads dashboard",
             "version": 1
         },
-        "coreMigrationVersion": "7.16.2",
+        "coreMigrationVersion": "7.16.3",
         "id": "643de010-d04c-11ea-9301-a30a04251ae9",
         "migrationVersion": {
             "dashboard": "7.16.0"
@@ -1755,11 +1758,6 @@
             {
                 "id": "0f82b540-d237-11ea-9301-a30a04251ae9",
                 "name": "80f94a01-4e80-42c2-b67e-971bab6e0526:panel_80f94a01-4e80-42c2-b67e-971bab6e0526",
-                "type": "visualization"
-            },
-            {
-                "id": "41f94ad0-d04c-11ea-9301-a30a04251ae9",
-                "name": "55aca97f-b1f0-43b1-af44-756fe59be5fc:panel_55aca97f-b1f0-43b1-af44-756fe59be5fc",
                 "type": "visualization"
             },
             {
@@ -1773,14 +1771,19 @@
                 "type": "visualization"
             },
             {
+                "id": "41f94ad0-d04c-11ea-9301-a30a04251ae9",
+                "name": "55aca97f-b1f0-43b1-af44-756fe59be5fc:panel_55aca97f-b1f0-43b1-af44-756fe59be5fc",
+                "type": "visualization"
+            },
+            {
                 "id": "26ba4cb0-0f73-11e9-8e1e-a16db980e11e",
                 "name": "9a987436-c698-4236-9b92-bfab81de8cc1:panel_9a987436-c698-4236-9b92-bfab81de8cc1",
                 "type": "search"
             }
         ],
         "sort": [
-            1642152857910,
-            2115
+            1643016103992,
+            297
         ],
         "type": "dashboard",
         "version": "1"
@@ -1891,7 +1894,7 @@
             "title": "RedELK - Credentials dashboard",
             "version": 1
         },
-        "coreMigrationVersion": "7.16.2",
+        "coreMigrationVersion": "7.16.3",
         "id": "82b865a0-d318-11ea-9301-a30a04251ae9",
         "migrationVersion": {
             "dashboard": "7.16.0"
@@ -1924,8 +1927,8 @@
             }
         ],
         "sort": [
-            1642152857910,
-            2121
+            1642171876916,
+            85
         ],
         "type": "dashboard",
         "version": "1"
@@ -2035,7 +2038,7 @@
             "title": "RedELK - IOC dashboard",
             "version": 1
         },
-        "coreMigrationVersion": "7.16.2",
+        "coreMigrationVersion": "7.16.3",
         "id": "86643e90-d4e4-11ea-9301-a30a04251ae9",
         "migrationVersion": {
             "dashboard": "7.16.0"
@@ -2068,8 +2071,8 @@
             }
         ],
         "sort": [
-            1642152857910,
-            2127
+            1642171876916,
+            91
         ],
         "type": "dashboard",
         "version": "1"
@@ -2180,7 +2183,7 @@
             "title": "RedELK - Screenshots dashboard",
             "version": 1
         },
-        "coreMigrationVersion": "7.16.2",
+        "coreMigrationVersion": "7.16.3",
         "id": "a2dcebf0-d316-11ea-9301-a30a04251ae9",
         "migrationVersion": {
             "dashboard": "7.16.0"
@@ -2213,8 +2216,8 @@
             }
         ],
         "sort": [
-            1642152857910,
-            2133
+            1642171876916,
+            97
         ],
         "type": "dashboard",
         "version": "1"
