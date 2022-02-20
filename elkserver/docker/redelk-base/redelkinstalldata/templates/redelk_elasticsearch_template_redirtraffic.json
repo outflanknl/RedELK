@@ -64,6 +64,31 @@
             },
             "alarm": {
                 "properties": {
+                    "alarm_httptraffic": {
+                        "properties": {
+                            "last_alarmed": {
+                                "doc_values": true,
+                                "ignore_malformed": false,
+                                "index": true,
+                                "store": false,
+                                "type": "date_nanos"
+                            },
+                            "last_checked": {
+                                "type": "date_nanos"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "last_alarmed": {
+                        "type": "date_nanos"
+                    },
+                    "last_checked": {
+                        "doc_values": true,
+                        "ignore_malformed": false,
+                        "index": true,
+                        "store": false,
+                        "type": "date_nanos"
+                    },
                     "timestamp": {
                         "type": "date"
                     }
@@ -703,6 +728,9 @@
                     },
                     "ip": {
                         "type": "ip"
+                    },
+                    "ip_otherproxies": {
+                        "type": "text"
                     },
                     "port": {
                         "type": "long"

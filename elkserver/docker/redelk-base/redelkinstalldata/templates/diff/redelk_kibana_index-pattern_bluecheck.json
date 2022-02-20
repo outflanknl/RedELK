@@ -603,15 +603,15 @@
             "timeFieldName": "@timestamp",
             "title": "bluecheck-*"
         },
-        "coreMigrationVersion": "7.16.2",
+        "coreMigrationVersion": "7.16.3",
         "id": "bluecheck",
         "migrationVersion": {
             "index-pattern": "7.11.0"
         },
         "references": [],
         "sort": [
-            1642152837408,
-            1663
+            1645363325826,
+            1146
         ],
         "type": "index-pattern",
         "version": "1"

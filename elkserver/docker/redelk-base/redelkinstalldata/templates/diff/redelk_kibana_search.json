@@ -33,7 +33,7 @@
             "title": "RedELK - _Redirector Traffic",
             "version": 1
         },
-        "coreMigrationVersion": "7.16.2",
+        "coreMigrationVersion": "7.16.3",
         "id": "0f7dcd70-b982-11e8-94dd-171ae5c1fd1a",
         "migrationVersion": {
             "search": "7.9.3"
@@ -46,8 +46,8 @@
             }
         ],
         "sort": [
-            1642152855820,
-            2152
+            1645363345688,
+            1259
         ],
         "type": "search",
         "version": "1"
@@ -112,7 +112,7 @@
             "title": "RedELK - C2 IOCs - Alarmed",
             "version": 1
         },
-        "coreMigrationVersion": "7.16.2",
+        "coreMigrationVersion": "7.16.3",
         "id": "10da2290-d4e2-11ea-9301-a30a04251ae9",
         "migrationVersion": {
             "search": "7.9.3"
@@ -130,8 +130,8 @@
             }
         ],
         "sort": [
-            1642152855820,
-            2155
+            1645363345688,
+            1262
         ],
         "type": "search",
         "version": "1"
@@ -294,7 +294,7 @@
             "title": "RedELK - _Red Team Operations",
             "version": 1
         },
-        "coreMigrationVersion": "7.16.2",
+        "coreMigrationVersion": "7.16.3",
         "id": "1c580960-b6a9-11e8-bc1a-cf8fa3255855",
         "migrationVersion": {
             "search": "7.9.3"
@@ -337,8 +337,8 @@
             }
         ],
         "sort": [
-            1642152855820,
-            2163
+            1645363345688,
+            1270
         ],
         "type": "search",
         "version": "1"
@@ -403,7 +403,7 @@
             "title": "RedELK - C2 Downloads",
             "version": 1
         },
-        "coreMigrationVersion": "7.16.2",
+        "coreMigrationVersion": "7.16.3",
         "id": "26ba4cb0-0f73-11e9-8e1e-a16db980e11e",
         "migrationVersion": {
             "search": "7.9.3"
@@ -421,8 +421,8 @@
             }
         ],
         "sort": [
-            1642152855820,
-            2166
+            1645363345688,
+            1273
         ],
         "type": "search",
         "version": "1"
@@ -484,7 +484,7 @@
             "title": "RedELK - C2 Keystrokes",
             "version": 1
         },
-        "coreMigrationVersion": "7.16.2",
+        "coreMigrationVersion": "7.16.3",
         "id": "3afbdbc0-b6aa-11e8-bc1a-cf8fa3255855",
         "migrationVersion": {
             "search": "7.9.3"
@@ -502,8 +502,8 @@
             }
         ],
         "sort": [
-            1642152855820,
-            2169
+            1645363345688,
+            1276
         ],
         "type": "search",
         "version": "1"
@@ -540,7 +540,7 @@
             "title": "RedELK - C2 Credentials",
             "version": 1
         },
-        "coreMigrationVersion": "7.16.2",
+        "coreMigrationVersion": "7.16.3",
         "id": "3fabe620-6c38-11ea-97d6-55783aed877a",
         "migrationVersion": {
             "search": "7.9.3"
@@ -553,8 +553,8 @@
             }
         ],
         "sort": [
-            1642152855820,
-            2171
+            1645363345688,
+            1278
         ],
         "type": "search",
         "version": "1"
@@ -619,7 +619,7 @@
             "title": "RedELK - C2 IOCs",
             "version": 1
         },
-        "coreMigrationVersion": "7.16.2",
+        "coreMigrationVersion": "7.16.3",
         "id": "4c003e20-b6aa-11e8-bc1a-cf8fa3255855",
         "migrationVersion": {
             "search": "7.9.3"
@@ -637,8 +637,8 @@
             }
         ],
         "sort": [
-            1642152855820,
-            2174
+            1645363345688,
+            1281
         ],
         "type": "search",
         "version": "1"
@@ -689,7 +689,7 @@
             "title": "RedELK - Modules status",
             "version": 1
         },
-        "coreMigrationVersion": "7.16.2",
+        "coreMigrationVersion": "7.16.3",
         "id": "654f76a0-9269-11eb-a753-9da683898c26",
         "migrationVersion": {
             "search": "7.9.3"
@@ -707,8 +707,8 @@
             }
         ],
         "sort": [
-            1642152855820,
-            2177
+            1645363345688,
+            1284
         ],
         "type": "search",
         "version": "1"
@@ -747,7 +747,7 @@
             "title": "RedELK - Redirector Traffic - Alarmed",
             "version": 1
         },
-        "coreMigrationVersion": "7.16.2",
+        "coreMigrationVersion": "7.16.3",
         "id": "658d7180-d4e1-11ea-9301-a30a04251ae9",
         "migrationVersion": {
             "search": "7.9.3"
@@ -760,8 +760,8 @@
             }
         ],
         "sort": [
-            1642152855820,
-            2179
+            1645363345688,
+            1286
         ],
         "type": "search",
         "version": "1"
@@ -806,7 +806,7 @@
             "title": "RedELK - C2 implants overview",
             "version": 1
         },
-        "coreMigrationVersion": "7.16.2",
+        "coreMigrationVersion": "7.16.3",
         "id": "68e8e870-b6aa-11e8-bc1a-cf8fa3255855",
         "migrationVersion": {
             "search": "7.9.3"
@@ -819,8 +819,8 @@
             }
         ],
         "sort": [
-            1642152855820,
-            2181
+            1645363345688,
+            1288
         ],
         "type": "search",
         "version": "1"
@@ -850,7 +850,7 @@
             "title": "RedELK - IP Lists",
             "version": 1
         },
-        "coreMigrationVersion": "7.16.2",
+        "coreMigrationVersion": "7.16.3",
         "id": "87530b40-9269-11eb-a753-9da683898c26",
         "migrationVersion": {
             "search": "7.9.3"
@@ -863,8 +863,8 @@
             }
         ],
         "sort": [
-            1642152855820,
-            2183
+            1645363345688,
+            1290
         ],
         "type": "search",
         "version": "1"
@@ -898,7 +898,7 @@
             "title": "RedELK - BlueCheck",
             "version": 1
         },
-        "coreMigrationVersion": "7.16.2",
+        "coreMigrationVersion": "7.16.3",
         "id": "a4757c90-ce50-11ea-a580-918d4757c08d",
         "migrationVersion": {
             "search": "7.9.3"
@@ -911,8 +911,8 @@
             }
         ],
         "sort": [
-            1642152855820,
-            2185
+            1645363345688,
+            1292
         ],
         "type": "search",
         "version": "1"
@@ -944,7 +944,7 @@
             "title": "RedELK - Emails",
             "version": 1
         },
-        "coreMigrationVersion": "7.16.2",
+        "coreMigrationVersion": "7.16.3",
         "id": "c1fca0d0-d171-11ea-8ac3-bfcfabda2250",
         "migrationVersion": {
             "search": "7.9.3"
@@ -957,8 +957,8 @@
             }
         ],
         "sort": [
-            1642152855820,
-            2187
+            1645363345688,
+            1294
         ],
         "type": "search",
         "version": "1"
@@ -1011,7 +1011,7 @@
             "title": "RedELK - C2 Tasks",
             "version": 1
         },
-        "coreMigrationVersion": "7.16.2",
+        "coreMigrationVersion": "7.16.3",
         "id": "cc523820-d021-11ea-9301-a30a04251ae9",
         "migrationVersion": {
             "search": "7.9.3"
@@ -1029,8 +1029,8 @@
             }
         ],
         "sort": [
-            1642152855820,
-            2190
+            1645363345688,
+            1297
         ],
         "type": "search",
         "version": "1"
@@ -1083,7 +1083,7 @@
             "title": "RedELK - Signals",
             "version": 1
         },
-        "coreMigrationVersion": "7.16.2",
+        "coreMigrationVersion": "7.16.3",
         "id": "dddbba20-d04f-11ea-9301-a30a04251ae9",
         "migrationVersion": {
             "search": "7.9.3"
@@ -1101,8 +1101,8 @@
             }
         ],
         "sort": [
-            1642152855820,
-            2193
+            1645363345688,
+            1300
         ],
         "type": "search",
         "version": "1"
@@ -1161,7 +1161,7 @@
             "title": "RedELK - C2 Screenshots",
             "version": 1
         },
-        "coreMigrationVersion": "7.16.2",
+        "coreMigrationVersion": "7.16.3",
         "id": "e8de79f0-b6aa-11e8-bc1a-cf8fa3255855",
         "migrationVersion": {
             "search": "7.9.3"
@@ -1179,8 +1179,8 @@
             }
         ],
         "sort": [
-            1642152855820,
-            2196
+            1645363345688,
+            1303
         ],
         "type": "search",
         "version": "1"
