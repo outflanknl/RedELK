@@ -1,6 +1,19 @@
 
 RedELK release notes
 
+### version 2.0.0 BETA6
+* New alarm: alarm when traffic is hit to any redir backend that has 'alarm' in it. Allows for flexibility in smarter redir logic.
+* Chained X-Forwarded-For IPs are now also stored, in field source.ip_otherproxies in redirtraffic index
+* Outflank Security Tooling specific: Stage1 C2 operator name recorded
+* Outflank Security Tooling specific: Data from BlueCheck CertCheck, BlueCheck PasswordChangeCheck and BlueCheck SecurityToolCheck now properly stored in ElasticSearch.
+* LogStash config now mounted by default, allowing for easier modification of the config.
+* Template updates.
+* Fixed bug on storage of www-data/c2logs directory
+* Fixed bug to make email alarms working again
+* Several smaller bugfixes
+
+
+
 ### version 2.0.0 BETA5
 * log4shell fix: bumped ELK stack to 7.16.3
 * Further Docker and memory tunings
