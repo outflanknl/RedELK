@@ -9,15 +9,15 @@
             "title": "redirtraffic-*",
             "typeMeta": "{}"
         },
-        "coreMigrationVersion": "7.16.2",
+        "coreMigrationVersion": "7.16.3",
         "id": "redirtraffic",
         "migrationVersion": {
             "index-pattern": "7.11.0"
         },
         "references": [],
         "sort": [
-            1642154954544,
-            16181
+            1645363339500,
+            1313
         ],
         "type": "index-pattern",
         "version": "1"

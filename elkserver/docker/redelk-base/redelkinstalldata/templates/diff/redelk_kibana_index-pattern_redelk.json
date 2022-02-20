@@ -206,15 +206,15 @@
             ],
             "title": "redelk-*"
         },
-        "coreMigrationVersion": "7.16.2",
+        "coreMigrationVersion": "7.16.3",
         "id": "b5972620-2b72-11eb-85d7-bbc5b6917d13",
         "migrationVersion": {
             "index-pattern": "7.11.0"
         },
         "references": [],
         "sort": [
-            1642152847512,
-            1890
+            1645363337498,
+            1307
         ],
         "type": "index-pattern",
         "version": "1"

@@ -7,6 +7,46 @@
         "_meta": {},
         "_source": {},
         "properties": {
+            "bluecheck": {
+                "properties": {
+                    "accountname": {
+                        "type": "text"
+                    },
+                    "accountstate": {
+                        "type": "text"
+                    },
+                    "certissuer ": {
+                        "type": "text"
+                    },
+                    "certsubject": {
+                        "type": "text"
+                    },
+                    "message": {
+                        "type": "text"
+                    },
+                    "pwchangedate": {
+                        "type": "date"
+                    },
+                    "sectools": {
+                        "properties": {
+                            "ProcessID": {
+                                "type": "text"
+                            },
+                            "Product": {
+                                "type": "text"
+                            },
+                            "Vendor": {
+                                "type": "text"
+                            }
+                        },
+                        "type": "nested"
+                    },
+                    "sectoolsamount": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
             "bluechecktimestamp": {
                 "type": "text"
             },

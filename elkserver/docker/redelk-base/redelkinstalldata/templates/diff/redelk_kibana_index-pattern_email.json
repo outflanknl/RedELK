@@ -2826,15 +2826,15 @@
             "timeFieldName": "@timestamp",
             "title": "email-*"
         },
-        "coreMigrationVersion": "7.16.2",
+        "coreMigrationVersion": "7.16.3",
         "id": "email",
         "migrationVersion": {
             "index-pattern": "7.11.0"
         },
         "references": [],
         "sort": [
-            1642152841336,
-            1866
+            1645363329707,
+            1149
         ],
         "type": "index-pattern",
         "version": "1"
