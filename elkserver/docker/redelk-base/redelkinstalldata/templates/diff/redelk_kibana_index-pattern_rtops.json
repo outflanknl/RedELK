@@ -9,15 +9,15 @@
             "title": "rtops-*",
             "typeMeta": "{}"
         },
-        "coreMigrationVersion": "7.16.3",
+        "coreMigrationVersion": "7.16.2",
         "id": "rtops",
         "migrationVersion": {
             "index-pattern": "7.11.0"
         },
         "references": [],
         "sort": [
-            1642171870762,
-            242
+            1642157817846,
+            34863
         ],
         "type": "index-pattern",
         "version": "1"
