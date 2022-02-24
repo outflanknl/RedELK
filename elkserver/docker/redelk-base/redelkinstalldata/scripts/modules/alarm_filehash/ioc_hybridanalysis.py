@@ -79,11 +79,12 @@ class HA():
         # Search for the file hash
         response = requests.post(url, headers=headers, data=payload)
 
-        if response.status_code == 200: # Hash found
+        if response.status_code == 200: # Hash found 
             json_response = response.json()
         else: # Unexpected result
             self.logger.warning('Error retrieving VT File hash results (HTTP Status code: %d): %s', response.status_code, response.text)
-            json_response = response.text
+            #json_response = response.text
+            json_response = []  # see lione 106 checking for len 0.
 
         return json_response
 
