@@ -14,5 +14,4 @@ LABEL description="RedELK Kibana"
 #COPY redelk-7.10.0.zip /tmp/redelk-7.10.0.zip
 #RUN /usr/share/kibana/bin/kibana-plugin install file:/tmp/redelk-7.10.0.zip
 
-# temp do not install RedELK Kibana app as we fix log4shell
-#RUN /usr/share/kibana/bin/kibana-plugin install  https:/github.com/fastlorenzo/redelk-kibana-app/releases/download/v0.3.0/redelk-7.10.0.zip
+RUN /usr/share/kibana/bin/kibana-plugin install  https:/github.com/fastlorenzo/redelk-kibana-app/releases/download/v0.4.0-rc.1/zredelk-7.16.3.zip
