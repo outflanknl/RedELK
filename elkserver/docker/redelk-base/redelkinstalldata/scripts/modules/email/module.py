@@ -50,7 +50,7 @@ class Module():
         message = MIMEMultipart()
         # Read html File
         html = mail
-        message['Subject'] = subject
+        message['Subject'] = "[%s] %s"%(notifications['projectname'],subject)
         message['From'] = formataddr((str(Header(from_address, 'utf-8')), from_address))
         message['To'] = ', '.join(to_addresses)
         message['Date'] = formatdate()

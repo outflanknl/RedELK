@@ -36,6 +36,7 @@ if 'tempDir' in data:
 # -- Notifications
 # pylint: disable=invalid-name
 notifications = {
+    'projectname':'redelk-project',
     'email': {
         'enabled': False,
         'smtp': {
