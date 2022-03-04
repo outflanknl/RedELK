@@ -31,7 +31,7 @@ class Module():
         """ Run the alarm module """
         ret = get_initial_alarm_result()
         ret['info'] = info
-        ret['fields'] = ['source.ip', 'source.nat.ip', 'source.geo.country_name', 'source.as.organization.name', 'redir.frontend.name', 'redir.backend.name', 'infra.attack_scenario', 'tags', 'redir.timestamp']
+        ret['fields'] = ['source.ip', 'source.cdn.ip', 'source.geo.country_name', 'source.as.organization.name', 'redir.frontend.name', 'redir.backend.name', 'infra.attack_scenario', 'tags', 'redir.timestamp']
         ret['groupby'] = ['source.ip']
         report = self.alarm_check()
         ret['hits']['hits'] = report['hits']

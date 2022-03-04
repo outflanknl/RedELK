@@ -375,7 +375,7 @@
                     "esTypes": [
                         "ip"
                     ],
-                    "name": "client.nat.ip",
+                    "name": "client.cdn.ip",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
@@ -387,7 +387,7 @@
                     "esTypes": [
                         "long"
                     ],
-                    "name": "client.nat.port",
+                    "name": "client.cdn.port",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
@@ -990,7 +990,7 @@
                     "esTypes": [
                         "ip"
                     ],
-                    "name": "destination.nat.ip",
+                    "name": "destination.cdn.ip",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
@@ -1002,7 +1002,7 @@
                     "esTypes": [
                         "long"
                     ],
-                    "name": "destination.nat.port",
+                    "name": "destination.cdn.port",
                     "readFromDocValues": true,
                     "scripted": false,
                     "searchable": true,
