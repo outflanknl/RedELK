@@ -125,10 +125,10 @@ def process_alarms(connector_dict, alarm_dict):
             if alarm_status == 'error':
                 logger.warning('Alarm %s did not run correctly, skipping processing (status: %s)', alarm, alarm_status)
                 continue
-            elif alarm_status == 'did_not_run':
+            if alarm_status == 'did_not_run':
                 logger.debug('Alarm %s did not run (this was expected), skipping processing (status: %s)', alarm, alarm_status)
                 continue
-            elif alarm_status == 'unknown':
+            if alarm_status == 'unknown':
                 logger.warning('Alarm %s returned and unknown status (this should never happen), skipping processing (status: %s)', alarm, alarm_status)
                 continue
 

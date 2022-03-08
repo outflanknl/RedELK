@@ -8,9 +8,9 @@
         "le_email": "",
         "staging": "0"
     },
+    "project_name":"redelk-project",
     "es_connection": ["https://elastic:{{ELASTIC_PASSWORD}}@redelk-elasticsearch:9200"],
     "notifications": {
-        "projectname":"redelk-project",
         "email": {
             "enabled": false,
             "smtp": {
