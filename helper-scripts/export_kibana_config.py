@@ -22,6 +22,7 @@ ES_URL = SCHEME + '://localhost:9200'
 ES_TEMPLATES_LIST = ['rtops', 'redirtraffic', 'implantsdb', 'bluecheck', 'credentials', 'email', 'redelk']
 EXPORT_FILES_PREFIX_ES = 'redelk_elasticsearch_'
 DIFF_PATH = 'diff/'  # path is relative to exportpath
+PASSW_FILE = '../elkserver/.env'
 
 
 def fetch_kibana_object(obj_type, exportpath):
@@ -122,8 +123,8 @@ def check_args():
     parser.add_argument("--estemplate", action='store_true', help="Export Elasticsearch templates")
     parser.add_argument("--export", action='store_true', help="Export data   (either --export of --process required)")
     parser.add_argument("--process", action='store_true', help="Process locally saved NDJSON files for easy diff   (either --export of --process required)")
-    parser.add_argument("--username", metavar="<username>", dest="username", help="Elastic username (default: redelk)")
-    parser.add_argument("--password", metavar="<password>", dest="password", help="Elastic password (default: redelk)")
+    parser.add_argument("--username", metavar="<username>", dest="username", help="Elastic username, if not provided default 'redelk' is used")
+    parser.add_argument("--password", metavar="<password>", dest="password", help="Elastic password, if not provided config file ../elkserver/.env will be parsed")
 
     args = parser.parse_args()
 
@@ -145,11 +146,23 @@ if __name__ == '__main__':
 
     BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 
+    try:
+        f = open(PASSW_FILE, "r")
+        for line in f.readlines():
+            if 'CREDS_redelk=' in line:
+                p = line.split("=")
+                PASSW = p[1].strip()
+    except:
+        print("Error opening password file")
+
     KIBANA_USER = args.username if args.username else 'redelk'
-    KIBANA_PASS = args.password if args.password else 'redelk'
+    
+    if args.password:
+        KIBANA_PASS = args.password
+    else:
+        KIBANA_PASS = PASSW
 
     exportpath = args.exportpath if args.exportpath else os.path.join(BASE_PATH, '../elkserver/docker/redelk-base/redelkinstalldata/templates')
-    print(KIBANA_PASS)
     diff_exportpath = os.path.join(exportpath, DIFF_PATH)
     if not os.path.exists(diff_exportpath):
         os.makedirs(diff_exportpath)
