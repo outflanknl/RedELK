@@ -58,5 +58,5 @@ class Module():  # pylint: disable=too-few-public-methods
         except Exception as error:
             self.logger.exception(error)
 
-        tmsg.title(f'Alarm from {alarm["info"]["name"]} [{alarm["hits"]["total"]} hits]')
+        tmsg.title(f'[{config.project_name}] Alarm from {alarm["info"]["name"]} [{alarm["hits"]["total"]} hits]')
         tmsg.send()

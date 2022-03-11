@@ -8,6 +8,7 @@ Authors:
 - Outflank B.V. / Mark Bergman (@xychix)
 - Lorenzo Bernardi (@fastlorenzo)
 """
+import os
 import logging
 import smtplib
 import base64
@@ -17,9 +18,8 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.utils import formataddr, formatdate
 from json2html import json2html
-import os
 
-from config import notifications
+from config import notifications, project_name
 from modules.helpers import get_value, pprint
 
 
@@ -50,7 +50,7 @@ class Module():
         message = MIMEMultipart()
         # Read html File
         html = mail
-        message['Subject'] = subject
+        message['Subject'] = f'[{project_name}] {subject}'
         message['From'] = formataddr((str(Header(from_address, 'utf-8')), from_address))
         message['To'] = ', '.join(to_addresses)
         message['Date'] = formatdate()
@@ -81,7 +81,7 @@ class Module():
         """ Send the alarm """
 
         # Read the RedELK logo from file and base64 encode it
-        with open('%s/redelk_white.png'%FILEDIR, 'rb') as logo_file:
+        with open(f'{FILEDIR}/redelk_white.png', 'rb') as logo_file:
             redelk_logo_b64 = base64.b64encode(logo_file.read()).decode('utf-8')
 
         mail = f'''
@@ -111,7 +111,7 @@ class Module():
                     </tr>
                     <tr>
                         <td bgcolor="#212121" height="20px" style="color: #FAFAFA; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px; padding: 20px 30px 30px 10px;">
-                            Total hits: <em>{alarm["hits"]["total"]}</em>
+                            Project: <em>{project_name}</em><br/>Total hits: <em>{alarm["hits"]["total"]}</em>
                         </td>
                     </tr>
                     <tr>

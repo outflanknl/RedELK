@@ -127,3 +127,5 @@ if 'enrich' in data:
 es_connection = ['http://localhost:9200']
 if 'es_connection' in data:
     es_connection = data['es_connection']
+
+project_name = data['project_name'] if 'project_name' in data else 'redelk-project'
