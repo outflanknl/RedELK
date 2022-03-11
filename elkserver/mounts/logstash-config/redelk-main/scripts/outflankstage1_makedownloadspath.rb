@@ -8,8 +8,6 @@
 
 def filter(event)
 	host = event.get("[agent][name]")
-	logpath = event.get("[log][file][path]")
-	implant_id = event.get("[implant][id]")
 	filename = event.get("[file][name]")
 	file_path = event.get("[file][directory_local]")
 	downloadsurl = "/c2logs/" + "#{host}" + "/stage1/downloads/" + "#{file_path}" + "_" + "#{filename}"
