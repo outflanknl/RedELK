@@ -131,3 +131,4 @@ redirs.tgz
 redirs/VERSION
 redirs/filebeat/*.crt
 sshkey/
+elkserver/mounts/logstash-config/certs_inputs/*
