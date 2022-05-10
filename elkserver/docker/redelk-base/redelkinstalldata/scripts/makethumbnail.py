@@ -26,12 +26,13 @@ try:
             if file.endswith('.jpg') and not file.endswith('thumb.jpg'):
                 file_in = os.path.join(root, file)
                 file_out = (f'{file_in}.thumb.jpg')
-            if not os.path.exists(file_out):
-                img = Image.open(file_in)
-                w_percent = (BAS_HEIGHT/float(img.size[1]))
-                v_size = int((float(img.size[0])*float(w_percent)))
-                img = img.resize((v_size,BAS_HEIGHT), Image.ANTIALIAS)
-                img.save(file_out)
+                
+                if not os.path.exists(file_out):
+                    img = Image.open(file_in)
+                    w_percent = (BAS_HEIGHT/float(img.size[1]))
+                    v_size = int((float(img.size[0])*float(w_percent)))
+                    img = img.resize((v_size,BAS_HEIGHT), Image.ANTIALIAS)
+                    img.save(file_out)
 # pylint: disable=broad-except
 except Exception as error:
     error = sys.exc_info()[1]
