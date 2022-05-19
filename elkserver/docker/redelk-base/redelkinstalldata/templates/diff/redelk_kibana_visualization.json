@@ -1741,7 +1741,7 @@
                 "aggs": [],
                 "params": {
                     "fontSize": 12,
-                    "markdown": "**External tools** : [MITRE ATT&CK Navigator](/attack-navigator/) | [Jupyter Notebook](/jupyter/) | [Neo4j Browser](/neo4jbrowser/) ",
+                    "markdown": "**External tools** : [MITRE ATT&CK Navigator](/app/zredelk/attack-navigator/) | [Jupyter Notebook](/jupyter/) | [Neo4j Browser](/neo4jbrowser/) ",
                     "openLinksInNewTab": true
                 },
                 "title": "RedELK - Dashboard links external",
