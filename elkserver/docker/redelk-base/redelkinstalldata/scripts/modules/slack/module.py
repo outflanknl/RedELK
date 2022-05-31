@@ -34,14 +34,14 @@ class Module():  # pylint: disable=too-few-public-methods
             description += f'\n _Please note that the items below have been grouped by: {alarm["groupby"]}_'
 
         blocks = [
-            {'type': "section", 'text':
+            {'type': 'section', 'text':
                 {
                     'type': 'mrkdwn',
                     'text': f'*Alarm from {alarm["info"]["name"]} [{alarm["hits"]["total"]} hits]*\n{description}'
                 }
              },
             {
-                "type": "divider"
+                'type': 'divider'
             },
         ]
 
@@ -57,16 +57,16 @@ class Module():  # pylint: disable=too-few-public-methods
                         title = f'{title} / {val}'
                     i += 1
 
-                text = f"*Alarm on item: {title.strip()}*\n\t"
+                text = f'*Alarm on item: {title.strip()}*\n\t'
                 for field in alarm['fields']:
                     val = get_value(f'_source.{field}', hit)
 
                     # Add a tab to every line of values, this makes it easier to read
                     pretty_val = ''.join([f'{line}\n\t' for line in pprint(val).split('\n')])
-                    text += f"*{field}*: {pretty_val}"
+                    text += f'*{field}*: {pretty_val}'
 
                 blocks.append(
-                    {'type': "section",
+                    {'type': 'section',
                      'text':
                          {
                              'type': 'mrkdwn',
@@ -74,7 +74,7 @@ class Module():  # pylint: disable=too-few-public-methods
                          }
                      }
                 )
-                blocks.append({"type": "divider"})
+                blocks.append({'type': 'divider'})
             # pylint: disable=broad-except
         except Exception as error:
             self.logger.exception(error)
@@ -82,6 +82,6 @@ class Module():  # pylint: disable=too-few-public-methods
         webhook = WebhookClient(config.notifications['slack']['webhook_url'])
         res = webhook.send(text='', blocks=blocks)
 
-        if not (200 <= res.status_code <= 299):
-            self.logger.error(f"Informing slack failed: {res.status_code} {res.body}")
+        if not 200 <= res.status_code <= 299:
+            self.logger.error('Informing slack failed: %s %s', res.status_code, res.body)
             self.logger.error(alarm)
