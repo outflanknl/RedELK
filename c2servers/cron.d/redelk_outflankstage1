@@ -10,5 +10,5 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
 # Command to sync the logs from Stage1 to our scponly user's home directory
 # m h dom mon dow user  command
-* * * * * root /usr/bin/rsync -ax --delete /root/stage1c2server/shared/logs /home/scponly/stage1/; /bin/chown -R scponly:scponly /home/scponly/stage1/*
+* * * * * root /usr/bin/rsync -rvx --append-verify --delete /root/stage1c2server/shared/logs /home/scponly/stage1/; /bin/chown -R scponly:scponly /home/scponly/stage1/*
 * * * * * root /usr/share/redelk/bin/copydownloads_outflankstage1.sh
