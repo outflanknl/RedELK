@@ -214,7 +214,7 @@ class Module():
 
     def add_greynoise_data(self, doc, data):
         """ Add greynoise data to the doc """
-        doc['_source.greynoise'] = data
+        doc['_source']['greynoise'] = data
 
         try:
             es.update(index=doc['_index'], id=doc['_id'], body={'doc': doc['_source']})
