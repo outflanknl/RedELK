@@ -100,7 +100,7 @@ class Module():
             if not last_es_data:
                 greynoise_data = self.get_greynoise_data(ip)
             else:
-                greynoise_data = get_value('_source.greynoise', last_es_data)
+                greynoise_data = get_value('_source.source.greynoise', last_es_data)
 
             # If no greynoise data found, skip the IP
             if not greynoise_data:
@@ -182,7 +182,7 @@ class Module():
                     'filter': [
                         {
                             'range':  {
-                                'greynoise.query_timestamp': {
+                                'source.greynoise.query_timestamp': {
                                     'gte': f'now-{self.cache}s',
                                     'lte': 'now'
                                 }
@@ -214,7 +214,7 @@ class Module():
 
     def add_greynoise_data(self, doc, data):
         """ Add greynoise data to the doc """
-        doc['_source']['greynoise'] = data
+        doc['_source']['source']['greynoise'] = data
 
         try:
             es.update(index=doc['_index'], id=doc['_id'], body={'doc': doc['_source']})
