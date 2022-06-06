@@ -241,6 +241,30 @@
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
+                        "ip"
+                    ],
+                    "name": "client.cdn.ip",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "ip"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "long"
+                    ],
+                    "name": "client.cdn.port",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "number"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
                         "keyword"
                     ],
                     "name": "client.domain",
@@ -368,30 +392,6 @@
                     "scripted": false,
                     "searchable": true,
                     "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "ip"
-                    ],
-                    "name": "client.cdn.ip",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "ip"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "long"
-                    ],
-                    "name": "client.cdn.port",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "number"
                 },
                 {
                     "aggregatable": true,
@@ -856,6 +856,30 @@
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
+                        "ip"
+                    ],
+                    "name": "destination.cdn.ip",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "ip"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "long"
+                    ],
+                    "name": "destination.cdn.port",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "number"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
                         "keyword"
                     ],
                     "name": "destination.domain",
@@ -983,30 +1007,6 @@
                     "scripted": false,
                     "searchable": true,
                     "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "ip"
-                    ],
-                    "name": "destination.cdn.ip",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "ip"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "long"
-                    ],
-                    "name": "destination.cdn.port",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "number"
                 },
                 {
                     "aggregatable": true,
@@ -5527,6 +5527,30 @@
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
+                        "ip"
+                    ],
+                    "name": "server.cdn.ip",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "ip"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "long"
+                    ],
+                    "name": "server.cdn.port",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "number"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
                         "keyword"
                     ],
                     "name": "server.domain",
@@ -5654,30 +5678,6 @@
                     "scripted": false,
                     "searchable": true,
                     "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "ip"
-                    ],
-                    "name": "server.nat.ip",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "ip"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "long"
-                    ],
-                    "name": "server.nat.port",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "number"
                 },
                 {
                     "aggregatable": true,
@@ -7138,6 +7138,30 @@
                     "aggregatable": true,
                     "count": 0,
                     "esTypes": [
+                        "ip"
+                    ],
+                    "name": "source.cdn.ip",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "ip"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
+                        "long"
+                    ],
+                    "name": "source.cdn.port",
+                    "readFromDocValues": true,
+                    "scripted": false,
+                    "searchable": true,
+                    "type": "number"
+                },
+                {
+                    "aggregatable": true,
+                    "count": 0,
+                    "esTypes": [
                         "keyword"
                     ],
                     "name": "source.domain",
@@ -7265,30 +7289,6 @@
                     "scripted": false,
                     "searchable": true,
                     "type": "string"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "ip"
-                    ],
-                    "name": "source.nat.ip",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "ip"
-                },
-                {
-                    "aggregatable": true,
-                    "count": 0,
-                    "esTypes": [
-                        "long"
-                    ],
-                    "name": "source.nat.port",
-                    "readFromDocValues": true,
-                    "scripted": false,
-                    "searchable": true,
-                    "type": "number"
                 },
                 {
                     "aggregatable": true,
@@ -8676,8 +8676,8 @@
         },
         "references": [],
         "sort": [
-            1645363343565,
-            1305
+            1654547964930,
+            1818
         ],
         "type": "index-pattern",
         "version": "1"
