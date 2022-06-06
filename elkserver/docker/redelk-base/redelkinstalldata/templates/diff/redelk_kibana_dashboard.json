@@ -650,7 +650,8 @@
             "panelsJSON": [
                 {
                     "embeddableConfig": {
-                        "enhancements": {}
+                        "enhancements": {},
+                        "hidePanelTitles": true
                     },
                     "gridData": {
                         "h": 2,
@@ -847,8 +848,8 @@
             }
         ],
         "sort": [
-            1654551426574,
-            25365
+            1654551927133,
+            28316
         ],
         "type": "dashboard",
         "version": "1"
