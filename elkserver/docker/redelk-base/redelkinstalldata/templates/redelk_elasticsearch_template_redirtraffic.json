@@ -95,6 +95,74 @@
                 },
                 "type": "object"
             },
+            "destination": {
+                "properties": {
+                    "as": {
+                        "properties": {
+                            "number": {
+                                "type": "long"
+                            },
+                            "organization": {
+                                "properties": {
+                                    "name": {
+                                        "fields": {
+                                            "text": {
+                                                "type": "text"
+                                            }
+                                        },
+                                        "type": "keyword"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "geo": {
+                        "properties": {
+                            "city_name": {
+                                "doc_values": true,
+                                "eager_global_ordinals": false,
+                                "index": true,
+                                "index_options": "docs",
+                                "norms": false,
+                                "split_queries_on_whitespace": false,
+                                "store": false,
+                                "type": "keyword"
+                            },
+                            "continent_name": {
+                                "type": "keyword"
+                            },
+                            "country_iso_code": {
+                                "type": "keyword"
+                            },
+                            "country_name": {
+                                "type": "keyword"
+                            },
+                            "location": {
+                                "type": "geo_point"
+                            },
+                            "name": {
+                                "type": "keyword"
+                            },
+                            "region_iso_code": {
+                                "type": "keyword"
+                            },
+                            "region_name": {
+                                "type": "keyword"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "ip": {
+                        "type": "ip"
+                    },
+                    "port": {
+                        "type": "long"
+                    }
+                },
+                "type": "object"
+            },
             "ecs": {
                 "properties": {
                     "version": {
@@ -191,81 +259,6 @@
                     },
                     "url": {
                         "ignore_above": 1024,
-                        "type": "keyword"
-                    }
-                },
-                "type": "object"
-            },
-            "greynoise": {
-                "properties": {
-                    "Name_List": {
-                        "type": "text"
-                    },
-                    "OS_List": {
-                        "type": "text"
-                    },
-                    "first_seen": {
-                        "type": "keyword"
-                    },
-                    "ip": {
-                        "type": "keyword"
-                    },
-                    "last_result": {
-                        "properties": {
-                            "category": {
-                                "type": "keyword"
-                            },
-                            "confidence": {
-                                "type": "keyword"
-                            },
-                            "first_seen": {
-                                "type": "keyword"
-                            },
-                            "intention": {
-                                "type": "keyword"
-                            },
-                            "last_updated": {
-                                "type": "keyword"
-                            },
-                            "metadata": {
-                                "properties": {
-                                    "asn": {
-                                        "type": "keyword"
-                                    },
-                                    "datacenter": {
-                                        "type": "text"
-                                    },
-                                    "link": {
-                                        "type": "text"
-                                    },
-                                    "org": {
-                                        "type": "text"
-                                    },
-                                    "os": {
-                                        "type": "text"
-                                    },
-                                    "rdns": {
-                                        "type": "keyword"
-                                    },
-                                    "rdns_parent": {
-                                        "type": "keyword"
-                                    },
-                                    "tor": {
-                                        "type": "boolean"
-                                    }
-                                },
-                                "type": "object"
-                            },
-                            "name": {
-                                "type": "keyword"
-                            }
-                        },
-                        "type": "object"
-                    },
-                    "query_timestamp": {
-                        "type": "date"
-                    },
-                    "status": {
                         "type": "keyword"
                     }
                 },
@@ -693,6 +686,38 @@
                             },
                             "region_name": {
                                 "type": "keyword"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "greynoise": {
+                        "properties": {
+                            "classification": {
+                                "type": "keyword"
+                            },
+                            "ip": {
+                                "type": "ip"
+                            },
+                            "last_seen": {
+                                "type": "date"
+                            },
+                            "link": {
+                                "type": "text"
+                            },
+                            "message": {
+                                "type": "text"
+                            },
+                            "name": {
+                                "type": "keyword"
+                            },
+                            "noise": {
+                                "type": "boolean"
+                            },
+                            "query_timestamp": {
+                                "type": "date"
+                            },
+                            "riot": {
+                                "type": "boolean"
                             }
                         },
                         "type": "object"

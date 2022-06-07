@@ -148,6 +148,15 @@ if [ $ERROR -ne 0 ]; then
 fi
 echo "" >> $LOGFILE
 
+echo "[*] Installing Kibana maps" | tee -a $LOGFILE
+upcheck_kibana
+$CURL -X POST "https://redelk-kibana:5601/api/saved_objects/_import?overwrite=true" -H 'kbn-xsrf: true' -F file=@./root/redelkinstalldata/templates/redelk_kibana_map.ndjson >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echo "[X] Could not install Kibana maps (Error Code: $ERROR)."
+fi
+echo "" >> $LOGFILE
+
 echo "[*] Installing Kibana dashboards" | tee -a $LOGFILE
 upcheck_kibana
 $CURL -X POST "https://redelk-kibana:5601/api/saved_objects/_import?overwrite=true" -H 'kbn-xsrf: true' -F file=@./root/redelkinstalldata/templates/redelk_kibana_dashboard.ndjson >> $LOGFILE 2>&1
