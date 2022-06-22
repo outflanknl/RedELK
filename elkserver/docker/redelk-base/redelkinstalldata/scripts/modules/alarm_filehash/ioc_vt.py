@@ -67,7 +67,7 @@ class VT():
             json_response = None
         else: # Unexpected result
             self.logger.warning('Error retrieving VT File hash results (HTTP Status code: %d): %s', response.status_code, response.text)
-            json_response = response.text
+            json_response = None
 
         return json_response
 
