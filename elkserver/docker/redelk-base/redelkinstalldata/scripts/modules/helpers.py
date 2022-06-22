@@ -30,6 +30,12 @@ def pprint(to_print):
     out_string = json.dumps(to_print, indent=2, sort_keys=True)
     return out_string
 
+def is_json(myjson):
+  try:
+    json.loads(myjson)
+  except ValueError as e:
+    return False
+  return True
 
 def get_value(path, source, default_value=None):
     """ Gets the value in source based on the provided path, or 'default_value' if not exists (default: None) """

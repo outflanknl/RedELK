@@ -15,6 +15,7 @@ from dateutil import parser
 import requests
 
 from modules.helpers import get_value
+from modules.helpers import is_json
 
 # The Public API is limited to 2000 requests per hour and a rate of 200 requests per minute.
 
@@ -78,14 +79,12 @@ class HA():
 
         # Search for the file hash
         response = requests.post(url, headers=headers, data=payload)
-
         if response.status_code == 200: # Hash found 
             json_response = response.json()
         else: # Unexpected result
             self.logger.warning('Error retrieving VT File hash results (HTTP Status code: %d): %s', response.status_code, response.text)
             #json_response = response.text
             json_response = []  # see lione 106 checking for len 0.
-
         return json_response
 
     def test(self, hash_list):
@@ -107,7 +106,7 @@ class HA():
                     ha_results[md5] = {
                         'result': 'clean'
                     }
-                else:
+                elif is_json(ha_result):
                     # Loop through the results to get the first analysis (submission) date
                     first_analysis_time = datetime.utcnow()
                     for result in ha_result:
@@ -122,6 +121,11 @@ class HA():
                         'first_submitted': first_analysis_time.isoformat(),
                         # TO-DO: loop through the submissions to get the time 'last_seen'
                     }
+                else:
+                    # some horrible error
+                    # implement logging here
+                    continue
+
             else:
                 # Quota reached, skip the check
                 ha_results[md5] = {
