@@ -99,6 +99,10 @@ enrich = {
         'enabled': True,
         'interval': 300
     },
+    'enrich_sliver': {
+        'enabled': True,
+        'interval': 300
+    },
     'enrich_greynoise': {
         'enabled': True,
         'interval': 310,
