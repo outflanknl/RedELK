@@ -11,7 +11,7 @@ import logging
 import datetime
 import os.path
 
-from modules.helpers import get_initial_alarm_result, get_query, get_value, es, is_valid_domain_name
+from modules.helpers import get_initial_alarm_result, get_query, get_value, es, match_domain_name
 
 info = {
     'version': 0.1,
@@ -58,7 +58,7 @@ class Module():
 
         # Get data from ES domainlist
         query = f'domainslist.name:{domainlist}'
-        es_domainslist_docs = get_query(query, size=10000, index='redelk-*')
+        es_domainslist_docs = get_query(query, size=10000, index='redelk-domainslist-*')
 
         # Check if config domain is in ES and source = config_file
         es_domainslist = []
@@ -113,11 +113,11 @@ class Module():
             content = config_file.readlines()
 
         for line in content:
-            domain_match = is_valid_domain_name(line)
-            if domain_match:
+            domain_match = match_domain_name(line)
+            if domain_match and domain_match.group(1) is not None:
                 cfg_domainslist.append((domain_match.group(1), domain_match.group(len(domain_match.groups()))))
             else:
-                self.logger.warning('Invalid domain in %s: %s', fname, line)
+                self.logger.debug('Invalid domain in %s: %s', fname, line)
 
         return cfg_domainslist
 
