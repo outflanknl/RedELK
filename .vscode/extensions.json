@@ -1,0 +1,9 @@
+{
+    "recommendations": [
+        "ms-python.python",
+        "ms-toolsai.jupyter",
+        "redhat.vscode-yaml",
+        "oderwat.indent-rainbow",
+        "ms-azuretools.vscode-docker"
+    ]
+}
