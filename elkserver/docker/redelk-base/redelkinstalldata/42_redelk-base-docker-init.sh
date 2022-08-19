@@ -204,6 +204,7 @@ echo "" >> $LOGFILE
 
 echo "[*] Fixing cron file permissions" | tee -a $LOGFILE
 chown root:root /etc/cron.d/redelk >> $LOGFILE 2>&1
+chmod 644 /etc/cron.d/redelk >> $LOGFILE 2>&1 
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echo "[X] Could not fix cron file permissions (Error Code: $ERROR)."

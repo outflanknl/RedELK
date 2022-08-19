@@ -1,0 +1,17 @@
+- type: log
+  scan_frequency: 5s
+  enabled: true
+  fields_under_root: true
+  json.keys_under_root: true
+  json.add_error_key: true
+  paths:
+    - /root/.sliver/logs/audit.json
+  fields:
+    infra:
+      attack_scenario: @@ATTACKSCENARIO@@
+      log:
+        type: rtops
+    c2:
+      program: sliver
+      log:
+        type: events
