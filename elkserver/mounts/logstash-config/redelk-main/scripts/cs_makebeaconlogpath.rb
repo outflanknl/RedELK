@@ -8,9 +8,7 @@
 def filter(event)
 	host = event.get("[agent][name]")
 	logpath = event.get("[log][file][path]")
-	implant_id = event.get("[implant][id]")
 	temppath = logpath.split('/cobaltstrike')
-	temppath2 = temppath[1].split(/\/([^\/]*)$/)
 	implantlogpath = "/c2logs/" + "#{host}" + "/cobaltstrike" + "#{temppath[1]}"
 	event.tag("_rubyparseok")
   	event.set("[implant][log_file]", implantlogpath)
