@@ -9,7 +9,6 @@
 def filter(event)
 	host = event.get("[agent][name]")
 	logpath = event.get("[log][file][path]")
-	implant_id = event.get("[implant][id]")
 	desktop_session = event.get("[keystrokes][desktop_session]")
 	temppath = logpath.split('/cobaltstrike')
 	temppath2 = temppath[1].split(/\/([^\/]*)$/)
