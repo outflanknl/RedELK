@@ -82,6 +82,10 @@ alarms = {
     'alarm_dummy': {
         'enabled': False,
         'interval': 300
+    },
+    'alarm_manual': {
+        'enabled': False,
+        'interval': 300
     }
 }
 if 'alarms' in data:

@@ -53,6 +53,10 @@
         "alarm_backendalarm": {
             "enabled": true,
             "interval": 320
+        },
+        "alarm_manual": {
+            "enabled": false,
+            "interval": 300
         }
     },
     "enrich": {
