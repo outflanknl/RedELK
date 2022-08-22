@@ -9,7 +9,6 @@ Authors:
 """
 
 import logging
-import traceback
 import requests
 
 from config import enrich
@@ -31,6 +30,7 @@ class VT:
             "status": "unknown",
             "response_code": -1,
             "extra_data": {},
+            "last_checked": None,
         }
 
         # Get the remaining quota for this run
@@ -45,46 +45,44 @@ class VT:
         vt_result = self.get_vt_domain_results(domain)
         self.logger.debug("Response: %s", vt_result)
 
-        if vt_result is not None:
-            if isinstance(vt_result, type({})) and "data" in vt_result:
-                result["status"] = "found"
+        if (
+            vt_result is not None
+            and isinstance(vt_result, type({}))
+            and "data" in vt_result
+        ):
+            result["status"] = "found"
 
-                vt_cats = get_value("data.attributes.categories", vt_result, {})
-                result["extra_data"]["record"] = get_value(
-                    "data.attributes", vt_result, {}
+            vt_cats = get_value("data.attributes.categories", vt_result, {})
+            result["extra_data"]["record"] = get_value("data.attributes", vt_result, {})
+
+            # Parse the categories
+            for cat in vt_cats:
+                result["categories"].extend(
+                    [x.strip() for x in vt_cats[cat].split(",")]
                 )
 
-                # Parse the categories
-                for cat in vt_cats:
-                    result["categories"].extend(
-                        [x.strip() for x in vt_cats[cat].split(",")]
-                    )
+            # # Get first submission date
+            # first_submitted_ts = get_value(
+            #     "data.attributes.first_submission_date", vt_result, None
+            # )
+            # try:
+            #     first_submitted_date = datetime.fromtimestamp(
+            #         first_submitted_ts
+            #     ).isoformat()
+            # # pylint: disable=broad-except
+            # except Exception:
+            #     first_submitted_date = None
 
-                # # Get first submission date
-                # first_submitted_ts = get_value(
-                #     "data.attributes.first_submission_date", vt_result, None
-                # )
-                # try:
-                #     first_submitted_date = datetime.fromtimestamp(
-                #         first_submitted_ts
-                #     ).isoformat()
-                # # pylint: disable=broad-except
-                # except Exception:
-                #     first_submitted_date = None
-
-                # last_modification_ts = get_value(
-                #     "data.attributes.last_modification_date", vt_result, None
-                # )
-                # try:
-                #     last_modification_date = datetime.fromtimestamp(
-                #         last_modification_ts
-                #     ).isoformat()
-                # # pylint: disable=broad-except
-                # except Exception:
-                #     last_modification_date = None
-
-            else:
-                result["status"] = "not_found"
+            # last_modification_ts = get_value(
+            #     "data.attributes.last_modification_date", vt_result, None
+            # )
+            # try:
+            #     last_modification_date = datetime.fromtimestamp(
+            #         last_modification_ts
+            #     ).isoformat()
+            # # pylint: disable=broad-except
+            # except Exception:
+            #     last_modification_date = None
 
         else:
             # 404 not found

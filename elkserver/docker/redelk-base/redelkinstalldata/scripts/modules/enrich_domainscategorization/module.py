@@ -9,10 +9,9 @@ Authors:
 """
 import datetime
 import logging
-import re
-from this import d
+import copy
 
-from modules.enrich_domainscategorization.cat_bluecoat import Bluecoat
+# from modules.enrich_domainscategorization.cat_bluecoat import Bluecoat
 from modules.enrich_domainscategorization.cat_ibmxforce import IBMXForce
 from modules.enrich_domainscategorization.cat_mcafee import MCafee
 from modules.enrich_domainscategorization.cat_vt import VT
@@ -55,10 +54,11 @@ class Module:
 
         # 2. Check all domains
         checked_domains = self.check_domains(domains)
+        self.logger.debug("Checked domains: %s", checked_domains)
 
         # 3. loop through each result and update the categorization data
         # res = self.update_traffic(domains_lists)
-        self.update_categorization_data(checked_domains)
+        self.update_categorization_data(domains, checked_domains)
 
         # 4. Return all hits so they can be tagged
         ret["hits"]["hits"] = []
@@ -94,48 +94,68 @@ class Module:
         mcafee = MCafee()
         vt = VT()  # pylint: disable=invalid-name
 
+        checked_domains = {}
+
         for domain in domains:
-            domains[domain]["categories"] = {}
-            domains[domain]["extra_data"] = {}
+            checked_domains[domain] = {
+                "categorization": {
+                    "engines": {},
+                    "categories": [],
+                    "categories_str": "",
+                }
+            }
 
             # Loop through all enabled engines and check the domain
             for engine in self.enabled_engines:
-                self.logger.debug("Checking %s with %s", domain, engine)
-                if engine == "vt":
-                    result = vt.check_domain(domain)
-                elif engine == "ibmxforce":
-                    result = ibmxforce.check_domain(domain)
-                elif engine == "mcafee":
-                    result = mcafee.check_domain(domain)
-                # elif engine == "bluecoat":
-                #     result = bluecoat.check_domain(domain)
-                else:
-                    self.logger.error("Unknown engine: %s", engine)
+                try:
 
-                domains[domain]["categories"][engine] = result["categories"]
-                domains[domain]["extra_data"][engine] = get_value(
-                    "extra_data", result, {}
+                    self.logger.debug("Checking %s with %s", domain, engine)
+                    if engine == "vt":
+                        result = copy.deepcopy(vt.check_domain(domain))
+                    elif engine == "ibmxforce":
+                        result = copy.deepcopy(ibmxforce.check_domain(domain))
+                    elif engine == "mcafee":
+                        result = copy.deepcopy(mcafee.check_domain(domain))
+                    # elif engine == "bluecoat":
+                    #     result = copy.deepcopy(bluecoat.check_domain(domain))
+                    else:
+                        self.logger.error("Unknown engine: %s", engine)
+
+                except Exception as err:  # pylint: disable=broad-except
+                    self.logger.error(
+                        "Error checking domain %s with %s: %s", domain, engine, err
+                    )
+                    result = {
+                        "categories": [],
+                        "extra_data": {},
+                    }
+
+                checked_domains[domain]["categorization"]["engines"][engine] = {
+                    "categories": result["categories"],
+                    "extra_data": result["extra_data"],
+                }
+
+                checked_domains[domain]["categorization"]["categories"].extend(
+                    result["categories"]
                 )
+                checked_domains[domain]["categorization"][
+                    "categories_str"
+                ] += f"{engine}={','.join(result['categories'])}"
 
-        return domains
+        return checked_domains
 
-    def update_categorization_data(self, domains):
+    def update_categorization_data(self, domains, checked_domains):
         """Update the categorization data for each domain"""
         for domain in domains:
             self.logger.debug("Updating categorization data for %s", domain)
             # Check if current categorization data is different from the new one
             new_categories = []
-            raw_categories = []
-            for engine in domains[domain]["categories"]:
-                if len(domains[domain]["categories"][engine]) > 0:
-                    new_categories.append(
-                        f"{engine}={';'.join(domains[domain]['categories'][engine])}"
-                    )
-                    raw_categories.extend(domains[domain]["categories"][engine])
 
-            new_categories = "|".join(new_categories)
+            new_categories = get_value(
+                "categorization.categories_str", checked_domains[domain], ""
+            )
             old_categories = get_value(
-                "_source.domainslist.categories", domains[domain], ""
+                "_source.domainslist.categorization.categories_str", domains[domain], ""
             )
             self.logger.debug("New categories: %s", new_categories)
             self.logger.debug("Old categories: %s", old_categories)
@@ -147,16 +167,30 @@ class Module:
                     domain,
                     new_categories,
                 )
-                domains[domain]["_source"]["domainslist"]["categories"] = new_categories
                 domains[domain]["_source"]["domainslist"][
-                    "raw_categories"
-                ] = raw_categories
-                domains[domain]["_source"]["domainslist"]["categories_extra"] = domains[
-                    domain
-                ]["extra_data"]
+                    "categorization"
+                ] = checked_domains[domain]["categorization"]
+
                 es.update(
                     index=domains[domain]["_index"],
                     id=domains[domain]["_id"],
                     body={"doc": domains[domain]["_source"]},
                 )
-                # TODO: add a document to the bluecheck index to indicate that the categorization data has been updated
+
+                self.add_bluecheck_entry(domains[domain])
+
+    def add_bluecheck_entry(self, domain):
+        """Add an entry to the bluecheck index"""
+
+        data = domain["_source"]
+
+        now = datetime.datetime.utcnow()
+
+        doc_id = f"{domain['_id']}-{now.timestamp()}"
+
+        # Add checked_at field
+        data["last_checked"] = now.isoformat()
+        data["@timestamp"] = now.isoformat()
+
+        # Create the document in bluecheck index
+        es.create(index="bluecheck-domains", body=data, id=doc_id)

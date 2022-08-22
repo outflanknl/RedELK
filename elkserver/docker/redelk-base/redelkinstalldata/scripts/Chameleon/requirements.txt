@@ -1,2 +1,0 @@
-requests~=2.27.1
-beautifulsoup4~=4.9.1

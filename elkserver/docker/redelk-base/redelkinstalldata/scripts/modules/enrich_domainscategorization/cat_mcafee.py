@@ -38,7 +38,7 @@ class MCafee:
         session = requests.session()
 
         try:
-            # 1. Get anti-automation tokens
+            # Get anti-automation tokens
             headers = {
                 "User-Agent": "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)",
                 "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
@@ -53,7 +53,7 @@ class MCafee:
             e_token = form.find("input", {"name": "e"}).get("value")
             c_token = form.find("input", {"name": "c"}).get("value")
 
-            # 2. Check domain with MCAfee
+            # Check domain with MCAfee
             headers["Referer"] = base_url
             session.headers.update(headers)
             payload = {
@@ -72,15 +72,15 @@ class MCafee:
             )
             result["response_code"] = response.status_code
 
-            # 3. Parse response
+            # Parse response
             bs_parsed = BeautifulSoup(response.content, "html.parser")
             form = bs_parsed.find("form", {"class": "contactForm"})
-            # sid = form.find("input", {"name": "sid"}).get("value")
+
             results_table = bs_parsed.find("table", {"class": "result-table"})
-            self.logger.debug("Results table: %s", results_table)
 
             td_cat = results_table.find_all("td")
             categories = td_cat[len(td_cat) - 2].text
+
             # Split categories by "- " and remove empty strings
             categories = categories.strip().split("- ")[1:]
 
