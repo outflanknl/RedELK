@@ -4,7 +4,7 @@ Part of RedELK
 
 This check queries for C2 messages that contain "REDELK_ALARM" and will send an alarm with the content of that line.
 
-Only alarms when c2.log.type is: events or implant_output
+Only alarms when c2.log.type is: events or implant_input
 
 Authors:
 - Outflank B.V. / Marc Smeets (@MarcOverIp)
@@ -17,7 +17,7 @@ from modules.helpers import get_initial_alarm_result, get_value, raw_search
 info = {
     'version': 0.1,
     'name': 'Alarm manual module',
-    'description': 'This check queries c2.message items that contain "REDELK_ALARM" and alarms the content of that line',
+    'description': 'This check queries c2.message items (output and event log) that contain "REDELK_ALARM" and alarms the content of that line',
     'type': 'redelk_alarm',
     'submodule': 'alarm_manual'
 }
@@ -79,13 +79,15 @@ class Module():
 
     def alarm_check(self, alarmed_messages):  # pylint: disable=no-self-use
         """ This check queries for C2 messages that contain 'REDELK_ALARM' """
+    def alarm_check(self, alarmed_messages): 
+        """ This check queries for C2 messages (input of eventlog) that contain 'REDELK_ALARM' """
         es_query = {
             'sort': [{'@timestamp': {'order': 'asc'}}],
             'query': {
                 'bool': {
                     'must': {
                         'query_string': {
-                            'query': '(c2.message:*REDELK_ALARM*) AND (c2.log.type:implant_output OR c2.log.type:events)'
+                            'query': '(c2.message:*REDELK_ALARM*) AND (((c2.log.type:implant_input) AND (tags:enrich_*)) OR (c2.log.type:events))'
                         }
                     },
                     'must_not': [
