@@ -40,7 +40,7 @@ class Module():
         self.logger.info('finished running module. result: %s hits', ret['hits']['total'])
         return ret
 
-    def get_alarmed_messages(self):  # pylint: disable=no-self-use
+    def get_alarmed_messages(self): 
         """ Returns all previous messages that have been alarmed already """
         es_query = {
             'sort': [{'@timestamp': {'order': 'desc'}}],
@@ -77,8 +77,6 @@ class Module():
 
         return messages
 
-    def alarm_check(self, alarmed_messages):  # pylint: disable=no-self-use
-        """ This check queries for C2 messages that contain 'REDELK_ALARM' """
     def alarm_check(self, alarmed_messages): 
         """ This check queries for C2 messages (input of eventlog) that contain 'REDELK_ALARM' """
         es_query = {
@@ -123,7 +121,3 @@ class Module():
 
         # Return the array of new documents to be alarmed
         return hits
-
-
-
-
