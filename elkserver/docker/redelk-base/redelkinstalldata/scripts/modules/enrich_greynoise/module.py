@@ -161,7 +161,7 @@ class Module():
                 'classification': get_value('classification', json_result, 'unknown'),
                 'name': get_value('name', json_result, 'unknown'),
                 'link': get_value('link', json_result, 'unknown'),
-                'last_seen': get_value('last_seen', json_result, 'unknown'),
+                'last_seen': get_value('last_seen', json_result, None),
                 'message': get_value('message', json_result, 'unknown'),
                 'query_timestamp': int(time())
             }
