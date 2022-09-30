@@ -505,7 +505,7 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "[*] Setting permissions on redelk www data" | tee -a $LOGFILE
-chown -R 1000 ./mounts/redelk-www && chmod 664 ./mounts/redelk-www/* >> $LOGFILE 2>&1
+chown -R 1000 ./mounts/redelk-www && chmod 755 ./mounts/redelk-www/* >> $LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echo "[X] Could not set permissions on redelk www data (Error Code: $ERROR)." | tee -a $LOGFILE
