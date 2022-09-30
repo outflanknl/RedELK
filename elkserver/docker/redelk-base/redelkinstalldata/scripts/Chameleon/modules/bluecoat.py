@@ -10,10 +10,11 @@ import traceback
 import requests
 import os
 
+
 class NewHandler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
-        if self.path == '/':
-            self.path = 'webroot/index.html'
+        if self.path == "/":
+            self.path = "webroot/index.html"
         return http.server.SimpleHTTPRequestHandler.do_GET(self)
 
 
@@ -37,25 +38,31 @@ class Bluecoat:
     def __init__(self, url, clonesite):
         self.url = url
         self.clonesite = clonesite
-        self.server = ''
+        self.server = ""
 
     def clone(self):
         print("[-] Cloning " + self.clonesite)
-        headers = {'User-Agent': 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)'}
+        headers = {"User-Agent": "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)"}
         webContent = requests.get(self.clonesite, headers=headers).content
 
-        if not os.path.exists('webroot'):
-            os.makedirs('webroot')
+        if not os.path.exists("webroot"):
+            os.makedirs("webroot")
 
         try:
-            if webContent.lower().index(b"<base href=\""):
+            if webContent.lower().index(b'<base href="'):
                 pass
         except ValueError:
             parsed_uri = urlparse(self.clonesite)
-            base = '{uri.scheme}://{uri.netloc}/'.format(uri=parsed_uri)
-            webContent = re.sub(b"(<head.*?>)", b"\g<0>\n<base href=\"" + bytes(base, encoding='utf8') + b"\">", webContent, count=1, flags=re.IGNORECASE)
+            base = "{uri.scheme}://{uri.netloc}/".format(uri=parsed_uri)
+            webContent = re.sub(
+                b"(<head.*?>)",
+                b'\g<0>\n<base href="' + bytes(base, encoding="utf8") + b'">',
+                webContent,
+                count=1,
+                flags=re.IGNORECASE,
+            )
 
-        with open('webroot/index.html', 'wb') as indexFile:
+        with open("webroot/index.html", "wb") as indexFile:
             indexFile.write(webContent)
             indexFile.close()
 
@@ -67,14 +74,23 @@ class Bluecoat:
         session = requests.session()
         url = "https://sitereview.bluecoat.com/resource/lookup"
         cookies = {"XSRF-TOKEN": "028e5984-50bf-4c00-ad38-87d19957201a"}
-        headers = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0",
-                         "Accept": "application/json, text/plain, */*", "Accept-Language": "en_US",
-                         "Accept-Encoding": "gzip, deflate", "Referer": "https://sitereview.bluecoat.com/",
-                         "X-XSRF-TOKEN": "028e5984-50bf-4c00-ad38-87d19957201a",
-                         "Content-Type": "application/json; charset=utf-8", "Connection": "close"}
-        data = {"captcha": "", "key": "",
-                      "phrase": "RXZlbiBpZiB5b3UgYXJlIG5vdCBwYXJ0IG9mIGEgY29tbWVyY2lhbCBvcmdhbml6YXRpb24sIHNjcmlwdGluZyBhZ2FpbnN0IFNpdGUgUmV2aWV3IGlzIHN0aWxsIGFnYWluc3QgdGhlIFRlcm1zIG9mIFNlcnZpY2U=",
-                      "source": "new lookup", "url": self.url}
+        headers = {
+            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0",
+            "Accept": "application/json, text/plain, */*",
+            "Accept-Language": "en_US",
+            "Accept-Encoding": "gzip, deflate",
+            "Referer": "https://sitereview.bluecoat.com/",
+            "X-XSRF-TOKEN": "028e5984-50bf-4c00-ad38-87d19957201a",
+            "Content-Type": "application/json; charset=utf-8",
+            "Connection": "close",
+        }
+        data = {
+            "captcha": "",
+            "key": "",
+            "phrase": "RXZlbiBpZiB5b3UgYXJlIG5vdCBwYXJ0IG9mIGEgY29tbWVyY2lhbCBvcmdhbml6YXRpb24sIHNjcmlwdGluZyBhZ2FpbnN0IFNpdGUgUmV2aWV3IGlzIHN0aWxsIGFnYWluc3QgdGhlIFRlcm1zIG9mIFNlcnZpY2U=",
+            "source": "new lookup",
+            "url": self.url,
+        }
         response = session.post(url, headers=headers, cookies=cookies, json=data)
 
         try:
@@ -82,14 +98,14 @@ class Bluecoat:
             if "errorType" in json_data:
                 if json_data["errorType"] == "captcha":
                     print("[-] BlueCoat blocked us :(")
-                    return("Blocked by BlueCoat")
+                    return "Blocked by BlueCoat"
                     sys.exit(0)
             category = []
             for entry in json_data["categorization"]:
                 category.append(entry["name"])
-            cat = ', '.join(category)
+            cat = ", ".join(category)
             print("\033[1;32m[-] Your site is categorised as: " + cat + "\033[0;0m")
-            return(cat)
+            return cat
         except Exception as e:
             traceback.print_exc()
 

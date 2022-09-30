@@ -1,1 +1,1 @@
-__all__ = ['bluecoat', 'trustedsource', 'ibmxforce']
+__all__ = ["bluecoat", "trustedsource", "ibmxforce"]
