@@ -173,24 +173,24 @@ AccountName  : stroop.local/Domain Admins
 IsDomain     : True
 IsGroup      : True
 SID          : S-1-5-21-2163199188-2306780613-1636707950-512
-Description  : 
-Disabled     : 
-LastLogin    : 
-PwdLastSet   : 
-PwdExpired   : 
-UserFlags    : 
+Description  :
+Disabled     :
+LastLogin    :
+PwdLastSet   :
+PwdExpired   :
+UserFlags    :
 
 ComputerName : l-win224
 AccountName  : stroop.local/Domain Users
 IsDomain     : True
 IsGroup      : True
 SID          : S-1-5-21-2163199188-2306780613-1636707950-513
-Description  : 
-Disabled     : 
-LastLogin    : 
-PwdLastSet   : 
-PwdExpired   : 
-UserFlags    : 
+Description  :
+Disabled     :
+LastLogin    :
+PwdLastSet   :
+PwdExpired   :
+UserFlags    :
 
 
 
@@ -211,8 +211,8 @@ received output:
 received output:
 Computers in domain 'stroop.local':
 
- Server Name             IP Address                      
- -----------             ----------                      
+ Server Name             IP Address
+ -----------             ----------
  S-WIN21                 10.1.2.10
  S-WIN22                 10.2.1.10
  s-win100                unknown
@@ -1840,15 +1840,15 @@ cn                            : S-WIN22
 accountexpires                : 9223372036854775807
 adspath                       : LDAP://CN=S-WIN22,OU=Domain Controllers,DC=stroop,DC=local
 instancetype                  : 4
-msdfsr-computerreferencebl    : CN=S-WIN22,CN=Topology,CN=Domain System 
+msdfsr-computerreferencebl    : CN=S-WIN22,CN=Topology,CN=Domain System
                                 Volume,CN=DFSR-GlobalSettings,CN=System,DC=stroop,DC=local
 objectguid                    : 739b8d8a-66db-4d1f-accb-3b54c02be81f
 operatingsystem               : Windows Server 2012 R2 Datacenter
 operatingsystemversion        : 6.3 (9600)
 objectcategory                : CN=Computer,CN=Schema,CN=Configuration,DC=stroop,DC=local
 dscorepropagationdata         : 1/1/1601 12:00:00 AM
-serviceprincipalname          : {DNS/S-WIN22.stroop.local, HOST/S-WIN22.stroop.local/STROOP, 
-                                RPC/74e70e8d-7d61-4bdc-a817-63fa62eb73b2._msdcs.stroop.local, 
+serviceprincipalname          : {DNS/S-WIN22.stroop.local, HOST/S-WIN22.stroop.local/STROOP,
+                                RPC/74e70e8d-7d61-4bdc-a817-63fa62eb73b2._msdcs.stroop.local,
                                 GC/S-WIN22.stroop.local/stroop.local...}
 usncreated                    : 8042
 lastlogon                     : 3/30/2020 7:51:46 AM
@@ -1879,15 +1879,15 @@ cn                            : S-WIN21
 accountexpires                : 9223372036854775807
 adspath                       : LDAP://CN=S-WIN21,OU=Domain Controllers,DC=stroop,DC=local
 instancetype                  : 4
-msdfsr-computerreferencebl    : CN=S-WIN21,CN=Topology,CN=Domain System 
+msdfsr-computerreferencebl    : CN=S-WIN21,CN=Topology,CN=Domain System
                                 Volume,CN=DFSR-GlobalSettings,CN=System,DC=stroop,DC=local
 objectguid                    : 2f094ab8-be92-40b1-aa06-63512f213122
 operatingsystem               : Windows Server 2012 R2 Datacenter
 operatingsystemversion        : 6.3 (9600)
 objectcategory                : CN=Computer,CN=Schema,CN=Configuration,DC=stroop,DC=local
 dscorepropagationdata         : 1/1/1601 12:00:00 AM
-serviceprincipalname          : {Dfsr-12F9A27C-BF97-4787-9364-D31B6C55EB04/S-WIN21.stroop.local, 
-                                ldap/S-WIN21.stroop.local/ForestDnsZones.stroop.local, 
+serviceprincipalname          : {Dfsr-12F9A27C-BF97-4787-9364-D31B6C55EB04/S-WIN21.stroop.local,
+                                ldap/S-WIN21.stroop.local/ForestDnsZones.stroop.local,
                                 ldap/S-WIN21.stroop.local/DomainDnsZones.stroop.local, TERMSRV/S-WIN21...}
 usncreated                    : 8029
 useraccountcontrol            : 532480
@@ -1921,7 +1921,7 @@ operatingsystem               : Windows Server 2012 R2 Datacenter
 operatingsystemversion        : 6.3 (9600)
 objectcategory                : CN=Computer,CN=Schema,CN=Configuration,DC=stroop,DC=local
 dscorepropagationdata         : 1/1/1601 12:00:00 AM
-serviceprincipalname          : {TERMSRV/S-WIN43, TERMSRV/S-WIN43.stroop.local, WSMAN/S-WIN43, 
+serviceprincipalname          : {TERMSRV/S-WIN43, TERMSRV/S-WIN43.stroop.local, WSMAN/S-WIN43,
                                 WSMAN/S-WIN43.stroop.local...}
 useraccountcontrol            : 4096
 whencreated                   : 3/29/2020 10:12:40 AM
@@ -1953,7 +1953,7 @@ operatingsystem               : Windows Server 2016 Datacenter
 operatingsystemversion        : 10.0 (14393)
 objectcategory                : CN=Computer,CN=Schema,CN=Configuration,DC=stroop,DC=local
 dscorepropagationdata         : 1/1/1601 12:00:00 AM
-serviceprincipalname          : {WSMAN/S-WIN44, WSMAN/S-WIN44.stroop.local, TERMSRV/S-WIN44, 
+serviceprincipalname          : {WSMAN/S-WIN44, WSMAN/S-WIN44.stroop.local, TERMSRV/S-WIN44,
                                 TERMSRV/S-WIN44.stroop.local...}
 memberof                      : CN=Event Log Readers,CN=Builtin,DC=stroop,DC=local
 useraccountcontrol            : 4096
@@ -1986,7 +1986,7 @@ operatingsystem               : Windows 10 Enterprise LTSC
 operatingsystemversion        : 10.0 (17763)
 objectcategory                : CN=Computer,CN=Schema,CN=Configuration,DC=stroop,DC=local
 dscorepropagationdata         : 1/1/1601 12:00:00 AM
-serviceprincipalname          : {WSMAN/L-WIN223, WSMAN/L-WIN223.stroop.local, TERMSRV/L-WIN223, 
+serviceprincipalname          : {WSMAN/L-WIN223, WSMAN/L-WIN223.stroop.local, TERMSRV/L-WIN223,
                                 TERMSRV/L-WIN223.stroop.local...}
 lastlogon                     : 3/30/2020 8:40:35 AM
 usnchanged                    : 20818
@@ -2022,7 +2022,7 @@ operatingsystem               : Windows 10 Enterprise LTSC
 operatingsystemversion        : 10.0 (17763)
 objectcategory                : CN=Computer,CN=Schema,CN=Configuration,DC=stroop,DC=local
 dscorepropagationdata         : 1/1/1601 12:00:00 AM
-serviceprincipalname          : {WSMAN/L-WIN224, WSMAN/L-WIN224.stroop.local, TERMSRV/L-WIN224, 
+serviceprincipalname          : {WSMAN/L-WIN224, WSMAN/L-WIN224.stroop.local, TERMSRV/L-WIN224,
                                 TERMSRV/L-WIN224.stroop.local...}
 lastlogon                     : 3/30/2020 8:36:46 AM
 useraccountcontrol            : 4096
@@ -2055,7 +2055,7 @@ operatingsystem               : Windows 10 Enterprise LTSC
 operatingsystemversion        : 10.0 (17763)
 objectcategory                : CN=Computer,CN=Schema,CN=Configuration,DC=stroop,DC=local
 dscorepropagationdata         : 1/1/1601 12:00:00 AM
-serviceprincipalname          : {WSMAN/L-WIN225, WSMAN/L-WIN225.stroop.local, TERMSRV/L-WIN225, 
+serviceprincipalname          : {WSMAN/L-WIN225, WSMAN/L-WIN225.stroop.local, TERMSRV/L-WIN225,
                                 TERMSRV/L-WIN225.stroop.local...}
 lastlogon                     : 3/30/2020 8:43:44 AM
 usnchanged                    : 20822
@@ -2089,7 +2089,7 @@ operatingsystem               : Windows 10 Enterprise LTSC
 operatingsystemversion        : 10.0 (17763)
 objectcategory                : CN=Computer,CN=Schema,CN=Configuration,DC=stroop,DC=local
 dscorepropagationdata         : 1/1/1601 12:00:00 AM
-serviceprincipalname          : {WSMAN/L-WIN226, WSMAN/L-WIN226.stroop.local, TERMSRV/L-WIN226, 
+serviceprincipalname          : {WSMAN/L-WIN226, WSMAN/L-WIN226.stroop.local, TERMSRV/L-WIN226,
                                 TERMSRV/L-WIN226.stroop.local...}
 useraccountcontrol            : 4096
 whencreated                   : 3/29/2020 10:24:59 AM
@@ -2123,7 +2123,7 @@ operatingsystem               : Windows 10 Enterprise LTSC
 operatingsystemversion        : 10.0 (17763)
 objectcategory                : CN=Computer,CN=Schema,CN=Configuration,DC=stroop,DC=local
 dscorepropagationdata         : 1/1/1601 12:00:00 AM
-serviceprincipalname          : {WSMAN/L-WIN227, WSMAN/L-WIN227.stroop.local, TERMSRV/L-WIN227, 
+serviceprincipalname          : {WSMAN/L-WIN227, WSMAN/L-WIN227.stroop.local, TERMSRV/L-WIN227,
                                 TERMSRV/L-WIN227.stroop.local...}
 lastlogon                     : 3/30/2020 7:46:16 AM
 useraccountcontrol            : 4096
@@ -2158,7 +2158,7 @@ operatingsystem               : Windows 10 Enterprise LTSC
 operatingsystemversion        : 10.0 (17763)
 objectcategory                : CN=Computer,CN=Schema,CN=Configuration,DC=stroop,DC=local
 dscorepropagationdata         : 1/1/1601 12:00:00 AM
-serviceprincipalname          : {WSMAN/L-WIN228, WSMAN/L-WIN228.stroop.local, TERMSRV/L-WIN228, 
+serviceprincipalname          : {WSMAN/L-WIN228, WSMAN/L-WIN228.stroop.local, TERMSRV/L-WIN228,
                                 TERMSRV/L-WIN228.stroop.local...}
 lastlogon                     : 3/30/2020 8:11:41 AM
 useraccountcontrol            : 4096
@@ -2193,7 +2193,7 @@ operatingsystemversion        : 6.3 (9600)
 lastlogoff                    : 1/1/1601 12:00:00 AM
 objectcategory                : CN=Computer,CN=Schema,CN=Configuration,DC=stroop,DC=local
 dscorepropagationdata         : 1/1/1601 12:00:00 AM
-serviceprincipalname          : {TERMSRV/S-WIN45, TERMSRV/S-WIN45.stroop.local, WSMAN/S-WIN45, 
+serviceprincipalname          : {TERMSRV/S-WIN45, TERMSRV/S-WIN45.stroop.local, WSMAN/S-WIN45,
                                 WSMAN/S-WIN45.stroop.local...}
 whencreated                   : 3/29/2020 10:50:58 AM
 iscriticalsystemobject        : False
@@ -2282,11 +2282,11 @@ Shared resources at \\s-win43
 
 
 
-Share name        Type  Used as  Comment  
+Share name        Type  Used as  Comment
 
 -------------------------------------------------------------------------------
-DepartmentShares  Disk                    
-Software          Disk                    
+DepartmentShares  Disk
+Software          Disk
 The command completed successfully.
 
 

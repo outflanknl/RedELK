@@ -2,41 +2,41 @@
 
 # C2 server files
 c2servers:
-  - 'c2servers/**/*'
+  - "c2servers/**/*"
 
 # ELK server files
 elkserver:
-  - 'elkserver/**/*'
+  - "elkserver/**/*"
 
 # Redirector files
 redirs:
-  - 'redirs/**/*'
+  - "redirs/**/*"
 
 # Helper scripts
 helpers:
-  - 'helper-scripts/**/*'
+  - "helper-scripts/**/*"
 
 # Documentation
 documentation:
-  - 'README.md'
-  - 'LICENSE'
-  - 'VERSION'
-  - 'releasenotes.txt'
-  - 'images/**/*'
-  - 'example-data-and-configs/**/*'
+  - "README.md"
+  - "LICENSE"
+  - "VERSION"
+  - "releasenotes.txt"
+  - "images/**/*"
+  - "example-data-and-configs/**/*"
 
 # Installer files
 installer:
-  - 'initial-setup.sh'
-  - 'c2servers/install-c2server-*.sh'
-  - 'elkserver/install-elkserver.sh'
-  - 'elkserver/redelk-*.yml'
-  - 'redirs/install-redir.sh'
+  - "initial-setup.sh"
+  - "c2servers/install-c2server-*.sh"
+  - "elkserver/install-elkserver.sh"
+  - "elkserver/redelk-*.yml"
+  - "redirs/install-redir.sh"
 
 # Docker files
 docker:
-  - 'elkserver/docker/**/*'
+  - "elkserver/docker/**/*"
 
 # GitHub workflows and CI/CD files
 githubci:
-  - '.github/**/*'
+  - ".github/**/*"

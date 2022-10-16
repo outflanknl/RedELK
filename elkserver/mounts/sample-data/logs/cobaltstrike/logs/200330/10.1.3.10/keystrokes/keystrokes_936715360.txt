@@ -45,7 +45,7 @@ ad of competitors2[right]k
 2[tab]
 03/30 08:00:10 UTC Received keystrokes
 
-Decided: 
+Decided:
 03/30 08:02:47 UTC Received keystrokes
 
 Ani
@@ -58,7 +58,7 @@ se snowflakes
 : Peanut
 03/30 08:03:20 UTC Received keystrokes
 
- butter OR 
+ butter OR
 03/30 08:03:30 UTC Received keystrokes
 
 Nutella

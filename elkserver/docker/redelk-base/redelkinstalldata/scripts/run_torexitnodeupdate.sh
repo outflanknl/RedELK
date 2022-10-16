@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # Part of RedELK
-# Script to update list of TOR exit node IP addresses 
+# Script to update list of TOR exit node IP addresses
 #
 # Author: Outflank B.V. / Marc Smeets
 #
@@ -13,7 +13,7 @@ TEMPFILE="/tmp/torexitnodes.txt"
 
 curl -s https://check.torproject.org/exit-addresses | awk '/ExitAddress/ {print $2}' > $TEMPFILE
 LINECOUNT=`wc -l /tmp/torexitnodes.txt|awk '{print $1}'`
-if [ $LINECOUNT -ge 10 ]; then 
+if [ $LINECOUNT -ge 10 ]; then
     echo "# Part of RedELK - list of TOR exit node addresses - AUTO UPDATED, DO NOT MAKE MANUAL CHANGES" > $CONFIGFILE
     cat $TEMPFILE >> $CONFIGFILE
     rm $TEMPFILE

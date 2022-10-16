@@ -100,7 +100,7 @@ The indices in RedELK have more fields than listed below. Only the most relevant
 | torexitnodes_v0X                | Set when source IP address matches with config in /etc/redelk/torexitnodes.conf                           |
 | iplist_customer_v0X             | Set when source IP address matches with config in /etc/redelk/iplist_customer.conf                        |
 | iplist_unknown_v0X              | Set when source IP address matches with config in /etc/redelk/iplist_unknwown.conf                        |
-| iplist_alarmed                  | Set when this event was already alarmed     
+| iplist_alarmed                  | Set when this event was already alarmed
 | redirlongmessagecatchall        | Set when the catchall logstash grok rule was matched (redir.catchall is filled)  |
 
 

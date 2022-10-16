@@ -1,9 +1,9 @@
 #!/bin/bash
-# Part of RedELK 
+# Part of RedELK
 # Helper script to read out Kibana settings and dump the field names, EStype and Kibana type in a Markup table
 
 function QueryES() {
-    curl --user ${KIBANACREDS} -k -s -X GET "https://${KIBANAIP}:5601/api/saved_objects/index-pattern/${type}" -H 'kbn-xsrf: true' | jq -r '(.attributes.fields | fromjson)[] | select(.name | startswith("_")|not)| select(.name | startswith("@")|not)|"| " + .name + "   | " + (.esTypes|tostring) + "   | " + .type + "   |        |"'| tr -d '["]' >> $outfile    
+    curl --user ${KIBANACREDS} -k -s -X GET "https://${KIBANAIP}:5601/api/saved_objects/index-pattern/${type}" -H 'kbn-xsrf: true' | jq -r '(.attributes.fields | fromjson)[] | select(.name | startswith("_")|not)| select(.name | startswith("@")|not)|"| " + .name + "   | " + (.esTypes|tostring) + "   | " + .type + "   |        |"'| tr -d '["]' >> $outfile
 }
 
 echo "[*] Trying to auto determine the IP address of the redelk-kibana docker container."

@@ -99,17 +99,17 @@ Bugfixes:
 ### version 1.1
 * Added support for Cobalt Strike 4.1. Thanks to @fastlorenzo
 * HTTP status code parsing improved to better handle non-RFC approved logging by some redir programs
-* Fix for supporting underscores in hostnames, although not allowed by RFC. Thanks to @jaredhaight 
+* Fix for supporting underscores in hostnames, although not allowed by RFC. Thanks to @jaredhaight
 
 ### version 1.0.3
 * Added support for Nginx redirectors thanks to @sunnyneo
 
 ### version 1.0.2
-* Fixed silly bug in enrich.py that disabled Greynoise enrichment 
+* Fixed silly bug in enrich.py that disabled Greynoise enrichment
 
 ### version 1.0.1
 * Fixed bug in logstash filter rule when Apache doesn't have a hostname configured
-* Tuned verbosity of Alarm.py 
+* Tuned verbosity of Alarm.py
 
 ### version 1.0
 * Support for Apache redirectors
@@ -117,20 +117,20 @@ Bugfixes:
 * Fixed bug in useragent alarm, now uses config file as input
 * Added example configurations for HAProxy and Apache that show how to setup the logging required for RedELK
 * Added example Cobalt Strike Mallable profile that works with the example configs of Apache and HAProxy
-* Added RedELKFieldnames.md with detailed info on the field names in RedELK 
+* Added RedELKFieldnames.md with detailed info on the field names in RedELK
 * ES index haproxytraffic renamed to redirtraffic to better suit the support for Apache (and future redirectors)
 * ES field name overhaul to better suit the support for Apache
 * Renamed of Kibana views, visualisations and dashboards for better usability, i.e. Redirector Traffic, Red Team Operations, CS Downloads, CS Keystrokes, CS IOCs, CS Screenshots and CS Beacons.
 * Adjustment of logstash filter rules to support the aforementioned renaming as well as Apache.
 * Adjusting enrichment and alarming python scripts to support the aforementioned renaming.
-* Changed alarm script to use redir destination c2* instead of cobaltstrike* 
+* Changed alarm script to use redir destination c2* instead of cobaltstrike*
 * Minor changes to type definitions of fields, e.g. IPs now stored as IP instead of string.
 * Explicit check and quit with error for non-apt based distributions during installation.
 * Redir installation script now checks for presence /etc/logrotate.d/haproxy before trying to adjust it.
 * Dozens of minor changes
 
 
-### version 0.9 
+### version 0.9
 * Support for Cobalt Strike 3.14
 * Upgraded jvm to OpenJDK 11.0
 * Upgraded Filebeat, Elasticsearch, Logstash and Kibana to 6.8.2

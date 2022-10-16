@@ -9,7 +9,7 @@
 #
 
 # INIT-LOGFILE is the first log file created
-# Keep it for root cause analysis 
+# Keep it for root cause analysis
 LOGFILE="/var/log/redelk/daemon.log"
 INIT-LOGFILE="/var/log/redelk/init-daemon.log"
 

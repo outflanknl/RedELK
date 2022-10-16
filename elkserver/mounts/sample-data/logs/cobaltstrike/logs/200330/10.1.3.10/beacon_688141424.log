@@ -200,8 +200,8 @@ received output:
 received output:
 Domain Controllers in domain 'stroop.local':
 
- Server Name             IP Address                      
- -----------             ----------                      
+ Server Name             IP Address
+ -----------             ----------
  S-WIN22                 10.2.1.10
  S-WIN21                 10.1.2.10
 
@@ -244,8 +244,8 @@ received output:
 User accounts for \\L-WIN223
 
 -------------------------------------------------------------------------------
-bofh                     DefaultAccount           Guest                    
-WDAGUtilityAccount       
+bofh                     DefaultAccount           Guest
+WDAGUtilityAccount
 The command completed successfully.
 
 
@@ -285,7 +285,7 @@ received output:
 USER INFORMATION
 ----------------
 
-User Name    SID                                           
+User Name    SID
 ============ ==============================================
 stroop\w.tax S-1-5-21-2163199188-2306780613-1636707950-4076
 
@@ -293,10 +293,10 @@ stroop\w.tax S-1-5-21-2163199188-2306780613-1636707950-4076
 GROUP INFORMATION
 -----------------
 
-Group Name                                 Type             SID                                            Attributes                                        
+Group Name                                 Type             SID                                            Attributes
 ========================================== ================ ============================================== ==================================================
 Everyone                                   Well-known group S-1-1-0                                        Mandatory group, Enabled by default, Enabled group
-BUILTIN\Administrators                     Alias            S-1-5-32-544                                   Group used for deny only                          
+BUILTIN\Administrators                     Alias            S-1-5-32-544                                   Group used for deny only
 BUILTIN\Remote Desktop Users               Alias            S-1-5-32-555                                   Mandatory group, Enabled by default, Enabled group
 BUILTIN\Users                              Alias            S-1-5-32-545                                   Mandatory group, Enabled by default, Enabled group
 NT AUTHORITY\REMOTE INTERACTIVE LOGON      Well-known group S-1-5-14                                       Mandatory group, Enabled by default, Enabled group
@@ -311,16 +311,16 @@ STROOP\All-RUS                             Group            S-1-5-21-2163199188-
 STROOP\SalesRUS                            Group            S-1-5-21-2163199188-2306780613-1636707950-2705 Mandatory group, Enabled by default, Enabled group
 STROOP\IT-MobileUsers                      Group            S-1-5-21-2163199188-2306780613-1636707950-2715 Mandatory group, Enabled by default, Enabled group
 Authentication authority asserted identity Well-known group S-1-18-1                                       Mandatory group, Enabled by default, Enabled group
-Mandatory Label\Medium Mandatory Level     Label            S-1-16-8192                                                                                      
+Mandatory Label\Medium Mandatory Level     Label            S-1-16-8192
 
 
 PRIVILEGES INFORMATION
 ----------------------
 
-Privilege Name                Description                          State   
+Privilege Name                Description                          State
 ============================= ==================================== ========
 SeShutdownPrivilege           Shut down the system                 Disabled
-SeChangeNotifyPrivilege       Bypass traverse checking             Enabled 
+SeChangeNotifyPrivilege       Bypass traverse checking             Enabled
 SeUndockPrivilege             Remove computer from docking station Disabled
 SeIncreaseWorkingSetPrivilege Increase a process working set       Disabled
 SeTimeZonePrivilege           Change the time zone                 Disabled
@@ -392,9 +392,9 @@ received output:
 Account information for w.tax on \\s-win21:
 
 User name                    W.Tax
-Full Name                    
-Comment                      
-User's Comment               
+Full Name
+Comment
+User's Comment
 Country code                 0
 Account active               Yes
 Account expires              Never
@@ -406,9 +406,9 @@ Password changeable          Yes
 Password required            Yes
 User may change password     Yes
 
-Workstations allowed         
-Logon script                 
-User profile                 
+Workstations allowed
+Logon script
+User profile
 Home directory               \\S-win43\UserHome$\W.Tax
 Last logon                   03/29/2020 11:49:35
 
@@ -493,9 +493,9 @@ usncreated            : 14979
 objectguid            : 6694a63e-28cd-425c-afb4-9b218ec8d013
 objectcategory        : CN=Person,CN=Schema,CN=Configuration,DC=stroop,DC=local
 dscorepropagationdata : 1/1/1601 12:00:00 AM
-memberof              : {CN=SalesRUS,OU=Sales,OU=Groups,DC=stroop,DC=local, 
-                        CN=SalesMarketingExt,OU=Sales,OU=Groups,DC=stroop,DC=local, 
-                        CN=All-RUS,OU=Users,OU=Groups,DC=stroop,DC=local, 
+memberof              : {CN=SalesRUS,OU=Sales,OU=Groups,DC=stroop,DC=local,
+                        CN=SalesMarketingExt,OU=Sales,OU=Groups,DC=stroop,DC=local,
+                        CN=All-RUS,OU=Users,OU=Groups,DC=stroop,DC=local,
                         CN=IT-MobileUsers,OU=IT,OU=Corp,OU=Groups,DC=stroop,DC=local...}
 lastlogon             : 3/30/2020 7:45:36 AM
 adspath               : LDAP://CN=W.Tax,OU=User,OU=Accounts,DC=stroop,DC=local
@@ -535,36 +535,36 @@ AccountName  : stroop.local/Domain Admins
 IsDomain     : True
 IsGroup      : True
 SID          : S-1-5-21-2163199188-2306780613-1636707950-512
-Description  : 
-Disabled     : 
-LastLogin    : 
-PwdLastSet   : 
-PwdExpired   : 
-UserFlags    : 
+Description  :
+Disabled     :
+LastLogin    :
+PwdLastSet   :
+PwdExpired   :
+UserFlags    :
 
 ComputerName : l-win223
 AccountName  : stroop.local/svc-bsservice
 IsDomain     : True
 IsGroup      : False
 SID          : S-1-5-21-2163199188-2306780613-1636707950-4820
-Description  : 
-Disabled     : 
+Description  :
+Disabled     :
 LastLogin    : 3/29/2020 3:35:29 PM
-PwdLastSet   : 
-PwdExpired   : 
-UserFlags    : 
+PwdLastSet   :
+PwdExpired   :
+UserFlags    :
 
 ComputerName : l-win223
 AccountName  : stroop.local/W.Tax
 IsDomain     : True
 IsGroup      : False
 SID          : S-1-5-21-2163199188-2306780613-1636707950-4076
-Description  : 
-Disabled     : 
+Description  :
+Disabled     :
 LastLogin    : 3/30/2020 7:45:36 AM
-PwdLastSet   : 
-PwdExpired   : 
-UserFlags    : 
+PwdLastSet   :
+PwdExpired   :
+UserFlags    :
 
 
 
@@ -859,24 +859,24 @@ AccountName  : stroop.local/Domain Admins
 IsDomain     : True
 IsGroup      : True
 SID          : S-1-5-21-2163199188-2306780613-1636707950-512
-Description  : 
-Disabled     : 
-LastLogin    : 
-PwdLastSet   : 
-PwdExpired   : 
-UserFlags    : 
+Description  :
+Disabled     :
+LastLogin    :
+PwdLastSet   :
+PwdExpired   :
+UserFlags    :
 
 ComputerName : l-win224
 AccountName  : stroop.local/Domain Users
 IsDomain     : True
 IsGroup      : True
 SID          : S-1-5-21-2163199188-2306780613-1636707950-513
-Description  : 
-Disabled     : 
-LastLogin    : 
-PwdLastSet   : 
-PwdExpired   : 
-UserFlags    : 
+Description  :
+Disabled     :
+LastLogin    :
+PwdLastSet   :
+PwdExpired   :
+UserFlags    :
 
 
 
