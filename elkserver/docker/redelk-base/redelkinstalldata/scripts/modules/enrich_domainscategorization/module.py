@@ -162,12 +162,34 @@ class Module:
             self.logger.debug("Old categories: %s", old_categories)
 
             # Update the categorization data if needed
-            if new_categories != old_categories:
+            if new_categories != old_categories or True:
                 self.logger.debug(
                     "Updating categorization data for %s with %s",
                     domain,
                     new_categories,
                 )
+
+                # Get old categorization data to add in bluecheck
+                try:
+                    old_categorization = copy.deepcopy(
+                        domains[domain]["_source"]["domainslist"]["categorization"]
+                    )
+                except Exception as err:  # pylint: disable=broad-except
+                    self.logger.error(
+                        "Error getting old categorization data for %s: %s", domain, err
+                    )
+                    old_categorization = {
+                        "categories_str": get_value(
+                            "_source.domainslist.categorization.categories_str",
+                            domains[domain],
+                            "",
+                        ),
+                        "categories": get_value(
+                            "_source.domainslist.categorization.categories",
+                            domains[domain],
+                            [],
+                        ),
+                    }
                 domains[domain]["_source"]["domainslist"][
                     "categorization"
                 ] = checked_domains[domain]["categorization"]
@@ -178,19 +200,22 @@ class Module:
                     body={"doc": domains[domain]["_source"]},
                 )
 
-                # self.add_bluecheck_entry(domains[domain])
+                self.add_bluecheck_entry(domains[domain], old_categorization)
 
-    def add_bluecheck_entry(self, domain):
+    def add_bluecheck_entry(self, domain, old_categorization):
         """Add an entry to the bluecheck index"""
 
         data = domain["_source"]
+        self.logger.debug(
+            "Adding bluecheck entry with data: %s [old:%s]", data, old_categorization
+        )
+        data["domainslist"]["categorization"]["old"] = old_categorization
 
         now = datetime.datetime.utcnow()
 
         doc_id = f"{domain['_id']}-{now.timestamp()}"
 
         # Add checked_at field
-        data["last_checked"] = now.isoformat()
         data["@timestamp"] = now.isoformat()
 
         # Create the document in bluecheck index

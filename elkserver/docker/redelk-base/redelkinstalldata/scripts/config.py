@@ -56,9 +56,12 @@ alarms = {
     "alarm_filehash": {
         "enabled": False,
         "interval": 300,
-        "vt_api_key": "",  # Virustotal API
-        "ibm_basic_auth": "",  # IBM X-Force API (can be retreived from a sample call on their swagger test site)
-        "ha_api_key": "",  # Hybrid Analysis API
+        # Virustotal API
+        "vt_api_key": "",
+        # IBM X-Force API (can be retreived from a sample call on their swagger test site)
+        "ibm_basic_auth": "",
+        # Hybrid Analysis API
+        "ha_api_key": "",
     },
     "alarm_httptraffic": {
         "enabled": False,
@@ -82,7 +85,8 @@ enrich = {
         "enabled": True,
         "interval": 310,
         "cache": 86400,  # Only query for the same IP hit every 24h by default
-        "api_key": "cEwJeLyDkNSXzabKNvzJSzZjZW0xEJYSYvf2nfhmmaXQHfCA8bJb49AvI3DF5Tlx",  # Greynoise Community API Key - Default RedELK key if none provided
+        # Greynoise Community API Key - Default RedELK key if none provided
+        "api_key": "cEwJeLyDkNSXzabKNvzJSzZjZW0xEJYSYvf2nfhmmaXQHfCA8bJb49AvI3DF5Tlx",
     },
     "enrich_tor": {"enabled": True, "interval": 320, "cache": 3600},
     "enrich_iplists": {"enabled": True, "interval": 330},
@@ -91,7 +95,9 @@ enrich = {
     "enrich_domainscategorization": {
         "enabled": True,
         "interval": 345,
+        # IBM X-Force API (can be retreived from a sample call on their swagger test site)
         "ibm_basic_auth": "",
+        # Virustotal API
         "vt_api_key": "",
     },
 }

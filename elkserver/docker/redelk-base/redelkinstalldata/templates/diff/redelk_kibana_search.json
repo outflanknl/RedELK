@@ -47,7 +47,7 @@
         ],
         "sort": [
             1665957491185,
-            27450
+            27444
         ],
         "type": "search",
         "version": "1"
@@ -131,7 +131,7 @@
         ],
         "sort": [
             1665957491185,
-            27453
+            27447
         ],
         "type": "search",
         "version": "1"
@@ -338,7 +338,7 @@
         ],
         "sort": [
             1665957491185,
-            27461
+            27455
         ],
         "type": "search",
         "version": "1"
@@ -422,7 +422,7 @@
         ],
         "sort": [
             1665957491185,
-            27464
+            27458
         ],
         "type": "search",
         "version": "1"
@@ -503,7 +503,7 @@
         ],
         "sort": [
             1665957491185,
-            27467
+            27461
         ],
         "type": "search",
         "version": "1"
@@ -554,7 +554,7 @@
         ],
         "sort": [
             1665957491185,
-            27469
+            27463
         ],
         "type": "search",
         "version": "1"
@@ -638,7 +638,7 @@
         ],
         "sort": [
             1665957491185,
-            27472
+            27466
         ],
         "type": "search",
         "version": "1"
@@ -687,7 +687,7 @@
         ],
         "sort": [
             1665957798222,
-            30639
+            30633
         ],
         "type": "search",
         "version": "1"
@@ -757,7 +757,7 @@
         ],
         "sort": [
             1665957491185,
-            27475
+            27469
         ],
         "type": "search",
         "version": "1"
@@ -810,7 +810,7 @@
         ],
         "sort": [
             1665957491185,
-            27477
+            27471
         ],
         "type": "search",
         "version": "1"
@@ -869,7 +869,7 @@
         ],
         "sort": [
             1665957491185,
-            27479
+            27473
         ],
         "type": "search",
         "version": "1"
@@ -913,7 +913,7 @@
         ],
         "sort": [
             1665957491185,
-            27481
+            27475
         ],
         "type": "search",
         "version": "1"
@@ -961,7 +961,7 @@
         ],
         "sort": [
             1665957491185,
-            27483
+            27477
         ],
         "type": "search",
         "version": "1"
@@ -1007,7 +1007,7 @@
         ],
         "sort": [
             1665957491185,
-            27485
+            27479
         ],
         "type": "search",
         "version": "1"
@@ -1079,7 +1079,7 @@
         ],
         "sort": [
             1665957491185,
-            27488
+            27482
         ],
         "type": "search",
         "version": "1"
@@ -1151,7 +1151,7 @@
         ],
         "sort": [
             1665957491185,
-            27491
+            27485
         ],
         "type": "search",
         "version": "1"
@@ -1229,7 +1229,81 @@
         ],
         "sort": [
             1665957491185,
-            27494
+            27488
+        ],
+        "type": "search",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "columns": [
+                "domainslist.domain",
+                "domainslist.comment",
+                "domainslist.name",
+                "domainslist.categorization.categories",
+                "domainslist.categorization.old.categories"
+            ],
+            "description": "",
+            "grid": {},
+            "hideChart": false,
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [
+                        {
+                            "$state": {
+                                "store": "appState"
+                            },
+                            "meta": {
+                                "alias": null,
+                                "disabled": false,
+                                "indexRefName": "kibanaSavedObjectMeta.searchSourceJSON.filter[0].meta.index",
+                                "key": "domainslist.domain",
+                                "negate": false,
+                                "type": "exists",
+                                "value": "exists"
+                            },
+                            "query": {
+                                "exists": {
+                                    "field": "domainslist.domain"
+                                }
+                            }
+                        }
+                    ],
+                    "indexRefName": "kibanaSavedObjectMeta.searchSourceJSON.index",
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "sort": [
+                [
+                    "@timestamp",
+                    "desc"
+                ]
+            ],
+            "title": "RedELK - Domains lists changes"
+        },
+        "coreMigrationVersion": "7.16.3",
+        "id": "eb275740-4da5-11ed-9a8f-a126bac589a5",
+        "migrationVersion": {
+            "search": "7.9.3"
+        },
+        "references": [
+            {
+                "id": "bluecheck",
+                "name": "kibanaSavedObjectMeta.searchSourceJSON.index",
+                "type": "index-pattern"
+            },
+            {
+                "id": "bluecheck",
+                "name": "kibanaSavedObjectMeta.searchSourceJSON.filter[0].meta.index",
+                "type": "index-pattern"
+            }
+        ],
+        "sort": [
+            1665961405185,
+            55187
         ],
         "type": "search",
         "version": "1"
