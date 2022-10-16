@@ -291,8 +291,8 @@
             }
         ],
         "sort": [
-            1654552233431,
-            30417
+            1665957494242,
+            27508
         ],
         "type": "dashboard",
         "version": "1"
@@ -443,8 +443,8 @@
             }
         ],
         "sort": [
-            1654552290226,
-            31055
+            1665957494242,
+            27514
         ],
         "type": "dashboard",
         "version": "1"
@@ -590,8 +590,8 @@
             }
         ],
         "sort": [
-            1654552308834,
-            31268
+            1665957494242,
+            27520
         ],
         "type": "dashboard",
         "version": "1"
@@ -858,8 +858,8 @@
             }
         ],
         "sort": [
-            1654551927133,
-            28316
+            1665957494242,
+            27530
         ],
         "type": "dashboard",
         "version": "1"
@@ -1103,8 +1103,8 @@
             }
         ],
         "sort": [
-            1654552271649,
-            30810
+            1665957494242,
+            27540
         ],
         "type": "dashboard",
         "version": "1"
@@ -1269,8 +1269,140 @@
             }
         ],
         "sort": [
-            1654552377991,
-            31966
+            1665957494242,
+            27547
+        ],
+        "type": "dashboard",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "View information about monitored domains",
+            "hits": 0,
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "optionsJSON": {
+                "hidePanelTitles": false,
+                "syncColors": false,
+                "useMargins": true
+            },
+            "panelsJSON": [
+                {
+                    "embeddableConfig": {
+                        "enhancements": {},
+                        "hidePanelTitles": true
+                    },
+                    "gridData": {
+                        "h": 4,
+                        "i": "19089d38-77be-44b7-ba3c-6f40a079d59c",
+                        "w": 16,
+                        "x": 0,
+                        "y": 0
+                    },
+                    "panelIndex": "19089d38-77be-44b7-ba3c-6f40a079d59c",
+                    "panelRefName": "panel_19089d38-77be-44b7-ba3c-6f40a079d59c",
+                    "type": "visualization",
+                    "version": "7.16.3"
+                },
+                {
+                    "embeddableConfig": {
+                        "enhancements": {},
+                        "hidePanelTitles": false
+                    },
+                    "gridData": {
+                        "h": 19,
+                        "i": "d8197309-60f4-41d3-967c-7484669c43f8",
+                        "w": 32,
+                        "x": 16,
+                        "y": 0
+                    },
+                    "panelIndex": "d8197309-60f4-41d3-967c-7484669c43f8",
+                    "panelRefName": "panel_d8197309-60f4-41d3-967c-7484669c43f8",
+                    "title": "Domains categories",
+                    "type": "lens",
+                    "version": "7.16.3"
+                },
+                {
+                    "embeddableConfig": {
+                        "enhancements": {},
+                        "hidePanelTitles": false
+                    },
+                    "gridData": {
+                        "h": 15,
+                        "i": "47dd8e3c-4be4-40c1-a648-7d38079b60c4",
+                        "w": 16,
+                        "x": 0,
+                        "y": 4
+                    },
+                    "panelIndex": "47dd8e3c-4be4-40c1-a648-7d38079b60c4",
+                    "panelRefName": "panel_47dd8e3c-4be4-40c1-a648-7d38079b60c4",
+                    "title": "Top 20 categories",
+                    "type": "visualization",
+                    "version": "7.16.3"
+                },
+                {
+                    "embeddableConfig": {
+                        "enhancements": {}
+                    },
+                    "gridData": {
+                        "h": 20,
+                        "i": "a099b377-2ed0-4c02-891d-de498b213304",
+                        "w": 48,
+                        "x": 0,
+                        "y": 19
+                    },
+                    "panelIndex": "a099b377-2ed0-4c02-891d-de498b213304",
+                    "panelRefName": "panel_a099b377-2ed0-4c02-891d-de498b213304",
+                    "type": "search",
+                    "version": "7.16.3"
+                }
+            ],
+            "timeRestore": false,
+            "title": "RedELK - Domains list",
+            "version": 1
+        },
+        "coreMigrationVersion": "7.16.3",
+        "id": "411271a0-4d9f-11ed-9a8f-a126bac589a5",
+        "migrationVersion": {
+            "dashboard": "7.16.0"
+        },
+        "references": [
+            {
+                "id": "232bdf50-4d9f-11ed-9a8f-a126bac589a5",
+                "name": "19089d38-77be-44b7-ba3c-6f40a079d59c:panel_19089d38-77be-44b7-ba3c-6f40a079d59c",
+                "type": "visualization"
+            },
+            {
+                "id": "ee1134f0-4d9e-11ed-9a8f-a126bac589a5",
+                "name": "d8197309-60f4-41d3-967c-7484669c43f8:panel_d8197309-60f4-41d3-967c-7484669c43f8",
+                "type": "lens"
+            },
+            {
+                "id": "d3fdfc50-4d9f-11ed-9a8f-a126bac589a5",
+                "name": "47dd8e3c-4be4-40c1-a648-7d38079b60c4:panel_47dd8e3c-4be4-40c1-a648-7d38079b60c4",
+                "type": "visualization"
+            },
+            {
+                "id": "573cd750-4d9e-11ed-9a8f-a126bac589a5",
+                "name": "a099b377-2ed0-4c02-891d-de498b213304:panel_a099b377-2ed0-4c02-891d-de498b213304",
+                "type": "search"
+            },
+            {
+                "id": "ec7203e0-4d9e-11ed-9a8f-a126bac589a5",
+                "name": "tag-ec7203e0-4d9e-11ed-9a8f-a126bac589a5",
+                "type": "tag"
+            }
+        ],
+        "sort": [
+            1665958661052,
+            36712
         ],
         "type": "dashboard",
         "version": "1"
@@ -1461,8 +1593,8 @@
             }
         ],
         "sort": [
-            1654547968949,
-            1893
+            1665957494242,
+            27555
         ],
         "type": "dashboard",
         "version": "1"
@@ -1650,8 +1782,8 @@
             }
         ],
         "sort": [
-            1654552251519,
-            30607
+            1665957494242,
+            27563
         ],
         "type": "dashboard",
         "version": "1"
@@ -1801,8 +1933,8 @@
             }
         ],
         "sort": [
-            1654552323667,
-            31540
+            1665957494242,
+            27569
         ],
         "type": "dashboard",
         "version": "1"
@@ -1947,8 +2079,8 @@
             }
         ],
         "sort": [
-            1654552342696,
-            31708
+            1665957494242,
+            27575
         ],
         "type": "dashboard",
         "version": "1"
@@ -2092,8 +2224,8 @@
             }
         ],
         "sort": [
-            1654552198669,
-            30113
+            1665957494242,
+            27581
         ],
         "type": "dashboard",
         "version": "1"
@@ -2238,8 +2370,8 @@
             }
         ],
         "sort": [
-            1654552357632,
-            31863
+            1665957494242,
+            27587
         ],
         "type": "dashboard",
         "version": "1"

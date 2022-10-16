@@ -21,10 +21,11 @@ import config
 
 # Domain name regex pattern
 domain_pattern = re.compile(
-    r"^(?:[a-zA-Z0-9]"  # First character of the domain
+    r"^((?:[a-zA-Z0-9]"  # First character of the domain
     r"(?:[a-zA-Z0-9-_]{0,61}[A-Za-z0-9])?\.)"  # Sub domain + hostname
     r"+[A-Za-z0-9][A-Za-z0-9-_]{0,61}"  # First 61 characters of the gTLD
-    r"[A-Za-z]$"  # Last character of the gTLD
+    r"[A-Za-z])"  # Last character of the gTLD
+    r"(?:\s*#\s*(.*))?$"  # Optional comment
 )
 
 urllib3.disable_warnings()
@@ -59,15 +60,12 @@ def is_json(myjson):
     return True
 
 
-def is_valid_domain_name(domain):
-    """Returns true if the domain is valid"""
+def match_domain_name(domain):
+    """Returns the match if the domain is valid"""
     try:
-        return (
-            domain_pattern.match(to_unicode(domain).encode("idna").decode("ascii"))
-            is not None
-        )
+        return domain_pattern.match(to_unicode(domain).encode("idna").decode("ascii"))
     except (UnicodeError, UnicodeEncodeError, AttributeError):
-        return False
+        return None
 
 
 def get_value(path, source, default_value=None):

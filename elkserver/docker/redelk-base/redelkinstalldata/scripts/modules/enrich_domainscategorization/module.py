@@ -178,7 +178,7 @@ class Module:
                     body={"doc": domains[domain]["_source"]},
                 )
 
-                self.add_bluecheck_entry(domains[domain])
+                # self.add_bluecheck_entry(domains[domain])
 
     def add_bluecheck_entry(self, domain):
         """Add an entry to the bluecheck index"""

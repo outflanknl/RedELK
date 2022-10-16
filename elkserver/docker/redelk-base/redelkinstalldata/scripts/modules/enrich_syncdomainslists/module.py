@@ -128,6 +128,7 @@ class Module:
 
         for line in content:
             domain_match = match_domain_name(line)
+            self.logger.debug("Domain match: %s", domain_match)
             if domain_match and domain_match.group(1) is not None:
                 cfg_domainslist.append(
                     (
