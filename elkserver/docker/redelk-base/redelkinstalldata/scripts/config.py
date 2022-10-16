@@ -87,6 +87,13 @@ enrich = {
     "enrich_tor": {"enabled": True, "interval": 320, "cache": 3600},
     "enrich_iplists": {"enabled": True, "interval": 330},
     "enrich_synciplists": {"enabled": True, "interval": 360},
+    "enrich_syncdomainslists": {"enabled": True, "interval": 355},
+    "enrich_domainscategorization": {
+        "enabled": True,
+        "interval": 345,
+        "ibm_basic_auth": "",
+        "vt_api_key": "",
+    },
 }
 if "enrich" in data:
     for e in data["enrich"]:
