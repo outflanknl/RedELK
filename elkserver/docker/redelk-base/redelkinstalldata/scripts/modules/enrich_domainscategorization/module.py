@@ -162,7 +162,7 @@ class Module:
             self.logger.debug("Old categories: %s", old_categories)
 
             # Update the categorization data if needed
-            if new_categories != old_categories or True:
+            if new_categories != old_categories:
                 self.logger.debug(
                     "Updating categorization data for %s with %s",
                     domain,
