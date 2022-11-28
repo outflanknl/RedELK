@@ -12,4 +12,3 @@ LABEL description="RedELK Jupyter Notebooks"
 RUN pip3 install pandas neo4j elasticsearch==7.17.3
 
 CMD ["/bin/bash", "-o", "pipefail", "-c", "start-notebook.sh --NotebookApp.token='' --NotebookApp.password='' --NotebookApp.allow_remote_access='True' --NotebookApp.allow_origin='*' --NotebookApp.base_url='/jupyter/'"]
-

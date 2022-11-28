@@ -162,8 +162,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1692
+            1665957492205,
+            27584
         ],
         "type": "visualization",
         "version": "1"
@@ -316,8 +316,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1694
+            1665957492205,
+            27586
         ],
         "type": "visualization",
         "version": "1"
@@ -355,8 +355,8 @@
         },
         "references": [],
         "sort": [
-            1654547968068,
-            1695
+            1665957492205,
+            27587
         ],
         "type": "visualization",
         "version": "1"
@@ -485,8 +485,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1698
+            1665957492205,
+            27590
         ],
         "type": "visualization",
         "version": "1"
@@ -590,8 +590,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1700
+            1665957492205,
+            27592
         ],
         "type": "visualization",
         "version": "1"
@@ -695,8 +695,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1702
+            1665957492205,
+            27594
         ],
         "type": "visualization",
         "version": "1"
@@ -790,8 +790,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1704
+            1665957492205,
+            27596
         ],
         "type": "visualization",
         "version": "1"
@@ -958,8 +958,75 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1706
+            1665957492205,
+            27598
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "title": "RedELK - Domains list name control",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [],
+                "params": {
+                    "controls": [
+                        {
+                            "fieldName": "domainslist.domain",
+                            "id": "1665958088232",
+                            "indexPatternRefName": "control_0_index_pattern",
+                            "label": "Domain name",
+                            "options": {
+                                "dynamicOptions": true,
+                                "multiselect": true,
+                                "order": "desc",
+                                "size": 5,
+                                "type": "terms"
+                            },
+                            "parent": "",
+                            "type": "list"
+                        }
+                    ],
+                    "pinFilters": false,
+                    "updateFiltersOnChange": true,
+                    "useTimeFilter": false
+                },
+                "title": "RedELK - Domains list name control",
+                "type": "input_control_vis"
+            }
+        },
+        "coreMigrationVersion": "7.16.3",
+        "id": "232bdf50-4d9f-11ed-9a8f-a126bac589a5",
+        "migrationVersion": {
+            "visualization": "7.14.0"
+        },
+        "references": [
+            {
+                "id": "ec7203e0-4d9e-11ed-9a8f-a126bac589a5",
+                "name": "tag-ref-ec7203e0-4d9e-11ed-9a8f-a126bac589a5",
+                "type": "tag"
+            },
+            {
+                "id": "db409380-4d9d-11ed-9a8f-a126bac589a5",
+                "name": "control_0_index_pattern",
+                "type": "index-pattern"
+            }
+        ],
+        "sort": [
+            1665958282698,
+            34698
         ],
         "type": "visualization",
         "version": "1"
@@ -1126,8 +1193,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1708
+            1665957492205,
+            27600
         ],
         "type": "visualization",
         "version": "1"
@@ -1225,8 +1292,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1710
+            1665957492205,
+            27602
         ],
         "type": "visualization",
         "version": "1"
@@ -1327,8 +1394,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1712
+            1665957492205,
+            27604
         ],
         "type": "visualization",
         "version": "1"
@@ -1406,8 +1473,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1714
+            1665957492205,
+            27606
         ],
         "type": "visualization",
         "version": "1"
@@ -1485,8 +1552,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1716
+            1665957492205,
+            27608
         ],
         "type": "visualization",
         "version": "1"
@@ -1639,8 +1706,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1718
+            1665957492205,
+            27610
         ],
         "type": "visualization",
         "version": "1"
@@ -1716,8 +1783,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1720
+            1665957492205,
+            27612
         ],
         "type": "visualization",
         "version": "1"
@@ -1755,8 +1822,8 @@
         },
         "references": [],
         "sort": [
-            1654547968068,
-            1721
+            1665957492205,
+            27613
         ],
         "type": "visualization",
         "version": "1"
@@ -1835,8 +1902,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1723
+            1665957492205,
+            27615
         ],
         "type": "visualization",
         "version": "1"
@@ -1957,8 +2024,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1728
+            1665957492205,
+            27620
         ],
         "type": "visualization",
         "version": "1"
@@ -2036,8 +2103,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1730
+            1665957492205,
+            27622
         ],
         "type": "visualization",
         "version": "1"
@@ -2115,8 +2182,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1732
+            1665957492205,
+            27624
         ],
         "type": "visualization",
         "version": "1"
@@ -2195,8 +2262,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1734
+            1665957492205,
+            27626
         ],
         "type": "visualization",
         "version": "1"
@@ -2278,8 +2345,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1736
+            1665957492205,
+            27628
         ],
         "type": "visualization",
         "version": "1"
@@ -2354,8 +2421,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1738
+            1665957492205,
+            27630
         ],
         "type": "visualization",
         "version": "1"
@@ -2437,8 +2504,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1740
+            1665957492205,
+            27632
         ],
         "type": "visualization",
         "version": "1"
@@ -2516,8 +2583,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1742
+            1665957492205,
+            27634
         ],
         "type": "visualization",
         "version": "1"
@@ -2672,8 +2739,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1744
+            1665957492205,
+            27636
         ],
         "type": "visualization",
         "version": "1"
@@ -2802,8 +2869,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1747
+            1665957492205,
+            27639
         ],
         "type": "visualization",
         "version": "1"
@@ -2881,8 +2948,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1749
+            1665957492205,
+            27641
         ],
         "type": "visualization",
         "version": "1"
@@ -2964,8 +3031,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1751
+            1665957492205,
+            27643
         ],
         "type": "visualization",
         "version": "1"
@@ -3063,8 +3130,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1753
+            1665957492205,
+            27645
         ],
         "type": "visualization",
         "version": "1"
@@ -3217,8 +3284,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1755
+            1665957492205,
+            27647
         ],
         "type": "visualization",
         "version": "1"
@@ -3293,8 +3360,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1757
+            1665957492205,
+            27649
         ],
         "type": "visualization",
         "version": "1"
@@ -3463,8 +3530,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1759
+            1665957492205,
+            27651
         ],
         "type": "visualization",
         "version": "1"
@@ -3543,8 +3610,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1761
+            1665957492205,
+            27653
         ],
         "type": "visualization",
         "version": "1"
@@ -3622,8 +3689,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1763
+            1665957492205,
+            27655
         ],
         "type": "visualization",
         "version": "1"
@@ -3812,8 +3879,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1765
+            1665957492205,
+            27657
         ],
         "type": "visualization",
         "version": "1"
@@ -3927,8 +3994,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1767
+            1665957492205,
+            27659
         ],
         "type": "visualization",
         "version": "1"
@@ -4017,8 +4084,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1769
+            1665957492205,
+            27661
         ],
         "type": "visualization",
         "version": "1"
@@ -4099,8 +4166,89 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1772
+            1665957492205,
+            27664
+        ],
+        "type": "visualization",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "",
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "indexRefName": "kibanaSavedObjectMeta.searchSourceJSON.index",
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "title": "RedELK - Domains list categories tag cloud",
+            "uiStateJSON": "{}",
+            "version": 1,
+            "visState": {
+                "aggs": [
+                    {
+                        "enabled": true,
+                        "id": "1",
+                        "params": {},
+                        "schema": "metric",
+                        "type": "count"
+                    },
+                    {
+                        "enabled": true,
+                        "id": "2",
+                        "params": {
+                            "field": "domainslist.categorization.categories",
+                            "missingBucket": false,
+                            "missingBucketLabel": "Missing",
+                            "order": "desc",
+                            "orderBy": "1",
+                            "otherBucket": true,
+                            "otherBucketLabel": "Other",
+                            "size": 20
+                        },
+                        "schema": "segment",
+                        "type": "terms"
+                    }
+                ],
+                "params": {
+                    "maxFontSize": 72,
+                    "minFontSize": 18,
+                    "orientation": "single",
+                    "palette": {
+                        "name": "default",
+                        "type": "palette"
+                    },
+                    "scale": "linear",
+                    "showLabel": false
+                },
+                "title": "RedELK - Domains list categories tag cloud",
+                "type": "tagcloud"
+            }
+        },
+        "coreMigrationVersion": "7.16.3",
+        "id": "d3fdfc50-4d9f-11ed-9a8f-a126bac589a5",
+        "migrationVersion": {
+            "visualization": "7.14.0"
+        },
+        "references": [
+            {
+                "id": "db409380-4d9d-11ed-9a8f-a126bac589a5",
+                "name": "kibanaSavedObjectMeta.searchSourceJSON.index",
+                "type": "index-pattern"
+            },
+            {
+                "id": "ec7203e0-4d9e-11ed-9a8f-a126bac589a5",
+                "name": "tag-ref-ec7203e0-4d9e-11ed-9a8f-a126bac589a5",
+                "type": "tag"
+            }
+        ],
+        "sort": [
+            1665958584343,
+            36659
         ],
         "type": "visualization",
         "version": "1"
@@ -4207,8 +4355,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1774
+            1665957492205,
+            27666
         ],
         "type": "visualization",
         "version": "1"
@@ -4286,8 +4434,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1776
+            1665957492205,
+            27668
         ],
         "type": "visualization",
         "version": "1"
@@ -4430,8 +4578,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1778
+            1665957492205,
+            27670
         ],
         "type": "visualization",
         "version": "1"
@@ -4535,8 +4683,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1780
+            1665957492205,
+            27672
         ],
         "type": "visualization",
         "version": "1"
@@ -4732,8 +4880,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1783
+            1665957492205,
+            27675
         ],
         "type": "visualization",
         "version": "1"
@@ -4903,8 +5051,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1785
+            1665957492205,
+            27677
         ],
         "type": "visualization",
         "version": "1"
@@ -4979,8 +5127,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1787
+            1665957492205,
+            27679
         ],
         "type": "visualization",
         "version": "1"
@@ -5055,8 +5203,8 @@
             }
         ],
         "sort": [
-            1654547968068,
-            1789
+            1665957492205,
+            27681
         ],
         "type": "visualization",
         "version": "1"

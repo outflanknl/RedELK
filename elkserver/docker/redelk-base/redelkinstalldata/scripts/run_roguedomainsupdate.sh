@@ -49,9 +49,9 @@ fi
 
 printf "`date +'%b %e %R'` Now running chameleon.py for checking classifications of our domains\n" >> $LOGFILE 2>&1
 
-# Now run chameleon.py to check if our domains 
+# Now run chameleon.py to check if our domains
 cd /usr/share/redelk/bin/Chameleon/
-#python3 chameleon.py --redelk --proxy a >> $LOGFILE 2>&1 
+#python3 chameleon.py --redelk --proxy a >> $LOGFILE 2>&1
 
 ### At this moment, Chameleon doesnt work anymore with IBM and Bluecoat. Setting proxy parameter to only query at McAfee
-python3 chameleon.py --redelk --proxy m >> $LOGFILE 2>&1 
+python3 chameleon.py --redelk --proxy m >> $LOGFILE 2>&1

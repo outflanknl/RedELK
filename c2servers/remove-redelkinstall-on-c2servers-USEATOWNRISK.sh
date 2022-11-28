@@ -3,7 +3,7 @@
 # Part of RedELK
 # Script to remove RedELK on C2 servers
 #
-# Author: Outflank B.V. / Marc Smeets 
+# Author: Outflank B.V. / Marc Smeets
 #
 
 echo ""

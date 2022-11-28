@@ -18,7 +18,7 @@ Object RDN           : krbtgt
 SAM Username         : krbtgt
 Account Type         : 30000000 ( USER_OBJECT )
 User Account Control : 00000202 ( ACCOUNTDISABLE NORMAL_ACCOUNT )
-Account expiration   : 
+Account expiration   :
 Password last change : 3/29/2020 9:54:08 AM
 Object Security ID   : S-1-5-21-2163199188-2306780613-1636707950-502
 Object Relative ID   : 502
@@ -212,5 +212,3 @@ LogonUI.exe	4592	3888
 dllhost.exe	920	3128	x64	STROOP\ADMIN-w.trommel	2
 svchost.exe	696	4552	x64	STROOP\ADMIN-w.trommel	2
 rundll32.exe	7372	3284
-
-

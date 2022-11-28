@@ -288,11 +288,16 @@
                 "id": "7d850b30-d4e2-11ea-9301-a30a04251ae9",
                 "name": "c15dc2cd-fad3-44a3-b127-1cd47d837740:panel_c15dc2cd-fad3-44a3-b127-1cd47d837740",
                 "type": "visualization"
+            },
+            {
+                "id": "ec7203e0-4d9e-11ed-9a8f-a126bac589a5",
+                "name": "tag-ec7203e0-4d9e-11ed-9a8f-a126bac589a5",
+                "type": "tag"
             }
         ],
         "sort": [
-            1654552233431,
-            30417
+            1665959503295,
+            42548
         ],
         "type": "dashboard",
         "version": "1"
@@ -440,11 +445,16 @@
                 "id": "1c580960-b6a9-11e8-bc1a-cf8fa3255855",
                 "name": "30674424-d470-4b93-80c1-260d16f987ab:panel_30674424-d470-4b93-80c1-260d16f987ab",
                 "type": "search"
+            },
+            {
+                "id": "ec7203e0-4d9e-11ed-9a8f-a126bac589a5",
+                "name": "tag-ec7203e0-4d9e-11ed-9a8f-a126bac589a5",
+                "type": "tag"
             }
         ],
         "sort": [
-            1654552290226,
-            31055
+            1665959473822,
+            42285
         ],
         "type": "dashboard",
         "version": "1"
@@ -503,7 +513,10 @@
                 },
                 {
                     "embeddableConfig": {
-                        "enhancements": {}
+                        "enhancements": {},
+                        "vis": {
+                            "legendOpen": true
+                        }
                     },
                     "gridData": {
                         "h": 18,
@@ -587,11 +600,16 @@
                 "id": "cc523820-d021-11ea-9301-a30a04251ae9",
                 "name": "b038a84c-9db0-4266-af43-c8023da4781a:panel_b038a84c-9db0-4266-af43-c8023da4781a",
                 "type": "search"
+            },
+            {
+                "id": "ec7203e0-4d9e-11ed-9a8f-a126bac589a5",
+                "name": "tag-ec7203e0-4d9e-11ed-9a8f-a126bac589a5",
+                "type": "tag"
             }
         ],
         "sort": [
-            1654552308834,
-            31268
+            1665959513092,
+            42593
         ],
         "type": "dashboard",
         "version": "1"
@@ -855,11 +873,16 @@
                 "id": "87898290-e5da-11ec-9935-9f498494c684",
                 "name": "c3e44583-6e22-4cb3-a014-ec42466f1ce1:panel_c3e44583-6e22-4cb3-a014-ec42466f1ce1",
                 "type": "map"
+            },
+            {
+                "id": "ec7203e0-4d9e-11ed-9a8f-a126bac589a5",
+                "name": "tag-ec7203e0-4d9e-11ed-9a8f-a126bac589a5",
+                "type": "tag"
             }
         ],
         "sort": [
-            1654551927133,
-            28316
+            1665959523687,
+            42585
         ],
         "type": "dashboard",
         "version": "1"
@@ -870,50 +893,7 @@
             "hits": 0,
             "kibanaSavedObjectMeta": {
                 "searchSourceJSON": {
-                    "filter": [
-                        {
-                            "$state": {
-                                "store": "appState"
-                            },
-                            "meta": {
-                                "alias": null,
-                                "disabled": false,
-                                "indexRefName": "kibanaSavedObjectMeta.searchSourceJSON.filter[0].meta.index",
-                                "key": "tags",
-                                "negate": true,
-                                "params": {
-                                    "query": "sandboxes_v01"
-                                },
-                                "type": "phrase"
-                            },
-                            "query": {
-                                "match_phrase": {
-                                    "tags": "sandboxes_v01"
-                                }
-                            }
-                        },
-                        {
-                            "$state": {
-                                "store": "appState"
-                            },
-                            "meta": {
-                                "alias": null,
-                                "disabled": false,
-                                "indexRefName": "kibanaSavedObjectMeta.searchSourceJSON.filter[1].meta.index",
-                                "key": "tags",
-                                "negate": true,
-                                "params": {
-                                    "query": "testsystems_v01"
-                                },
-                                "type": "phrase"
-                            },
-                            "query": {
-                                "match_phrase": {
-                                    "tags": "testsystems_v01"
-                                }
-                            }
-                        }
-                    ],
+                    "filter": [],
                     "query": {
                         "language": "lucene",
                         "query": ""
@@ -1057,16 +1037,6 @@
         },
         "references": [
             {
-                "id": "rtops",
-                "name": "kibanaSavedObjectMeta.searchSourceJSON.filter[0].meta.index",
-                "type": "index-pattern"
-            },
-            {
-                "id": "rtops",
-                "name": "kibanaSavedObjectMeta.searchSourceJSON.filter[1].meta.index",
-                "type": "index-pattern"
-            },
-            {
                 "id": "e12434d0-b8e8-11e8-94dd-171ae5c1fd1a",
                 "name": "1:panel_1",
                 "type": "visualization"
@@ -1100,11 +1070,16 @@
                 "id": "68e8e870-b6aa-11e8-bc1a-cf8fa3255855",
                 "name": "b9915fcd-f22e-4326-986a-25684f947b79:panel_b9915fcd-f22e-4326-986a-25684f947b79",
                 "type": "search"
+            },
+            {
+                "id": "ec7203e0-4d9e-11ed-9a8f-a126bac589a5",
+                "name": "tag-ec7203e0-4d9e-11ed-9a8f-a126bac589a5",
+                "type": "tag"
             }
         ],
         "sort": [
-            1654552271649,
-            30810
+            1665959449730,
+            42051
         ],
         "type": "dashboard",
         "version": "1"
@@ -1266,11 +1241,196 @@
                 "id": "0f82b540-d237-11ea-9301-a30a04251ae9",
                 "name": "3b895da0-50d0-49e0-a18d-790fd2dddaaa:panel_3b895da0-50d0-49e0-a18d-790fd2dddaaa",
                 "type": "visualization"
+            },
+            {
+                "id": "ec7203e0-4d9e-11ed-9a8f-a126bac589a5",
+                "name": "tag-ec7203e0-4d9e-11ed-9a8f-a126bac589a5",
+                "type": "tag"
             }
         ],
         "sort": [
-            1654552377991,
-            31966
+            1665959461895,
+            42169
+        ],
+        "type": "dashboard",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "description": "View information about monitored domains",
+            "hits": 0,
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "optionsJSON": {
+                "hidePanelTitles": false,
+                "syncColors": false,
+                "useMargins": true
+            },
+            "panelsJSON": [
+                {
+                    "embeddableConfig": {
+                        "enhancements": {},
+                        "hidePanelTitles": true
+                    },
+                    "gridData": {
+                        "h": 4,
+                        "i": "19089d38-77be-44b7-ba3c-6f40a079d59c",
+                        "w": 16,
+                        "x": 0,
+                        "y": 0
+                    },
+                    "panelIndex": "19089d38-77be-44b7-ba3c-6f40a079d59c",
+                    "panelRefName": "panel_19089d38-77be-44b7-ba3c-6f40a079d59c",
+                    "type": "visualization",
+                    "version": "7.16.3"
+                },
+                {
+                    "embeddableConfig": {
+                        "enhancements": {},
+                        "hidePanelTitles": false
+                    },
+                    "gridData": {
+                        "h": 19,
+                        "i": "d8197309-60f4-41d3-967c-7484669c43f8",
+                        "w": 32,
+                        "x": 16,
+                        "y": 0
+                    },
+                    "panelIndex": "d8197309-60f4-41d3-967c-7484669c43f8",
+                    "panelRefName": "panel_d8197309-60f4-41d3-967c-7484669c43f8",
+                    "title": "Domains categories",
+                    "type": "lens",
+                    "version": "7.16.3"
+                },
+                {
+                    "embeddableConfig": {
+                        "enhancements": {},
+                        "hidePanelTitles": false
+                    },
+                    "gridData": {
+                        "h": 15,
+                        "i": "47dd8e3c-4be4-40c1-a648-7d38079b60c4",
+                        "w": 16,
+                        "x": 0,
+                        "y": 4
+                    },
+                    "panelIndex": "47dd8e3c-4be4-40c1-a648-7d38079b60c4",
+                    "panelRefName": "panel_47dd8e3c-4be4-40c1-a648-7d38079b60c4",
+                    "title": "Top 20 categories",
+                    "type": "visualization",
+                    "version": "7.16.3"
+                },
+                {
+                    "embeddableConfig": {
+                        "enhancements": {},
+                        "hidePanelTitles": false
+                    },
+                    "gridData": {
+                        "h": 9,
+                        "i": "dd17dbeb-7d0d-42e2-bfaa-2d7afba75bb9",
+                        "w": 48,
+                        "x": 0,
+                        "y": 19
+                    },
+                    "panelIndex": "dd17dbeb-7d0d-42e2-bfaa-2d7afba75bb9",
+                    "panelRefName": "panel_dd17dbeb-7d0d-42e2-bfaa-2d7afba75bb9",
+                    "title": "Domain categorization change over time",
+                    "type": "lens",
+                    "version": "7.16.3"
+                },
+                {
+                    "embeddableConfig": {
+                        "enhancements": {},
+                        "hidePanelTitles": false
+                    },
+                    "gridData": {
+                        "h": 20,
+                        "i": "a099b377-2ed0-4c02-891d-de498b213304",
+                        "w": 48,
+                        "x": 0,
+                        "y": 47
+                    },
+                    "panelIndex": "a099b377-2ed0-4c02-891d-de498b213304",
+                    "panelRefName": "panel_a099b377-2ed0-4c02-891d-de498b213304",
+                    "title": "Domains lists",
+                    "type": "search",
+                    "version": "7.16.3"
+                },
+                {
+                    "embeddableConfig": {
+                        "enhancements": {},
+                        "hidePanelTitles": false
+                    },
+                    "gridData": {
+                        "h": 19,
+                        "i": "2f46bfbb-d8df-4b8f-b54c-c841f641510d",
+                        "w": 48,
+                        "x": 0,
+                        "y": 28
+                    },
+                    "panelIndex": "2f46bfbb-d8df-4b8f-b54c-c841f641510d",
+                    "panelRefName": "panel_2f46bfbb-d8df-4b8f-b54c-c841f641510d",
+                    "title": "Domains categorization changes",
+                    "type": "search",
+                    "version": "7.16.3"
+                }
+            ],
+            "timeRestore": false,
+            "title": "RedELK - Domains list",
+            "version": 1
+        },
+        "coreMigrationVersion": "7.16.3",
+        "id": "411271a0-4d9f-11ed-9a8f-a126bac589a5",
+        "migrationVersion": {
+            "dashboard": "7.16.0"
+        },
+        "references": [
+            {
+                "id": "232bdf50-4d9f-11ed-9a8f-a126bac589a5",
+                "name": "19089d38-77be-44b7-ba3c-6f40a079d59c:panel_19089d38-77be-44b7-ba3c-6f40a079d59c",
+                "type": "visualization"
+            },
+            {
+                "id": "ee1134f0-4d9e-11ed-9a8f-a126bac589a5",
+                "name": "d8197309-60f4-41d3-967c-7484669c43f8:panel_d8197309-60f4-41d3-967c-7484669c43f8",
+                "type": "lens"
+            },
+            {
+                "id": "d3fdfc50-4d9f-11ed-9a8f-a126bac589a5",
+                "name": "47dd8e3c-4be4-40c1-a648-7d38079b60c4:panel_47dd8e3c-4be4-40c1-a648-7d38079b60c4",
+                "type": "visualization"
+            },
+            {
+                "id": "728a2780-4da6-11ed-9a8f-a126bac589a5",
+                "name": "dd17dbeb-7d0d-42e2-bfaa-2d7afba75bb9:panel_dd17dbeb-7d0d-42e2-bfaa-2d7afba75bb9",
+                "type": "lens"
+            },
+            {
+                "id": "573cd750-4d9e-11ed-9a8f-a126bac589a5",
+                "name": "a099b377-2ed0-4c02-891d-de498b213304:panel_a099b377-2ed0-4c02-891d-de498b213304",
+                "type": "search"
+            },
+            {
+                "id": "eb275740-4da5-11ed-9a8f-a126bac589a5",
+                "name": "2f46bfbb-d8df-4b8f-b54c-c841f641510d:panel_2f46bfbb-d8df-4b8f-b54c-c841f641510d",
+                "type": "search"
+            },
+            {
+                "id": "ec7203e0-4d9e-11ed-9a8f-a126bac589a5",
+                "name": "tag-ec7203e0-4d9e-11ed-9a8f-a126bac589a5",
+                "type": "tag"
+            }
+        ],
+        "sort": [
+            1665961380352,
+            55076
         ],
         "type": "dashboard",
         "version": "1"
@@ -1308,7 +1468,7 @@
                     "panelIndex": "5f3b82fd-613e-460e-a5a3-b7a9c9036060",
                     "panelRefName": "panel_5f3b82fd-613e-460e-a5a3-b7a9c9036060",
                     "type": "visualization",
-                    "version": "7.10.0"
+                    "version": "7.16.3"
                 },
                 {
                     "embeddableConfig": {
@@ -1325,7 +1485,7 @@
                     "panelIndex": "cf429e43-5aaf-4e6b-8c3b-04c1bbd998b2",
                     "panelRefName": "panel_cf429e43-5aaf-4e6b-8c3b-04c1bbd998b2",
                     "type": "visualization",
-                    "version": "7.10.0"
+                    "version": "7.16.3"
                 },
                 {
                     "embeddableConfig": {
@@ -1341,7 +1501,7 @@
                     "panelIndex": "cd30bef4-7955-437a-adaf-317839c35931",
                     "panelRefName": "panel_cd30bef4-7955-437a-adaf-317839c35931",
                     "type": "visualization",
-                    "version": "7.10.0"
+                    "version": "7.16.3"
                 },
                 {
                     "embeddableConfig": {
@@ -1357,11 +1517,14 @@
                     "panelIndex": "cc62352b-f1ed-47fb-9687-d51a44693d13",
                     "panelRefName": "panel_cc62352b-f1ed-47fb-9687-d51a44693d13",
                     "type": "search",
-                    "version": "7.10.0"
+                    "version": "7.16.3"
                 },
                 {
                     "embeddableConfig": {
-                        "enhancements": {}
+                        "enhancements": {},
+                        "vis": {
+                            "legendOpen": true
+                        }
                     },
                     "gridData": {
                         "h": 18,
@@ -1373,11 +1536,14 @@
                     "panelIndex": "1d8af391-0559-412f-a001-12acc85b49ab",
                     "panelRefName": "panel_1d8af391-0559-412f-a001-12acc85b49ab",
                     "type": "visualization",
-                    "version": "7.10.0"
+                    "version": "7.16.3"
                 },
                 {
                     "embeddableConfig": {
-                        "enhancements": {}
+                        "enhancements": {},
+                        "vis": {
+                            "legendOpen": true
+                        }
                     },
                     "gridData": {
                         "h": 11,
@@ -1389,7 +1555,7 @@
                     "panelIndex": "cd45ce11-0279-476b-90c3-bd5733193a72",
                     "panelRefName": "panel_cd45ce11-0279-476b-90c3-bd5733193a72",
                     "type": "visualization",
-                    "version": "7.10.0"
+                    "version": "7.16.3"
                 },
                 {
                     "embeddableConfig": {
@@ -1405,7 +1571,7 @@
                     "panelIndex": "aa8ee839-556c-47ce-81af-451090b86f71",
                     "panelRefName": "panel_aa8ee839-556c-47ce-81af-451090b86f71",
                     "type": "search",
-                    "version": "7.10.0"
+                    "version": "7.16.3"
                 }
             ],
             "refreshInterval": {
@@ -1458,11 +1624,16 @@
                 "id": "654f76a0-9269-11eb-a753-9da683898c26",
                 "name": "aa8ee839-556c-47ce-81af-451090b86f71:panel_aa8ee839-556c-47ce-81af-451090b86f71",
                 "type": "search"
+            },
+            {
+                "id": "ec7203e0-4d9e-11ed-9a8f-a126bac589a5",
+                "name": "tag-ec7203e0-4d9e-11ed-9a8f-a126bac589a5",
+                "type": "tag"
             }
         ],
         "sort": [
-            1654547968949,
-            1893
+            1665959370296,
+            41173
         ],
         "type": "dashboard",
         "version": "1"
@@ -1647,11 +1818,16 @@
                 "id": "658d7180-d4e1-11ea-9301-a30a04251ae9",
                 "name": "67fd9bda-6d1a-4089-a588-b683ad113558:panel_67fd9bda-6d1a-4089-a588-b683ad113558",
                 "type": "search"
+            },
+            {
+                "id": "ec7203e0-4d9e-11ed-9a8f-a126bac589a5",
+                "name": "tag-ec7203e0-4d9e-11ed-9a8f-a126bac589a5",
+                "type": "tag"
             }
         ],
         "sort": [
-            1654552251519,
-            30607
+            1665959318299,
+            40589
         ],
         "type": "dashboard",
         "version": "1"
@@ -1798,11 +1974,16 @@
                 "id": "26ba4cb0-0f73-11e9-8e1e-a16db980e11e",
                 "name": "9a987436-c698-4236-9b92-bfab81de8cc1:panel_9a987436-c698-4236-9b92-bfab81de8cc1",
                 "type": "search"
+            },
+            {
+                "id": "ec7203e0-4d9e-11ed-9a8f-a126bac589a5",
+                "name": "tag-ec7203e0-4d9e-11ed-9a8f-a126bac589a5",
+                "type": "tag"
             }
         ],
         "sort": [
-            1654552323667,
-            31540
+            1665959356346,
+            41001
         ],
         "type": "dashboard",
         "version": "1"
@@ -1944,11 +2125,16 @@
                 "id": "3fabe620-6c38-11ea-97d6-55783aed877a",
                 "name": "77f94499-3c4b-49c0-8379-62d38f4d7d8e:panel_77f94499-3c4b-49c0-8379-62d38f4d7d8e",
                 "type": "search"
+            },
+            {
+                "id": "ec7203e0-4d9e-11ed-9a8f-a126bac589a5",
+                "name": "tag-ec7203e0-4d9e-11ed-9a8f-a126bac589a5",
+                "type": "tag"
             }
         ],
         "sort": [
-            1654552342696,
-            31708
+            1665959329722,
+            40695
         ],
         "type": "dashboard",
         "version": "1"
@@ -2089,11 +2275,16 @@
                 "id": "4c003e20-b6aa-11e8-bc1a-cf8fa3255855",
                 "name": "d492599d-f662-450b-9982-54ab7db9f174:panel_d492599d-f662-450b-9982-54ab7db9f174",
                 "type": "search"
+            },
+            {
+                "id": "ec7203e0-4d9e-11ed-9a8f-a126bac589a5",
+                "name": "tag-ec7203e0-4d9e-11ed-9a8f-a126bac589a5",
+                "type": "tag"
             }
         ],
         "sort": [
-            1654552198669,
-            30113
+            1665959416950,
+            41617
         ],
         "type": "dashboard",
         "version": "1"
@@ -2235,11 +2426,16 @@
                 "id": "659280b0-d317-11ea-9301-a30a04251ae9",
                 "name": "66403011-8fb6-402f-b9b6-5f503d6df704:panel_66403011-8fb6-402f-b9b6-5f503d6df704",
                 "type": "visualization"
+            },
+            {
+                "id": "ec7203e0-4d9e-11ed-9a8f-a126bac589a5",
+                "name": "tag-ec7203e0-4d9e-11ed-9a8f-a126bac589a5",
+                "type": "tag"
             }
         ],
         "sort": [
-            1654552357632,
-            31863
+            1665959483990,
+            42519
         ],
         "type": "dashboard",
         "version": "1"

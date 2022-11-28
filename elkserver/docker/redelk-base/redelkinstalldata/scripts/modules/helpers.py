@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+# -*- coding: utf-8 -*-
 """
 Part of RedELK
 
@@ -11,11 +12,21 @@ import datetime
 import json
 import logging
 import os
+import re
 
 from elasticsearch import Elasticsearch
 import urllib3
 
 import config
+
+# Domain name regex pattern
+domain_pattern = re.compile(
+    r"^((?:[a-zA-Z0-9]"  # First character of the domain
+    r"(?:[a-zA-Z0-9-_]{0,61}[A-Za-z0-9])?\.)"  # Sub domain + hostname
+    r"+[A-Za-z0-9][A-Za-z0-9-_]{0,61}"  # First 61 characters of the gTLD
+    r"[A-Za-z])"  # Last character of the gTLD
+    r"(?:\s*#\s*(.*))?$"  # Optional comment
+)
 
 urllib3.disable_warnings()
 es = Elasticsearch(config.es_connection, verify_certs=False)
@@ -31,12 +42,30 @@ def pprint(to_print):
     return out_string
 
 
+def to_unicode(obj, charset="utf-8", errors="strict"):
+    """Converts obj to unicode"""
+    if obj is None:
+        return None
+    if not isinstance(obj, bytes):
+        return str(obj)
+    return obj.decode(charset, errors)
+
+
 def is_json(myjson):
+    """Returns true if the string is a valid json"""
     try:
         json.loads(myjson)
-    except ValueError as e:
+    except ValueError:
         return False
     return True
+
+
+def match_domain_name(domain):
+    """Returns the match if the domain is valid"""
+    try:
+        return domain_pattern.match(to_unicode(domain).encode("idna").decode("ascii"))
+    except (UnicodeError, UnicodeEncodeError, AttributeError):
+        return None
 
 
 def get_value(path, source, default_value=None):

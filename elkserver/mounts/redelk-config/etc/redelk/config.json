@@ -8,8 +8,10 @@
         "le_email": "",
         "staging": "0"
     },
-    "project_name":"redelk-project",
-    "es_connection": ["https://elastic:{{ELASTIC_PASSWORD}}@redelk-elasticsearch:9200"],
+    "project_name": "redelk-project",
+    "es_connection": [
+        "https://elastic:{{ELASTIC_PASSWORD}}@redelk-elasticsearch:9200"
+    ],
     "notifications": {
         "email": {
             "enabled": false,
@@ -20,7 +22,9 @@
                 "pass": "redelk"
             },
             "from": "redelk@example.com",
-            "to": ["redelk@example.com"]
+            "to": [
+                "redelk@example.com"
+            ]
         },
         "msteams": {
             "enabled": false,
@@ -86,6 +90,16 @@
         "enrich_synciplists": {
             "enabled": true,
             "interval": 360
+        },
+        "enrich_syncdomainslists": {
+            "enabled": true,
+            "interval": 30
+        },
+        "enrich_domainscategorization": {
+            "enabled": true,
+            "interval": 1,
+            "ibm_basic_auth": "Basic ",
+            "vt_api_key": ""
         }
     }
 }

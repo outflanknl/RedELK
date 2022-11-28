@@ -166,24 +166,24 @@ Domain            : STROOP
 Logon Server      : S-WIN22
 Logon Time        : 3/30/2020 8:36:40 AM
 SID               : S-1-5-21-2163199188-2306780613-1636707950-4709
-	msv :	
+	msv :
 	 [00000003] Primary
 	 * Username : W.Trommel
 	 * Domain   : STROOP
 	 * NTLM     : e4a22d8e7bbec871b341c88c2e94cba2
 	 * SHA1     : e4d319d431fc5f20f9b459d40870854c840834d7
 	 * DPAPI    : e4c81fcb4b66f54c7d549fb446425a9c
-	tspkg :	
-	wdigest :	
+	tspkg :
+	wdigest :
 	 * Username : W.Trommel
 	 * Domain   : STROOP
 	 * Password : (null)
-	kerberos :	
+	kerberos :
 	 * Username : W.Trommel
 	 * Domain   : STROOP.LOCAL
 	 * Password : (null)
-	ssp :	
-	credman :	
+	ssp :
+	credman :
 
 Authentication Id : 0 ; 1187067 (00000000:00121cfb)
 Session           : RemoteInteractive from 2
@@ -192,24 +192,24 @@ Domain            : STROOP
 Logon Server      : S-WIN22
 Logon Time        : 3/30/2020 8:36:40 AM
 SID               : S-1-5-21-2163199188-2306780613-1636707950-4709
-	msv :	
+	msv :
 	 [00000003] Primary
 	 * Username : W.Trommel
 	 * Domain   : STROOP
 	 * NTLM     : e4a22d8e7bbec871b341c88c2e94cba2
 	 * SHA1     : e4d319d431fc5f20f9b459d40870854c840834d7
 	 * DPAPI    : e4c81fcb4b66f54c7d549fb446425a9c
-	tspkg :	
-	wdigest :	
+	tspkg :
+	wdigest :
 	 * Username : W.Trommel
 	 * Domain   : STROOP
 	 * Password : (null)
-	kerberos :	
+	kerberos :
 	 * Username : w.trommel
 	 * Domain   : STROOP.LOCAL
 	 * Password : (null)
-	ssp :	
-	credman :	
+	ssp :
+	credman :
 
 Authentication Id : 0 ; 1155726 (00000000:0011a28e)
 Session           : Interactive from 2
@@ -218,23 +218,23 @@ Domain            : Window Manager
 Logon Server      : (null)
 Logon Time        : 3/30/2020 8:36:40 AM
 SID               : S-1-5-90-0-2
-	msv :	
+	msv :
 	 [00000003] Primary
 	 * Username : L-WIN224$
 	 * Domain   : STROOP
 	 * NTLM     : b7fdacb33b890f235bf7e107ecf00d41
 	 * SHA1     : 81d84bb5789059ccca5504e4fb218b243ce2e820
-	tspkg :	
-	wdigest :	
+	tspkg :
+	wdigest :
 	 * Username : L-WIN224$
 	 * Domain   : STROOP
 	 * Password : (null)
-	kerberos :	
+	kerberos :
 	 * Username : L-WIN224$
 	 * Domain   : stroop.local
 	 * Password : kfB2!<Pv] V;"l<gPvY>9ssJ".!\C0SQjy%ER>("1:$E8]v<9c5a]Er2^.!1C7v<KvV$Xs1_8\nrL)SoRi/L#Z[8xLQ"'D^Zs!wO/2fL]Mnv[^k6WrcnX2#8
-	ssp :	
-	credman :	
+	ssp :
+	credman :
 
 Authentication Id : 0 ; 1154809 (00000000:00119ef9)
 Session           : Interactive from 2
@@ -243,23 +243,23 @@ Domain            : Window Manager
 Logon Server      : (null)
 Logon Time        : 3/30/2020 8:36:40 AM
 SID               : S-1-5-90-0-2
-	msv :	
+	msv :
 	 [00000003] Primary
 	 * Username : L-WIN224$
 	 * Domain   : STROOP
 	 * NTLM     : b7fdacb33b890f235bf7e107ecf00d41
 	 * SHA1     : 81d84bb5789059ccca5504e4fb218b243ce2e820
-	tspkg :	
-	wdigest :	
+	tspkg :
+	wdigest :
 	 * Username : L-WIN224$
 	 * Domain   : STROOP
 	 * Password : (null)
-	kerberos :	
+	kerberos :
 	 * Username : L-WIN224$
 	 * Domain   : stroop.local
 	 * Password : kfB2!<Pv] V;"l<gPvY>9ssJ".!\C0SQjy%ER>("1:$E8]v<9c5a]Er2^.!1C7v<KvV$Xs1_8\nrL)SoRi/L#Z[8xLQ"'D^Zs!wO/2fL]Mnv[^k6WrcnX2#8
-	ssp :	
-	credman :	
+	ssp :
+	credman :
 
 Authentication Id : 0 ; 1151719 (00000000:001192e7)
 Session           : Interactive from 2
@@ -268,23 +268,23 @@ Domain            : Font Driver Host
 Logon Server      : (null)
 Logon Time        : 3/30/2020 8:36:40 AM
 SID               : S-1-5-96-0-2
-	msv :	
+	msv :
 	 [00000003] Primary
 	 * Username : L-WIN224$
 	 * Domain   : STROOP
 	 * NTLM     : b7fdacb33b890f235bf7e107ecf00d41
 	 * SHA1     : 81d84bb5789059ccca5504e4fb218b243ce2e820
-	tspkg :	
-	wdigest :	
+	tspkg :
+	wdigest :
 	 * Username : L-WIN224$
 	 * Domain   : STROOP
 	 * Password : (null)
-	kerberos :	
+	kerberos :
 	 * Username : L-WIN224$
 	 * Domain   : stroop.local
 	 * Password : kfB2!<Pv] V;"l<gPvY>9ssJ".!\C0SQjy%ER>("1:$E8]v<9c5a]Er2^.!1C7v<KvV$Xs1_8\nrL)SoRi/L#Z[8xLQ"'D^Zs!wO/2fL]Mnv[^k6WrcnX2#8
-	ssp :	
-	credman :	
+	ssp :
+	credman :
 
 Authentication Id : 0 ; 997 (00000000:000003e5)
 Session           : Service from 0
@@ -293,18 +293,18 @@ Domain            : NT AUTHORITY
 Logon Server      : (null)
 Logon Time        : 3/30/2020 7:45:29 AM
 SID               : S-1-5-19
-	msv :	
-	tspkg :	
-	wdigest :	
+	msv :
+	tspkg :
+	wdigest :
 	 * Username : (null)
 	 * Domain   : (null)
 	 * Password : (null)
-	kerberos :	
+	kerberos :
 	 * Username : (null)
 	 * Domain   : (null)
 	 * Password : (null)
-	ssp :	
-	credman :	
+	ssp :
+	credman :
 
 Authentication Id : 0 ; 52152 (00000000:0000cbb8)
 Session           : Interactive from 1
@@ -313,23 +313,23 @@ Domain            : Window Manager
 Logon Server      : (null)
 Logon Time        : 3/30/2020 7:45:29 AM
 SID               : S-1-5-90-0-1
-	msv :	
+	msv :
 	 [00000003] Primary
 	 * Username : L-WIN224$
 	 * Domain   : STROOP
 	 * NTLM     : b7fdacb33b890f235bf7e107ecf00d41
 	 * SHA1     : 81d84bb5789059ccca5504e4fb218b243ce2e820
-	tspkg :	
-	wdigest :	
+	tspkg :
+	wdigest :
 	 * Username : L-WIN224$
 	 * Domain   : STROOP
 	 * Password : (null)
-	kerberos :	
+	kerberos :
 	 * Username : L-WIN224$
 	 * Domain   : stroop.local
 	 * Password : kfB2!<Pv] V;"l<gPvY>9ssJ".!\C0SQjy%ER>("1:$E8]v<9c5a]Er2^.!1C7v<KvV$Xs1_8\nrL)SoRi/L#Z[8xLQ"'D^Zs!wO/2fL]Mnv[^k6WrcnX2#8
-	ssp :	
-	credman :	
+	ssp :
+	credman :
 
 Authentication Id : 0 ; 52021 (00000000:0000cb35)
 Session           : Interactive from 1
@@ -338,23 +338,23 @@ Domain            : Window Manager
 Logon Server      : (null)
 Logon Time        : 3/30/2020 7:45:29 AM
 SID               : S-1-5-90-0-1
-	msv :	
+	msv :
 	 [00000003] Primary
 	 * Username : L-WIN224$
 	 * Domain   : STROOP
 	 * NTLM     : b7fdacb33b890f235bf7e107ecf00d41
 	 * SHA1     : 81d84bb5789059ccca5504e4fb218b243ce2e820
-	tspkg :	
-	wdigest :	
+	tspkg :
+	wdigest :
 	 * Username : L-WIN224$
 	 * Domain   : STROOP
 	 * Password : (null)
-	kerberos :	
+	kerberos :
 	 * Username : L-WIN224$
 	 * Domain   : stroop.local
 	 * Password : kfB2!<Pv] V;"l<gPvY>9ssJ".!\C0SQjy%ER>("1:$E8]v<9c5a]Er2^.!1C7v<KvV$Xs1_8\nrL)SoRi/L#Z[8xLQ"'D^Zs!wO/2fL]Mnv[^k6WrcnX2#8
-	ssp :	
-	credman :	
+	ssp :
+	credman :
 
 Authentication Id : 0 ; 996 (00000000:000003e4)
 Session           : Service from 0
@@ -363,23 +363,23 @@ Domain            : STROOP
 Logon Server      : (null)
 Logon Time        : 3/30/2020 7:45:29 AM
 SID               : S-1-5-20
-	msv :	
+	msv :
 	 [00000003] Primary
 	 * Username : L-WIN224$
 	 * Domain   : STROOP
 	 * NTLM     : b7fdacb33b890f235bf7e107ecf00d41
 	 * SHA1     : 81d84bb5789059ccca5504e4fb218b243ce2e820
-	tspkg :	
-	wdigest :	
+	tspkg :
+	wdigest :
 	 * Username : L-WIN224$
 	 * Domain   : STROOP
 	 * Password : (null)
-	kerberos :	
+	kerberos :
 	 * Username : l-win224$
 	 * Domain   : STROOP.LOCAL
 	 * Password : (null)
-	ssp :	
-	credman :	
+	ssp :
+	credman :
 
 Authentication Id : 0 ; 29685 (00000000:000073f5)
 Session           : Interactive from 1
@@ -388,23 +388,23 @@ Domain            : Font Driver Host
 Logon Server      : (null)
 Logon Time        : 3/30/2020 7:45:29 AM
 SID               : S-1-5-96-0-1
-	msv :	
+	msv :
 	 [00000003] Primary
 	 * Username : L-WIN224$
 	 * Domain   : STROOP
 	 * NTLM     : b7fdacb33b890f235bf7e107ecf00d41
 	 * SHA1     : 81d84bb5789059ccca5504e4fb218b243ce2e820
-	tspkg :	
-	wdigest :	
+	tspkg :
+	wdigest :
 	 * Username : L-WIN224$
 	 * Domain   : STROOP
 	 * Password : (null)
-	kerberos :	
+	kerberos :
 	 * Username : L-WIN224$
 	 * Domain   : stroop.local
 	 * Password : kfB2!<Pv] V;"l<gPvY>9ssJ".!\C0SQjy%ER>("1:$E8]v<9c5a]Er2^.!1C7v<KvV$Xs1_8\nrL)SoRi/L#Z[8xLQ"'D^Zs!wO/2fL]Mnv[^k6WrcnX2#8
-	ssp :	
-	credman :	
+	ssp :
+	credman :
 
 Authentication Id : 0 ; 29582 (00000000:0000738e)
 Session           : Interactive from 0
@@ -413,23 +413,23 @@ Domain            : Font Driver Host
 Logon Server      : (null)
 Logon Time        : 3/30/2020 7:45:29 AM
 SID               : S-1-5-96-0-0
-	msv :	
+	msv :
 	 [00000003] Primary
 	 * Username : L-WIN224$
 	 * Domain   : STROOP
 	 * NTLM     : b7fdacb33b890f235bf7e107ecf00d41
 	 * SHA1     : 81d84bb5789059ccca5504e4fb218b243ce2e820
-	tspkg :	
-	wdigest :	
+	tspkg :
+	wdigest :
 	 * Username : L-WIN224$
 	 * Domain   : STROOP
 	 * Password : (null)
-	kerberos :	
+	kerberos :
 	 * Username : L-WIN224$
 	 * Domain   : stroop.local
 	 * Password : kfB2!<Pv] V;"l<gPvY>9ssJ".!\C0SQjy%ER>("1:$E8]v<9c5a]Er2^.!1C7v<KvV$Xs1_8\nrL)SoRi/L#Z[8xLQ"'D^Zs!wO/2fL]Mnv[^k6WrcnX2#8
-	ssp :	
-	credman :	
+	ssp :
+	credman :
 
 Authentication Id : 0 ; 27214 (00000000:00006a4e)
 Session           : UndefinedLogonType from 0
@@ -437,18 +437,18 @@ User Name         : (null)
 Domain            : (null)
 Logon Server      : (null)
 Logon Time        : 3/30/2020 7:45:28 AM
-SID               : 
-	msv :	
+SID               :
+	msv :
 	 [00000003] Primary
 	 * Username : L-WIN224$
 	 * Domain   : STROOP
 	 * NTLM     : b7fdacb33b890f235bf7e107ecf00d41
 	 * SHA1     : 81d84bb5789059ccca5504e4fb218b243ce2e820
-	tspkg :	
-	wdigest :	
-	kerberos :	
-	ssp :	
-	credman :	
+	tspkg :
+	wdigest :
+	kerberos :
+	ssp :
+	credman :
 
 Authentication Id : 0 ; 999 (00000000:000003e7)
 Session           : UndefinedLogonType from 0
@@ -457,18 +457,18 @@ Domain            : STROOP
 Logon Server      : (null)
 Logon Time        : 3/30/2020 7:45:28 AM
 SID               : S-1-5-18
-	msv :	
-	tspkg :	
-	wdigest :	
+	msv :
+	tspkg :
+	wdigest :
 	 * Username : L-WIN224$
 	 * Domain   : STROOP
 	 * Password : (null)
-	kerberos :	
+	kerberos :
 	 * Username : l-win224$
 	 * Domain   : STROOP.LOCAL
 	 * Password : (null)
-	ssp :	
-	credman :	
+	ssp :
+	credman :
 
 
 03/30 08:51:19 UTC [input] <neo> pwd
@@ -4840,8 +4840,8 @@ received output:
 
 SERVICE_NAME: Appinfo
 DISPLAY_NAME: Application Information
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -4850,8 +4850,8 @@ DISPLAY_NAME: Application Information
 
 SERVICE_NAME: AppXSvc
 DISPLAY_NAME: AppX Deployment Service (AppXSVC)
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -4860,8 +4860,8 @@ DISPLAY_NAME: AppX Deployment Service (AppXSVC)
 
 SERVICE_NAME: AudioEndpointBuilder
 DISPLAY_NAME: Windows Audio Endpoint Builder
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -4870,8 +4870,8 @@ DISPLAY_NAME: Windows Audio Endpoint Builder
 
 SERVICE_NAME: Audiosrv
 DISPLAY_NAME: Windows Audio
-        TYPE               : 10  WIN32_OWN_PROCESS  
-        STATE              : 4  RUNNING 
+        TYPE               : 10  WIN32_OWN_PROCESS
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -4880,8 +4880,8 @@ DISPLAY_NAME: Windows Audio
 
 SERVICE_NAME: BFE
 DISPLAY_NAME: Base Filtering Engine
-        TYPE               : 20  WIN32_SHARE_PROCESS  
-        STATE              : 4  RUNNING 
+        TYPE               : 20  WIN32_SHARE_PROCESS
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -4890,8 +4890,8 @@ DISPLAY_NAME: Base Filtering Engine
 
 SERVICE_NAME: BrokerInfrastructure
 DISPLAY_NAME: Background Tasks Infrastructure Service
-        TYPE               : 20  WIN32_SHARE_PROCESS  
-        STATE              : 4  RUNNING 
+        TYPE               : 20  WIN32_SHARE_PROCESS
+        STATE              : 4  RUNNING
                                 (NOT_STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -4900,8 +4900,8 @@ DISPLAY_NAME: Background Tasks Infrastructure Service
 
 SERVICE_NAME: CDPSvc
 DISPLAY_NAME: Connected Devices Platform Service
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -4910,8 +4910,8 @@ DISPLAY_NAME: Connected Devices Platform Service
 
 SERVICE_NAME: CertPropSvc
 DISPLAY_NAME: Certificate Propagation
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -4920,8 +4920,8 @@ DISPLAY_NAME: Certificate Propagation
 
 SERVICE_NAME: ClickToRunSvc
 DISPLAY_NAME: Microsoft Office Click-to-Run Service
-        TYPE               : 10  WIN32_OWN_PROCESS  
-        STATE              : 4  RUNNING 
+        TYPE               : 10  WIN32_OWN_PROCESS
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -4930,8 +4930,8 @@ DISPLAY_NAME: Microsoft Office Click-to-Run Service
 
 SERVICE_NAME: CoreMessagingRegistrar
 DISPLAY_NAME: CoreMessaging
-        TYPE               : 20  WIN32_SHARE_PROCESS  
-        STATE              : 4  RUNNING 
+        TYPE               : 20  WIN32_SHARE_PROCESS
+        STATE              : 4  RUNNING
                                 (NOT_STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -4940,8 +4940,8 @@ DISPLAY_NAME: CoreMessaging
 
 SERVICE_NAME: CryptSvc
 DISPLAY_NAME: Cryptographic Services
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -4950,8 +4950,8 @@ DISPLAY_NAME: Cryptographic Services
 
 SERVICE_NAME: DcomLaunch
 DISPLAY_NAME: DCOM Server Process Launcher
-        TYPE               : 20  WIN32_SHARE_PROCESS  
-        STATE              : 4  RUNNING 
+        TYPE               : 20  WIN32_SHARE_PROCESS
+        STATE              : 4  RUNNING
                                 (NOT_STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -4960,8 +4960,8 @@ DISPLAY_NAME: DCOM Server Process Launcher
 
 SERVICE_NAME: Dhcp
 DISPLAY_NAME: DHCP Client
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -4970,8 +4970,8 @@ DISPLAY_NAME: DHCP Client
 
 SERVICE_NAME: DiagTrack
 DISPLAY_NAME: Connected User Experiences and Telemetry
-        TYPE               : 10  WIN32_OWN_PROCESS  
-        STATE              : 4  RUNNING 
+        TYPE               : 10  WIN32_OWN_PROCESS
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_PRESHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -4980,8 +4980,8 @@ DISPLAY_NAME: Connected User Experiences and Telemetry
 
 SERVICE_NAME: Dnscache
 DISPLAY_NAME: DNS Client
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (NOT_STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -4990,8 +4990,8 @@ DISPLAY_NAME: DNS Client
 
 SERVICE_NAME: DoSvc
 DISPLAY_NAME: Delivery Optimization
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_PRESHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5000,8 +5000,8 @@ DISPLAY_NAME: Delivery Optimization
 
 SERVICE_NAME: DPS
 DISPLAY_NAME: Diagnostic Policy Service
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5010,8 +5010,8 @@ DISPLAY_NAME: Diagnostic Policy Service
 
 SERVICE_NAME: DusmSvc
 DISPLAY_NAME: Data Usage
-        TYPE               : 10  WIN32_OWN_PROCESS  
-        STATE              : 4  RUNNING 
+        TYPE               : 10  WIN32_OWN_PROCESS
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5020,8 +5020,8 @@ DISPLAY_NAME: Data Usage
 
 SERVICE_NAME: EventLog
 DISPLAY_NAME: Windows Event Log
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5030,8 +5030,8 @@ DISPLAY_NAME: Windows Event Log
 
 SERVICE_NAME: EventSystem
 DISPLAY_NAME: COM+ Event System
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5040,8 +5040,8 @@ DISPLAY_NAME: COM+ Event System
 
 SERVICE_NAME: FontCache
 DISPLAY_NAME: Windows Font Cache Service
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5050,8 +5050,8 @@ DISPLAY_NAME: Windows Font Cache Service
 
 SERVICE_NAME: gpsvc
 DISPLAY_NAME: Group Policy Client
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_PRESHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5060,8 +5060,8 @@ DISPLAY_NAME: Group Policy Client
 
 SERVICE_NAME: IKEEXT
 DISPLAY_NAME: IKE and AuthIP IPsec Keying Modules
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5070,8 +5070,8 @@ DISPLAY_NAME: IKE and AuthIP IPsec Keying Modules
 
 SERVICE_NAME: iphlpsvc
 DISPLAY_NAME: IP Helper
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5080,8 +5080,8 @@ DISPLAY_NAME: IP Helper
 
 SERVICE_NAME: KeyIso
 DISPLAY_NAME: CNG Key Isolation
-        TYPE               : 20  WIN32_SHARE_PROCESS  
-        STATE              : 4  RUNNING 
+        TYPE               : 20  WIN32_SHARE_PROCESS
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5090,8 +5090,8 @@ DISPLAY_NAME: CNG Key Isolation
 
 SERVICE_NAME: LanmanServer
 DISPLAY_NAME: Server
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5100,8 +5100,8 @@ DISPLAY_NAME: Server
 
 SERVICE_NAME: LanmanWorkstation
 DISPLAY_NAME: Workstation
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5110,8 +5110,8 @@ DISPLAY_NAME: Workstation
 
 SERVICE_NAME: lmhosts
 DISPLAY_NAME: TCP/IP NetBIOS Helper
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5120,8 +5120,8 @@ DISPLAY_NAME: TCP/IP NetBIOS Helper
 
 SERVICE_NAME: LSM
 DISPLAY_NAME: Local Session Manager
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (NOT_STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5130,8 +5130,8 @@ DISPLAY_NAME: Local Session Manager
 
 SERVICE_NAME: mpssvc
 DISPLAY_NAME: Windows Defender Firewall
-        TYPE               : 20  WIN32_SHARE_PROCESS  
-        STATE              : 4  RUNNING 
+        TYPE               : 20  WIN32_SHARE_PROCESS
+        STATE              : 4  RUNNING
                                 (NOT_STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5140,8 +5140,8 @@ DISPLAY_NAME: Windows Defender Firewall
 
 SERVICE_NAME: NcbService
 DISPLAY_NAME: Network Connection Broker
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5150,8 +5150,8 @@ DISPLAY_NAME: Network Connection Broker
 
 SERVICE_NAME: Netlogon
 DISPLAY_NAME: Netlogon
-        TYPE               : 20  WIN32_SHARE_PROCESS  
-        STATE              : 4  RUNNING 
+        TYPE               : 20  WIN32_SHARE_PROCESS
+        STATE              : 4  RUNNING
                                 (STOPPABLE, PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5160,8 +5160,8 @@ DISPLAY_NAME: Netlogon
 
 SERVICE_NAME: netprofm
 DISPLAY_NAME: Network List Service
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5170,8 +5170,8 @@ DISPLAY_NAME: Network List Service
 
 SERVICE_NAME: NgcCtnrSvc
 DISPLAY_NAME: Microsoft Passport Container
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_PRESHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5180,8 +5180,8 @@ DISPLAY_NAME: Microsoft Passport Container
 
 SERVICE_NAME: NlaSvc
 DISPLAY_NAME: Network Location Awareness
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5190,8 +5190,8 @@ DISPLAY_NAME: Network Location Awareness
 
 SERVICE_NAME: nsi
 DISPLAY_NAME: Network Store Interface Service
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5200,8 +5200,8 @@ DISPLAY_NAME: Network Store Interface Service
 
 SERVICE_NAME: pla
 DISPLAY_NAME: Performance Logs & Alerts
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5210,8 +5210,8 @@ DISPLAY_NAME: Performance Logs & Alerts
 
 SERVICE_NAME: PlugPlay
 DISPLAY_NAME: Plug and Play
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5220,8 +5220,8 @@ DISPLAY_NAME: Plug and Play
 
 SERVICE_NAME: PolicyAgent
 DISPLAY_NAME: IPsec Policy Agent
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5230,8 +5230,8 @@ DISPLAY_NAME: IPsec Policy Agent
 
 SERVICE_NAME: Power
 DISPLAY_NAME: Power
-        TYPE               : 20  WIN32_SHARE_PROCESS  
-        STATE              : 4  RUNNING 
+        TYPE               : 20  WIN32_SHARE_PROCESS
+        STATE              : 4  RUNNING
                                 (NOT_STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5240,8 +5240,8 @@ DISPLAY_NAME: Power
 
 SERVICE_NAME: ProfSvc
 DISPLAY_NAME: User Profile Service
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5250,8 +5250,8 @@ DISPLAY_NAME: User Profile Service
 
 SERVICE_NAME: RdAgent
 DISPLAY_NAME: RdAgent
-        TYPE               : 10  WIN32_OWN_PROCESS  
-        STATE              : 4  RUNNING 
+        TYPE               : 10  WIN32_OWN_PROCESS
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5260,8 +5260,8 @@ DISPLAY_NAME: RdAgent
 
 SERVICE_NAME: RpcEptMapper
 DISPLAY_NAME: RPC Endpoint Mapper
-        TYPE               : 20  WIN32_SHARE_PROCESS  
-        STATE              : 4  RUNNING 
+        TYPE               : 20  WIN32_SHARE_PROCESS
+        STATE              : 4  RUNNING
                                 (NOT_STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5270,8 +5270,8 @@ DISPLAY_NAME: RPC Endpoint Mapper
 
 SERVICE_NAME: RpcSs
 DISPLAY_NAME: Remote Procedure Call (RPC)
-        TYPE               : 20  WIN32_SHARE_PROCESS  
-        STATE              : 4  RUNNING 
+        TYPE               : 20  WIN32_SHARE_PROCESS
+        STATE              : 4  RUNNING
                                 (NOT_STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5280,8 +5280,8 @@ DISPLAY_NAME: Remote Procedure Call (RPC)
 
 SERVICE_NAME: SamSs
 DISPLAY_NAME: Security Accounts Manager
-        TYPE               : 20  WIN32_SHARE_PROCESS  
-        STATE              : 4  RUNNING 
+        TYPE               : 20  WIN32_SHARE_PROCESS
+        STATE              : 4  RUNNING
                                 (NOT_STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5290,8 +5290,8 @@ DISPLAY_NAME: Security Accounts Manager
 
 SERVICE_NAME: Schedule
 DISPLAY_NAME: Task Scheduler
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5300,8 +5300,8 @@ DISPLAY_NAME: Task Scheduler
 
 SERVICE_NAME: SecurityHealthService
 DISPLAY_NAME: Windows Security Service
-        TYPE               : 10  WIN32_OWN_PROCESS  
-        STATE              : 4  RUNNING 
+        TYPE               : 10  WIN32_OWN_PROCESS
+        STATE              : 4  RUNNING
                                 (NOT_STOPPABLE, NOT_PAUSABLE, ACCEPTS_PRESHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5310,8 +5310,8 @@ DISPLAY_NAME: Windows Security Service
 
 SERVICE_NAME: SENS
 DISPLAY_NAME: System Event Notification Service
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5320,8 +5320,8 @@ DISPLAY_NAME: System Event Notification Service
 
 SERVICE_NAME: SessionEnv
 DISPLAY_NAME: Remote Desktop Configuration
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5330,8 +5330,8 @@ DISPLAY_NAME: Remote Desktop Configuration
 
 SERVICE_NAME: SgrmBroker
 DISPLAY_NAME: System Guard Runtime Monitor Broker
-        TYPE               : 10  WIN32_OWN_PROCESS  
-        STATE              : 4  RUNNING 
+        TYPE               : 10  WIN32_OWN_PROCESS
+        STATE              : 4  RUNNING
                                 (NOT_STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5340,8 +5340,8 @@ DISPLAY_NAME: System Guard Runtime Monitor Broker
 
 SERVICE_NAME: ShellHWDetection
 DISPLAY_NAME: Shell Hardware Detection
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5351,7 +5351,7 @@ DISPLAY_NAME: Shell Hardware Detection
 SERVICE_NAME: Spooler
 DISPLAY_NAME: Print Spooler
         TYPE               : 110  WIN32_OWN_PROCESS  (interactive)
-        STATE              : 4  RUNNING 
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5360,8 +5360,8 @@ DISPLAY_NAME: Print Spooler
 
 SERVICE_NAME: SSDPSRV
 DISPLAY_NAME: SSDP Discovery
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5370,8 +5370,8 @@ DISPLAY_NAME: SSDP Discovery
 
 SERVICE_NAME: StateRepository
 DISPLAY_NAME: State Repository Service
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5380,8 +5380,8 @@ DISPLAY_NAME: State Repository Service
 
 SERVICE_NAME: StorSvc
 DISPLAY_NAME: Storage Service
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5390,8 +5390,8 @@ DISPLAY_NAME: Storage Service
 
 SERVICE_NAME: SysMain
 DISPLAY_NAME: SysMain
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5400,8 +5400,8 @@ DISPLAY_NAME: SysMain
 
 SERVICE_NAME: sysmon64
 DISPLAY_NAME: sysmon64
-        TYPE               : 10  WIN32_OWN_PROCESS  
-        STATE              : 4  RUNNING 
+        TYPE               : 10  WIN32_OWN_PROCESS
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5410,8 +5410,8 @@ DISPLAY_NAME: sysmon64
 
 SERVICE_NAME: SystemEventsBroker
 DISPLAY_NAME: System Events Broker
-        TYPE               : 20  WIN32_SHARE_PROCESS  
-        STATE              : 4  RUNNING 
+        TYPE               : 20  WIN32_SHARE_PROCESS
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5420,8 +5420,8 @@ DISPLAY_NAME: System Events Broker
 
 SERVICE_NAME: TabletInputService
 DISPLAY_NAME: Touch Keyboard and Handwriting Panel Service
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (NOT_STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5430,8 +5430,8 @@ DISPLAY_NAME: Touch Keyboard and Handwriting Panel Service
 
 SERVICE_NAME: TermService
 DISPLAY_NAME: Remote Desktop Services
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5440,8 +5440,8 @@ DISPLAY_NAME: Remote Desktop Services
 
 SERVICE_NAME: Themes
 DISPLAY_NAME: Themes
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5450,8 +5450,8 @@ DISPLAY_NAME: Themes
 
 SERVICE_NAME: TimeBrokerSvc
 DISPLAY_NAME: Time Broker
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5460,8 +5460,8 @@ DISPLAY_NAME: Time Broker
 
 SERVICE_NAME: TokenBroker
 DISPLAY_NAME: Web Account Manager
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5470,8 +5470,8 @@ DISPLAY_NAME: Web Account Manager
 
 SERVICE_NAME: TrkWks
 DISPLAY_NAME: Distributed Link Tracking Client
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5480,8 +5480,8 @@ DISPLAY_NAME: Distributed Link Tracking Client
 
 SERVICE_NAME: UmRdpService
 DISPLAY_NAME: Remote Desktop Services UserMode Port Redirector
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5490,8 +5490,8 @@ DISPLAY_NAME: Remote Desktop Services UserMode Port Redirector
 
 SERVICE_NAME: UserManager
 DISPLAY_NAME: User Manager
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5500,8 +5500,8 @@ DISPLAY_NAME: User Manager
 
 SERVICE_NAME: UsoSvc
 DISPLAY_NAME: Update Orchestrator Service
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5510,8 +5510,8 @@ DISPLAY_NAME: Update Orchestrator Service
 
 SERVICE_NAME: VaultSvc
 DISPLAY_NAME: Credential Manager
-        TYPE               : 20  WIN32_SHARE_PROCESS  
-        STATE              : 4  RUNNING 
+        TYPE               : 20  WIN32_SHARE_PROCESS
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5520,8 +5520,8 @@ DISPLAY_NAME: Credential Manager
 
 SERVICE_NAME: vmicheartbeat
 DISPLAY_NAME: Hyper-V Heartbeat Service
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5530,8 +5530,8 @@ DISPLAY_NAME: Hyper-V Heartbeat Service
 
 SERVICE_NAME: vmickvpexchange
 DISPLAY_NAME: Hyper-V Data Exchange Service
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5540,8 +5540,8 @@ DISPLAY_NAME: Hyper-V Data Exchange Service
 
 SERVICE_NAME: vmicrdv
 DISPLAY_NAME: Hyper-V Remote Desktop Virtualization Service
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5550,8 +5550,8 @@ DISPLAY_NAME: Hyper-V Remote Desktop Virtualization Service
 
 SERVICE_NAME: vmicshutdown
 DISPLAY_NAME: Hyper-V Guest Shutdown Service
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5560,8 +5560,8 @@ DISPLAY_NAME: Hyper-V Guest Shutdown Service
 
 SERVICE_NAME: vmictimesync
 DISPLAY_NAME: Hyper-V Time Synchronization Service
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5570,8 +5570,8 @@ DISPLAY_NAME: Hyper-V Time Synchronization Service
 
 SERVICE_NAME: vmicvss
 DISPLAY_NAME: Hyper-V Volume Shadow Copy Requestor
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, PAUSABLE, ACCEPTS_PRESHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5580,8 +5580,8 @@ DISPLAY_NAME: Hyper-V Volume Shadow Copy Requestor
 
 SERVICE_NAME: VSS
 DISPLAY_NAME: Volume Shadow Copy
-        TYPE               : 10  WIN32_OWN_PROCESS  
-        STATE              : 4  RUNNING 
+        TYPE               : 10  WIN32_OWN_PROCESS
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5590,8 +5590,8 @@ DISPLAY_NAME: Volume Shadow Copy
 
 SERVICE_NAME: W32Time
 DISPLAY_NAME: Windows Time
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5600,8 +5600,8 @@ DISPLAY_NAME: Windows Time
 
 SERVICE_NAME: Wcmsvc
 DISPLAY_NAME: Windows Connection Manager
-        TYPE               : 10  WIN32_OWN_PROCESS  
-        STATE              : 4  RUNNING 
+        TYPE               : 10  WIN32_OWN_PROCESS
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5610,8 +5610,8 @@ DISPLAY_NAME: Windows Connection Manager
 
 SERVICE_NAME: WdiServiceHost
 DISPLAY_NAME: Diagnostic Service Host
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5620,8 +5620,8 @@ DISPLAY_NAME: Diagnostic Service Host
 
 SERVICE_NAME: WinDefend
 DISPLAY_NAME: Windows Defender Antivirus Service
-        TYPE               : 10  WIN32_OWN_PROCESS  
-        STATE              : 4  RUNNING 
+        TYPE               : 10  WIN32_OWN_PROCESS
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5630,8 +5630,8 @@ DISPLAY_NAME: Windows Defender Antivirus Service
 
 SERVICE_NAME: WindowsAzureGuestAgent
 DISPLAY_NAME: Windows Azure Guest Agent
-        TYPE               : 10  WIN32_OWN_PROCESS  
-        STATE              : 4  RUNNING 
+        TYPE               : 10  WIN32_OWN_PROCESS
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5640,8 +5640,8 @@ DISPLAY_NAME: Windows Azure Guest Agent
 
 SERVICE_NAME: WindowsAzureNetAgentSvc
 DISPLAY_NAME: Windows Azure Network Agent
-        TYPE               : 10  WIN32_OWN_PROCESS  
-        STATE              : 4  RUNNING 
+        TYPE               : 10  WIN32_OWN_PROCESS
+        STATE              : 4  RUNNING
                                 (STOPPABLE, PAUSABLE, ACCEPTS_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5650,8 +5650,8 @@ DISPLAY_NAME: Windows Azure Network Agent
 
 SERVICE_NAME: WindowsAzureTelemetryService
 DISPLAY_NAME: Windows Azure Telemetry Service
-        TYPE               : 10  WIN32_OWN_PROCESS  
-        STATE              : 4  RUNNING 
+        TYPE               : 10  WIN32_OWN_PROCESS
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5660,8 +5660,8 @@ DISPLAY_NAME: Windows Azure Telemetry Service
 
 SERVICE_NAME: WinHttpAutoProxySvc
 DISPLAY_NAME: WinHTTP Web Proxy Auto-Discovery Service
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (NOT_STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5670,8 +5670,8 @@ DISPLAY_NAME: WinHTTP Web Proxy Auto-Discovery Service
 
 SERVICE_NAME: Winmgmt
 DISPLAY_NAME: Windows Management Instrumentation
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, PAUSABLE, ACCEPTS_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5680,8 +5680,8 @@ DISPLAY_NAME: Windows Management Instrumentation
 
 SERVICE_NAME: WinRM
 DISPLAY_NAME: Windows Remote Management (WS-Management)
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5690,8 +5690,8 @@ DISPLAY_NAME: Windows Remote Management (WS-Management)
 
 SERVICE_NAME: WpnService
 DISPLAY_NAME: Windows Push Notifications System Service
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5700,8 +5700,8 @@ DISPLAY_NAME: Windows Push Notifications System Service
 
 SERVICE_NAME: wscsvc
 DISPLAY_NAME: Security Center
-        TYPE               : 30  WIN32  
-        STATE              : 4  RUNNING 
+        TYPE               : 30  WIN32
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5710,8 +5710,8 @@ DISPLAY_NAME: Security Center
 
 SERVICE_NAME: WSearch
 DISPLAY_NAME: Windows Search
-        TYPE               : 10  WIN32_OWN_PROCESS  
-        STATE              : 4  RUNNING 
+        TYPE               : 10  WIN32_OWN_PROCESS
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5720,8 +5720,8 @@ DISPLAY_NAME: Windows Search
 
 SERVICE_NAME: cbdhsvc_12420b
 DISPLAY_NAME: Clipboard User Service_12420b
-        TYPE               : f0   ERROR  
-        STATE              : 4  RUNNING 
+        TYPE               : f0   ERROR
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5730,8 +5730,8 @@ DISPLAY_NAME: Clipboard User Service_12420b
 
 SERVICE_NAME: CDPUserSvc_12420b
 DISPLAY_NAME: Connected Devices Platform User Service_12420b
-        TYPE               : f0   ERROR  
-        STATE              : 4  RUNNING 
+        TYPE               : f0   ERROR
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5740,8 +5740,8 @@ DISPLAY_NAME: Connected Devices Platform User Service_12420b
 
 SERVICE_NAME: OneSyncSvc_12420b
 DISPLAY_NAME: Sync Host_12420b
-        TYPE               : e0  USER_SHARE_PROCESS INSTANCE  
-        STATE              : 4  RUNNING 
+        TYPE               : e0  USER_SHARE_PROCESS INSTANCE
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5750,8 +5750,8 @@ DISPLAY_NAME: Sync Host_12420b
 
 SERVICE_NAME: WpnUserService_12420b
 DISPLAY_NAME: Windows Push Notifications User Service_12420b
-        TYPE               : f0   ERROR  
-        STATE              : 4  RUNNING 
+        TYPE               : f0   ERROR
+        STATE              : 4  RUNNING
                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_PRESHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
@@ -5765,9 +5765,9 @@ DISPLAY_NAME: Windows Push Notifications User Service_12420b
 03/30 08:59:55 UTC [output]
 received output:
 
-SERVICE_NAME: netsrv 
-        TYPE               : 10  WIN32_OWN_PROCESS  
-        STATE              : 1  STOPPED 
+SERVICE_NAME: netsrv
+        TYPE               : 10  WIN32_OWN_PROCESS
+        STATE              : 1  STOPPED
         WIN32_EXIT_CODE    : 1077  (0x435)
         SERVICE_EXIT_CODE  : 0  (0x0)
         CHECKPOINT         : 0x0
@@ -5780,16 +5780,16 @@ SERVICE_NAME: netsrv
 03/30 09:00:23 UTC [output]
 received output:
 
-SERVICE_NAME: netsrv 
-        TYPE               : 10  WIN32_OWN_PROCESS  
-        STATE              : 2  START_PENDING 
+SERVICE_NAME: netsrv
+        TYPE               : 10  WIN32_OWN_PROCESS
+        STATE              : 2  START_PENDING
                                 (NOT_STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
         WIN32_EXIT_CODE    : 0  (0x0)
         SERVICE_EXIT_CODE  : 0  (0x0)
         CHECKPOINT         : 0x0
         WAIT_HINT          : 0x7d0
         PID                : 5880
-        FLAGS              : 
+        FLAGS              :
 
 
 03/30 09:03:59 UTC [input] <neo> rev2self
@@ -5824,8 +5824,8 @@ NTLM	: e4a22d8e7bbec871b341c88c2e94cba2
   |  LUID 0 ; 2756941 (00000000:002a114d)
   \_ msv1_0   - data copy @ 0000013F1A4BC280 : OK !
   \_ kerberos - data copy @ 0000013F1A4CE8D8
-   \_ aes256_hmac       -> null             
-   \_ aes128_hmac       -> null             
+   \_ aes256_hmac       -> null
+   \_ aes128_hmac       -> null
    \_ rc4_hmac_nt       OK
    \_ rc4_hmac_old      OK
    \_ rc4_md4           OK

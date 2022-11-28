@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+# -*- coding: utf-8 -*-
 """
 Helper script to export Kibana and Elastic Search objects
 """
@@ -9,7 +10,6 @@ import sys
 import os
 import requests
 import ndjson
-from pprint import pprint
 
 # Quick hack to disable invalid cert warning
 import urllib3
@@ -34,9 +34,9 @@ ES_TEMPLATES_LIST = [
     "email",
     "redelk",
 ]
+ES_INDEX_TEMPLATES_LIST = ["redelk-domainslist"]
 EXPORT_FILES_PREFIX_ES = "redelk_elasticsearch_"
 DIFF_PATH = "diff/"  # path is relative to exportpath
-ENV_FILE = "../elkserver/.env"
 
 
 class KibanaExporter:
@@ -48,6 +48,7 @@ class KibanaExporter:
     def __init__(self, cmd_line_args) -> None:
         self.args = cmd_line_args
         self.base_path = os.path.dirname(os.path.abspath(__file__))
+        self.env_file = os.path.join(self.base_path, "..", "elkserver", ".env")
 
         if self.args.all:
             self.kibana_objects = [
@@ -70,12 +71,12 @@ class KibanaExporter:
             if self.args.map:
                 self.kibana_objects.append("map")
         try:
-            with open(ENV_FILE, "r") as env_file:
+            with open(self.env_file, "r", encoding="utf-8") as env_file:
                 for line in env_file.readlines():
                     if "CREDS_redelk=" in line:
                         env_file_password = line.split("=")[1].strip()
-        except:
-            print("Error opening password file")
+        except Exception as error:  # pylint: disable=broad-except
+            print(f"Error opening password file: {error}")
 
         self.kibana_user = (
             cmd_line_args.username if cmd_line_args.username else "redelk"
@@ -114,7 +115,7 @@ class KibanaExporter:
         Get saved object from Kibana API
         """
         try:
-            print("# Fetching kibana objects: %s" % obj_type)
+            print(f"# Fetching kibana objects: {obj_type}")
             response = requests.post(
                 KIBANA_OBJECTS_EXPORT_URL,
                 json={"type": obj_type},
@@ -124,15 +125,14 @@ class KibanaExporter:
             )
             if response.status_code != 200:
                 print(
-                    "!!! Error fetching kibana object %s: HTTP status code %s"
-                    % (obj_type, response.status_code)
+                    f"!!! Error fetching kibana object {obj_type}: HTTP status code {response.status_code}"
                 )
             else:
                 raw_data = response.text.encode("utf-8")
                 items = ndjson.loads(raw_data)
                 if obj_type != "index-pattern":
                     to_export = []
-                    for ip in items:
+                    for ip in items:  # pylint: disable=invalid-name
                         if "attributes" in ip.keys() and "title" in ip["attributes"]:
                             if re.match(
                                 REDELK_OBJ_FILTER,
@@ -144,13 +144,13 @@ class KibanaExporter:
                                 to_export.append(ip)
                     export_file = os.path.join(
                         self.export_path,
-                        "%s%s.ndjson" % (EXPORT_FILES_PREFIX_KIBANA, obj_type),
+                        f"{EXPORT_FILES_PREFIX_KIBANA}{obj_type}.ndjson",
                     )
-                    print("\tExporting %s: %s" % (obj_type, export_file))
-                    with open(export_file, "w") as f:
-                        ndjson.dump(to_export, f)
+                    print(f"\tExporting {obj_type}: {export_file}")
+                    with open(export_file, "w", encoding="utf-8") as obj_file:
+                        ndjson.dump(to_export, obj_file)
                 else:
-                    for ip in items:
+                    for ip in items:  # pylint: disable=invalid-name
                         if "attributes" in ip.keys() and "title" in ip["attributes"]:
                             if re.match(
                                 INDEX_PATTERNS_FILTER,
@@ -167,28 +167,25 @@ class KibanaExporter:
                                 ip["version"] = "1"
                                 export_file = os.path.join(
                                     self.export_path,
-                                    "%s%s_%s.ndjson"
-                                    % (
-                                        EXPORT_FILES_PREFIX_KIBANA,
-                                        obj_type,
-                                        index_pattern_name,
-                                    ),
+                                    f"{EXPORT_FILES_PREFIX_KIBANA}{obj_type}_{index_pattern_name}.ndjson",
                                 )
-                                print("\tExporting %s: %s" % (obj_type, export_file))
-                                with open(export_file, "w") as f:
-                                    ndjson.dump([ip], f)
-        except Exception as e:
-            print("!!! Error fetching kibana object %s: %s" % (obj_type, e))
+                                print(f"\tExporting {obj_type}: {export_file}")
+                                with open(
+                                    export_file, "w", encoding="utf-8"
+                                ) as obj_file:
+                                    ndjson.dump([ip], obj_file)
+        except Exception as error:  # pylint: disable=broad-except
+            print(f"!!! Error fetching kibana object {obj_type}: {error}")
 
     def fetch_es_templates(self):
         """
-        Get ElasticSearch template from API
+        Get ElasticSearch templates from API
         """
         for template_name in ES_TEMPLATES_LIST:
             try:
-                print("# Fetching ES template: %s" % template_name)
+                print(f"# Fetching ES template: {template_name}")
                 response = requests.get(
-                    "%s/_template/%s" % (ES_URL, template_name),
+                    f"{ES_URL}/_template/{template_name}",
                     verify=False,
                     auth=(self.kibana_user, self.kibana_password),
                 )
@@ -196,42 +193,76 @@ class KibanaExporter:
                 tmpl = json.loads(raw_data)
                 export_file = os.path.join(
                     self.export_path,
-                    "%stemplate_%s.json" % (EXPORT_FILES_PREFIX_ES, template_name),
+                    f"{EXPORT_FILES_PREFIX_ES}template_{template_name}.json",
                 )
-                print(
-                    "\tExporting index template %s: %s" % (template_name, export_file)
-                )
-                with open(export_file, "w") as template_file:
+                print(f"\tExporting index template {template_name}: {export_file}")
+                with open(export_file, "w", encoding="utf-8") as template_file:
                     json.dump(
                         tmpl[template_name], template_file, indent=4, sort_keys=True
                     )
-            except Exception as e:
-                print("!!! Error fetching ES template %s: %s" % (template_name, e))
+            except Exception as error:  # pylint: disable=broad-except
+                print(f"!!! Error fetching ES template {template_name}: {error}")
+
+        # Get ElasticSearch component templates from API
+        response = requests.get(
+            f"{ES_URL}/_component_template",
+            verify=False,
+            auth=(self.kibana_user, self.kibana_password),
+        )
+        json_data = response.json()
+        if "component_templates" in json_data:
+            for template in json_data["component_templates"]:
+                if "redelk" in template["name"]:
+                    export_file = os.path.join(
+                        self.export_path,
+                        f"{EXPORT_FILES_PREFIX_ES}component_template_{template['name']}.json",
+                    )
+                    print(
+                        f"\tExporting component template {template['name']}: {export_file}"
+                    )
+                    with open(export_file, "w", encoding="utf-8") as template_file:
+                        json.dump(template, template_file, indent=4, sort_keys=True)
+
+        # Get ElasticSearch index templates from API
+        response = requests.get(
+            f"{ES_URL}/_index_template",
+            verify=False,
+            auth=(self.kibana_user, self.kibana_password),
+        )
+        json_data = response.json()
+        if "index_templates" in json_data:
+            for template in json_data["index_templates"]:
+                if template["name"] in ES_INDEX_TEMPLATES_LIST:
+                    export_file = os.path.join(
+                        self.export_path,
+                        f"{EXPORT_FILES_PREFIX_ES}index_template_{template['name']}.json",
+                    )
+                    print(
+                        f"\tExporting index template {template['name']}: {export_file}"
+                    )
+                    with open(export_file, "w", encoding="utf-8") as template_file:
+                        json.dump(template, template_file, indent=4, sort_keys=True)
 
     def process_kibana_object(self, obj_type, indexpattern=None):
         """
         Create json from ndjson kibana object to ease diff during commits
         """
-        print("# Processing kibana object: %s" % obj_type)
+        print(f"# Processing kibana object: {obj_type}")
 
         if obj_type != "index-pattern":
-            src_file_name = "%s%s" % (EXPORT_FILES_PREFIX_KIBANA, obj_type)
+            src_file_name = f"{EXPORT_FILES_PREFIX_KIBANA}{obj_type}"
         else:
             if indexpattern is None:
                 for i in INDEX_PATTERNS_FILTER.split("|"):
                     self.process_kibana_object(obj_type, indexpattern=i)
                 return
             else:
-                src_file_name = "%s%s_%s" % (
-                    EXPORT_FILES_PREFIX_KIBANA,
-                    obj_type,
-                    indexpattern,
-                )
+                src_file_name = f"{EXPORT_FILES_PREFIX_KIBANA}{obj_type}_{indexpattern}"
 
-        src_file = os.path.join(self.export_path, "%s.ndjson" % src_file_name)
-        diff_file = os.path.join(self.export_path, DIFF_PATH, "%s.json" % src_file_name)
-        print("\tOpening %s: %s" % (obj_type, src_file))
-        with open(src_file, "r") as src_ndjson_file:
+        src_file = os.path.join(self.export_path, f"{src_file_name}.ndjson")
+        diff_file = os.path.join(self.export_path, DIFF_PATH, f"{src_file_name}.json")
+        print(f"\tOpening {obj_type}: {src_file}")
+        with open(src_file, "r", encoding="utf-8") as src_ndjson_file:
             src_ndjson = ndjson.load(src_ndjson_file)
 
         for src_ndjson_line in src_ndjson:
@@ -274,8 +305,8 @@ class KibanaExporter:
                     src_ndjson_line["attributes"]["panelsJSON"]
                 )
 
-        print("\tWriting output to: %s" % diff_file)
-        with open(diff_file, "w") as dst_json_file:
+        print(f"\tWriting output to: {diff_file}")
+        with open(diff_file, "w", encoding="utf-8") as dst_json_file:
             json.dump(src_ndjson, dst_json_file, indent=4, sort_keys=True)
 
 
@@ -334,6 +365,7 @@ def check_args():
 
     script_args = parser.parse_args()
 
+    # pylint: disable=too-many-boolean-expressions
     if (
         not script_args.indexpattern
         and not script_args.search

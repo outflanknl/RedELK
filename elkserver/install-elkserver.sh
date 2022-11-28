@@ -150,7 +150,7 @@ memcheck() {
 
     # check for full or limited install and set memory
     if [ ${WHATTOINSTALL} = "limited" ]; then
-        # Going for limited install. Only ES requiring significant memory. 
+        # Going for limited install. Only ES requiring significant memory.
         # Tuning memory to:
         # - 3GB for non-ES Dockers and host OS
         # - System memory minus 3GB is for ES, of which 50% of that is appointed to ES jvm heap. Rounded down.
@@ -211,7 +211,7 @@ memcheck() {
             ES_MEMORY=9g
         fi
     else
-    # Going for full install. Both ES and Neo4j requiring significant memory. 
+    # Going for full install. Both ES and Neo4j requiring significant memory.
     # Tuning memory to:
     # - 4GB for non-ES Dockers and host OS
     # - Of remainign memory (system mem minus 4GB), 50% is appointed to NEO4j
@@ -655,7 +655,7 @@ fi
 
 
 if [ $DRYRUN == "no" ]; then
-    
+
     echo "[*] Setting vm.max_map_count to 262144" | tee -a $LOGFILE
     sysctl -w vm.max_map_count=262144 >> $LOGFILE 2>&1
     ERROR=$?
@@ -675,7 +675,7 @@ if [ $DRYRUN == "no" ]; then
     else
         echo "[!] WARNING : existing vm.max_map_count setting found in /etc/systctl.conf - yolo continuing" | tee -a $LOGFILE
     fi
-    
+
     if [ $DO_LETSENCRYPT == "true" ]; then
         echo "[*] Running initial Let's Encrypt script" | tee -a $LOGFILE
         ./init-letsencrypt.sh $DOCKERCONFFILE $EXTERNAL_DOMAIN # >>$LOGFILE 2>&1

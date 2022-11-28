@@ -46,8 +46,8 @@
             }
         ],
         "sort": [
-            1654547967067,
-            1948
+            1665957491185,
+            27444
         ],
         "type": "search",
         "version": "1"
@@ -130,8 +130,8 @@
             }
         ],
         "sort": [
-            1654547967067,
-            1951
+            1665957491185,
+            27447
         ],
         "type": "search",
         "version": "1"
@@ -337,8 +337,8 @@
             }
         ],
         "sort": [
-            1654547967067,
-            1959
+            1665957491185,
+            27455
         ],
         "type": "search",
         "version": "1"
@@ -421,8 +421,8 @@
             }
         ],
         "sort": [
-            1654547967067,
-            1962
+            1665957491185,
+            27458
         ],
         "type": "search",
         "version": "1"
@@ -502,8 +502,8 @@
             }
         ],
         "sort": [
-            1654547967067,
-            1965
+            1665957491185,
+            27461
         ],
         "type": "search",
         "version": "1"
@@ -553,8 +553,8 @@
             }
         ],
         "sort": [
-            1654547967067,
-            1967
+            1665957491185,
+            27463
         ],
         "type": "search",
         "version": "1"
@@ -637,8 +637,57 @@
             }
         ],
         "sort": [
-            1654547967067,
-            1970
+            1665957491185,
+            27466
+        ],
+        "type": "search",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "columns": [
+                "domainslist.domain",
+                "domainslist.comment",
+                "domainslist.name",
+                "domainslist.source",
+                "domainslist.categorization.categories"
+            ],
+            "description": "",
+            "grid": {},
+            "hideChart": false,
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [],
+                    "indexRefName": "kibanaSavedObjectMeta.searchSourceJSON.index",
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "sort": [
+                [
+                    "@timestamp",
+                    "desc"
+                ]
+            ],
+            "title": "RedELK - Domains lists"
+        },
+        "coreMigrationVersion": "7.16.3",
+        "id": "573cd750-4d9e-11ed-9a8f-a126bac589a5",
+        "migrationVersion": {
+            "search": "7.9.3"
+        },
+        "references": [
+            {
+                "id": "db409380-4d9d-11ed-9a8f-a126bac589a5",
+                "name": "kibanaSavedObjectMeta.searchSourceJSON.index",
+                "type": "index-pattern"
+            }
+        ],
+        "sort": [
+            1665957798222,
+            30633
         ],
         "type": "search",
         "version": "1"
@@ -707,8 +756,8 @@
             }
         ],
         "sort": [
-            1654547967067,
-            1973
+            1665957491185,
+            27469
         ],
         "type": "search",
         "version": "1"
@@ -760,8 +809,8 @@
             }
         ],
         "sort": [
-            1654547967067,
-            1975
+            1665957491185,
+            27471
         ],
         "type": "search",
         "version": "1"
@@ -819,8 +868,8 @@
             }
         ],
         "sort": [
-            1654547967067,
-            1977
+            1665957491185,
+            27473
         ],
         "type": "search",
         "version": "1"
@@ -863,8 +912,8 @@
             }
         ],
         "sort": [
-            1654547967067,
-            1979
+            1665957491185,
+            27475
         ],
         "type": "search",
         "version": "1"
@@ -911,8 +960,8 @@
             }
         ],
         "sort": [
-            1654547967067,
-            1981
+            1665957491185,
+            27477
         ],
         "type": "search",
         "version": "1"
@@ -957,8 +1006,8 @@
             }
         ],
         "sort": [
-            1654547967067,
-            1983
+            1665957491185,
+            27479
         ],
         "type": "search",
         "version": "1"
@@ -1029,8 +1078,8 @@
             }
         ],
         "sort": [
-            1654547967067,
-            1986
+            1665957491185,
+            27482
         ],
         "type": "search",
         "version": "1"
@@ -1101,8 +1150,8 @@
             }
         ],
         "sort": [
-            1654547967067,
-            1989
+            1665957491185,
+            27485
         ],
         "type": "search",
         "version": "1"
@@ -1179,8 +1228,82 @@
             }
         ],
         "sort": [
-            1654547967067,
-            1992
+            1665957491185,
+            27488
+        ],
+        "type": "search",
+        "version": "1"
+    },
+    {
+        "attributes": {
+            "columns": [
+                "domainslist.domain",
+                "domainslist.comment",
+                "domainslist.name",
+                "domainslist.categorization.categories",
+                "domainslist.categorization.old.categories"
+            ],
+            "description": "",
+            "grid": {},
+            "hideChart": false,
+            "kibanaSavedObjectMeta": {
+                "searchSourceJSON": {
+                    "filter": [
+                        {
+                            "$state": {
+                                "store": "appState"
+                            },
+                            "meta": {
+                                "alias": null,
+                                "disabled": false,
+                                "indexRefName": "kibanaSavedObjectMeta.searchSourceJSON.filter[0].meta.index",
+                                "key": "domainslist.domain",
+                                "negate": false,
+                                "type": "exists",
+                                "value": "exists"
+                            },
+                            "query": {
+                                "exists": {
+                                    "field": "domainslist.domain"
+                                }
+                            }
+                        }
+                    ],
+                    "indexRefName": "kibanaSavedObjectMeta.searchSourceJSON.index",
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    }
+                }
+            },
+            "sort": [
+                [
+                    "@timestamp",
+                    "desc"
+                ]
+            ],
+            "title": "RedELK - Domains lists changes"
+        },
+        "coreMigrationVersion": "7.16.3",
+        "id": "eb275740-4da5-11ed-9a8f-a126bac589a5",
+        "migrationVersion": {
+            "search": "7.9.3"
+        },
+        "references": [
+            {
+                "id": "bluecheck",
+                "name": "kibanaSavedObjectMeta.searchSourceJSON.index",
+                "type": "index-pattern"
+            },
+            {
+                "id": "bluecheck",
+                "name": "kibanaSavedObjectMeta.searchSourceJSON.filter[0].meta.index",
+                "type": "index-pattern"
+            }
+        ],
+        "sort": [
+            1665961405185,
+            55187
         ],
         "type": "search",
         "version": "1"

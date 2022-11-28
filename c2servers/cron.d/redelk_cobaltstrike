@@ -2,7 +2,7 @@
 # Part of RedELK
 # cron.d script for periodic actions related to RedELK and Cobalt Strike
 #
-# Author: Outflank B.V. / Marc Smeets 
+# Author: Outflank B.V. / Marc Smeets
 #
 
 SHELL=/bin/sh

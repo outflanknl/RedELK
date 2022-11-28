@@ -15,24 +15,24 @@ Domain            : STROOP
 Logon Server      : S-WIN21
 Logon Time        : 3/30/2020 8:36:48 AM
 SID               : S-1-5-21-2163199188-2306780613-1636707950-4731
-	msv :	
+	msv :
 	 [00000003] Primary
 	 * Username : ADMIN-W.Trommel
 	 * Domain   : STROOP
 	 * NTLM     : e4a22d8e7bbec871b341c88c2e94cba2
 	 * SHA1     : e4d319d431fc5f20f9b459d40870854c840834d7
 	 * DPAPI    : 084184796699243227158b41c2c4a96a
-	tspkg :	
-	wdigest :	
+	tspkg :
+	wdigest :
 	 * Username : ADMIN-W.Trommel
 	 * Domain   : STROOP
 	 * Password : (null)
-	kerberos :	
+	kerberos :
 	 * Username : ADMIN-W.Trommel
 	 * Domain   : STROOP.LOCAL
 	 * Password : (null)
-	ssp :	
-	credman :	
+	ssp :
+	credman :
 
 Authentication Id : 0 ; 1200018 (00000000:00124f92)
 Session           : RemoteInteractive from 2
@@ -41,24 +41,24 @@ Domain            : STROOP
 Logon Server      : S-WIN21
 Logon Time        : 3/30/2020 8:36:48 AM
 SID               : S-1-5-21-2163199188-2306780613-1636707950-4731
-	msv :	
+	msv :
 	 [00000003] Primary
 	 * Username : ADMIN-W.Trommel
 	 * Domain   : STROOP
 	 * NTLM     : e4a22d8e7bbec871b341c88c2e94cba2
 	 * SHA1     : e4d319d431fc5f20f9b459d40870854c840834d7
 	 * DPAPI    : 084184796699243227158b41c2c4a96a
-	tspkg :	
-	wdigest :	
+	tspkg :
+	wdigest :
 	 * Username : ADMIN-W.Trommel
 	 * Domain   : STROOP
 	 * Password : (null)
-	kerberos :	
+	kerberos :
 	 * Username : ADMIN-w.trommel
 	 * Domain   : STROOP.LOCAL
 	 * Password : (null)
-	ssp :	
-	credman :	
+	ssp :
+	credman :
 
 Authentication Id : 0 ; 1171434 (00000000:0011dfea)
 Session           : Interactive from 2
@@ -67,23 +67,23 @@ Domain            : Window Manager
 Logon Server      : (null)
 Logon Time        : 3/30/2020 8:36:48 AM
 SID               : S-1-5-90-0-2
-	msv :	
+	msv :
 	 [00000003] Primary
 	 * Username : L-WIN227$
 	 * Domain   : STROOP
 	 * NTLM     : 6c3efa2c8e5131ce090ca83175b2dbb1
 	 * SHA1     : c97a31132db6a1b422870ced42e97c337c542627
-	tspkg :	
-	wdigest :	
+	tspkg :
+	wdigest :
 	 * Username : L-WIN227$
 	 * Domain   : STROOP
 	 * Password : (null)
-	kerberos :	
+	kerberos :
 	 * Username : L-WIN227$
 	 * Domain   : stroop.local
 	 * Password : hTHDWrB.P5[8!,wEBB&CJM&W!c;V)[ae#3:C&9h87uD?4;[1Z7_5!:Z1t%"-^+jt0*.i#Ccq^0@wL)F'QRJSl<-j3_K1MYV!!52M1'EyIhjdjyyTb5Up7''M
-	ssp :	
-	credman :	
+	ssp :
+	credman :
 
 Authentication Id : 0 ; 1170989 (00000000:0011de2d)
 Session           : Interactive from 2
@@ -92,23 +92,23 @@ Domain            : Window Manager
 Logon Server      : (null)
 Logon Time        : 3/30/2020 8:36:48 AM
 SID               : S-1-5-90-0-2
-	msv :	
+	msv :
 	 [00000003] Primary
 	 * Username : L-WIN227$
 	 * Domain   : STROOP
 	 * NTLM     : 6c3efa2c8e5131ce090ca83175b2dbb1
 	 * SHA1     : c97a31132db6a1b422870ced42e97c337c542627
-	tspkg :	
-	wdigest :	
+	tspkg :
+	wdigest :
 	 * Username : L-WIN227$
 	 * Domain   : STROOP
 	 * Password : (null)
-	kerberos :	
+	kerberos :
 	 * Username : L-WIN227$
 	 * Domain   : stroop.local
 	 * Password : hTHDWrB.P5[8!,wEBB&CJM&W!c;V)[ae#3:C&9h87uD?4;[1Z7_5!:Z1t%"-^+jt0*.i#Ccq^0@wL)F'QRJSl<-j3_K1MYV!!52M1'EyIhjdjyyTb5Up7''M
-	ssp :	
-	credman :	
+	ssp :
+	credman :
 
 Authentication Id : 0 ; 1170133 (00000000:0011dad5)
 Session           : Interactive from 2
@@ -117,23 +117,23 @@ Domain            : Font Driver Host
 Logon Server      : (null)
 Logon Time        : 3/30/2020 8:36:48 AM
 SID               : S-1-5-96-0-2
-	msv :	
+	msv :
 	 [00000003] Primary
 	 * Username : L-WIN227$
 	 * Domain   : STROOP
 	 * NTLM     : 6c3efa2c8e5131ce090ca83175b2dbb1
 	 * SHA1     : c97a31132db6a1b422870ced42e97c337c542627
-	tspkg :	
-	wdigest :	
+	tspkg :
+	wdigest :
 	 * Username : L-WIN227$
 	 * Domain   : STROOP
 	 * Password : (null)
-	kerberos :	
+	kerberos :
 	 * Username : L-WIN227$
 	 * Domain   : stroop.local
 	 * Password : hTHDWrB.P5[8!,wEBB&CJM&W!c;V)[ae#3:C&9h87uD?4;[1Z7_5!:Z1t%"-^+jt0*.i#Ccq^0@wL)F'QRJSl<-j3_K1MYV!!52M1'EyIhjdjyyTb5Up7''M
-	ssp :	
-	credman :	
+	ssp :
+	credman :
 
 Authentication Id : 0 ; 997 (00000000:000003e5)
 Session           : Service from 0
@@ -142,18 +142,18 @@ Domain            : NT AUTHORITY
 Logon Server      : (null)
 Logon Time        : 3/30/2020 7:46:05 AM
 SID               : S-1-5-19
-	msv :	
-	tspkg :	
-	wdigest :	
+	msv :
+	tspkg :
+	wdigest :
 	 * Username : (null)
 	 * Domain   : (null)
 	 * Password : (null)
-	kerberos :	
+	kerberos :
 	 * Username : (null)
 	 * Domain   : (null)
 	 * Password : (null)
-	ssp :	
-	credman :	
+	ssp :
+	credman :
 
 Authentication Id : 0 ; 51952 (00000000:0000caf0)
 Session           : Interactive from 1
@@ -162,23 +162,23 @@ Domain            : Window Manager
 Logon Server      : (null)
 Logon Time        : 3/30/2020 7:46:05 AM
 SID               : S-1-5-90-0-1
-	msv :	
+	msv :
 	 [00000003] Primary
 	 * Username : L-WIN227$
 	 * Domain   : STROOP
 	 * NTLM     : 6c3efa2c8e5131ce090ca83175b2dbb1
 	 * SHA1     : c97a31132db6a1b422870ced42e97c337c542627
-	tspkg :	
-	wdigest :	
+	tspkg :
+	wdigest :
 	 * Username : L-WIN227$
 	 * Domain   : STROOP
 	 * Password : (null)
-	kerberos :	
+	kerberos :
 	 * Username : L-WIN227$
 	 * Domain   : stroop.local
 	 * Password : hTHDWrB.P5[8!,wEBB&CJM&W!c;V)[ae#3:C&9h87uD?4;[1Z7_5!:Z1t%"-^+jt0*.i#Ccq^0@wL)F'QRJSl<-j3_K1MYV!!52M1'EyIhjdjyyTb5Up7''M
-	ssp :	
-	credman :	
+	ssp :
+	credman :
 
 Authentication Id : 0 ; 51837 (00000000:0000ca7d)
 Session           : Interactive from 1
@@ -187,23 +187,23 @@ Domain            : Window Manager
 Logon Server      : (null)
 Logon Time        : 3/30/2020 7:46:05 AM
 SID               : S-1-5-90-0-1
-	msv :	
+	msv :
 	 [00000003] Primary
 	 * Username : L-WIN227$
 	 * Domain   : STROOP
 	 * NTLM     : 6c3efa2c8e5131ce090ca83175b2dbb1
 	 * SHA1     : c97a31132db6a1b422870ced42e97c337c542627
-	tspkg :	
-	wdigest :	
+	tspkg :
+	wdigest :
 	 * Username : L-WIN227$
 	 * Domain   : STROOP
 	 * Password : (null)
-	kerberos :	
+	kerberos :
 	 * Username : L-WIN227$
 	 * Domain   : stroop.local
 	 * Password : hTHDWrB.P5[8!,wEBB&CJM&W!c;V)[ae#3:C&9h87uD?4;[1Z7_5!:Z1t%"-^+jt0*.i#Ccq^0@wL)F'QRJSl<-j3_K1MYV!!52M1'EyIhjdjyyTb5Up7''M
-	ssp :	
-	credman :	
+	ssp :
+	credman :
 
 Authentication Id : 0 ; 996 (00000000:000003e4)
 Session           : Service from 0
@@ -212,23 +212,23 @@ Domain            : STROOP
 Logon Server      : (null)
 Logon Time        : 3/30/2020 7:46:05 AM
 SID               : S-1-5-20
-	msv :	
+	msv :
 	 [00000003] Primary
 	 * Username : L-WIN227$
 	 * Domain   : STROOP
 	 * NTLM     : 6c3efa2c8e5131ce090ca83175b2dbb1
 	 * SHA1     : c97a31132db6a1b422870ced42e97c337c542627
-	tspkg :	
-	wdigest :	
+	tspkg :
+	wdigest :
 	 * Username : L-WIN227$
 	 * Domain   : STROOP
 	 * Password : (null)
-	kerberos :	
+	kerberos :
 	 * Username : l-win227$
 	 * Domain   : STROOP.LOCAL
 	 * Password : (null)
-	ssp :	
-	credman :	
+	ssp :
+	credman :
 
 Authentication Id : 0 ; 29657 (00000000:000073d9)
 Session           : Interactive from 1
@@ -237,23 +237,23 @@ Domain            : Font Driver Host
 Logon Server      : (null)
 Logon Time        : 3/30/2020 7:46:05 AM
 SID               : S-1-5-96-0-1
-	msv :	
+	msv :
 	 [00000003] Primary
 	 * Username : L-WIN227$
 	 * Domain   : STROOP
 	 * NTLM     : 6c3efa2c8e5131ce090ca83175b2dbb1
 	 * SHA1     : c97a31132db6a1b422870ced42e97c337c542627
-	tspkg :	
-	wdigest :	
+	tspkg :
+	wdigest :
 	 * Username : L-WIN227$
 	 * Domain   : STROOP
 	 * Password : (null)
-	kerberos :	
+	kerberos :
 	 * Username : L-WIN227$
 	 * Domain   : stroop.local
 	 * Password : hTHDWrB.P5[8!,wEBB&CJM&W!c;V)[ae#3:C&9h87uD?4;[1Z7_5!:Z1t%"-^+jt0*.i#Ccq^0@wL)F'QRJSl<-j3_K1MYV!!52M1'EyIhjdjyyTb5Up7''M
-	ssp :	
-	credman :	
+	ssp :
+	credman :
 
 Authentication Id : 0 ; 29612 (00000000:000073ac)
 Session           : Interactive from 0
@@ -262,23 +262,23 @@ Domain            : Font Driver Host
 Logon Server      : (null)
 Logon Time        : 3/30/2020 7:46:05 AM
 SID               : S-1-5-96-0-0
-	msv :	
+	msv :
 	 [00000003] Primary
 	 * Username : L-WIN227$
 	 * Domain   : STROOP
 	 * NTLM     : 6c3efa2c8e5131ce090ca83175b2dbb1
 	 * SHA1     : c97a31132db6a1b422870ced42e97c337c542627
-	tspkg :	
-	wdigest :	
+	tspkg :
+	wdigest :
 	 * Username : L-WIN227$
 	 * Domain   : STROOP
 	 * Password : (null)
-	kerberos :	
+	kerberos :
 	 * Username : L-WIN227$
 	 * Domain   : stroop.local
 	 * Password : hTHDWrB.P5[8!,wEBB&CJM&W!c;V)[ae#3:C&9h87uD?4;[1Z7_5!:Z1t%"-^+jt0*.i#Ccq^0@wL)F'QRJSl<-j3_K1MYV!!52M1'EyIhjdjyyTb5Up7''M
-	ssp :	
-	credman :	
+	ssp :
+	credman :
 
 Authentication Id : 0 ; 28303 (00000000:00006e8f)
 Session           : UndefinedLogonType from 0
@@ -286,18 +286,18 @@ User Name         : (null)
 Domain            : (null)
 Logon Server      : (null)
 Logon Time        : 3/30/2020 7:46:05 AM
-SID               : 
-	msv :	
+SID               :
+	msv :
 	 [00000003] Primary
 	 * Username : L-WIN227$
 	 * Domain   : STROOP
 	 * NTLM     : 6c3efa2c8e5131ce090ca83175b2dbb1
 	 * SHA1     : c97a31132db6a1b422870ced42e97c337c542627
-	tspkg :	
-	wdigest :	
-	kerberos :	
-	ssp :	
-	credman :	
+	tspkg :
+	wdigest :
+	kerberos :
+	ssp :
+	credman :
 
 Authentication Id : 0 ; 999 (00000000:000003e7)
 Session           : UndefinedLogonType from 0
@@ -306,18 +306,18 @@ Domain            : STROOP
 Logon Server      : (null)
 Logon Time        : 3/30/2020 7:46:05 AM
 SID               : S-1-5-18
-	msv :	
-	tspkg :	
-	wdigest :	
+	msv :
+	tspkg :
+	wdigest :
 	 * Username : L-WIN227$
 	 * Domain   : STROOP
 	 * Password : (null)
-	kerberos :	
+	kerberos :
 	 * Username : l-win227$
 	 * Domain   : STROOP.LOCAL
 	 * Password : (null)
-	ssp :	
-	credman :	
+	ssp :
+	credman :
 
 
 03/30 09:04:20 UTC [input] <neo> ps
@@ -499,8 +499,8 @@ NTLM	: e4a22d8e7bbec871b341c88c2e94cba2
   |  LUID 0 ; 2184206 (00000000:0021540e)
   \_ msv1_0   - data copy @ 0000015374FA4E80 : OK !
   \_ kerberos - data copy @ 0000015374EF5418
-   \_ aes256_hmac       -> null             
-   \_ aes128_hmac       -> null             
+   \_ aes256_hmac       -> null
+   \_ aes128_hmac       -> null
    \_ rc4_hmac_nt       OK
    \_ rc4_hmac_old      OK
    \_ rc4_md4           OK
