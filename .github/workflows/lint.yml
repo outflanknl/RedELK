@@ -11,17 +11,17 @@ on:
       - .github/workflows/lint.yml
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  lint:
+    runs-on: ubuntu-20.04
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v2
+      - name: Set up Python 3.6
+        uses: actions/setup-python@v4
         with:
-          python-version: "3.8.10"
-          architecture: "x64"
+          python-version: "3.6.9"
+          cache: pip
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
