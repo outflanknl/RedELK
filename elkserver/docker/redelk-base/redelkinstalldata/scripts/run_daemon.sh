@@ -18,7 +18,7 @@ INIT_LOGFILE="/var/log/redelk/init-daemon.log"
 MAXLOGSIZE=$((1024 * 50))
 
 # Check if there isn't an old process running, we dont want to run this in parallel
-pgrep daemon.py >/dev/null
+pgrep -f daemon.py >/dev/null
 DAEMON_RUNNING=$?
 if [ $DAEMON_RUNNING -eq 1 ]; then
     cd /usr/share/redelk/bin
