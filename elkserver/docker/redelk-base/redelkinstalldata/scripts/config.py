@@ -71,6 +71,7 @@ alarms = {
     "alarm_useragent": {"enabled": False, "interval": 320},
     "alarm_dummy": {"enabled": False, "interval": 300},
     "alarm_manual": {"enabled": False, "interval": 300},
+    "alarm_backendalarm": {"enabled": False, "interval": 320},
 }
 if "alarms" in data:
     for a in data["alarms"]:
