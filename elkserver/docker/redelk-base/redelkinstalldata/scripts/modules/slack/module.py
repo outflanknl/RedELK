@@ -39,7 +39,7 @@ class Module:  # pylint: disable=too-few-public-methods
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": f'*Alarm from {alarm["info"]["name"]} [{alarm["hits"]["total"]} hits]*\n{description}',
+                    "text": f'*[{config.project_name}] Alarm from {alarm["info"]["name"]} [{alarm["hits"]["total"]} hits]*\n{description}',
                 },
             },
             {"type": "divider"},
