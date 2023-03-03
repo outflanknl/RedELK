@@ -7,8 +7,6 @@
 
 def filter(event)
 	host = event.get("[agent][name]")
-	logpath = event.get("[log][file][path]")
-	implant_id = event.get("[implant][id]")
   	filename = event.get("[file][name]")
 	file_path = event.get("[file][directory_local]")
 	file_patharray = file_path.split(/\/([^\/]*)$/)
