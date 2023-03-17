@@ -133,3 +133,16 @@ redirs/VERSION
 redirs/filebeat/*.crt
 sshkey/
 elkserver/mounts/logstash-config/certs_inputs/*
+certs/config.cnf
+elkserver/mounts/redelk-config/etc/cron.d/redelk
+elkserver/mounts/redelk-config/etc/redelk/config.json
+elkserver/mounts/redelk-config/etc/redelk/domainslist_redteam.conf
+elkserver/mounts/redelk-config/etc/redelk/iplist_alarmed.conf
+elkserver/mounts/redelk-config/etc/redelk/iplist_blueteam.conf
+elkserver/mounts/redelk-config/etc/redelk/iplist_customer.conf
+elkserver/mounts/redelk-config/etc/redelk/iplist_redteam.conf
+elkserver/mounts/redelk-config/etc/redelk/iplist_unknown.conf
+elkserver/mounts/redelk-config/etc/redelk/rogue_useragents.conf
+elkserver/mounts/redelk-config/etc/redelk/roguedomains.conf
+redirs/filebeat/filebeat.yml
+c2servers/filebeat/filebeat_redelk_main.yml
