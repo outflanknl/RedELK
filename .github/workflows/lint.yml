@@ -12,21 +12,24 @@ on:
 
 jobs:
   lint:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
       - name: Set up Python 3.6
         uses: actions/setup-python@v4
         with:
           python-version: "3.6.9"
           cache: pip
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install black
           pip install -r elkserver/docker/redelk-base/redelkinstalldata/scripts/requirements.txt
+
       - name: Analysing the code with black
         run: |
           black --check --diff --color elkserver/docker/redelk-base/redelkinstalldata/scripts
