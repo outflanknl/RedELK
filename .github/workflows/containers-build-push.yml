@@ -5,6 +5,7 @@ on:
     # For push to main branch (PR merges)
     branches:
       - main
+      - master
     paths:
       - "elkserver/docker/**"
       - ".github/workflows/containers-build-push.yml"
