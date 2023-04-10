@@ -58,7 +58,7 @@ jobs:
         with:
           images: |
             ${{ steps.prepare.outputs.docker_image }}
-            ${{ github.repository_owner }}/redelk-${{ matrix.container }}
+            ghcr.io/${{ github.repository_owner }}/redelk-${{ matrix.container }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
