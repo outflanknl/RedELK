@@ -9,7 +9,7 @@
 
 FROM docker.elastic.co/logstash/logstash:7.16.3
 LABEL maintainer="Outflank B.V. / Marc Smeets"
-LABEL description="RedELK Logstash"
+LABEL org.opencontainers.image.description="RedELK Logstash"
 
 # Create relevant directories
 #RUN mkdir -p /usr/share/logstash/redelk-main/conf.d
