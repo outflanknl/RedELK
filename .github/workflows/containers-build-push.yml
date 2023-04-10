@@ -47,6 +47,7 @@ jobs:
           DOCKER_IMAGE="${DOCKER_REPO}/redelk-${{ matrix.container }}"
           echo ::set-output name=docker_image::${DOCKER_IMAGE}
           echo ::set-output name=docker_repo::${DOCKER_REPO}
+          echo ::set-output name=docker_file::elkserver/docker/redelk-${{ matrix.container }}/Dockerfile
           echo ::set-output name=build_args::BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') \
             VCS_REF=${GITHUB_SHA::8}
         env:
@@ -84,13 +85,15 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Cache Docker layers
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         id: cache
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ matrix.container }}-${{ github.sha }}
+          key: ${{ runner.os }}-buildx-${{ matrix.container }}-${{ hashFiles(steps.prepare.outputs.docker_file) }}
           restore-keys: |
+            ${{ runner.os }}-buildx-${{ matrix.container }}-${{ hashFiles(steps.prepare.outputs.docker_file) }}
             ${{ runner.os }}-buildx-${{ matrix.container }}-
+            ${{ runner.os }}-buildx-
 
       - name: Build and push
         uses: docker/build-push-action@v4
