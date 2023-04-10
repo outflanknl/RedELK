@@ -5,17 +5,19 @@ on:
     # For push to branches (e.g. master, features branches, etc.)
     branches:
       - "*"
+    paths:
+      - "elkserver/docker/**"
+      - ".github/workflows/containers-build-push.yml"
     # For releases
     tags:
       - "*"
-    paths:
-      - "elkserver/docker/**"
   # For pull requests
   pull_request:
     branches:
       - "*"
     paths:
       - "elkserver/docker/**"
+      - ".github/workflows/containers-build-push.yml"
 
 jobs:
   docker:
@@ -48,9 +50,11 @@ jobs:
 
       - name: Docker meta
         id: docker_meta
-        uses: crazy-max/ghaction-docker-meta@v1
+        uses: crazy-max/ghaction-docker-meta@v4
         with:
-          images: ${{ steps.prepare.outputs.docker_image }}
+          images: |
+            ${{ steps.prepare.outputs.docker_image }}
+            ${{ github.repository_owner }}/redelk-${{ matrix.container }}
 
       # No longer needed?
       # - name: Set up QEMU
