@@ -29,10 +29,10 @@ jobs:
     strategy:
       matrix:
         container:
-          # - base
-          # - elasticsearch
-          # - jupyter
-          # - kibana
+          - base
+          - elasticsearch
+          - jupyter
+          - kibana
           - logstash
     steps:
       - name: Checkout
@@ -54,7 +54,7 @@ jobs:
 
       - name: Docker meta
         id: docker_meta
-        uses: crazy-max/ghaction-docker-meta@v4
+        uses: docker/metadata-action@v4
         with:
           images: |
             ${{ steps.prepare.outputs.docker_image }}
@@ -105,10 +105,7 @@ jobs:
             DOCKER_METADATA_OUTPUT_JSON
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
-          # tags: |
-          #   ${{ steps.semver_parser.outputs.major }}
-          #   ${{ steps.semver_parser.outputs.major }}.${{ steps.semver_parser.outputs.minor }}
-          #   ${{ steps.semver_parser.outputs.major }}.${{ steps.semver_parser.outputs.minor }}.${{ steps.semver_parser.outputs.patch }}
+          outputs: type=image,name=target,annotation-index.org.opencontainers.image.description=${{ matrix.container }} container for RedELK
 
       # Temp fix
       # https://github.com/docker/build-push-action/issues/252
