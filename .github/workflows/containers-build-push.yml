@@ -8,10 +8,14 @@ on:
     # For releases
     tags:
       - "*"
+    paths:
+      - "elkserver/docker/**"
   # For pull requests
   pull_request:
     branches:
       - "*"
+    paths:
+      - "elkserver/docker/**"
 
 jobs:
   docker:
