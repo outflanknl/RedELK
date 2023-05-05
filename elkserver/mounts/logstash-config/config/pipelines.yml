@@ -4,3 +4,4 @@
 
 - pipeline.id: redelk-pipeline
   path.config: "/usr/share/logstash/redelk-main/conf.d"
+  pipeline.ecs_compatibility: v1
