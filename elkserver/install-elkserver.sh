@@ -634,7 +634,7 @@ if [ $ERROR -ne 0 ]; then
 fi
 
 echo "[*] Creating password file for easy reference" | tee -a $LOGFILE
-echo "# passwords used for RedELK installation" > redelk_passwords.cfg && \
+echo "# passwords used by RedELK installation - NOT A CONFIG FILE! - passwords are defined in .env file" > redelk_passwords.cfg && \
 echo "CredHtaccessUsername = \"redelk\"" >> redelk_passwords.cfg && \
 echo "CredHtaccessPassword = \"$CREDS_redelk\"" >> redelk_passwords.cfg && \
 echo "CredESUsername = \"elastic\"" >> redelk_passwords.cfg && \
