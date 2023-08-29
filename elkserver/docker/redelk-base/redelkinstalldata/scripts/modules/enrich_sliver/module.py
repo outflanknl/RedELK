@@ -6,6 +6,7 @@ This script enriches rtops lines with data from initial Sliver implant
 Authors:
 - Outflank B.V. / Mark Bergman (@xychix)
 - Lorenzo Bernardi (@fastlorenzo)
+- hypnoticpattern
 """
 
 import logging
