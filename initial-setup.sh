@@ -42,6 +42,15 @@ if [  ! -f $1 ];then
     exit 1
 fi >> $LOGFILE 2>&1
 
+
+echo "[*] Doing basic sanity check of openssl config file." | tee -a $LOGFILE
+grep -E "MODIFYME|dnsnameofyourredelkserver|someseconddnsname" $1 | grep -v "^#" >> $LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "[X] Check your openssl config file, it fails basic sanity checks. (Error Code: $ERROR)."
+    exit 1
+fi
+
 echo ""
 echo "[*] Will generate TLS certificates for the following DNS names and/or IP addresses:" | tee -a $LOGFILE
 grep -E "^DNS\.|^IP\." certs/config.cnf
