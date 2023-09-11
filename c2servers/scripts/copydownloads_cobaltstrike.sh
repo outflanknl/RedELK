@@ -11,14 +11,15 @@ LOGFILE="/var/log/redelk/copydownloads.log"
 
 mkdir -p /home/scponly/cobaltstrike/downloads >> $LOGFILE 2>&1
 
-echo "`date` ######## Start downloads copy" >> $LOGFILE 2>&1
+echo "`date` # Start CS downloads copy" >> $LOGFILE 2>&1
 
 for fileid in $(ls /root/cobaltstrike/downloads/ | grep -v '\.'); do
   orifilename=`grep -rn $fileid /root/cobaltstrike/logs/*/downloads.log|awk 'BEGIN {FS="\t"}; {print $6}'`
+  if [ -z "$orifilename" ]; then orifilename="filenameunknown"; fi
   if [ ! -f "/home/scponly/cobaltstrike/downloads/${fileid}_${orifilename}" ]; then
     cp /root/cobaltstrike/downloads/${fileid} "/home/scponly/cobaltstrike/downloads/${fileid}_${orifilename}"
     chown scponly:scponly "/home/scponly/cobaltstrike/downloads/${fileid}_${orifilename}"
   fi
 done
 
-echo "`date` ######## Done with downloads copy" >> $LOGFILE 2>&1
+echo "`date` # Done CS" >> $LOGFILE 2>&1
