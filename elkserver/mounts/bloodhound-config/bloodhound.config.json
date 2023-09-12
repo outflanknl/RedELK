@@ -2,7 +2,7 @@
     "version": 1,
     "bind_addr": "0.0.0.0:8080",
     "metrics_port": ":2112",
-    "root_url": "http://127.0.0.1:8080/",
+    "root_url": "http://127.0.0.1:8080/bloodhound/",
     "work_dir": "/opt/bloodhound/work",
     "log_level": "INFO",
     "log_path": "bloodhound.log",
