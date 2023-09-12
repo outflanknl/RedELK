@@ -1,6 +1,6 @@
 
 upstream neo4j_bolt {
-    server redelk-bloodhound:7687;
+    server redelk-bloodhound-neo4j:7687;
 }
 
 server {
