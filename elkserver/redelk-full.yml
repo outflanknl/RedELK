@@ -245,7 +245,7 @@ services:
     # ports:
     #   - ${POSTGRES_PORT:-5432}:5432
     volumes:
-      - postgres-data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
     healthcheck:
       test:
         [
@@ -295,6 +295,8 @@ services:
   bloodhound:
     container_name: redelk-bloodhound-app
     image: docker.io/specterops/bloodhound:${BLOODHOUND_TAG:-latest}
+    networks:
+      - net
     environment:
       - bhe_disable_cypher_qc=${bhe_disable_cypher_qc:-false}
     ports:

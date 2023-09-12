@@ -17,7 +17,7 @@
       "connection": "user=bloodhound password={{PGSQL_PASSWORD}} dbname=bloodhound host=redelk-bloodhound-postgres"
     },
     "neo4j": {
-      "connection": "neo4j://neo4j:{{NEO4J_PASSWORD}}@graph-db:7687/"
+      "connection": "neo4j://neo4j:{{NEO4J_PASSWORD}}@redelk-bloodhound-neo4j:7687/"
     },
     "collectors_base_path": "/etc/bloodhound/collectors",
     "default_admin": {

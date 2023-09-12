@@ -505,7 +505,7 @@ if [ ${WHATTOINSTALL} = "full" ]; then
             echo "[X] Could not set postgresql password (Error Code: $ERROR)." | tee -a $LOGFILE
         fi
     else
-        echo "[*] Neo4j password in docker template already defined - skipping" | tee -a $LOGFILE
+        echo "[*] Postgresql password in docker template already defined - skipping" | tee -a $LOGFILE
         POSTGRES_PASSWORD=$(grep -E ^POSTGRES_PASSWORD= .env|awk -Fneo4j/ '{print $2}')
     fi
     # check if Postgres password is already set in bloodhound config as it can not be set through env.
