@@ -14,7 +14,7 @@
       "key_file": ""
     },
     "database": {
-      "connection": "user=bloodhound password={{PGSQL_PASSWORD}} dbname=bloodhound host=app-db"
+      "connection": "user=bloodhound password={{PGSQL_PASSWORD}} dbname=bloodhound host=redelk-bloodhound-postgres"
     },
     "neo4j": {
       "connection": "neo4j://neo4j:{{NEO4J_PASSWORD}}@graph-db:7687/"
