@@ -14,7 +14,7 @@
       "key_file": ""
     },
     "database": {
-      "connection": "user=bloodhound password={{POSTGRES_PASSWORD}} dbname=bloodhound host=app-db"
+      "connection": "user=bloodhound password={{PGSQL_PASSWORD}} dbname=bloodhound host=app-db"
     },
     "neo4j": {
       "connection": "neo4j://neo4j:{{NEO4J_PASSWORD}}@graph-db:7687/"
@@ -22,8 +22,9 @@
     "collectors_base_path": "/etc/bloodhound/collectors",
     "default_admin": {
       "principal_name": "admin",
+      "password": "{{BLOODHOUND_PASSWORD}}",
       "first_name": "Bloodhound",
       "last_name": "Admin",
-      "email_address": "{{LE_EMAIL}}"
+      "email_address": "{{BLOODHOUND_ADMIN_EMAIL}}"
     }
   }

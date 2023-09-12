@@ -15,6 +15,7 @@ FIXEDMEMORY="no"
 DOCKERCONFFILE="redelk-full.yml"
 DOCKERENVFILE=".env"
 DOCKERENVTMPLFILE=".env.tmpl"
+BLOODHOUND_APP_CONFIG="./mounts/bloodhound-config/bloodhound.config.json"
 
 printf "[*] `date +'%b %e %R'` $INSTALLER - Starting installer\n" > $LOGFILE 2>&1
 echo ""
@@ -43,7 +44,7 @@ printinstallsummary() {
         echo "[*] No 'limited' parameter found. Going for the full RedELK installation including: " | tee -a $LOGFILE
         echo "- RedELK"
         echo "- Jupyter notebooks"
-        echo "- BloodHound / Neo4j"
+        echo "- BloodHound / Neo4j / Postgres"
     fi
     echo ""
     echo "5 Seconds to abort"
@@ -481,6 +482,76 @@ if [ ${WHATTOINSTALL} = "full" ]; then
         echo "[*] Neo4j password in docker template already defined - skipping" | tee -a $LOGFILE
         NEO4J_PASSWORD=$(grep -E ^NEO4J_AUTH= .env|awk -Fneo4j/ '{print $2}')
     fi
+    # check if Neo4J password is already generated and set in bloodhound config as it can not be set through env.
+    # https://github.com/SpecterOps/BloodHound/issues/9
+    if (grep "{{NEO4J_PASSWORD}}" $BLOODHOUND_APP_CONFIG > /dev/null); then
+        # do not regenerate the password as it should already be set
+        echo "[*] Setting neo4j password" | tee -a $LOGFILE
+        sed -E -i.bak "s/\{\{NEO4J_PASSWORD\}\}/${NEO4J_PASSWORD}/g" ${BLOODHOUND_APP_CONFIG} >> $LOGFILE 2>&1
+        ERROR=$?
+        if [ $ERROR -ne 0 ]; then
+            echo "[X] Could not set postgresql password (Error Code: $ERROR)." | tee -a $LOGFILE
+        fi
+    fi
+
+    # check if Postgres password is already generated and set in Docker env.
+    if (grep "{{PGSQL_PASSWORD}}" $DOCKERENVFILE > /dev/null); then
+        POSTGRES_PASSWORD=$(< /dev/urandom tr -dc _A-Za-z0-9 | head -c32)
+
+        echo "[*] Setting postgresql password" | tee -a $LOGFILE
+        sed -E -i.bak "s/\{\{PGSQL_PASSWORD\}\}/${POSTGRES_PASSWORD}/g" ${DOCKERENVFILE} >> $LOGFILE 2>&1
+        ERROR=$?
+        if [ $ERROR -ne 0 ]; then
+            echo "[X] Could not set postgresql password (Error Code: $ERROR)." | tee -a $LOGFILE
+        fi
+    else
+        echo "[*] Neo4j password in docker template already defined - skipping" | tee -a $LOGFILE
+        POSTGRES_PASSWORD=$(grep -E ^POSTGRES_PASSWORD= .env|awk -Fneo4j/ '{print $2}')
+    fi
+    # check if Postgres password is already set in bloodhound config as it can not be set through env.
+    # https://github.com/SpecterOps/BloodHound/issues/9
+    if (grep "{{PGSQL_PASSWORD}}" $BLOODHOUND_APP_CONFIG > /dev/null); then
+        # do not regenerate the password as it should already be set
+        echo "[*] Setting postgresql password" | tee -a $LOGFILE
+        sed -E -i.bak "s/\{\{PGSQL_PASSWORD\}\}/${POSTGRES_PASSWORD}/g" ${BLOODHOUND_APP_CONFIG} >> $LOGFILE 2>&1
+        ERROR=$?
+        if [ $ERROR -ne 0 ]; then
+            echo "[X] Could not set postgresql password (Error Code: $ERROR)." | tee -a $LOGFILE
+        fi
+    fi
+
+    # check if Bloodhound admin password is already generated and set in bloodhound app config  as it can not be set through env.
+    # https://github.com/SpecterOps/BloodHound/issues/9
+    if (grep "{{BLOODHOUND_PASSWORD}}" $BLOODHOUND_APP_CONFIG > /dev/null); then
+        BLOODHOUND_PASSWORD=$(< /dev/urandom tr -dc _A-Za-z0-9 | head -c32)
+
+        echo "[*] Setting bloodhound password" | tee -a $LOGFILE
+        sed -E -i.bak "s/\{\{BLOODHOUND_PASSWORD\}\}/${BLOODHOUND_PASSWORD}/g" ${BLOODHOUND_APP_CONFIG} >> $LOGFILE 2>&1
+        ERROR=$?
+        if [ $ERROR -ne 0 ]; then
+            echo "[X] Could not set bloodhound password (Error Code: $ERROR)." | tee -a $LOGFILE
+        fi
+    else
+        echo "[*] Bloodhound password in bloodhound config already defined - skipping" | tee -a $LOGFILE
+        BLOODHOUND_PASSWORD=$(grep -E '"password":' ${BLOODHOUND_APP_CONFIG}|awk -F " \"" '{print $3}'|sed -e "s/\",//")
+    fi
+
+    
+    # check if Bloodhound admin email is already generated and set in bloodhound app config  as it can not be set through env.
+    # https://github.com/SpecterOps/BloodHound/issues/9
+    if (grep "{{BLOODHOUND_ADMIN_EMAIL}}" $BLOODHOUND_APP_CONFIG > /dev/null); then
+        BLOODHOUND_ADMIN_EMAIL=$(cat ./mounts/redelk-config/etc/redelk/config.json | jq -r .redelkserver_letsencrypt.le_email)
+
+        echo "[*] Setting bloodhound password" | tee -a $LOGFILE
+        sed -E -i.bak "s/\{\{BLOODHOUND_ADMIN_EMAIL\}\}/${BLOODHOUND_ADMIN_EMAIL}/g" ${BLOODHOUND_APP_CONFIG} >> $LOGFILE 2>&1
+        ERROR=$?
+        if [ $ERROR -ne 0 ]; then
+            echo "[X] Could not set bloodhound admin email (Error Code: $ERROR)." | tee -a $LOGFILE
+        fi
+    else
+        echo "[*] Bloodhound admin e-mail in bloodhound config already defined - skipping" | tee -a $LOGFILE
+        BLOODHOUND_ADMIN_EMAIL=$(grep -E '"email_address":' ${BLOODHOUND_APP_CONFIG}|awk -F " \"" '{print $3}'|sed -e "s/\"//")
+    fi
 fi
 
 echo "[*] Setting permissions on redelk base cron job" | tee -a $LOGFILE
@@ -640,7 +711,12 @@ echo "CredHtaccessPassword = \"$CREDS_redelk\"" >> redelk_passwords.cfg && \
 echo "CredESUsername = \"elastic\"" >> redelk_passwords.cfg && \
 echo "CredESPassword = \"$ELASTIC_PASSWORD\"" >> redelk_passwords.cfg && \
 echo "CredNeo4jUsername = \"neo4j\"" >> redelk_passwords.cfg && \
-echo "CredNeo4jPassword = \"$NEO4J_PASSWORD\"" >> redelk_passwords.cfg
+echo "CredNeo4jPassword = \"$NEO4J_PASSWORD\"" >> redelk_passwords.cfg && \
+echo "CredBloodhoundAdminEmail = \"$BLOODHOUND_ADMIN_EMAIL\"" >> redelk_passwords.cfg && \
+echo "CredBloodhoundUsername = \"admin\"" >> redelk_passwords.cfg && \
+echo "CredBloodhoundPassword = \"$BLOODHOUND_PASSWORD\"" >> redelk_passwords.cfg && \
+echo "CredPostgresUsername = \"bloodhound\"" >> redelk_passwords.cfg && \
+echo "CredPostgresPassword = \"$POSTGRES_PASSWORD\"" >> redelk_passwords.cfg
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
     echo "[X] Error creating password file for easy reference (Error Code: $ERROR)." | tee -a $LOGFILE
