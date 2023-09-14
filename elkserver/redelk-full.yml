@@ -164,6 +164,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
+      - "8443:8443"
     environment:
       - TLS_NGINX_CRT_PATH=${TLS_NGINX_CRT_PATH}
       - TLS_NGINX_KEY_PATH=${TLS_NGINX_KEY_PATH}
