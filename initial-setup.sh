@@ -46,7 +46,7 @@ fi >> $LOGFILE 2>&1
 echo "[*] Doing basic sanity check of openssl config file." | tee -a $LOGFILE
 grep -E "MODIFYME|dnsnameofyourredelkserver|someseconddnsname|123.123.123.123" $1 | grep -v "^#" >> $LOGFILE 2>&1
 ERROR=$?
-if [ $ERROR -ne 0 ]; then
+if [ $ERROR -eq 0 ]; then
     echoerror "[X] Check your openssl config file, it fails basic sanity checks. (Error Code: $ERROR)."
     exit 1
 fi
