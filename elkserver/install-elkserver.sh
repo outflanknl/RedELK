@@ -685,9 +685,21 @@ if [ ${WHATTOINSTALL} = "limited" ]; then
     if [ $ERROR -ne 0 ]; then
         echo "[X] Could not adjust Nginx config (Error Code: $ERROR)." | tee -a $LOGFILE
     fi
+    # commenting out the bloodhound location template
+    sed -i 's/^\s*include conf.d\/full.bloodhound-conf;\s*$/    # include conf.d\/full.bloodhound-conf;/g' ./mounts/nginx-config/default.conf.template
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echo "[X] Could not adjust Nginx config (Error Code: $ERROR)." | tee -a $LOGFILE
+    fi
 else
     echo "[*] Adjusting Nginx config file" | tee -a $LOGFILE
     sed -i 's/^\s*#\s*include conf.d\/full.location-conf;\s*$/    include conf.d\/full.location-conf;/g' ./mounts/nginx-config/default.conf.template
+    ERROR=$?
+    if [ $ERROR -ne 0 ]; then
+        echo "[X] Could not adjust Nginx config (Error Code: $ERROR)." | tee -a $LOGFILE
+    fi
+    # re-enabling the bloodhound location template
+    sed -i 's/^\s*#\s*include conf.d\/full.bloodhound-conf;\s*$/    include conf.d\/full.bloodhound-conf;/g' ./mounts/nginx-config/default.conf.template
     ERROR=$?
     if [ $ERROR -ne 0 ]; then
         echo "[X] Could not adjust Nginx config (Error Code: $ERROR)." | tee -a $LOGFILE
