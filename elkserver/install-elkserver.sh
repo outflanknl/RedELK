@@ -800,6 +800,7 @@ if [ $DRYRUN == "no" ]; then
     echo "   - Main RedELK Kibana interface on port 443 (user: redelk, pass:$CREDS_redelk)" | tee -a $LOGFILE
     if [ ${WHATTOINSTALL} != "limited" ]; then
         echo "   - Jupyter notebooks on /jupyter (user: redelk, pass:$CREDS_redelk)" | tee -a $LOGFILE
+        echo "   - Bloodhound community edition on https port 8443 (user: admin, pass:$BLOODHOUND_PASSWORD)" | tee -a $LOGFILE
         echo "   - Neo4J Browser port 7473 (user: neo4j, pass:$NEO4J_PASSWORD)" | tee -a $LOGFILE
         echo "   - Neo4J using the BloodHound app on port 7687 (user: neo4j, pass:$NEO4J_PASSWORD)" | tee -a $LOGFILE
     fi
