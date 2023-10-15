@@ -506,7 +506,7 @@ if [ ${WHATTOINSTALL} = "full" ]; then
         fi
     else
         echo "[*] Postgresql password in docker template already defined - skipping" | tee -a $LOGFILE
-        POSTGRES_PASSWORD=$(grep -E ^POSTGRES_PASSWORD= .env|awk -Fneo4j/ '{print $2}')
+        POSTGRES_PASSWORD=$(grep -E ^POSTGRES_PASSWORD= .env|awk -F= '{print $2}')
     fi
     # check if Postgres password is already set in bloodhound config as it can not be set through env.
     # https://github.com/SpecterOps/BloodHound/issues/9
