@@ -96,4 +96,5 @@ server {
     include conf.d/full.location-conf;
 }
 
+include conf.d/full.bloodhound-conf;
 # include conf.d/full.neo4j-conf;

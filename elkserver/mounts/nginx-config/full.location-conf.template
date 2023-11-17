@@ -2,7 +2,7 @@ location /neo4jbrowser {
     return 301 http://$host:7474;
     # auth_basic "Restricted Access";
     # auth_basic_user_file /etc/nginx/conf.d/htpasswd.users;
-    # proxy_pass http://redelk-bloodhound:7474/browser;
+    # proxy_pass http://redelk-bloodhound-neo4j:7474/browser;
 }
 
 location /jupyter {
