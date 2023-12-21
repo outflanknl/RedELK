@@ -37,6 +37,9 @@ server {
     # verify chain of trust of OCSP response using Root CA and Intermediate certs
     ssl_trusted_certificate ${TLS_NGINX_CA_PATH};
 
+    # Increase upload limit
+    client_max_body_size 1500M; 
+
     location / {
         #auth_basic "Restricted Access";
         #auth_basic_user_file /etc/nginx/conf.d/htpasswd.users;
