@@ -266,8 +266,8 @@ services:
     volumes:
       - bloodhound_data:/data
     ports:
-      - "${NEO4J_DB_PORT}:7474"
-      - "${NEO4J_WEB_PORT}:7687"
+      - "${NEO4J_WEB_PORT}:7474"
+      - "${NEO4J_DB_PORT}:7687"
     environment:
       - NEO4J_AUTH=${NEO4J_AUTH}
       - NEO4J_dbms_memory_heap_initial__size=${NEO4J_dbms_memory_heap_initial__size}
