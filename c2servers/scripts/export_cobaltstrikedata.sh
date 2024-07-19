@@ -8,7 +8,7 @@
 #
 
 LOGFILE="/var/log/redelk/exportcobaltstrikesdata.log"
-CSDIR="/root/cobaltstrike"
+CSDIR="/root/cobaltstrike/server"
 
 echo "`date` ######## Start CS data export" >> $LOGFILE 2>&1
 
