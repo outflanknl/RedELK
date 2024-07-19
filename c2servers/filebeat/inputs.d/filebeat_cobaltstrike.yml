@@ -3,7 +3,7 @@
   enabled: true
   fields_under_root: true
   paths:
-    - /root/cobaltstrike/logs/*/events.log
+    - /root/cobaltstrike/server/logs/*/events.log
   fields:
     infra:
       attack_scenario: @@ATTACKSCENARIO@@
@@ -19,7 +19,7 @@
   enabled: true
   fields_under_root: true
   paths:
-    - /root/cobaltstrike/logs/*/weblog*
+    - /root/cobaltstrike/server/logs/*/weblog*
   fields:
     infra:
       attack_scenario: @@ATTACKSCENARIO@@
@@ -35,7 +35,7 @@
   enabled: true
   fields_under_root: true
   paths:
-    - /root/cobaltstrike/logs/*/downloads.log
+    - /root/cobaltstrike/server/logs/*/downloads.log
   fields:
     infra:
       attack_scenario: @@ATTACKSCENARIO@@
@@ -51,7 +51,7 @@
   enabled: true
   fields_under_root: true
   paths:
-    - /root/cobaltstrike/data/export_credentials.tsv
+    - /root/cobaltstrike/server/data/export_credentials.tsv
   fields:
     infra:
       attack_scenario: @@ATTACKSCENARIO@@
@@ -68,8 +68,8 @@
   enabled: true
   fields_under_root: true
   paths:
-    - /root/cobaltstrike/logs/*/*/beacon_*.log
-    - /root/cobaltstrike/logs/*/*/ssh_*.log
+    - /root/cobaltstrike/server/logs/*/*/beacon_*.log
+    - /root/cobaltstrike/server/logs/*/*/ssh_*.log
   # Since Cobalt Strike version 3.14 the time format in the logs is changed. Here we use regex 'or' function (expr1)|(expr2) to match new or old format
   multiline.pattern: '(^\d\d\/\d\d\s\d\d\:\d\d\:\d\d\sUTC\s\[)|(^\d\d\/\d\d\s\d\d\:\d\d\:\d\d\s\[)' # match "06/19 12:32:56 UTC [" or "06/19 12:32:56 ["
   multiline.negate: true
@@ -90,7 +90,7 @@
   enabled: true
   fields_under_root: true
   paths:
-    - /root/cobaltstrike/logs/*/*/keystrokes/keystrokes_*.txt
+    - /root/cobaltstrike/server/logs/*/*/keystrokes/keystrokes_*.txt
   # Since Cobalt Strike version 3.14 the time format in the logs is changed. Here we use regex 'or' function (expr1)|(expr2) to match new or old format
   multiline.pattern: '(^\d\d\/\d\d\s\d\d\:\d\d\:\d\d\sUTC\s\[)|(^\d\d\/\d\d\s\d\d\:\d\d\:\d\d\s\[)' # match "06/19 12:32:56 UTC [" or "06/19 12:32:56 ["
   multiline.negate: true
@@ -111,7 +111,7 @@
   enabled: true
   fields_under_root: true
   paths:
-    - /root/cobaltstrike/logs/*/*/screenshots.log
+    - /root/cobaltstrike/server/logs/*/*/screenshots.log
   # Since Cobalt Strike version 3.14 the time format in the logs is changed. Here we use regex 'or' function (expr1)|(expr2) to match new or old format
   multiline.pattern: '(^\d\d\/\d\d\s\d\d\:\d\d\:\d\d\sUTC\s\[)|(^\d\d\/\d\d\s\d\d\:\d\d\:\d\d\s\[)' # match "06/19 12:32:56 UTC [" or "06/19 12:32:56 ["
   multiline.negate: true
