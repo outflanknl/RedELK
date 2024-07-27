@@ -11,7 +11,7 @@
     max_lines: 500
   fields:
     infra:
-      attack_scenario: @@ATTACKSCENARIO@@
+      attack_scenario: shorthaul
       log:
         type: rtops
     c2:
@@ -31,17 +31,17 @@
   fields_under_root: true
   fields:
     infra:
-      attack_scenario: @@ATTACKSCENARIO@@
-    log:
-      type: rtops
+      attack_scenario: shorthaul
+      log:
+        type: rtops
     c2:
       program: havoc
       log:
         type: teamserver
   multiline:
     pattern: '^\[\d{2}:\d{2}:\d{2}\]'
-    negate: false
-    match: pattern
+    negate: true
+    match: after
   processors:
     - dissect:
         tokenizer: '[%{timestamp}] [%{log_level}] %{message}'
@@ -52,7 +52,7 @@
           not:
             or:
               - regexp:
-                  teamserver.message: "User .*"
+                  teamserver.message: "User *"
               - regexp:
-                  teamserver.message: "Started .* listener.*"
+                  teamserver.message: "Started .* listener*"
 
