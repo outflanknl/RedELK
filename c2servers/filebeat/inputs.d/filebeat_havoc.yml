@@ -1,0 +1,58 @@
+- type: log
+  scan_frequency: 5s
+  enabled: true
+  fields_under_root: true
+  paths:
+    - /opt/Havoc/data/loot/*/agents/*/Console_*.log
+  multiline:
+    pattern: '^\[Time:'
+    negate: true
+    match: after
+    max_lines: 500
+  fields:
+    infra:
+      attack_scenario: @@ATTACKSCENARIO@@
+      log:
+        type: rtops
+    c2:
+      program: havoc
+      log:
+        type: agent_console
+  processors:
+    - dissect:
+        tokenizer: '[Time: %{timestamp}] [User: %{user.name}] [TaskID: %{taskid}] %{c2.message}'
+        field: "message"
+        target_prefix: ""
+
+- type: log
+  enabled: true
+  paths:
+    - /opt/Havoc/data/loot/*/teamserver.log
+  fields_under_root: true
+  fields:
+    infra:
+      attack_scenario: @@ATTACKSCENARIO@@
+    log:
+      type: rtops
+    c2:
+      program: havoc
+      log:
+        type: teamserver
+  multiline:
+    pattern: '^\[\d{2}:\d{2}:\d{2}\]'
+    negate: false
+    match: pattern
+  processors:
+    - dissect:
+        tokenizer: '[%{timestamp}] [%{log_level}] %{message}'
+        field: "message"
+        target_prefix: "teamserver"
+    - drop_event:
+        when:
+          not:
+            or:
+              - regexp:
+                  teamserver.message: "User .*"
+              - regexp:
+                  teamserver.message: "Started .* listener.*"
+
