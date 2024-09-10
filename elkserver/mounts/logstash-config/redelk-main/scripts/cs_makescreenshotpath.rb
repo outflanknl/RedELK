@@ -10,7 +10,7 @@ def filter(event)
   host = event.get("[agent][name]")
   logpath = event.get("[log][file][path]")
   filename = event.get("[screenshot][file_name]")
-  temppath = logpath.split('/cobaltstrike')
+  temppath = logpath.split('/cobaltstrike/server')
   temppath2 = temppath[1].split(/\/([^\/]*)$/)
   screenshoturl = "/c2logs/" + "#{host}" + "/cobaltstrike" + "#{temppath2[0]}" + "/screenshots/"+ "#{filename}"
   thumburl = "/c2logs/" + "#{host}" + "/cobaltstrike" + "#{temppath2[0]}" + "/screenshots/"+ "#{filename}" + ".thumb.jpg"

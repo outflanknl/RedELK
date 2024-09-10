@@ -10,8 +10,8 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
 # Command to sync the logs from cobaltstrike to our scponly user's home directory
 # m h dom mon dow user  command
-* * * * * root /usr/bin/rsync -rvx --append-verify --delete /root/cobaltstrike/logs /home/scponly/cobaltstrike/; /bin/chown -R scponly:scponly /home/scponly/cobaltstrike/*
+* * * * * root /usr/bin/rsync -rvx --append-verify --delete /root/cobaltstrike/server/logs /home/scponly/cobaltstrike/; /bin/chown -R scponly:scponly /home/scponly/cobaltstrike/*
 * * * * * root /usr/bin/rsync -rvx --append-verify --delete /root/cobaltstrike/profiles /home/scponly/cobaltstrike/; /bin/chown -R scponly:scponly /home/scponly/cobaltstrike/*
-* * * * * root /usr/bin/rsync -rvx --append-verify --delete /root/cobaltstrike/data /home/scponly/cobaltstrike/; /bin/chown -R scponly:scponly /home/scponly/cobaltstrike/*
+* * * * * root /usr/bin/rsync -rvx --append-verify --delete /root/cobaltstrike/server/data /home/scponly/cobaltstrike/; /bin/chown -R scponly:scponly /home/scponly/cobaltstrike/*
 * * * * * root /usr/share/redelk/bin/export_cobaltstrikedata.sh
 * * * * * root /usr/share/redelk/bin/copydownloads_cobaltstrike.sh

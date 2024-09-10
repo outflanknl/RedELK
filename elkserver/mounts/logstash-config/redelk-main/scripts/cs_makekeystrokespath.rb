@@ -11,9 +11,10 @@ def filter(event)
 	logpath = event.get("[log][file][path]")
 	implant_id = event.get("[implant][id]")
 	desktop_session = event.get("[keystrokes][desktop_session]")
-	temppath = logpath.split('/cobaltstrike')
+	temppath = logpath.split('/cobaltstrike/server')
 	temppath2 = temppath[1].split(/\/([^\/]*)$/)
-	keystrokespath = "/c2logs/" + "#{host}" + "/cobaltstrike" + "#{temppath2[0]}" + "/keystrokes_" + "#{implant_id}" + "." + "#{desktop_session}" + ".txt"
+	filename = temppath2[1]
+	keystrokespath = "/c2logs/" + "#{host}" + "/cobaltstrike" + "#{temppath2[0]}" + "/" + "#{filename}"
 	event.tag("_rubyparseok")
   	event.set("[keystrokes][url]", keystrokespath)
 	return [event]
