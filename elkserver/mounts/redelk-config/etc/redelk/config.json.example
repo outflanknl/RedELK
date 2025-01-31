@@ -72,6 +72,10 @@
             "enabled": true,
             "interval": 300
         },
+        "enrich_sliver": {
+            "enabled": true,
+            "interval": 300
+        },
         "enrich_greynoise": {
             "enabled": true,
             "interval": 310,
