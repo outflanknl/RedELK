@@ -1,0 +1,14 @@
+- type: log
+  enabled: true
+  fields_under_root: true
+  paths:
+    - /var/log/nginx/access-redelk.log
+  fields:
+    infra:
+      attack_scenario: @@ATTACKSCENARIO@@
+      log:
+        type: redirtraffic
+    redir:
+      program: nginx
+
+

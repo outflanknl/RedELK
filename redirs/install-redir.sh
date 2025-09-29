@@ -136,6 +136,13 @@ if [ $ERROR -ne 0 ]; then
     echoerror "[X] Could not copy filebeat config (Error Code: $ERROR)."
 fi
 
+echo "[*] Copying redir specific config files" | tee -a $LOGFILE
+cp -r ./filebeat/inputs.d /etc/filebeat/ >>$LOGFILE 2>&1
+ERROR=$?
+if [ $ERROR -ne 0 ]; then
+    echoerror "[X] Could not copy c2 specific config files (Error Code: $ERROR)."
+fi
+
 echo "[*] Copying ca file" | tee -a $LOGFILE
 cp ./filebeat/redelkCA.crt /etc/filebeat/ >>$LOGFILE 2>&1
 ERROR=$?
@@ -150,11 +157,11 @@ if [ $ERROR -ne 0 ]; then
     echoerror "[X] Could not change hostname field in filebeat config (Error Code: $ERROR)."
 fi
 
-echo "[*] Altering attackscenario field in filebeat config" | tee -a $LOGFILE
-sed -i s/'@@ATTACKSCENARIO@@'/$2/g /etc/filebeat/filebeat.yml >>$LOGFILE 2>&1
+echo "[*] Altering attackscenario field in filebeat inputs config files" | tee -a $LOGFILE
+sed -i s/'@@ATTACKSCENARIO@@'/$2/g /etc/filebeat/inputs.d/*.yml >>$LOGFILE 2>&1
 ERROR=$?
 if [ $ERROR -ne 0 ]; then
-    echoerror "[X] Could not change attackscenario field in filebeat config (Error Code: $ERROR)."
+    echoerror "[X] Could not change attackscenario field in filebeat C2 config files (Error Code: $ERROR)."
 fi
 
 echo "[*] Altering log destination field in filebeat config" | tee -a $LOGFILE
