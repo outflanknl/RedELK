@@ -121,6 +121,7 @@ elkserver.tgz
 elkserver/VERSION
 elkserver/mounts/redelk-ssh/*
 elkserver/mounts/redelk-logs/*
+!elkserver/mounts/redelk-logs/redteamdomaincheck.txt
 elkserver/mounts/certs/*
 elkserver/mounts/certbot/*
 elkserver/mounts/jupyter-workbooks/redelk_passwords.py
@@ -146,3 +147,4 @@ elkserver/mounts/redelk-config/etc/redelk/rogue_useragents.conf
 elkserver/mounts/redelk-config/etc/redelk/roguedomains.conf
 redirs/filebeat/filebeat.yml
 c2servers/filebeat/filebeat_redelk_main.yml
+elkserver/initial-setup-data
