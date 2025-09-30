@@ -32,6 +32,8 @@ class Module:
 
     def run(self):
         """run the enrich module"""
+
+        print("MYTHIC")
         ret = get_initial_alarm_result()
         ret["info"] = info
         hits = self.enrich_beacon_data()
@@ -107,14 +109,20 @@ class Module:
         for task_id, implant_task_val in task_ids.items():
             initial_task_doc = self.get_initial_task_doc(task_id)
 
-            # If not initial beacon line found, skip the beacon ID
+            # If not initial task line found, skip the beacon ID
             if not initial_task_doc:
+                continue
+
+            initial_beacon_doc = self.get_initial_beacon_doc(initial_task_doc["_source"]["implant"]["id"])
+
+            # If not initial task line found, skip the beacon ID
+            if not initial_beacon_doc:
                 continue
 
             for doc in implant_task_val:
                 # Fields to copy: host.*, implant.*, process.*, user.*
                 res = self.copy_data_fields(
-                    initial_task_doc, doc, ["host", "implant", "user", "process"]
+                    initial_beacon_doc, doc, ["host", "implant", "user", "process"]
                 )
                 if res:
                     hits.append(res)
