@@ -33,11 +33,11 @@ class Module:
     def run(self):
         """run the enrich module"""
 
-        print("MYTHIC")
         ret = get_initial_alarm_result()
         ret["info"] = info
         hits = self.enrich_beacon_data()
         hits += self.enrich_beacon_response_data()
+        hits += self.enrich_credentials_data()
         ret["hits"]["hits"] = hits
         ret["hits"]["total"] = len(hits)
         self.logger.info(
@@ -163,3 +163,54 @@ class Module:
             )
             self.logger.exception(error)
             return False
+
+    def enrich_credentials_data(self):
+        """Get all lines in creds that have not been enriched yet (for Mythic)"""
+        es_query = f'creds.task_id:* AND c2.program: mythic AND c2.log.type:credentials AND NOT tags:{info["submodule"]}'
+        not_enriched_results = get_query(es_query, size=10000, index="credentials-*")
+
+        # Created a dict grouped by task ID
+        task_ids = {}
+        for not_enriched in not_enriched_results:
+            task_id = get_value("_source.creds.task_id", not_enriched)
+            if task_id in task_ids:
+                task_ids[task_id].append(not_enriched)
+            else:
+                task_ids[task_id] = [not_enriched]
+
+        hits = []
+        # For each implant ID, get the initial beacon line
+        for task_id, creds_val in task_ids.items():
+            initial_task_doc = self.get_initial_task_doc(task_id)
+
+            # If not initial task line found, skip the beacon ID
+            if not initial_task_doc:
+                continue
+
+            initial_beacon_doc = self.get_initial_beacon_doc(initial_task_doc["_source"]["implant"]["id"])
+
+            # If not initial task line found, skip the beacon ID
+            if not initial_beacon_doc:
+                continue
+
+            for doc in creds_val:
+                # initial_beacon.host.name =>  doc.creds.host
+                doc["_source"]["creds"]["host"] = initial_beacon_doc["_source"]["host"]["name"]
+
+                # initial_task.implant.task =>  doc.creds.source
+                doc["_source"]["creds"]["source"] = initial_task_doc["_source"]["implant"]["task"]
+
+                try:
+                    es.update(index=doc["_index"], id=doc["_id"], body={"doc": doc["_source"]})
+                    hits.append(doc)
+                    
+                # pylint: disable=broad-except
+                except Exception as error:
+                    # stackTrace = traceback.format_exc()
+                    self.logger.error(
+                        "Error enriching beacon document %s: %s", dst["_id"], traceback
+                    )
+                    self.logger.exception(error)
+
+        return hits
+
