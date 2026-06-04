@@ -9,9 +9,9 @@ Authors:
 - Lorenzo Bernardi (@fastlorenzo)
 """
 import logging
-import pymsteams
 
 import config
+import pymsteams
 from modules.helpers import get_value, pprint
 
 info = {

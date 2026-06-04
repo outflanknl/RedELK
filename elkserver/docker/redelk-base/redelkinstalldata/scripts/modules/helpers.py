@@ -14,10 +14,9 @@ import logging
 import os
 import re
 
-from elasticsearch import Elasticsearch
-import urllib3
-
 import config
+import urllib3
+from elasticsearch import Elasticsearch
 
 # Domain name regex pattern
 domain_pattern = re.compile(
@@ -254,7 +253,6 @@ def module_should_run(module_name, module_type):  # pylint: disable=too-many-bra
     """Check if the module is enabled and when is the last time the module ran.
     If the last time is before now - interval, the module will be allowed to run"""
     if module_type == "redelk_alarm":
-
         if module_name not in config.alarms:
             logger.warning(
                 "Missing configuration for alarm [%s]. Will not run!", module_name
@@ -277,7 +275,6 @@ def module_should_run(module_name, module_type):  # pylint: disable=too-many-bra
             interval = 360
 
     elif module_type == "redelk_enrich":
-
         if module_name not in config.enrich:
             logger.warning(
                 "Missing configuration for enrichment module [%s]. Will not run!",

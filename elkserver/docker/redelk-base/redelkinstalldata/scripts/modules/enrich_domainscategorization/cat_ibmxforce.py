@@ -13,8 +13,8 @@ Authors:
 
 import logging
 import traceback
-import requests
 
+import requests
 from config import enrich
 from modules.helpers import get_value
 
@@ -61,7 +61,6 @@ class IBMXForce:
 
         # Domain was found in IBM X-Force Exchange
         elif response.status_code == 200:
-
             try:
                 json_data = response.json()
                 self.logger.debug("Json Response: %s", json_data)

@@ -3,13 +3,14 @@
 """
 Helper script to export Kibana and Elastic Search objects
 """
-import json
-import re
 import argparse
-import sys
+import json
 import os
-import requests
+import re
+import sys
+
 import ndjson
+import requests
 
 # Quick hack to disable invalid cert warning
 import urllib3
@@ -387,7 +388,6 @@ def check_args():
 
 
 if __name__ == "__main__":
-
     args = check_args()
 
     exporter = KibanaExporter(args)

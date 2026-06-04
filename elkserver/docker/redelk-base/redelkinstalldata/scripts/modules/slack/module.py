@@ -9,9 +9,10 @@ Authors:
 - Matthijs Vos (@matthijsy)
 """
 import logging
-from slack_sdk.webhook import WebhookClient
-from modules.helpers import get_value, pprint
+
 import config
+from modules.helpers import get_value, pprint
+from slack_sdk.webhook import WebhookClient
 
 info = {
     "version": 0.1,

@@ -9,20 +9,19 @@ Authors:
 - Outflank B.V. / Mark Bergman (@xychix)
 - Lorenzo Bernardi (@fastlorenzo)
 """
-import os
-import logging
-import smtplib
 import base64
+import logging
+import os
+import smtplib
 from email.header import Header
 from email.mime.application import MIMEApplication
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.utils import formataddr, formatdate
-from json2html import json2html
 
 from config import notifications, project_name
+from json2html import json2html
 from modules.helpers import get_value, pprint
-
 
 info = {
     "version": 0.1,

@@ -12,10 +12,9 @@ Authors:
 import logging
 
 from config import alarms
-
-from modules.alarm_filehash import ioc_vt as vt
-from modules.alarm_filehash import ioc_ibm as ibm
 from modules.alarm_filehash import ioc_hybridanalysis as ha
+from modules.alarm_filehash import ioc_ibm as ibm
+from modules.alarm_filehash import ioc_vt as vt
 from modules.helpers import (
     add_alarm_data,
     get_initial_alarm_result,

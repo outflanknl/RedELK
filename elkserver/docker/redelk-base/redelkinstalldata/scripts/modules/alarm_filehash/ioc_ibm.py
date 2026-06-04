@@ -11,9 +11,10 @@ Authors:
 """
 import logging
 from datetime import datetime
-import requests
 
+import requests
 from modules.helpers import get_value
+
 
 # Rate limiting:
 # Free Tier (Non-Commercial Use Only): The free tier allows usage of up to 5,000 records per month
@@ -112,7 +113,6 @@ class IBM:
 
                 if ibm_result is not None:
                     if isinstance(ibm_result, type({})) and "malware" in ibm_result:
-
                         # Get first submission date
                         first_submitted_date = get_value(
                             "malware.created", ibm_results, None

@@ -9,6 +9,7 @@ Authors:
 - Lorenzo Bernardi (@fastlorenzo)
 """
 import logging
+
 from modules.helpers import get_initial_alarm_result, get_query
 
 info = {

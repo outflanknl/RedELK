@@ -54,7 +54,8 @@ class Module:
 
     def alarm_check(self):  # pylint: disable=no-self-use
         """This check queries for UA's that are listed in any blacklist_useragents.conf and do talk to c2* paths on redirectors
-        We will dig trough ALL data finding specific IP related lines and tag them reading the useragents we trigger on."""
+        We will dig trough ALL data finding specific IP related lines and tag them reading the useragents we trigger on.
+        """
         file_name = "/etc/redelk/rogue_useragents.conf"
         with open(file_name, encoding="utf-8") as file:
             content = file.readlines()

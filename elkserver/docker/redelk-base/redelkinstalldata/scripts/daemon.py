@@ -16,13 +16,13 @@ import logging
 import os
 import traceback
 
-from config import alarms, LOGLEVEL, notifications
+from config import LOGLEVEL, alarms, notifications
 from modules.helpers import (
     add_alarm_data,
     group_hits,
     module_did_run,
-    set_tags,
     module_should_run,
+    set_tags,
 )
 
 MODULES_PATH = "./modules/"
@@ -148,7 +148,6 @@ def process_alarms(connector_dict, alarm_dict):
     # now we can loop over the modules once again and log the lines
     for alarm in alarm_dict:
         if alarm in alarms and alarms[alarm]["enabled"]:
-
             alarm_status = alarm_dict[alarm]["status"]
             # If the alarm did fail to run, skip processing the notification and tagging as we are not sure of the results
             if alarm_status == "error":

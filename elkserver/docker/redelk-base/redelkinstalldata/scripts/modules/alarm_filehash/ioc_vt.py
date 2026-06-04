@@ -11,6 +11,7 @@ Authors:
 """
 import logging
 from datetime import datetime
+
 import requests
 from modules.helpers import get_value
 
@@ -101,7 +102,6 @@ class VT:
 
                 if vt_result is not None:
                     if isinstance(vt_result, type({})) and "data" in vt_result:
-
                         # Get first submission date
                         first_submitted_ts = get_value(
                             "data.attributes.first_submission_date", vt_result, None

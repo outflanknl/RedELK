@@ -11,9 +11,10 @@ Authors:
 - Lorenzo Bernardi (@fastlorenzo)
 """
 
-import logging
 import json
+import logging
 import traceback
+
 import requests
 
 

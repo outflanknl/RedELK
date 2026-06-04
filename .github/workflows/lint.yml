@@ -12,21 +12,14 @@ on:
 
 jobs:
   lint:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Set up Python 3.6
-        uses: actions/setup-python@v4
+        uses: actions/checkout@v5
+
+      - name: Check files using black formatter
+        uses: datadog/action-py-black-formatter@v2.5
         with:
-          python-version: "3.6.9"
-          cache: pip
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install black
-          pip install -r elkserver/docker/redelk-base/redelkinstalldata/scripts/requirements.txt
-      - name: Analysing the code with black
-        run: |
-          black --check --diff --color elkserver/docker/redelk-base/redelkinstalldata/scripts
+          check_mode: true
+          additional_args: "-t py36 elkserver/docker/redelk-base/redelkinstalldata/scripts"

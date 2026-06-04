@@ -9,14 +9,13 @@ Authors:
 - Outflank B.V. / Mark Bergman (@xychix)
 - Lorenzo Bernardi (@fastlorenzo)
 """
+import json
 import logging
 from datetime import datetime
-import json
-from dateutil import parser
-import requests
 
-from modules.helpers import get_value
-from modules.helpers import is_json
+import requests
+from dateutil import parser
+from modules.helpers import get_value, is_json
 
 # The Public API is limited to 2000 requests per hour and a rate of 200 requests per minute.
 

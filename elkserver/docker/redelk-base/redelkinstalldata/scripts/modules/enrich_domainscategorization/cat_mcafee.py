@@ -13,8 +13,8 @@ Authors:
 
 import logging
 import traceback
-import requests
 
+import requests
 from bs4 import BeautifulSoup
 
 

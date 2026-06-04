@@ -8,15 +8,15 @@ Syncs domainslists data between ES and legacy config files
 Authors:
 - Lorenzo Bernardi (@fastlorenzo)
 """
-import logging
 import datetime
+import logging
 import os.path
 
 from modules.helpers import (
+    es,
     get_initial_alarm_result,
     get_query,
     get_value,
-    es,
     match_domain_name,
 )
 
@@ -88,7 +88,6 @@ class Module:
 
         toadd = []
         for domaine, doc in es_domainslist:
-
             # Check if ES domain is in config file
             found = [item for item in cfg_domainslist if domaine in item]
 

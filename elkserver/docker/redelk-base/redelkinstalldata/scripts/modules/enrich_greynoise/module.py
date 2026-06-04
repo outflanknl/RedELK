@@ -64,7 +64,8 @@ class Module:
 
     def enrich_greynoise(self):
         """Get all lines in redirtraffic that have not been enriched with 'enrich_greynoise'
-        Filter documents that were before the last run time of enrich_iplist (to avoid race condition)"""
+        Filter documents that were before the last run time of enrich_iplist (to avoid race condition)
+        """
         iplist_lastrun = get_last_run("enrich_iplists")
         es_query = {
             "sort": [{"@timestamp": {"order": "desc"}}],

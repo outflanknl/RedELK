@@ -12,45 +12,54 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v5
+
       - name: Prepare
         id: prepare
         run: |
-          if [[ "x$DOCKER_REPO" == "x" ]]; then
-            DOCKER_REPO=outflanknl
-          fi
-          DOCKER_IMAGE="${DOCKER_REPO}/redelk-logstash"
-          echo ::set-output name=docker_image::${DOCKER_IMAGE}
-          echo ::set-output name=docker_repo::${DOCKER_REPO}
-          echo ::set-output name=build_args::BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') \
-            VCS_REF=${GITHUB_SHA::8}
+          echo "docker_image=${DOCKER_IMAGE}" >> $GITHUB_OUTPUT
+          echo "ghcr_image=${GHCR_IMAGE}" >> $GITHUB_OUTPUT
+          {
+            echo "build_args<<EOF"
+            echo "BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+            echo "VCS_REF=${GITHUB_SHA::8}"
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
         env:
-          DOCKER_REPO: ${{ secrets.DOCKER_REPO }}
+          DOCKER_IMAGE: ${{ vars.DOCKER_REPO || 'outflanknl' }}/redelk-logstash
+          GHCR_IMAGE: ghcr.io/${{ github.repository_owner }}/redelk-logstash
+
       - name: Docker meta
         id: docker_meta
-        uses: crazy-max/ghaction-docker-meta@v1
+        uses: docker/metadata-action@v5
         with:
-          images: ${{ steps.prepare.outputs.docker_image }}
+          images: |
+            ${{ steps.prepare.outputs.docker_image }}
+            ${{ steps.prepare.outputs.ghcr_image }}
+
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
+        uses: docker/setup-qemu-action@v3
+
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+        uses: docker/setup-buildx-action@v3
+
       - name: Login to DockerHub
-        uses: docker/login-action@v1
+        uses: docker/login-action@v3
         if: ${{ github.event_name != 'pull_request' }}
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
+          username: ${{ vars.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Cache Docker layers
-        uses: actions/cache@v2
-        id: cache
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        if: ${{ github.event_name != 'pull_request' }}
         with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-logstash-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-logstash-
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Build and push
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v6
         with:
           context: elkserver/docker/redelk-logstash
           file: ./elkserver/docker/redelk-logstash/Dockerfile
@@ -59,5 +68,5 @@ jobs:
           tags: ${{ steps.docker_meta.outputs.tags }}
           labels: ${{ steps.docker_meta.outputs.labels }}
           build-args: ${{ steps.prepare.outputs.build_args }}
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

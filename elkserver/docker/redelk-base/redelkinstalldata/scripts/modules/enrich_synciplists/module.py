@@ -9,12 +9,12 @@ Authors:
 - Outflank B.V. / Mark Bergman (@xychix)
 - Lorenzo Bernardi (@fastlorenzo)
 """
-import logging
-import re
 import datetime
+import logging
 import os.path
+import re
 
-from modules.helpers import get_initial_alarm_result, get_query, get_value, es
+from modules.helpers import es, get_initial_alarm_result, get_query, get_value
 
 IP_RE = r"^((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))(\s?#\s?(.*))?$"
 IP_CIDR_RE = r"^((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/([1-2][0-9]|3[0-2]|[0-9])))(\s?#\s?(.*))?$"
