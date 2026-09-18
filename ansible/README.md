@@ -1,8 +1,6 @@
 # RedELK Ansible Deployment
 
-This directory provides roles and a playbook for deploying the RedELK stack:
-the server and its log-collection connectors on existing C2 servers and redirectors.
-The original shell scripts remain available for manual installs without Ansible.
+This directory provides roles and a playbook for deploying the RedELK stack: the server and its log-collection connectors on existing C2 servers and redirectors. The original shell scripts remain available for manual installs without Ansible.
 
 The roles provide:
 - RedELK server deployment (`redelk-server`)
@@ -17,8 +15,7 @@ The playbook automates:
 - native RedELK server preparation on ELK hosts (`.env`, config, certificates, compose startup)
 - native Ansible deployment of Filebeat and public C2 sync helpers on client hosts
 
-These roles deploy RedELK and its connectors. Operators must install and configure
-C2 software and redirectors separately, including the log sources used by RedELK.
+These roles deploy RedELK and its connectors. Operators must install and configure C2 software and redirectors separately, including the log sources used by RedELK.
 
 ## Relationship To The Shell Scripts
 
@@ -40,15 +37,13 @@ The Ansible workflow follows the same component split:
 
 - `playbook.yml`: main orchestration playbook
 - `inventory.yml`: example inventory
-- `inventory-live.example.yml`: example inventory for real test hosts
 - `group_vars/`: example variable sets
 - `roles/redelk-package-prep`: local package preparation role for certs, SSH keys, and archives
 - `roles/docker`: local Docker install role
 - `roles/redelk-server`: native ELK server role with internal-style task split
 - `roles/redelk-client`: native client role for Filebeat, redirector logs, and public C2 sync helpers
 
-Each of those RedELK roles also has its own local `README.md` with role-specific
-design notes and implementation details.
+Each of those RedELK roles also has its own local `README.md` with role-specific design notes and implementation details.
 
 ## Prerequisites
 
@@ -110,10 +105,10 @@ ansible-playbook -i inventory.yml playbook.yml
 
 ## Live System Testing
 
-Use `inventory-live.example.yml` as the starting point for reserved real hosts.
+Use `inventory.yml` as the starting point for reserved real hosts.
 
 Recommended flow:
-- create your own live inventory based on `inventory-live.example.yml`
+- create your own private live inventory based on `inventory.yml`
 - set real values in `group_vars/elkservers.yml`, `group_vars/c2servers.yml`, and `group_vars/redirs.yml`
 - start with a narrow run against one host or group
 
@@ -122,8 +117,8 @@ Examples:
 ```bash
 cd ansible
 ansible-playbook -i inventory-live.yml playbook.yml --limit elkservers
-ansible-playbook -i inventory-live.yml playbook.yml --limit c2-live-01
-ansible-playbook -i inventory-live.yml playbook.yml --limit redir-live-01
+ansible-playbook -i inventory-live.yml playbook.yml --limit c2servers
+ansible-playbook -i inventory-live.yml playbook.yml --limit redirs
 ```
 
 Then run the full integration deployment:
@@ -148,6 +143,13 @@ A Molecule split setup is available:
 - `molecule/redelk`: test of `redelk-server` and `redelk-client` with fixture archives generated from the repository contents
 
 Both scenarios use privileged Ubuntu containers.
+
+Run the syntax check without connecting to hosts:
+
+```bash
+cd ansible
+ansible-playbook -i inventory.yml playbook.yml --syntax-check
+```
 
 Run Docker-role tests:
 
