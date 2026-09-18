@@ -1,24 +1,24 @@
-# RedELK Ansible Example
+# RedELK Ansible Deployment
 
-This directory contains a minimal Ansible example for deploying RedELK components from this repository.
+This directory provides roles and a playbook for deploying the RedELK stack:
+the server and its log-collection connectors on existing C2 servers and redirectors.
+The original shell scripts remain available for manual installs without Ansible.
 
-This is the infrastructure-as-code path for RedELK.
-The original shell scripts remain available in the repository for customers who prefer manual installs without Ansible.
-
-It is intentionally small and focused on:
+The roles provide:
 - RedELK server deployment (`redelk-server`)
 - RedELK client connector deployment (`redelk-client`)
 - Docker installation on hosts that need a local Docker engine (`docker` role)
 
 ## Scope
 
-This example automates:
-- optional package generation on the control node via native Ansible tasks
+The playbook automates:
+- package generation on the control node via native Ansible tasks, or reuse of prebuilt packages
 - upload and extraction of generated archives (`elkserver.tgz`, `c2servers.tgz`, `redirs.tgz`)
 - native RedELK server preparation on ELK hosts (`.env`, config, certificates, compose startup)
 - native Ansible deployment of Filebeat and public C2 sync helpers on client hosts
 
-Environment-specific internals are deliberately excluded from this public example.
+These roles deploy RedELK and its connectors. Operators must install and configure
+C2 software and redirectors separately, including the log sources used by RedELK.
 
 ## Relationship To The Shell Scripts
 
@@ -30,7 +30,7 @@ The repository still ships the original installer scripts:
 
 Those scripts remain useful for standalone/manual deployments.
 
-This Ansible example does not remove that path. Instead it provides an IaC workflow that mirrors the same high-level component split:
+The Ansible workflow follows the same component split:
 - package preparation on the control node
 - ELK server deployment
 - C2 connector deployment
@@ -86,14 +86,17 @@ Client-related:
 - optional `redelk_sync_public_key_path` for C2 rsync access
 - optional `redelk_c2_filebeat_inputs` and `redelk_c2_sync_jobs`
 
-Optional shared:
-- `redelk_generate_packages` (`true` to generate packages on the control node)
+Deployment controls:
+- `redelk_generate_packages` (`true` to generate packages on the control node; `false` requires prebuilt packages)
 - `redelk_openssl_config_path` (for example `certs/config.cnf`)
-- `deploy_redelk` (`true/false` gate for client deployment in the playbook)
+- `deploy_redelk` (`true` in the supplied group vars; set `false` to explicitly skip client deployment on selected hosts)
 
 ## Usage
 
-1. Update `inventory.yml` with your hosts and access settings.
+Assign RedELK targets to `elkservers`, `c2servers`, and `redirs`. Other hosts are
+ignored, so an existing inventory can be reused.
+
+1. Use your existing inventory or update `inventory.yml` with your hosts and access settings.
 2. Set variables for your groups in `group_vars/`.
 3. Decide whether to generate packages on the control node:
    - set `redelk_generate_packages: true` to generate certs, SSH keys, and archives during playbook run
@@ -170,13 +173,13 @@ Requirements:
 ## Playbook Behavior
 
 `playbook.yml` runs these plays:
-- `all`: SSH prep, optional package generation, and shared pre-tasks
+- `elkservers:c2servers:redirs`: SSH prep, optional package generation, and shared pre-tasks
 - `elkservers`: `docker` then `redelk-server`
-- `c2servers`: `docker` and optional `redelk-client`
-- `redirs`: `redir` and optional `redelk-client`
+- `c2servers`: `redelk-client`
+- `redirs`: `redelk-client`
 
 This Docker split is deliberate:
-- the public Ansible path follows the same role boundary as `infra_mgmnt`
+- `redelk-server` checks for Docker but does not install it or declare a Docker role dependency
 - the legacy shell scripts remain authoritative for standalone installs, but not for Ansible role decomposition
 
 ## Idempotency and Re-runs
@@ -188,7 +191,5 @@ Set `redelk_force_extract_server_package: true` if you want to force re-extracti
 
 ## Notes
 
-- This is a minimal public example, not a full production framework.
-- Supporting infra roles outside the RedELK scripts, such as `redir`, remain environment-specific and may need adaptation for your setup.
 - If you do not want to use Ansible, use the script-based deployment path documented in the repository root [`README.md`](../README.md).
 - The current static parity assessment between the legacy scripts and the Ansible path is documented in [`test-results/legacy-vs-ansible-static-parity.md`](./test-results/legacy-vs-ansible-static-parity.md).

@@ -1,10 +1,10 @@
 ---
-- hosts: all
+- hosts: elkservers:c2servers:redirs
   gather_facts: false
   tags:
     - pre
   pre_tasks:
-    - name: Check known_hosts for all hosts
+    - name: Check known_hosts for selected hosts
       ansible.builtin.command:
         argv:
           - ssh-keygen
@@ -43,8 +43,6 @@
 
 - hosts: redirs
   roles:
-    - name: redir
-      tags: redir
     - name: redelk-client
       when: deploy_redelk == true
       tags: redelk-client
