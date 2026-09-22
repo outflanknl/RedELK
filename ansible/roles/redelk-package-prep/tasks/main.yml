@@ -114,6 +114,8 @@
         create_subject_key_identifier: true
         use_common_name_for_san: false
       register: redelk_package_ca_csr
+      # This computes CSR content in memory; the certificate task manages files.
+      changed_when: false
 
     - name: Generate RedELK CA certificate
       community.crypto.x509_certificate:
@@ -130,7 +132,9 @@
         path: "{{ redelk_local_repo_path }}/certs/elkserver.key"
         type: RSA
         size: 2048
-        format: pkcs1
+        # Preserve the PKCS8 format left by the conversion task on subsequent runs.
+        format: auto_ignore
+        regenerate: fail
         mode: "0600"
 
     - name: Generate ELK server certificate signing request
@@ -187,6 +191,7 @@
         size: 2048
         format: pkcs8
         format_mismatch: convert
+        regenerate: fail
         mode: "0600"
 
     - name: Ensure package output directories exist
