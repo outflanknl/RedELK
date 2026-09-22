@@ -14,7 +14,7 @@ Scope
 This role is responsible for:
 
 - validating Debian/APT-based connector hosts
-- managing locale defaults used by the legacy connector scripts
+- installing locale support and generating configured locales before writing defaults
 - configuring the Elastic APT repository
 - installing and configuring Filebeat
 - deploying the RedELK CA certificate
@@ -35,7 +35,8 @@ Key Variables
 - `redelk_attack_scenario`: scenario label required in deployed connector config
 - `redelk_logstash_endpoint`: Logstash host and port for Filebeat output
 - `redelk_identifier`: host identifier written into connector config
-- `redelk_manage_locale`: enable or disable locale management
+- `redelk_manage_locale`: enable or disable locale generation and defaults management;
+  the `locales` package is always installed with the other dependencies
 - `redelk_c2_filebeat_inputs`: enabled Filebeat inputs for C2 hosts
 - `redelk_c2_sync_jobs`: enabled RedELK sync cron jobs for C2 hosts
 - `redelk_sync_public_key_path`: public key copied into the C2 sync account
@@ -68,3 +69,14 @@ Validation
 
 This role is exercised in the `molecule/redelk` scenario together with
 `redelk-server`.
+
+From `ansible/`, using Python from the Ansible environment, run the lightweight
+locale task regression check:
+
+```bash
+python tests/test_client_locale.py
+```
+
+This checks prerequisite ordering, configured locales, retry conditions and
+`redelk_manage_locale: false` for both connector types. It does not execute
+remote modules or replace the Molecule runtime/idempotence checks.

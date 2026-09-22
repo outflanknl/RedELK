@@ -7,6 +7,27 @@
       - ansible_facts["pkg_mgr"] == "apt"
     fail_msg: "redelk-client currently supports Debian/APT-based hosts only."
 
+- name: Install dependency packages
+  become: true
+  ansible.builtin.apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - python3-debian
+      - python3-pip
+      - locales
+    state: present
+    update_cache: true
+  tags:
+    - packages
+
+- name: Ensure configured connector locales exist
+  become: true
+  community.general.locale_gen:
+    name: "{{ [redelk_locale_lang, redelk_locale_lc_all] | unique | list }}"
+    state: present
+  when: redelk_manage_locale | bool
+
 - name: Manage connector locale defaults
   become: true
   ansible.builtin.copy:
@@ -17,28 +38,7 @@
     owner: root
     group: root
     mode: "0644"
-  register: redelk_locale_defaults
   when: redelk_manage_locale | bool
-
-- name: Generate connector locale when locale defaults changed
-  become: true
-  ansible.builtin.command: locale-gen
-  when:
-    - redelk_manage_locale | bool
-    - redelk_locale_defaults.changed
-
-- name: Install dependency packages
-  become: true
-  ansible.builtin.apt:
-    name:
-      - apt-transport-https
-      - ca-certificates
-      - python3-debian
-      - python3-pip
-    state: present
-    update_cache: true
-  tags:
-    - packages
 
 - name: Install Elastic repository
   become: true
