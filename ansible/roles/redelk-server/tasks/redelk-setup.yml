@@ -172,7 +172,7 @@
             if redelk_server_initial_setup_cert_config.stat.exists
             else ''
           )
-          | regex_findall('(?m)^(?:DNS|IP)\\.\\d+\\s*=\\s*(.+)$')
+          | regex_findall('(?m)^(?:DNS|IP)\.\d+\s*=\s*(.+)$')
           | map('trim')
           | first
         )

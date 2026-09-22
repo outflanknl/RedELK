@@ -33,31 +33,31 @@
       ansible.builtin.set_fact:
         redelk_package_openssl_config_text: "{{ redelk_package_openssl_config_content.content | b64decode }}"
         redelk_package_cert_country_name: >-
-          {{ (redelk_package_openssl_config_content.content | b64decode | regex_findall('(?m)^C\\s*=\\s*(.+)$') | first) | trim }}
+          {{ (redelk_package_openssl_config_content.content | b64decode | regex_findall('(?m)^C\s*=\s*(.+)$') | first) | trim }}
         redelk_package_cert_state_name: >-
-          {{ (redelk_package_openssl_config_content.content | b64decode | regex_findall('(?m)^ST\\s*=\\s*(.+)$') | first) | trim }}
+          {{ (redelk_package_openssl_config_content.content | b64decode | regex_findall('(?m)^ST\s*=\s*(.+)$') | first) | trim }}
         redelk_package_cert_locality_name: >-
-          {{ (redelk_package_openssl_config_content.content | b64decode | regex_findall('(?m)^L\\s*=\\s*(.+)$') | first) | trim }}
+          {{ (redelk_package_openssl_config_content.content | b64decode | regex_findall('(?m)^L\s*=\s*(.+)$') | first) | trim }}
         redelk_package_cert_organization_name: >-
-          {{ (redelk_package_openssl_config_content.content | b64decode | regex_findall('(?m)^O\\s*=\\s*(.+)$') | first) | trim }}
+          {{ (redelk_package_openssl_config_content.content | b64decode | regex_findall('(?m)^O\s*=\s*(.+)$') | first) | trim }}
         redelk_package_cert_organizational_unit_name: >-
-          {{ (redelk_package_openssl_config_content.content | b64decode | regex_findall('(?m)^OU\\s*=\\s*(.+)$') | first) | trim }}
+          {{ (redelk_package_openssl_config_content.content | b64decode | regex_findall('(?m)^OU\s*=\s*(.+)$') | first) | trim }}
         redelk_package_cert_common_name: >-
-          {{ (redelk_package_openssl_config_content.content | b64decode | regex_findall('(?m)^CN\\s*=\\s*(.+)$') | first) | trim }}
+          {{ (redelk_package_openssl_config_content.content | b64decode | regex_findall('(?m)^CN\s*=\s*(.+)$') | first) | trim }}
         redelk_package_cert_email_address: >-
-          {{ (redelk_package_openssl_config_content.content | b64decode | regex_findall('(?m)^emailAddress\\s*=\\s*(.+)$') | first) | trim }}
+          {{ (redelk_package_openssl_config_content.content | b64decode | regex_findall('(?m)^emailAddress\s*=\s*(.+)$') | first) | trim }}
         redelk_package_cert_dns_sans: >-
-          {{ redelk_package_openssl_config_content.content | b64decode | regex_findall('(?m)^DNS\\.\\d+\\s*=\\s*(.+)$') | map('trim') | list }}
+          {{ redelk_package_openssl_config_content.content | b64decode | regex_findall('(?m)^DNS\.\d+\s*=\s*(.+)$') | map('trim') | list }}
         redelk_package_cert_ip_sans: >-
-          {{ redelk_package_openssl_config_content.content | b64decode | regex_findall('(?m)^IP\\.\\d+\\s*=\\s*(.+)$') | map('trim') | list }}
+          {{ redelk_package_openssl_config_content.content | b64decode | regex_findall('(?m)^IP\.\d+\s*=\s*(.+)$') | map('trim') | list }}
 
     - name: Build RedELK server subject alternative names
       ansible.builtin.set_fact:
         redelk_package_cert_subject_alt_name: >-
           {{
-            (redelk_package_cert_dns_sans | map('regex_replace', '^(.*)$', 'DNS:\\1') | list)
+            (redelk_package_cert_dns_sans | map('regex_replace', '^', 'DNS:') | list)
             +
-            (redelk_package_cert_ip_sans | map('regex_replace', '^(.*)$', 'IP:\\1') | list)
+            (redelk_package_cert_ip_sans | map('regex_replace', '^', 'IP:') | list)
           }}
 
     - name: Find example files in repository
