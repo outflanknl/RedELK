@@ -3,8 +3,6 @@ ansible_become: true
 deploy_redelk: true
 
 redelk_local_repo_path: "{{ playbook_dir | dirname }}"
-redelk_openssl_config_path: certs/config.cnf
-redelk_generate_packages: false
 
 redelk_remote_base_path: /opt/redelk
 redelk_elk_install_command: "./install-elkserver.sh limited"

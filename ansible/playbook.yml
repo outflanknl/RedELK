@@ -23,11 +23,6 @@
     - name: Delayed gathering of facts
       ansible.builtin.setup:
 
-  roles:
-    - name: redelk-package-prep
-      when: redelk_generate_packages | bool
-      tags: pre
-
 - hosts: elkservers
   roles:
     - name: docker

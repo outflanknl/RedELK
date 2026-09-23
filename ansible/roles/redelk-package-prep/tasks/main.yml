@@ -1,7 +1,5 @@
 ---
 - name: Prepare RedELK deployment packages on control node
-  run_once: true
-  delegate_to: localhost
   block:
     - name: Check OpenSSL config path exists
       ansible.builtin.stat:

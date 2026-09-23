@@ -23,16 +23,20 @@ This role is responsible for:
 Key Variables
 -------------
 
-- `redelk_local_repo_path`: repository root used as the packaging workspace
-- `redelk_openssl_config_path`: relative path to the OpenSSL config file
+- `redelk_local_repo_path`: packaging workspace; defaults to `"{{ playbook_dir | dirname }}"`
+- `redelk_openssl_config_path`: OpenSSL config path relative to that workspace; defaults to `certs/config.cnf`
 - `redelk_package_ssh_dir`: local SSH key output directory
 - `redelk_package_archives`: archive definitions for packaged outputs
 
 Design Notes
 ------------
 
-- This role is control-node work only and is designed to run with
-  `delegate_to: localhost`.
+- This role is control-node work only. `prepare-packages.yml` selects localhost,
+  a local connection, Ansible's Python interpreter, and no privilege escalation.
+- Run from `ansible/` with `ansible-playbook -i localhost, prepare-packages.yml`,
+  then deploy with `ansible-playbook -i inventory.yml playbook.yml`.
+- Target-group variables do not apply to localhost. Override prep defaults with
+  `-e` or `-e @file.yml`; use the same workspace for preparation and deployment.
 - It uses `community.crypto` and `community.general.archive` instead of shell
   commands such as `openssl`, `ssh-keygen`, and `tar`.
 - It keeps the same practical artifact model as `initial-setup.sh`: generated
@@ -51,7 +55,13 @@ Intentional Differences From `initial-setup.sh`
 Validation
 ----------
 
-This role is validated by syntax checks and by the downstream roles that consume
-the generated public package artifacts.
+Check the preparation entrypoint with:
+
+```bash
+cd ansible
+ansible-playbook -i localhost, prepare-packages.yml --syntax-check
+```
+
+The downstream roles consume the generated public deployment artifacts.
 
 It is not directly exercised by the current `molecule/redelk` scenario.

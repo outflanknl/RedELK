@@ -1,4 +1,6 @@
 ---
+redelk_local_repo_path: "{{ playbook_dir | dirname }}"
+redelk_openssl_config_path: certs/config.cnf
 redelk_package_ssh_dir: "{{ redelk_local_repo_path }}/sshkey"
 redelk_package_archives:
   - name: elkserver
