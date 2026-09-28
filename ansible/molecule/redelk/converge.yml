@@ -1,18 +1,16 @@
 ---
-- name: Converge ELK servers
-  hosts: elkservers
-  gather_facts: true
-  roles:
-    - redelk-server
+- name: Prepare RedELK fixture packages through the public entrypoint
+  ansible.builtin.import_playbook: ../../prepare-packages.yml
+  vars:
+    redelk_local_repo_path: "{{ lookup('env', 'MOLECULE_EPHEMERAL_DIRECTORY') }}/fixtures"
 
-- name: Converge C2 servers
-  hosts: c2servers
-  gather_facts: true
-  roles:
-    - redelk-client
-
-- name: Converge redirectors
-  hosts: redirs
-  gather_facts: true
-  roles:
-    - redelk-client
+- name: Deploy RedELK fixtures through the public entrypoint
+  ansible.builtin.import_playbook: ../../playbook.yml
+  vars:
+    redelk_local_repo_path: "{{ lookup('env', 'MOLECULE_EPHEMERAL_DIRECTORY') }}/fixtures"
+    redelk_remote_base_path: /opt/redelk
+    redelk_elk_install_command: ./install-elkserver.sh limited
+    redelk_start_containers: false
+    deploy_redelk: true
+    redelk_attack_scenario: molecule-test
+    redelk_logstash_endpoint: redelk.local:5044

@@ -1,4 +1,34 @@
 ---
+- name: Verify prepared RedELK packages
+  hosts: localhost
+  gather_facts: false
+  become: false
+  vars:
+    fixtures_dir: "{{ lookup('env', 'MOLECULE_EPHEMERAL_DIRECTORY') }}/fixtures"
+  tasks:
+    - name: Check prepared package archives
+      ansible.builtin.stat:
+        path: "{{ fixtures_dir }}/{{ item }}"
+      loop:
+        - elkserver.tgz
+        - c2servers.tgz
+        - redirs.tgz
+      register: redelk_package_archives
+
+    - name: Read prepared ELK certificate
+      community.crypto.x509_certificate_info:
+        path: "{{ fixtures_dir }}/certs/elkserver.crt"
+      register: redelk_package_certificate
+
+    - name: Assert prepared packages contain configured certificate identities
+      ansible.builtin.assert:
+        that:
+          - redelk_package_archives.results | map(attribute='stat.exists') | min
+          - redelk_package_certificate.subject.commonName == 'elkserver-01'
+          - "'DNS:elkserver-01' in redelk_package_certificate.subject_alt_name"
+          - "'DNS:redelk.local' in redelk_package_certificate.subject_alt_name"
+          - "'IP:127.0.0.1' in redelk_package_certificate.subject_alt_name"
+
 - name: Verify ELK server
   hosts: elkservers
   gather_facts: false
@@ -8,16 +38,37 @@
         path: /opt/redelk/elkserver/.env
       register: elk_env_file
 
-    - name: Check ELK self-signed certificate
-      ansible.builtin.stat:
+    - name: Read ELK self-signed certificate
+      community.crypto.x509_certificate_info:
         path: /opt/redelk/elkserver/mounts/certbot/conf/live/noletsencrypt/fullchain.pem
-      register: elk_self_signed_cert
+      register: elk_self_signed_certificate
 
-    - name: Assert ELK server artifacts exist
+    - name: Assert ELK server artifacts and certificate identity
       ansible.builtin.assert:
         that:
           - elk_env_file.stat.exists
-          - elk_self_signed_cert.stat.exists
+          - elk_self_signed_certificate.subject.commonName == 'elkserver-01'
+
+- name: Verify connector locales
+  hosts: c2servers:redirs
+  gather_facts: false
+  tasks:
+    - name: List generated locales
+      ansible.builtin.command: locale -a
+      changed_when: false
+      register: connector_locales
+
+    - name: Read connector locale defaults
+      ansible.builtin.slurp:
+        src: /etc/default/locale
+      register: connector_locale_defaults
+
+    - name: Assert connector locale configuration
+      ansible.builtin.assert:
+        that:
+          - "'en_us.utf8' in (connector_locales.stdout_lines | map('lower') | list)"
+          - "'LANG=en_US.UTF-8' in (connector_locale_defaults.content | b64decode).splitlines()"
+          - "'LC_ALL=en_US.UTF-8' in (connector_locale_defaults.content | b64decode).splitlines()"
 
 - name: Verify C2 connector
   hosts: c2servers

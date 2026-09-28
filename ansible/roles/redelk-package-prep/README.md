@@ -62,6 +62,6 @@ cd ansible
 ansible-playbook -i localhost, prepare-packages.yml --syntax-check
 ```
 
-The downstream roles consume the generated public deployment artifacts.
-
-It is not directly exercised by the current `molecule/redelk` scenario.
+The `molecule/redelk` scenario exercises this entrypoint before deployment and
+repeats it during idempotence testing. The downstream roles consume the generated
+fixture artifacts.

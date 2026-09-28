@@ -1,5 +1,5 @@
 ---
-- name: Build fixture archives for RedELK role tests
+- name: Seed fixture workspace for the public RedELK workflow
   hosts: localhost
   gather_facts: false
   become: false
@@ -14,13 +14,13 @@
         path: "{{ fixtures_dir }}"
         state: absent
 
-    - name: Create fixture directory
+    - name: Create fixture certificate directory
       ansible.builtin.file:
-        path: "{{ fixtures_dir }}"
+        path: "{{ fixtures_dir }}/certs"
         state: directory
         mode: "0755"
 
-    - name: Copy fixture source directories from repository
+    - name: Copy fixture sources from repository
       ansible.builtin.command:
         argv:
           - cp
@@ -32,225 +32,38 @@
         - elkserver
         - c2servers
         - redirs
+        - VERSION
 
-    - name: Ensure generated fixture directories exist
-      ansible.builtin.file:
-        path: "{{ item }}"
-        state: directory
-        mode: "0755"
-      loop:
-        - "{{ fixtures_dir }}/certs"
-        - "{{ fixtures_dir }}/ssh"
-        - "{{ fixtures_dir }}/c2servers/filebeat"
-        - "{{ fixtures_dir }}/c2servers/ssh"
-        - "{{ fixtures_dir }}/redirs/filebeat"
-        - "{{ fixtures_dir }}/elkserver/mounts/redelk-ssh"
-        - "{{ fixtures_dir }}/elkserver/mounts/logstash-config/certs_inputs"
-
-    - name: Generate Molecule RedELK CA certificate
-      ansible.builtin.command:
-        argv:
-          - openssl
-          - req
-          - -x509
-          - -nodes
-          - -newkey
-          - rsa:2048
-          - -days
-          - "365"
-          - -keyout
-          - "{{ fixtures_dir }}/certs/redelkCA.key"
-          - -out
-          - "{{ fixtures_dir }}/certs/redelkCA.crt"
-          - -subj
-          - /CN=redelk-molecule-ca
-      args:
-        creates: "{{ fixtures_dir }}/certs/redelkCA.crt"
-
-    - name: Generate Molecule ELK server certificate
-      ansible.builtin.command:
-        argv:
-          - openssl
-          - req
-          - -x509
-          - -nodes
-          - -newkey
-          - rsa:2048
-          - -days
-          - "365"
-          - -keyout
-          - "{{ fixtures_dir }}/certs/elkserver.key"
-          - -out
-          - "{{ fixtures_dir }}/certs/elkserver.crt"
-          - -subj
-          - /CN=elkserver-01
-      args:
-        creates: "{{ fixtures_dir }}/certs/elkserver.crt"
-
-    - name: Copy ELK certificates into fixture package
+    - name: Write fixture OpenSSL configuration
       ansible.builtin.copy:
-        src: "{{ item.src }}"
-        dest: "{{ item.dest }}"
-        remote_src: true
-        mode: preserve
-      loop:
-        - src: "{{ fixtures_dir }}/certs/redelkCA.crt"
-          dest: "{{ fixtures_dir }}/c2servers/filebeat/redelkCA.crt"
-        - src: "{{ fixtures_dir }}/certs/redelkCA.crt"
-          dest: "{{ fixtures_dir }}/redirs/filebeat/redelkCA.crt"
-        - src: "{{ fixtures_dir }}/certs/redelkCA.crt"
-          dest: "{{ fixtures_dir }}/elkserver/mounts/logstash-config/certs_inputs/redelkCA.crt"
-        - src: "{{ fixtures_dir }}/certs/elkserver.crt"
-          dest: "{{ fixtures_dir }}/elkserver/mounts/logstash-config/certs_inputs/elkserver.crt"
-        - src: "{{ fixtures_dir }}/certs/elkserver.key"
-          dest: "{{ fixtures_dir }}/elkserver/mounts/logstash-config/certs_inputs/elkserver.key"
-
-    - name: Generate Molecule sync SSH key pair
-      ansible.builtin.command:
-        argv:
-          - ssh-keygen
-          - -t
-          - rsa
-          - -f
-          - "{{ fixtures_dir }}/ssh/id_rsa"
-          - -N
-          - ""
-      args:
-        creates: "{{ fixtures_dir }}/ssh/id_rsa"
-
-    - name: Copy sync SSH keys into fixture packages
-      ansible.builtin.copy:
-        src: "{{ item.src }}"
-        dest: "{{ item.dest }}"
-        remote_src: true
-        mode: preserve
-      loop:
-        - src: "{{ fixtures_dir }}/ssh/id_rsa.pub"
-          dest: "{{ fixtures_dir }}/c2servers/ssh/id_rsa.pub"
-        - src: "{{ fixtures_dir }}/ssh/id_rsa"
-          dest: "{{ fixtures_dir }}/elkserver/mounts/redelk-ssh/id_rsa"
-        - src: "{{ fixtures_dir }}/ssh/id_rsa.pub"
-          dest: "{{ fixtures_dir }}/elkserver/mounts/redelk-ssh/id_rsa.pub"
-
-    - name: Check whether VERSION exists in the repository
-      ansible.builtin.stat:
-        path: "{{ repo_root }}/VERSION"
-      register: redelk_version_file
-
-    - name: Copy VERSION into fixture packages
-      ansible.builtin.copy:
-        src: "{{ repo_root }}/VERSION"
-        dest: "{{ item }}"
-        remote_src: true
-        mode: preserve
-      when: redelk_version_file.stat.exists
-      loop:
-        - "{{ fixtures_dir }}/elkserver/VERSION"
-        - "{{ fixtures_dir }}/c2servers/VERSION"
-        - "{{ fixtures_dir }}/redirs/VERSION"
-
-    - name: Create fixture tarballs
-      ansible.builtin.command:
-        argv:
-          - tar
-          - -czf
-          - "{{ fixtures_dir }}/{{ item.dest }}"
-          - -C
-          - "{{ fixtures_dir }}"
-          - "{{ item.src }}"
-      changed_when: true
-      loop:
-        - src: elkserver
-          dest: elkserver.tgz
-        - src: c2servers
-          dest: c2servers.tgz
-        - src: redirs
-          dest: redirs.tgz
-
-- name: Prepare Molecule ELK server host
-  hosts: elkservers
-  gather_facts: true
-  become: true
-  tasks:
-    - name: Remove conflicting Docker packages
-      ansible.builtin.apt:
-        name:
-          - docker.io
-          - docker-compose
-          - docker-compose-v2
-          - docker-doc
-          - podman-docker
-          - containerd
-          - runc
-        state: absent
-
-    - name: Install Docker repository prerequisites
-      ansible.builtin.apt:
-        name:
-          - ca-certificates
-          - curl
-          - python3-debian
-        update_cache: true
-        state: present
-
-    - name: Ensure apt keyrings directory exists
-      ansible.builtin.file:
-        path: /etc/apt/keyrings
-        state: directory
-        owner: root
-        group: root
-        mode: "0755"
-
-    - name: Install Docker apt signing key
-      ansible.builtin.get_url:
-        url: https://download.docker.com/linux/ubuntu/gpg
-        dest: /etc/apt/keyrings/docker.asc
-        owner: root
-        group: root
+        dest: "{{ fixtures_dir }}/certs/config.cnf"
         mode: "0644"
+        content: |
+          [req]
+          distinguished_name = req_distinguished_name
+          x509_extensions = v3_req
+          prompt = no
 
-    - name: Map system architecture to Docker apt architecture
-      ansible.builtin.set_fact:
-        docker_apt_arch: "{{ docker_arch_map.get(ansible_facts['architecture'], ansible_facts['architecture']) }}"
-      vars:
-        docker_arch_map:
-          x86_64: amd64
-          aarch64: arm64
-          armv7l: armhf
-          ppc64le: ppc64el
+          [req_distinguished_name]
+          C = NL
+          ST = Utrecht
+          L = Utrecht
+          O = RedELK
+          OU = Molecule
+          CN = elkserver-01
+          emailAddress = molecule@redelk.invalid
 
-    - name: Ensure architecture is supported by Docker apt repository
-      ansible.builtin.assert:
-        that:
-          - docker_apt_arch in ['amd64', 'arm64', 'armhf', 'ppc64el', 's390x']
-        fail_msg: >-
-          Unsupported architecture '{{ ansible_facts["architecture"] }}'
-          (mapped '{{ docker_apt_arch }}') for Docker apt repository.
+          [v3_ca]
+          subjectKeyIdentifier = hash
+          authorityKeyIdentifier = keyid:always,issuer:always
+          basicConstraints = CA:TRUE
 
-    - name: Configure Docker apt repository
-      ansible.builtin.deb822_repository:
-        name: docker
-        types:
-          - deb
-        uris:
-          - https://download.docker.com/linux/ubuntu
-        suites:
-          - "{{ ansible_facts['distribution_release'] }}"
-        components:
-          - stable
-        architectures:
-          - "{{ docker_apt_arch }}"
-        signed_by: /etc/apt/keyrings/docker.asc
-        state: present
+          [v3_req]
+          keyUsage = nonRepudiation, digitalSignature, keyEncipherment, dataEncipherment
+          extendedKeyUsage = serverAuth
+          subjectAltName = @alt_names
 
-    - name: Update apt cache after adding Docker repository
-      ansible.builtin.apt:
-        update_cache: true
-
-    - name: Install Docker CLI packages from official Docker repository
-      ansible.builtin.apt:
-        name:
-          - docker-ce-cli
-          - docker-buildx-plugin
-          - docker-compose-plugin
-        state: present
+          [alt_names]
+          DNS.1 = elkserver-01
+          DNS.2 = redelk.local
+          IP.1 = 127.0.0.1

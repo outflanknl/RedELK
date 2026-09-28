@@ -68,15 +68,5 @@ Validation
 ----------
 
 This role is exercised in the `molecule/redelk` scenario together with
-`redelk-server`.
-
-From `ansible/`, using Python from the Ansible environment, run the lightweight
-locale task regression check:
-
-```bash
-python tests/test_client_locale.py
-```
-
-This checks prerequisite ordering, configured locales, retry conditions and
-`redelk_manage_locale: false` for both connector types. It does not execute
-remote modules or replace the Molecule runtime/idempotence checks.
+`redelk-server`. The scenario verifies locale generation and defaults for both
+connector types, including runtime and idempotence checks.
