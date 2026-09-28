@@ -19,8 +19,6 @@ platforms:
     tmpfs:
       - /run
       - /tmp
-    environment:
-      container: docker
     groups:
       - elkservers
 
@@ -36,8 +34,6 @@ platforms:
     tmpfs:
       - /run
       - /tmp
-    environment:
-      container: docker
     groups:
       - c2servers
 
@@ -53,8 +49,6 @@ platforms:
     tmpfs:
       - /run
       - /tmp
-    environment:
-      container: docker
     groups:
       - redirs
 
@@ -95,7 +89,6 @@ provisioner:
         redelk_logstash_endpoint: redelk.local:5044
   playbooks:
     create: create.yml
-    destroy: destroy.yml
     cleanup: cleanup.yml
     prepare: prepare.yml
     converge: converge.yml

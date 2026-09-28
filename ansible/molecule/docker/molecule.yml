@@ -19,8 +19,6 @@ platforms:
     tmpfs:
       - /run
       - /tmp
-    environment:
-      container: docker
     groups:
       - docker_hosts
 
@@ -41,7 +39,6 @@ provisioner:
         ansible_python_interpreter: /usr/bin/python3
   playbooks:
     create: create.yml
-    destroy: destroy.yml
     prepare: prepare.yml
     converge: converge.yml
     verify: verify.yml
