@@ -93,7 +93,7 @@ services:
       - ./mounts/logstash-config/redelk-main:/usr/share/logstash/redelk-main
     environment:
       - node.name=redelk-logstash
-      - config.reload.automatic:true
+      - CONFIG_RELOAD_AUTOMATIC=true
       - CERTS_DIR_REDELK=${CERTS_DIR_REDELK}
       - CERTS_DIR_LOGSTASH=${CERTS_DIR_LOGSTASH}
       - CERTS_LOGSTASH_OUTPUT_CA=${CERTS_LOGSTASH_OUTPUT_CA}
