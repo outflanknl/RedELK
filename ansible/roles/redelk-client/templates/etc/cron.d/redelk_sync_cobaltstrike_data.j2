@@ -3,8 +3,8 @@
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
-* * * * * root /usr/bin/rsync -rvx --append-verify --delete /root/cobaltstrike/server/logs {{ redelk_sync_user_home }}/cobaltstrike/; /bin/chown -R {{ redelk_sync_user }}:{{ redelk_sync_user }} {{ redelk_sync_user_home }}/cobaltstrike/*
-* * * * * root /usr/bin/rsync -rvx --append-verify --delete /root/cobaltstrike/profiles {{ redelk_sync_user_home }}/cobaltstrike/; /bin/chown -R {{ redelk_sync_user }}:{{ redelk_sync_user }} {{ redelk_sync_user_home }}/cobaltstrike/*
-* * * * * root /usr/bin/rsync -rvx --append-verify --delete /root/cobaltstrike/server/data {{ redelk_sync_user_home }}/cobaltstrike/; /bin/chown -R {{ redelk_sync_user }}:{{ redelk_sync_user }} {{ redelk_sync_user_home }}/cobaltstrike/*
+* * * * * root /usr/bin/rsync -rvx --append-verify --delete {{ redelk_cobaltstrike_dir }}/server/logs {{ redelk_sync_user_home }}/cobaltstrike/; /bin/chown -R {{ redelk_sync_user }}:{{ redelk_sync_user }} {{ redelk_sync_user_home }}/cobaltstrike/*
+* * * * * root /usr/bin/rsync -rvx --append-verify --delete {{ redelk_cobaltstrike_dir }}/profiles {{ redelk_sync_user_home }}/cobaltstrike/; /bin/chown -R {{ redelk_sync_user }}:{{ redelk_sync_user }} {{ redelk_sync_user_home }}/cobaltstrike/*
+* * * * * root /usr/bin/rsync -rvx --append-verify --delete {{ redelk_cobaltstrike_dir }}/server/data {{ redelk_sync_user_home }}/cobaltstrike/; /bin/chown -R {{ redelk_sync_user }}:{{ redelk_sync_user }} {{ redelk_sync_user_home }}/cobaltstrike/*
 * * * * * root {{ redelk_bin_dir }}/export_cobaltstrikedata.sh
 * * * * * root {{ redelk_bin_dir }}/copydownloads_cobaltstrike.sh

@@ -22,6 +22,8 @@ redelk_sync_user: scponly
 redelk_sync_user_home: "/home/{{ redelk_sync_user }}"
 redelk_sync_user_shell: /usr/sbin/rush
 redelk_sync_public_key_path: "{{ redelk_local_repo_path }}/c2servers/ssh/id_rsa.pub"
+redelk_cobaltstrike_dir: /opt/cobaltstrike
+redelk_stage1_dir: /opt/stage1c2server
 redelk_c2_filebeat_inputs:
   - cobaltstrike
   - outflankstage1

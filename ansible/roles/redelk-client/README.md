@@ -35,6 +35,8 @@ Key Variables
 - `redelk_attack_scenario`: scenario label required in deployed connector config
 - `redelk_logstash_endpoint`: Logstash host and port for Filebeat output
 - `redelk_identifier`: host identifier written into connector config
+- `redelk_cobaltstrike_dir`: Cobalt Strike installation directory, default `/opt/cobaltstrike`
+- `redelk_stage1_dir`: Stage1 installation directory, default `/opt/stage1c2server`
 - `redelk_manage_locale`: enable or disable locale generation and defaults management;
   the `locales` package is always installed with the other dependencies
 - `redelk_c2_filebeat_inputs`: enabled Filebeat inputs for C2 hosts

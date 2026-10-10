@@ -5,7 +5,7 @@
 #
 
 LOGFILE="{{ redelk_log_dir }}/exportcobaltstrikesdata.log"
-CSDIR="/root/cobaltstrike/server"
+CSDIR="{{ redelk_cobaltstrike_dir }}/server"
 
 echo "$(date) ######## Start CS data export" >> "$LOGFILE" 2>&1
 

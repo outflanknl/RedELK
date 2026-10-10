@@ -13,10 +13,9 @@ def filter(event)
   implant_id = event.get("[implant][id]")
   timefromcs = event.get("[c2][timestamp]") + " UTC"
   timestring =  Time.parse(timefromcs).strftime("%I%M%S")
-  temppath = logpath.split('/cobaltstrike')
-  temppath2 = temppath[1].split(/\/([^\/]*)$/)
-  screenshoturl = "/c2logs/" + "#{host}" + "/cobaltstrike" + "#{temppath2[0]}" + "/screenshots/screen_" + "#{timestring}" + "_" + "#{implant_id}" + ".jpg"
-  thumburl = "/c2logs/" + "#{host}" + "/cobaltstrike" + "#{temppath2[0]}" + "/screenshots/screen_" + "#{timestring}" + "_" + "#{implant_id}" + ".jpg.thumb.jpg"
+  log_dir = File.dirname(logpath.rpartition('/logs').last)
+  screenshoturl = "/c2logs/#{host}/cobaltstrike/logs#{log_dir}/screenshots/screen_#{timestring}_#{implant_id}.jpg"
+  thumburl = "#{screenshoturl}.thumb.jpg"
   event.tag("_rubyparseok")
   event.set("[screenshot][full]", screenshoturl)
   event.set("[screenshot][thumb]", thumburl)
