@@ -43,6 +43,11 @@
         path: /opt/redelk/elkserver/mounts/certbot/conf/live/noletsencrypt/fullchain.pem
       register: elk_self_signed_certificate
 
+    - name: Read RedELK cron configuration
+      ansible.builtin.slurp:
+        src: /opt/redelk/elkserver/mounts/redelk-config/etc/cron.d/redelk
+      register: elk_cron_file
+
     - name: Check deployed sync private key
       ansible.builtin.stat:
         path: /opt/redelk/elkserver/mounts/redelk-ssh/id_rsa
@@ -56,6 +61,7 @@
           - elk_sync_private_key.stat.uid == 1000
           - elk_sync_private_key.stat.gid == 1000
           - elk_self_signed_certificate.subject.commonName == 'elkserver-01'
+          - "'getremotelogs.sh c2server-01 c2server-01 scponly 22' in (elk_cron_file.content | b64decode)"
 
 - name: Verify connector locales
   hosts: c2servers:redirs

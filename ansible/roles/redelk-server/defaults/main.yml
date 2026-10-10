@@ -11,6 +11,7 @@ redelk_compose_project_name: redelk
 redelk_docker_log_max_size: 200m
 redelk_docker_log_max_files: 1
 redelk_redelk_username: redelk
+redelk_sync_user: scponly
 redelk_loglevel: WARNING
 redelk_alarm_interval: 3600
 redelk_alarm_temp_dir: /tmp

@@ -160,6 +160,27 @@
     path: "{{ redelk_server_path }}/mounts/redelk-config/etc/cron.d/redelk"
   register: redelk_server_base_cron
 
+- name: Configure C2 log sync jobs
+  become: true
+  ansible.builtin.blockinfile:
+    path: "{{ redelk_server_path }}/mounts/redelk-config/etc/cron.d/redelk"
+    marker: "# {mark} ANSIBLE MANAGED C2 LOG SYNC"
+    insertafter: '^#\*/2 .*getremotelogs'
+    block: |
+      {% for host in groups.get('c2servers', []) %}
+      {% if hostvars[host].deploy_redelk | default(true) | bool %}
+      {% set sync_host = hostvars[host].ansible_host | default(host) %}
+      {% set sync_id = hostvars[host].redelk_identifier | default(host) %}
+      {% set sync_user = hostvars[host].redelk_sync_user | default(redelk_sync_user) %}
+      {% set sync_port = hostvars[host].ansible_port | default(22) %}
+      */2 * * * * redelk /usr/share/redelk/bin/getremotelogs.sh {{ sync_host }} {{ sync_id }} {{ sync_user }} {{ sync_port }}
+      {% endif %}
+      {% endfor %}
+    owner: root
+    group: root
+    mode: "0600"
+  when: redelk_server_base_cron.stat.exists
+
 - name: Check for packaged initial setup certificate config
   ansible.builtin.stat:
     path: "{{ redelk_server_path }}/initial-setup-data/certs/config.cnf"
@@ -227,15 +248,6 @@
     src: redelk_passwords.cfg.j2
     dest: "{{ redelk_server_path }}/mounts/jupyter-workbooks/redelk_passwords.py"
     mode: "0600"
-
-- name: Set permissions on RedELK base cron file
-  become: true
-  ansible.builtin.file:
-    path: "{{ redelk_server_path }}/mounts/redelk-config/etc/cron.d/redelk"
-    owner: root
-    group: root
-    mode: "0600"
-  when: redelk_server_base_cron.stat.exists
 
 - name: Create htpasswd file for RedELK web access
   become: true

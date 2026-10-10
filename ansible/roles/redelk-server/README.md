@@ -19,6 +19,7 @@ This role is responsible for:
 - preserving generated secrets across reruns
 - preparing self-signed or Let's Encrypt certificate paths
 - managing `vm.max_map_count`
+- configuring periodic C2 log retrieval for hosts in `c2servers`
 - starting the stack through Docker Compose v2
 
 This role is not responsible for installing Docker itself in the Ansible path.
@@ -39,6 +40,7 @@ Key Variables
 - `redelk_letsencrypt_enabled`: switch between self-signed and Let's Encrypt flow
 - `redelk_external_domain`: required when Let's Encrypt is enabled
 - `redelk_letsencrypt_email`: required when Let's Encrypt is enabled
+- `redelk_sync_user`: remote C2 sync account, default `scponly`
 - `redelk_start_containers`: control whether the role starts the stack
 
 Design Notes
