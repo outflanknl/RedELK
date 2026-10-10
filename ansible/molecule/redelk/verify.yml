@@ -43,10 +43,18 @@
         path: /opt/redelk/elkserver/mounts/certbot/conf/live/noletsencrypt/fullchain.pem
       register: elk_self_signed_certificate
 
+    - name: Check deployed sync private key
+      ansible.builtin.stat:
+        path: /opt/redelk/elkserver/mounts/redelk-ssh/id_rsa
+      register: elk_sync_private_key
+
     - name: Assert ELK server artifacts and certificate identity
       ansible.builtin.assert:
         that:
           - elk_env_file.stat.exists
+          - elk_sync_private_key.stat.mode == '0600'
+          - elk_sync_private_key.stat.uid == 1000
+          - elk_sync_private_key.stat.gid == 1000
           - elk_self_signed_certificate.subject.commonName == 'elkserver-01'
 
 - name: Verify connector locales

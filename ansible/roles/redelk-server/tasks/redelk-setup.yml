@@ -139,9 +139,21 @@
     - { path: "mounts/certbot/conf/live", owner: "1000", group: "1000" }
     - { path: "mounts/jupyter-workbooks", owner: "1000", group: "1000" }
     - { path: "mounts/redelk-logs", owner: "1000", group: "1000" }
+    - { path: "mounts/redelk-ssh", owner: "1000", group: "1000", mode: "0700" }
     - { path: "mounts/redelk-www", owner: "1000", group: "1000" }
     - { path: "mounts/logstash-config", owner: "1000", group: "1000" }
     - { path: "mounts/elasticsearch-config/jvm.options.d", owner: "1000", group: "1000" }
+
+- name: Normalize RedELK sync key permissions
+  become: true
+  ansible.builtin.file:
+    path: "{{ redelk_server_path }}/mounts/redelk-ssh/{{ item }}"
+    owner: "1000"
+    group: "1000"
+    mode: "0600"
+  loop:
+    - id_rsa
+    - id_rsa.pub
 
 - name: Check whether RedELK base cron file exists
   ansible.builtin.stat:
