@@ -52,8 +52,8 @@ Each of those RedELK roles also has its own local `README.md` with role-specific
 - required collections installed from `collections.yml`
 - SSH access to all targets
 - privilege escalation (`become`) on targets
-- Debian/APT-based targets for RedELK installer compatibility
-- Ubuntu targets for the local `docker` role
+- Ubuntu 24.04 or newer on all deployment targets (ELK servers, C2 servers, and redirectors)
+- GNU Rush 2.x on C2 servers
 - valid certificate config at `certs/config.cnf` before running `prepare-packages.yml`
 
 Install the shared Ansible collections first:
@@ -157,7 +157,9 @@ A Molecule split setup is available:
 - `molecule/docker`: isolated test of the `docker` role
 - `molecule/redelk`: test of `redelk-server` and `redelk-client` with fixture archives generated from the repository contents
 
-Both scenarios use privileged Ubuntu containers.
+Both scenarios use privileged Ubuntu 24.04 containers, matching the minimum
+version required by every deployment role. Package preparation runs on the
+control node and is not subject to the target OS requirement.
 
 Run syntax checks without connecting to hosts:
 

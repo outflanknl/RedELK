@@ -1,6 +1,16 @@
 ---
 # RedELK server installation tasks
 
+- name: Require Ubuntu 24.04 or newer
+  ansible.builtin.assert:
+    that:
+      - ansible_facts["distribution"] == "Ubuntu"
+      - ansible_facts["distribution_version"] is version('24.04', '>=')
+      - ansible_facts["pkg_mgr"] == "apt"
+    fail_msg: "RedELK deployment roles require Ubuntu 24.04 or newer."
+  tags:
+    - always
+
 - name: Calculate install mode prechecks
   ansible.builtin.import_tasks: memory.yml
   tags:

@@ -13,15 +13,14 @@ Features
 - Configures Docker apt repo using deb822 source file (`/etc/apt/sources.list.d/docker.sources`).
 - Installs `docker-ce`, `docker-ce-cli`, `containerd.io`, `docker-buildx-plugin`, and `docker-compose-plugin`.
 - Ensures Docker service is enabled and running.
-- Supports Ubuntu `jammy` (22.04), `noble` (24.04), `questing` (25.10), and `resolute` (26.04) as current Docker-documented releases.
-- Keeps legacy support for Ubuntu `focal` (20.04 EOL).
+- Requires Ubuntu 24.04 or newer, matching all RedELK deployment roles.
 
 Requirements
 ------------
 
-- Ubuntu host.
+- Ubuntu 24.04 or newer.
 - `become: true` for package and service management tasks.
-- A working Ubuntu apt configuration (including EOL mirror handling when applicable).
+- A working Ubuntu apt configuration.
 
 Configuration
 -------------
@@ -40,13 +39,6 @@ Example Playbook
   roles:
     - role: docker
 ```
-
-Ubuntu 20.04 (EOL)
-------------------
-
-This role still installs Docker for `focal`, but it does not manage base Ubuntu
-apt mirrors. Operators must ensure host apt sources are already configured
-correctly before running this role.
 
 Ubuntu Version Logic
 --------------------

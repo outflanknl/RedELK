@@ -9,7 +9,7 @@ driver:
 platforms:
   - name: dockerhost-01
     hostname: dockerhost-01
-    image: geerlingguy/docker-ubuntu2204-ansible:latest
+    image: geerlingguy/docker-ubuntu2404-ansible:latest
     pre_build_image: true
     privileged: true
     command: /lib/systemd/systemd

@@ -13,7 +13,7 @@ Scope
 
 This role is responsible for:
 
-- validating Debian/APT-based connector hosts
+- validating Ubuntu 24.04 or newer on both connector types
 - installing locale support and generating configured locales before writing defaults
 - configuring the Elastic APT repository
 - installing and configuring Filebeat
@@ -23,8 +23,8 @@ This role is responsible for:
 
 The role supports two connector types:
 
-- `c2servers`
-- `redirs`
+- `c2servers` (Ubuntu 24.04 or newer; GNU Rush 2.x required)
+- `redirs` (Ubuntu 24.04 or newer)
 
 It intentionally branches on host group rather than trying to treat both
 targets as a single identical connector type.

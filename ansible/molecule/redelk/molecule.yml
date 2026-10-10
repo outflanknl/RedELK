@@ -9,7 +9,7 @@ driver:
 platforms:
   - name: elkserver-01
     hostname: elkserver-01
-    image: geerlingguy/docker-ubuntu2204-ansible:latest
+    image: geerlingguy/docker-ubuntu2404-ansible:latest
     pre_build_image: true
     privileged: true
     command: /lib/systemd/systemd
@@ -24,7 +24,7 @@ platforms:
 
   - name: c2server-01
     hostname: c2server-01
-    image: geerlingguy/docker-ubuntu2204-ansible:latest
+    image: geerlingguy/docker-ubuntu2404-ansible:latest
     pre_build_image: true
     privileged: true
     command: /lib/systemd/systemd
@@ -39,7 +39,7 @@ platforms:
 
   - name: redir-01
     hostname: redir-01
-    image: geerlingguy/docker-ubuntu2204-ansible:latest
+    image: geerlingguy/docker-ubuntu2404-ansible:latest
     pre_build_image: true
     privileged: true
     command: /lib/systemd/systemd

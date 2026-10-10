@@ -1,26 +1,14 @@
 # SPDX-License-Identifier: MIT-0
 ---
-- name: Ensure target is Ubuntu
+- name: Require Ubuntu 24.04 or newer
   ansible.builtin.assert:
     that:
-      - ansible_facts["os_family"] == "Debian"
       - ansible_facts["distribution"] == "Ubuntu"
-    fail_msg: "This role currently supports Ubuntu only."
-
-- name: Ensure Ubuntu release is supported by this role
-  ansible.builtin.assert:
-    that:
-      - ansible_facts["distribution_release"] in ['focal', 'jammy', 'noble', 'questing', 'resolute']
-    fail_msg: >-
-      Unsupported Ubuntu release '{{ ansible_facts["distribution_release"] }}'.
-      Supported by this role: focal (legacy), jammy, noble, questing, resolute.
-
-- name: Warn when using Ubuntu 20.04 (EOL)
-  ansible.builtin.debug:
-    msg: >-
-      Ubuntu 20.04 (focal) is EOL. This role still installs Docker for focal,
-      but assumes the host apt repositories are already correctly configured.
-  when: ansible_facts["distribution_release"] == "focal"
+      - ansible_facts["distribution_version"] is version('24.04', '>=')
+      - ansible_facts["pkg_mgr"] == "apt"
+    fail_msg: "RedELK deployment roles require Ubuntu 24.04 or newer."
+  tags:
+    - always
 
 - name: Remove conflicting packages
   ansible.builtin.apt:

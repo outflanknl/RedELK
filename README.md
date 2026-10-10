@@ -67,6 +67,8 @@ Check the [wiki](https://github.com/outflanknl/RedELK/wiki) and the script comme
 ## Ansible-based deployment
 
 The public Ansible example in [`ansible/`](./ansible/README.md) is the IaC path in this repository.
+All deployment targets require Ubuntu 24.04 or newer; C2 hosts also require GNU Rush 2.x.
+The standalone legacy scripts have not been upgraded to this platform baseline.
 
 It keeps the same RedELK packaging model, but automates:
 

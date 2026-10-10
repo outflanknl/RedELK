@@ -11,6 +11,7 @@ Scope
 
 This role is responsible for:
 
+- validating Ubuntu 24.04 or newer, matching the Docker and connector roles
 - interpreting the install mode (`limited`, `full`, `dev`)
 - deriving memory settings, including `fixedmemory` and `dryrun` compatibility
 - extracting `elkserver.tgz` into the remote deployment path

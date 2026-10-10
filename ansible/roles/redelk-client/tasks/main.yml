@@ -1,11 +1,14 @@
 ---
 # RedELK clients install (C2 and redirectors) tasks
-- name: Ensure connector host uses a supported package platform
+- name: Require Ubuntu 24.04 or newer
   ansible.builtin.assert:
     that:
-      - ansible_facts["os_family"] == "Debian"
+      - ansible_facts["distribution"] == "Ubuntu"
+      - ansible_facts["distribution_version"] is version('24.04', '>=')
       - ansible_facts["pkg_mgr"] == "apt"
-    fail_msg: "redelk-client currently supports Debian/APT-based hosts only."
+    fail_msg: "RedELK deployment roles require Ubuntu 24.04 or newer."
+  tags:
+    - always
 
 - name: Install dependency packages
   become: true
@@ -102,7 +105,7 @@
   ansible.builtin.pip:
     name:
       - javaobj-py3
-    break_system_packages: "{{ ansible_facts['distribution_version'] is version('24.04', '>=') }}"
+    break_system_packages: true
   when: "'c2servers' in group_names"
   tags:
     - packages
