@@ -89,12 +89,37 @@
         path: /etc/cron.d/redelk_sync_stage1_data
       register: c2_stage1_cron
 
+    - name: Test allowed C2 sync command
+      ansible.builtin.command:
+        argv:
+          - rush
+          - --test
+          - --user=scponly
+          - -c
+          - rsync --server --sender -de.LsfxC --list-only . ~/
+      changed_when: false
+      register: c2_allowed_sync_command
+
+    - name: Test rejected C2 sync traversal
+      ansible.builtin.command:
+        argv:
+          - rush
+          - --test
+          - --user=scponly
+          - -c
+          - rsync --server --sender -de.LsfxC --list-only . ~/../
+      changed_when: false
+      failed_when: false
+      register: c2_rejected_sync_command
+
     - name: Assert C2 artifacts exist
       ansible.builtin.assert:
         that:
           - c2_filebeat_config.stat.exists
           - c2_sync_authorized_keys.stat.exists
           - c2_stage1_cron.stat.exists
+          - c2_allowed_sync_command.rc == 0
+          - c2_rejected_sync_command.rc != 0
 
 - name: Verify redirector connector
   hosts: redirs
