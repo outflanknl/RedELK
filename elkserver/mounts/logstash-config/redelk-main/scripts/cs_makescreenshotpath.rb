@@ -10,7 +10,7 @@ def filter(event)
   host = event.get("[agent][name]")
   logpath = event.get("[log][file][path]")
   filename = event.get("[screenshot][file_name]")
-  log_dir = File.dirname(logpath.rpartition('/logs').last)
+  log_dir = File.dirname(logpath.partition(%r{/logs(?=/\d{6}/)}).last)
   screenshoturl = "/c2logs/#{host}/cobaltstrike/logs#{log_dir}/screenshots/#{filename}"
   thumburl = "#{screenshoturl}.thumb.jpg"
   event.tag("_rubyparseok")

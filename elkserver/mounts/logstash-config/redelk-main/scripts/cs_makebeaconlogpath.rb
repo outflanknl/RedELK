@@ -8,7 +8,7 @@
 def filter(event)
 	host = event.get("[agent][name]")
 	logpath = event.get("[log][file][path]")
-	relative_path = logpath.rpartition('/logs').last
+	relative_path = logpath.partition(%r{/logs(?=/\d{6}/)}).last
 	implantlogpath = "/c2logs/#{host}/cobaltstrike/logs#{relative_path}"
 	event.tag("_rubyparseok")
   	event.set("[implant][log_file]", implantlogpath)

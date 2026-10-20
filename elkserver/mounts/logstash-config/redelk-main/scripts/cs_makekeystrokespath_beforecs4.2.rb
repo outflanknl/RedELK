@@ -10,7 +10,7 @@ def filter(event)
 	host = event.get("[agent][name]")
 	logpath = event.get("[log][file][path]")
 	implant_id = event.get("[implant][id]")
-	log_dir = File.dirname(logpath.rpartition('/logs').last)
+	log_dir = File.dirname(logpath.partition(%r{/logs(?=/\d{6}/)}).last)
 	keystrokespath = "/c2logs/#{host}/cobaltstrike/logs#{log_dir}/keystrokes_#{implant_id}.txt"
 	event.tag("_rubyparseok")
   	event.set("[keystrokes][url]", keystrokespath)

@@ -13,7 +13,7 @@ def filter(event)
   implant_id = event.get("[implant][id]")
   timefromcs = event.get("[c2][timestamp]") + " UTC"
   timestring =  Time.parse(timefromcs).strftime("%I%M%S")
-  log_dir = File.dirname(logpath.rpartition('/logs').last)
+  log_dir = File.dirname(logpath.partition(%r{/logs(?=/\d{6}/)}).last)
   screenshoturl = "/c2logs/#{host}/cobaltstrike/logs#{log_dir}/screenshots/screen_#{timestring}_#{implant_id}.jpg"
   thumburl = "#{screenshoturl}.thumb.jpg"
   event.tag("_rubyparseok")
