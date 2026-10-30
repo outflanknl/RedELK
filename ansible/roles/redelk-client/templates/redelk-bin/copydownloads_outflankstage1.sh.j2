@@ -1,23 +1,23 @@
 #!/bin/sh
-#
-# Part of RedELK
-# Copy downloaded files from the Stage1 teamserver to the RedELK sync user.
-#
+# Copy Stage1 downloads into the dedicated RedELK sync home.
 
-LOGFILE="{{ redelk_log_dir }}/copydownloads.log"
+LOGFILE={{ (redelk_log_dir ~ '/copydownloads.log') | quote }}
+STAGE1DIR={{ (redelk_stage1_dir ~ '/shared') | quote }}
+DESTDIR={{ (redelk_sync_user_home ~ '/stage1/downloads') | quote }}
 
-mkdir -p "{{ redelk_sync_user_home }}/stage1/downloads" >> "$LOGFILE" 2>&1
+[ -d "$STAGE1DIR/downloads" ] || exit 0
+mkdir -p "$DESTDIR" >> "$LOGFILE" 2>&1 || exit 1
 
 echo "$(date) # Start Stage1 downloads copy" >> "$LOGFILE" 2>&1
 
-for fileid in $(ls "{{ redelk_stage1_dir }}/shared/downloads/" | grep -v '\.'); do
-  orifilename=$(grep -rn "$fileid" "{{ redelk_stage1_dir }}"/shared/logs/api/implant_logs/legacy_text/* | awk 'BEGIN {FS="taskResponse: Downloaded"}; {print $2}' | awk -F"] " '{print $2}' | tr -d ";" | awk '{$1=$1};1')
+for fileid in $(ls "$STAGE1DIR/downloads/" | grep -v '\.'); do
+  orifilename=$(grep -rn -- "$fileid" "$STAGE1DIR"/logs/api/implant_logs/legacy_text/* | awk 'BEGIN {FS="taskResponse: Downloaded"}; {print $2}' | awk -F"] " '{print $2}' | tr -d ";" | awk '{$1=$1};1')
   if [ -z "$orifilename" ]; then
     orifilename="filenameunknown"
   fi
-  if [ ! -f "{{ redelk_sync_user_home }}/stage1/downloads/${fileid}_${orifilename}" ]; then
-    cp "{{ redelk_stage1_dir }}/shared/downloads/${fileid}" "{{ redelk_sync_user_home }}/stage1/downloads/${fileid}_${orifilename}"
-    chown {{ redelk_sync_user }}:{{ redelk_sync_user }} "{{ redelk_sync_user_home }}/stage1/downloads/${fileid}_${orifilename}"
+  if [ ! -f "$DESTDIR/${fileid}_${orifilename}" ]; then
+    cp -- "$STAGE1DIR/downloads/${fileid}" "$DESTDIR/${fileid}_${orifilename}" || exit 1
+    chown -- {{ (redelk_sync_user ~ ':' ~ redelk_sync_user) | quote }} "$DESTDIR/${fileid}_${orifilename}" || exit 1
   fi
 done
 

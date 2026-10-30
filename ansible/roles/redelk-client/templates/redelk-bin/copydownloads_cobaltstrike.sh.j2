@@ -1,23 +1,23 @@
 #!/bin/sh
-#
-# Part of RedELK
-# Copy downloaded files from the Cobalt Strike teamserver to the RedELK sync user.
-#
+# Copy Cobalt Strike downloads into the dedicated RedELK sync home.
 
-LOGFILE="{{ redelk_log_dir }}/copydownloads.log"
+LOGFILE={{ (redelk_log_dir ~ '/copydownloads.log') | quote }}
+CSDIR={{ (redelk_cobaltstrike_dir ~ '/server') | quote }}
+DESTDIR={{ (redelk_sync_user_home ~ '/cobaltstrike/downloads') | quote }}
 
-mkdir -p "{{ redelk_sync_user_home }}/cobaltstrike/downloads" >> "$LOGFILE" 2>&1
+[ -d "$CSDIR/downloads" ] || exit 0
+mkdir -p "$DESTDIR" >> "$LOGFILE" 2>&1 || exit 1
 
 echo "$(date) # Start CS downloads copy" >> "$LOGFILE" 2>&1
 
-for fileid in $(ls "{{ redelk_cobaltstrike_dir }}/server/downloads/" | grep -v '\.'); do
-  orifilename=$(grep -rn "$fileid" "{{ redelk_cobaltstrike_dir }}"/server/logs/*/downloads.log | awk 'BEGIN {FS="\t"}; {print $6}')
+for fileid in $(ls "$CSDIR/downloads/" | grep -v '\.'); do
+  orifilename=$(grep -rn -- "$fileid" "$CSDIR"/logs/*/downloads.log | awk 'BEGIN {FS="\t"}; {print $6}')
   if [ -z "$orifilename" ]; then
     orifilename="filenameunknown"
   fi
-  if [ ! -f "{{ redelk_sync_user_home }}/cobaltstrike/downloads/${fileid}_${orifilename}" ]; then
-    cp "{{ redelk_cobaltstrike_dir }}/server/downloads/${fileid}" "{{ redelk_sync_user_home }}/cobaltstrike/downloads/${fileid}_${orifilename}"
-    chown {{ redelk_sync_user }}:{{ redelk_sync_user }} "{{ redelk_sync_user_home }}/cobaltstrike/downloads/${fileid}_${orifilename}"
+  if [ ! -f "$DESTDIR/${fileid}_${orifilename}" ]; then
+    cp -- "$CSDIR/downloads/${fileid}" "$DESTDIR/${fileid}_${orifilename}" || exit 1
+    chown -- {{ (redelk_sync_user ~ ':' ~ redelk_sync_user) | quote }} "$DESTDIR/${fileid}_${orifilename}" || exit 1
   fi
 done
 

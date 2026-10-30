@@ -3,5 +3,5 @@
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
-* * * * * root /usr/bin/rsync -rvx --append-verify --delete {{ redelk_stage1_dir }}/shared/logs {{ redelk_sync_user_home }}/stage1/; /bin/chown -R {{ redelk_sync_user }}:{{ redelk_sync_user }} {{ redelk_sync_user_home }}/stage1/*
-* * * * * root {{ redelk_bin_dir }}/copydownloads_outflankstage1.sh
+* * * * * root if [ -d {{ (redelk_stage1_dir ~ '/shared/logs') | quote }} ]; then /usr/bin/rsync -rvx --append-verify --delete -- {{ (redelk_stage1_dir ~ '/shared/logs') | quote }} {{ (redelk_sync_user_home ~ '/stage1/') | quote }} && /bin/chown -R -- {{ (redelk_sync_user ~ ':' ~ redelk_sync_user) | quote }} {{ (redelk_sync_user_home ~ '/stage1/') | quote }}; fi
+* * * * * root {{ (redelk_bin_dir ~ '/copydownloads_outflankstage1.sh') | quote }}

@@ -90,7 +90,11 @@
     owner: root
     group: root
     mode: "0644"
-  loop: "{{ redelk_c2_filebeat_inputs }}"
+  loop:
+    - cobaltstrike
+    - outflankstage1
+    - poshc2
+    - sliver
   when: "'c2servers' in group_names"
   notify: Restart filebeat
 
@@ -100,20 +104,6 @@
     path: "{{ redelk_filebeat_redir_input_file }}"
     state: absent
   when: "'c2servers' in group_names"
-
-- name: Remove unused C2 Filebeat input configurations from C2 hosts
-  become: true
-  ansible.builtin.file:
-    path: "{{ redelk_filebeat_inputs_dir }}/{{ item }}.yml"
-    state: absent
-  loop:
-    - cobaltstrike
-    - outflankstage1
-    - poshc2
-    - sliver
-  when:
-    - "'c2servers' in group_names"
-    - item not in redelk_c2_filebeat_inputs
 
 - name: Deploy redirector Filebeat input configuration
   become: true

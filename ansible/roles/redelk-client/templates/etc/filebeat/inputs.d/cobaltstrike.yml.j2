@@ -5,7 +5,7 @@
   enabled: true
   fields_under_root: true
   paths:
-    - "{{ redelk_cobaltstrike_dir }}/server/logs/*/events.log"
+    - {{ (redelk_cobaltstrike_dir ~ '/server/logs/*/events.log') | to_json }}
   fields:
     infra:
       attack_scenario: {{ redelk_attack_scenario }}
@@ -21,7 +21,7 @@
   enabled: true
   fields_under_root: true
   paths:
-    - "{{ redelk_cobaltstrike_dir }}/server/logs/*/weblog*"
+    - {{ (redelk_cobaltstrike_dir ~ '/server/logs/*/weblog*') | to_json }}
   fields:
     infra:
       attack_scenario: {{ redelk_attack_scenario }}
@@ -37,7 +37,7 @@
   enabled: true
   fields_under_root: true
   paths:
-    - "{{ redelk_cobaltstrike_dir }}/server/logs/*/downloads.log"
+    - {{ (redelk_cobaltstrike_dir ~ '/server/logs/*/downloads.log') | to_json }}
   fields:
     infra:
       attack_scenario: {{ redelk_attack_scenario }}
@@ -53,7 +53,7 @@
   enabled: true
   fields_under_root: true
   paths:
-    - "{{ redelk_cobaltstrike_dir }}/server/data/export_credentials.tsv"
+    - {{ (redelk_cobaltstrike_dir ~ '/server/data/export_credentials.tsv') | to_json }}
   fields:
     infra:
       attack_scenario: {{ redelk_attack_scenario }}
@@ -69,8 +69,8 @@
   enabled: true
   fields_under_root: true
   paths:
-    - "{{ redelk_cobaltstrike_dir }}/server/logs/*/*/beacon_*.log"
-    - "{{ redelk_cobaltstrike_dir }}/server/logs/*/*/ssh_*.log"
+    - {{ (redelk_cobaltstrike_dir ~ '/server/logs/*/*/beacon_*.log') | to_json }}
+    - {{ (redelk_cobaltstrike_dir ~ '/server/logs/*/*/ssh_*.log') | to_json }}
   multiline.pattern: '(^\d\d\/\d\d\s\d\d\:\d\d\:\d\d\sUTC\s\[)|(^\d\d\/\d\d\s\d\d\:\d\d\:\d\d\s\[)'
   multiline.negate: true
   multiline.match: after
@@ -90,7 +90,7 @@
   enabled: true
   fields_under_root: true
   paths:
-    - "{{ redelk_cobaltstrike_dir }}/server/logs/*/*/keystrokes/keystrokes_*.txt"
+    - {{ (redelk_cobaltstrike_dir ~ '/server/logs/*/*/keystrokes/keystrokes_*.txt') | to_json }}
   multiline.pattern: '(^\d\d\/\d\d\s\d\d\:\d\d\:\d\d\sUTC\s\[)|(^\d\d\/\d\d\s\d\d\:\d\d\:\d\d\s\[)'
   multiline.negate: true
   multiline.match: after
@@ -110,7 +110,7 @@
   enabled: true
   fields_under_root: true
   paths:
-    - "{{ redelk_cobaltstrike_dir }}/server/logs/*/*/screenshots.log"
+    - {{ (redelk_cobaltstrike_dir ~ '/server/logs/*/*/screenshots.log') | to_json }}
   multiline.pattern: '(^\d\d\/\d\d\s\d\d\:\d\d\:\d\d\sUTC\s\[)|(^\d\d\/\d\d\s\d\d\:\d\d\:\d\d\s\[)'
   multiline.negate: true
   multiline.match: after

@@ -135,25 +135,7 @@
   loop:
     - src: redelk_sync_cobaltstrike_data.j2
       dest: redelk_sync_cobaltstrike_data
-      program: cobaltstrike
     - src: redelk_sync_stage1_data.j2
       dest: redelk_sync_stage1_data
-      program: outflankstage1
     - src: redelk_sync_sliver_data.j2
       dest: redelk_sync_sliver_data
-      program: sliver
-  when: item.program in redelk_c2_sync_jobs
-
-- name: Remove disabled RedELK C2 cron jobs
-  become: true
-  ansible.builtin.file:
-    path: "/etc/cron.d/{{ item.dest }}"
-    state: absent
-  loop:
-    - dest: redelk_sync_cobaltstrike_data
-      program: cobaltstrike
-    - dest: redelk_sync_stage1_data
-      program: outflankstage1
-    - dest: redelk_sync_sliver_data
-      program: sliver
-  when: item.program not in redelk_c2_sync_jobs

@@ -10,6 +10,22 @@
   tags:
     - always
 
+- name: Validate paths embedded in C2 cron and helper commands
+  ansible.builtin.assert:
+    that:
+      - item is string
+      - item is match('^/')
+      - item is not search('[\x00-\x1f\x7f%]')
+    fail_msg: "C2 paths must be absolute and contain no control characters or cron-special percent signs."
+  loop:
+    - "{{ redelk_cobaltstrike_dir }}"
+    - "{{ redelk_stage1_dir }}"
+    - "{{ redelk_bin_dir }}"
+    - "{{ redelk_log_dir }}"
+  when: "'c2servers' in group_names"
+  tags:
+    - always
+
 - name: Install dependency packages
   become: true
   ansible.builtin.apt:

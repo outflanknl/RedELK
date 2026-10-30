@@ -1,24 +1,26 @@
 #!/bin/sh
-#
-# Part of RedELK
-# Script to start the exporting of data of Cobalt Strike data.
-#
+# Export Cobalt Strike data when this product has been installed.
 
-LOGFILE="{{ redelk_log_dir }}/exportcobaltstrikesdata.log"
-CSDIR="{{ redelk_cobaltstrike_dir }}/server"
+LOGFILE={{ (redelk_log_dir ~ '/exportcobaltstrikesdata.log') | quote }}
+CSDIR={{ (redelk_cobaltstrike_dir ~ '/server') | quote }}
+
+[ -d "$CSDIR/data" ] || exit 0
 
 echo "$(date) ######## Start CS data export" >> "$LOGFILE" 2>&1
 
 if [ -f "$CSDIR/data/export_listeners.tsv" ]; then
-  cp "$CSDIR/data/export_listeners.tsv" "$CSDIR/data/export_listeners.old.tsv"
+  cp "$CSDIR/data/export_listeners.tsv" "$CSDIR/data/export_listeners.old.tsv" || exit 1
 fi
 
-cd "$CSDIR/data" && python3 {{ redelk_bin_dir }}/exportcsdata.py --credentials "$CSDIR/data/credentials.bin" --listeners "$CSDIR/data/listeners.bin" >> "$LOGFILE" 2>&1
+cd "$CSDIR/data" || exit 1
+python3 {{ (redelk_bin_dir ~ '/exportcsdata.py') | quote }} --credentials "$CSDIR/data/credentials.bin" --listeners "$CSDIR/data/listeners.bin" >> "$LOGFILE" 2>&1 || exit 1
 
-if [ -f "$CSDIR/data/export_listeners.old.tsv" ]; then
-  diff "$CSDIR/data/export_listeners.old.tsv" "$CSDIR/data/export_listeners.tsv" --changed-group-format='%>' --unchanged-group-format='' >> "$CSDIR/data/export_listeners.log"
-else
-  cat "$CSDIR/data/export_listeners.tsv" >> "$CSDIR/data/export_listeners.log"
+if [ -f "$CSDIR/data/export_listeners.tsv" ]; then
+  if [ -f "$CSDIR/data/export_listeners.old.tsv" ]; then
+    diff "$CSDIR/data/export_listeners.old.tsv" "$CSDIR/data/export_listeners.tsv" --changed-group-format='%>' --unchanged-group-format='' >> "$CSDIR/data/export_listeners.log"
+  else
+    cat "$CSDIR/data/export_listeners.tsv" >> "$CSDIR/data/export_listeners.log"
+  fi
 fi
 
 echo "$(date) ######## Done with CS data export" >> "$LOGFILE" 2>&1

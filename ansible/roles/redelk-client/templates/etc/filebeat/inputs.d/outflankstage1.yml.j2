@@ -5,7 +5,7 @@
   enabled: true
   fields_under_root: true
   paths:
-    - "{{ redelk_stage1_dir }}/shared/logs/api/implant_logs/legacy_text/*.log"
+    - {{ (redelk_stage1_dir ~ '/shared/logs/api/implant_logs/legacy_text/*.log') | to_json }}
   multiline.pattern: '^\d\d\d\d\-\d\d\-\d\d\s\d\d\:\d\d\:\d\d\sUTC\s'
   multiline.negate: true
   multiline.match: after
