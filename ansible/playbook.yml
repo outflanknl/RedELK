@@ -4,6 +4,15 @@
   tags:
     - pre
   pre_tasks:
+    - name: Require one RedELK server per inventory
+      ansible.builtin.assert:
+        that:
+          - groups.get('elkservers', []) | length <= 1
+        fail_msg: "Use one RedELK server per inventory; multi-ELK routing is not supported."
+      run_once: true
+      delegate_to: localhost
+      become: false
+
     - name: Check known_hosts for selected hosts
       ansible.builtin.command:
         argv:
