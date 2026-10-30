@@ -1,0 +1,30 @@
+---
+- name: Require an explicit pinned release
+  ansible.builtin.assert:
+    that:
+      - redelk_version is string
+      - redelk_version is match('^[A-Za-z0-9_][A-Za-z0-9_.-]{0,127}$')
+      - redelk_version not in ['latest', 'master', 'main', 'develop', 'dev']
+    fail_msg: "Set redelk_version to the exact GitHub release tag of the selected source checkout; no rolling default is provided."
+
+- name: Read release identity and limited Compose from controller source
+  ansible.builtin.set_fact:
+    redelk_server_source_version: "{{ lookup('file', redelk_local_repo_path ~ '/VERSION') | trim }}"
+    redelk_server_source_compose: "{{ lookup('file', redelk_local_repo_path ~ '/elkserver/redelk-limited.yml') | from_yaml }}"
+
+- name: Require matching release source and requested version
+  ansible.builtin.assert:
+    that:
+      - redelk_server_source_version == redelk_version
+    fail_msg: "Use the source checkout belonging to redelk_version; generated target files cannot select another release."
+
+- name: Require every core image to be pinned in the release Compose
+  ansible.builtin.assert:
+    that:
+      - redelk_server_source_compose.services[item].image == '${REDELKREPO}/redelk-' ~ item ~ ':' ~ redelk_version
+    fail_msg: >-
+      The source Compose must pin every core image to the exact release tag.
+      Use a prepared release, not an unstamped development checkout or a
+      REDELKVERSION substitution. Maintainers prepare releases with
+      scripts/pin_release.py before committing and tagging.
+  loop: [base, elasticsearch, logstash, kibana]

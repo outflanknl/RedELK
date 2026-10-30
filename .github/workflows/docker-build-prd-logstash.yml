@@ -1,11 +1,12 @@
 name: Build docker logstash image (prd)
 
 on:
-  push:
-    tags:
-      - "*"
-    paths:
-      - "*"
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  packages: write
 
 jobs:
   docker:
@@ -13,6 +14,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+
+      - name: Validate pinned release source
+        run: python3 scripts/pin_release.py --check "$GITHUB_REF_NAME"
 
       - name: Prepare
         id: prepare
@@ -36,6 +40,8 @@ jobs:
           images: |
             ${{ steps.prepare.outputs.docker_image }}
             ${{ steps.prepare.outputs.ghcr_image }}
+          flavor: latest=false
+          tags: type=raw,value=${{ github.ref_name }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3

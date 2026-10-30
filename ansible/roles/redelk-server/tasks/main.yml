@@ -11,6 +11,11 @@
   tags:
     - always
 
+- name: Validate the pinned controller release before deployment
+  ansible.builtin.import_tasks: release.yml
+  tags:
+    - always
+
 - name: Calculate install mode prechecks
   ansible.builtin.import_tasks: memory.yml
   tags:

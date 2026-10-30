@@ -53,15 +53,6 @@
     - redelk_force_extract_server_package | bool or not redelk_server_extract_marker.stat.exists
   notify: Restart RedELK docker containers
 
-- name: Read packaged VERSION file
-  ansible.builtin.slurp:
-    src: "{{ redelk_server_path }}/VERSION"
-  register: redelk_server_version_file
-
-- name: Set RedELK version fact
-  ansible.builtin.set_fact:
-    redelk_server_version: "{{ redelk_server_version_file.content | b64decode | trim }}"
-
 - name: Check for existing .env file
   ansible.builtin.stat:
     path: "{{ redelk_server_path }}/.env"

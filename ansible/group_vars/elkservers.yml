@@ -5,4 +5,5 @@ deploy_redelk: true
 redelk_local_repo_path: "{{ playbook_dir | dirname }}"
 
 redelk_remote_base_path: /opt/redelk
-redelk_elk_install_command: "./install-elkserver.sh limited"
+# Set the exact GitHub release tag matching this source checkout.
+redelk_version: ""
