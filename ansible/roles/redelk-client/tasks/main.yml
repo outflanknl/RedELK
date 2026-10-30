@@ -29,7 +29,6 @@
   community.general.locale_gen:
     name: "{{ [redelk_locale_lang, redelk_locale_lc_all] | unique | list }}"
     state: present
-  when: redelk_manage_locale | bool
 
 - name: Manage connector locale defaults
   become: true
@@ -41,8 +40,6 @@
     owner: root
     group: root
     mode: "0644"
-  when: redelk_manage_locale | bool
-
 - name: Install Elastic repository
   become: true
   tags:

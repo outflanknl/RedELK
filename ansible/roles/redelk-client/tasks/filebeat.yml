@@ -171,7 +171,6 @@
   register: redelk_redir_haproxy_logrotate
   when:
     - "'redirs' in group_names"
-    - redelk_redir_manage_haproxy_logrotate | bool
 
 - name: Adjust HAProxy logrotate schedule to weekly on redirectors
   become: true
@@ -181,5 +180,4 @@
     replace: '\\1weekly\\2'
   when:
     - "'redirs' in group_names"
-    - redelk_redir_manage_haproxy_logrotate | bool
     - redelk_redir_haproxy_logrotate.stat.exists

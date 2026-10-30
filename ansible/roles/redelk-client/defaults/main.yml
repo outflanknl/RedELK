@@ -2,7 +2,6 @@
 redelk_local_repo_path: "{{ playbook_dir | dirname }}"
 redelk_remote_base_path: /opt/redelk
 redelk_identifier: "{{ inventory_hostname }}"
-redelk_manage_locale: true
 redelk_locale_lang: en_US.UTF-8
 redelk_locale_lc_all: en_US.UTF-8
 es_version: "7.17.9"
@@ -14,7 +13,6 @@ redelk_filebeat_ca_path: /etc/filebeat/redelkCA.crt
 redelk_filebeat_main_config: /etc/filebeat/filebeat.yml
 redelk_filebeat_inputs_dir: /etc/filebeat/inputs.d
 redelk_filebeat_redir_input_file: "{{ redelk_filebeat_inputs_dir }}/redirs.yml"
-redelk_redir_manage_haproxy_logrotate: true
 redelk_redir_haproxy_logrotate_path: /etc/logrotate.d/haproxy
 redelk_log_dir: /var/log/redelk
 redelk_bin_dir: /usr/share/redelk/bin
