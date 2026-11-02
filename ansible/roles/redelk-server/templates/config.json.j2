@@ -1,16 +1,16 @@
 {
-  "loglevel": "{{ redelk_loglevel }}",
+  "loglevel": {{ redelk_loglevel | to_json }},
   "interval": {{ redelk_alarm_interval }},
-  "tempDir": "{{ redelk_alarm_temp_dir }}",
+  "tempDir": {{ redelk_alarm_temp_dir | to_json }},
   "redelkserver_letsencrypt": {
     "enable_letsencrypt": {{ redelk_letsencrypt_enabled | ternary('true', 'false') }},
-    "external_domain": "{{ redelk_external_domain }}",
-    "le_email": "{{ redelk_letsencrypt_email }}",
-    "staging": "{{ redelk_letsencrypt_staging }}"
+    "external_domain": {{ redelk_external_domain | to_json }},
+    "le_email": {{ redelk_letsencrypt_email | to_json }},
+    "staging": {{ redelk_letsencrypt_staging | to_json }}
   },
   "project_name": "redelk-project",
   "es_connection": [
-    "https://elastic:{{ redelk_server_elastic_password }}@redelk-elasticsearch:9200"
+    "https://elastic:{{ redelk_server_elastic_password | urlencode | replace('/', '%2F') }}@redelk-elasticsearch:9200"
   ],
   "notifications": {
     "email": {
