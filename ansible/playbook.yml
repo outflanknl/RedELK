@@ -1,10 +1,11 @@
 ---
-- hosts: elkservers:c2servers:redirs
+- name: Running preflight checks
+  hosts: elkservers:c2servers:redirs
   gather_facts: false
   tags:
     - pre
   pre_tasks:
-    - name: Require one RedELK server per inventory
+    - name: Require one RedELK server per inventory  # noqa: run-once[task]
       ansible.builtin.assert:
         that:
           - groups.get('elkservers', []) | length <= 1
@@ -35,19 +36,19 @@
 - name: Deploy RedELK server
   hosts: elkservers
   roles:
-    - name: docker
+    - role: docker
       tags: redelk-server
-    - name: redelk-server
+    - role: redelk-server
       tags: redelk-server
 
 - name: Deploy RedELK client on C2 servers
   hosts: c2servers
   roles:
-    - name: redelk-client
+    - role: redelk-client
       tags: redelk-client
 
 - name: Deploy RedELK client on redirectors
   hosts: redirs
   roles:
-    - name: redelk-client
+    - role: redelk-client
       tags: redelk-client
