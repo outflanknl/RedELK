@@ -1,0 +1,13 @@
+- type: log
+  enabled: true
+  fields_under_root: true
+  paths:
+    - /var/log/apache2/access-redelk.log
+  fields:
+    infra:
+      attack_scenario: @@ATTACKSCENARIO@@
+      log:
+        type: redirtraffic
+    redir:
+      program: apache
+
