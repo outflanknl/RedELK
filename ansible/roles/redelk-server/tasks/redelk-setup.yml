@@ -51,6 +51,7 @@
   when:
     - redelk_extract_server_package | bool
     - redelk_force_extract_server_package | bool or not redelk_server_extract_marker.stat.exists
+  notify: Restart RedELK docker containers
 
 - name: Read packaged VERSION file
   ansible.builtin.slurp:
