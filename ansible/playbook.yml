@@ -32,20 +32,23 @@
     - name: Delayed gathering of facts
       ansible.builtin.setup:
 
-- hosts: elkservers
+- name: Deploy RedELK server
+  hosts: elkservers
   roles:
     - name: docker
       tags: redelk-server
     - name: redelk-server
       tags: redelk-server
 
-- hosts: c2servers
+- name: Deploy RedELK client on C2 servers
+  hosts: c2servers
   roles:
     - name: redelk-client
       when: deploy_redelk == true
       tags: redelk-client
 
-- hosts: redirs
+- name: Deploy RedELK client on redirectors
+  hosts: redirs
   roles:
     - name: redelk-client
       when: deploy_redelk == true
