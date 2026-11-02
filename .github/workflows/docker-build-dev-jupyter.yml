@@ -70,4 +70,4 @@ jobs:
           labels: ${{ steps.docker_meta.outputs.labels }}
           build-args: ${{ steps.prepare.outputs.build_args }}
           cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-to: ${{ github.event_name == 'push' && 'type=gha,mode=max' || '' }}
