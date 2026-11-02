@@ -44,12 +44,10 @@
   hosts: c2servers
   roles:
     - name: redelk-client
-      when: deploy_redelk == true
       tags: redelk-client
 
 - name: Deploy RedELK client on redirectors
   hosts: redirs
   roles:
     - name: redelk-client
-      when: deploy_redelk == true
       tags: redelk-client
