@@ -7,3 +7,19 @@ redelk_local_repo_path: "{{ playbook_dir | dirname }}"
 redelk_remote_base_path: /opt/redelk
 # Set the exact GitHub release tag matching this source checkout.
 redelk_version: ""
+
+# Optional certificate overrides; omit these to use the role defaults.
+# Uncomment the entire subject list to override it.
+# redelk_certificate_subject:
+#   - C: NL
+#   - ST: Noord-Holland
+#   - L: Amsterdam
+#   - O: Contoso
+#   - OU: IT Department
+#   - CN: example.com
+#   - emailAddress: hello@example.com
+
+# SANs must match the DNS names/IP that clients use to connect to RedELK.
+# redelk_certificate_san_1: example.com
+# redelk_certificate_san_2: logs.example.com
+# redelk_certificate_ip_1: 192.0.2.10

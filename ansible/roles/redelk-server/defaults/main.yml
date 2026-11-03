@@ -23,14 +23,15 @@ redelk_self_signed_cert_dirname: noletsencrypt
 redelk_vm_max_map_count: 262144
 redelk_start_containers: true
 
-# Used for initial CA certificate generation
-redelk_certificate_country: NL
-redelk_certificate_state: Noord-Holland
-redelk_certificate_locality: Amsterdam
-redelk_certifate_organization: Contoso
-redelk_certificate_organizational_unit: IT Department
-redelk_certificate_common_name: example.com
-redelk_certificate_email: hello@example.com
+# Subject for CA and RedELK server certificates, in distinguished-name order
+redelk_certificate_subject:
+  - C: NL
+  - ST: Noord-Holland
+  - L: Amsterdam
+  - O: Contoso
+  - OU: IT Department
+  - CN: example.com
+  - emailAddress: hello@example.com
 
 # Enter the valid IP or DNS where the teamservers and redirectors can reach
 # your ELK server in the fields below. If not done correctly, Logstash on your

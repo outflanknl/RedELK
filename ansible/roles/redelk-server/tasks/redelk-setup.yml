@@ -6,14 +6,6 @@
     mode: "0755"
     state: directory
 
-- name: Render OpenSSL template
-  delegate_to: localhost
-  ansible.builtin.template:
-    src: config.cnf.j2
-    dest: certs/config.cnf
-    mode: "0644"
-
-# TODO: Convert these steps to use the community.crypto module instead of command
 - name: Create CA and leaf certificates
   delegate_to: localhost
   block:
@@ -21,47 +13,87 @@
       community.crypto.openssl_privatekey:
         path: certs/redelkCA.key
         type: RSA
+        size: 4096
+        mode: "0600"
+        format: pkcs8
+        format_mismatch: convert
+        regenerate: fail
+
+    - name: Derive CA subject key identifier
+      community.crypto.openssl_csr_pipe:
+        privatekey_path: certs/redelkCA.key
+        create_subject_key_identifier: true
+      register: redelk_server_ca_key_identifier
+      changed_when: false
+
+    - name: Create certificate signing request for CA
+      community.crypto.openssl_csr_pipe:
+        privatekey_path: certs/redelkCA.key
+        subject_ordered: "{{ redelk_certificate_subject }}"
+        use_common_name_for_san: false
+        digest: sha256
+        create_subject_key_identifier: true
+        # The selfsigned provider cannot reproduce issuer:always; retain keyid:always.
+        authority_key_identifier: >-
+          {{ (redelk_server_ca_key_identifier.csr | community.crypto.openssl_csr_info).subject_key_identifier }}
+        basic_constraints:
+          - CA:TRUE
+        basic_constraints_critical: false
+      register: redelk_server_ca_csr
+      changed_when: false
+
+    - name: Create CA certificate
+      community.crypto.x509_certificate:
+        path: certs/redelkCA.crt
+        privatekey_path: certs/redelkCA.key
+        csr_content: "{{ redelk_server_ca_csr.csr }}"
+        provider: selfsigned
+        selfsigned_digest: sha256
+        selfsigned_not_after: +3650d
+        mode: "0644"
+
+    - name: Generate private key for RedELK server
+      community.crypto.openssl_privatekey:
+        path: certs/elkserver.key
+        type: RSA
         size: 2048
         mode: "0600"
         format: pkcs8
         format_mismatch: convert
         regenerate: fail
 
-    #- name: Generate private key for CA
-    #  ansible.builtin.command:
-    #    cmd: openssl genrsa -out redelkCA.key 2048
-    #    creates: redelkCA.key
-    #    chdir: certs
-    #    # echo "[*] Generating private key for CA" | tee -a $LOGFILE
-    #    # openssl genrsa -out ./certs/redelkCA.key 2048
-    - name: Create CA certificate
-      ansible.builtin.command:
-        cmd: openssl req -new -x509 -days 3650 -nodes -key redelkCA.key -sha256 -out redelkCA.crt -extensions v3_ca -config config.cnf
-        creates: redelkCA.crt
-        chdir: certs
-        # echo "[*] Creating Certificate Authority" | tee -a $LOGFILE
-        # openssl req -new -x509 -days 3650 -nodes -key ./certs/redelkCA.key -sha256 -out ./certs/redelkCA.crt -extensions v3_ca -config $1
-    - name: Generate private key for RedELK server
-      ansible.builtin.command:
-        cmd: openssl genrsa -out elkserver.key 2048
-        creates: elkserver.key
-        chdir: certs
-        # echo "[*] Generating private key for ELK server" | tee -a $LOGFILE
-        # openssl genrsa -out ./certs/elkserver.key 2048
     - name: Create certificate signing request for RedELK server
-      ansible.builtin.command:
-        cmd: openssl req -sha512 -new -key elkserver.key -out elkserver.csr -config config.cnf
-        creates: elkserver.csr
-        chdir: certs
-        # echo "[*] Generating certificate for ELK server" | tee -a $LOGFILE
-        # openssl req -sha512 -new -key ./certs/elkserver.key -out ./certs/elkserver.csr -config $1
-    - name: Sign certificate signing request using CA
-      ansible.builtin.command:
-        cmd: openssl x509 -days 3650 -req -sha512 -in elkserver.csr -CAcreateserial -CA redelkCA.crt -CAkey redelkCA.key -out elkserver.crt -extensions v3_req -extfile config.cnf
-        creates: elkserver.crt
-        chdir: certs
-        # echo "[*] Signing certificate of ELK server with our new CA" | tee -a $LOGFILE
-        # openssl x509 -days 3650 -req -sha512 -in ./certs/elkserver.csr -CAcreateserial -CA ./certs/redelkCA.crt -CAkey ./certs/redelkCA.key -out ./certs/elkserver.crt -extensions v3_req -extfile $1 # noqa
+      community.crypto.openssl_csr:
+        path: certs/elkserver.csr
+        privatekey_path: certs/elkserver.key
+        subject_ordered: "{{ redelk_certificate_subject }}"
+        use_common_name_for_san: false
+        digest: sha512
+        key_usage:
+          - nonRepudiation
+          - digitalSignature
+          - keyEncipherment
+          - dataEncipherment
+        key_usage_critical: false
+        extended_key_usage:
+          - serverAuth
+        extended_key_usage_critical: false
+        subject_alt_name:
+          - "DNS:{{ redelk_certificate_san_1 }}"
+          - "DNS:{{ redelk_certificate_san_2 }}"
+          - "IP:{{ redelk_certificate_ip_1 }}"
+        mode: "0644"
+
+    - name: Sign request using CA and create certificate for RedELK server
+      community.crypto.x509_certificate:
+        path: certs/elkserver.crt
+        csr_path: certs/elkserver.csr
+        provider: ownca
+        ownca_path: certs/redelkCA.crt
+        ownca_privatekey_path: certs/redelkCA.key
+        ownca_digest: sha512
+        ownca_not_after: +3650d
+        mode: "0644"
 
 - name: Check local ELK server package
   delegate_to: localhost
