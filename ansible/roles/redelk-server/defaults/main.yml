@@ -39,3 +39,6 @@ redelk_certificate_subject:
 redelk_certificate_san_1: dnsnameofyourredelkserver
 redelk_certificate_san_2: someseconddnsname
 redelk_certificate_ip_1: 123.123.123.123
+
+# Set this value to 50% of the system memory remaining after reserving 3GB for the host OS and non-Elasticsearch containers; round up and cap at 9GB.
+redelk_elasticsearch_memory: 3g
