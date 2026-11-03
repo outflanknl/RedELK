@@ -166,54 +166,92 @@
   register: redelk_server_bloodhound_config_stat
   when: redelk_server_bloodhound_enabled | bool
 
-- name: Read existing BloodHound config
-  ansible.builtin.slurp:
-    src: "{{ redelk_server_path }}/mounts/bloodhound-config/bloodhound.config.json"
-  register: redelk_server_bloodhound_config_existing
-  when:
-    - redelk_server_bloodhound_enabled | bool
-    - redelk_server_bloodhound_config_stat.stat.exists
+# TODO: Deleted BloodHound config fetching, add back later?
 
-- name: Set RedELK secret facts
+- name: Generate or retrieve secrets for RedELK's various components
   ansible.builtin.set_fact:
-    redelk_server_existing_env_content: "{{ (redelk_server_env_existing.content | b64decode) if redelk_server_env_stat.stat.exists else '' }}"
-    redelk_server_existing_bloodhound_config_content: >-
-      {{ (redelk_server_bloodhound_config_existing.content | b64decode)
-         if (redelk_server_bloodhound_enabled | bool and redelk_server_bloodhound_config_stat.stat.exists)
-         else '' }}
-
-- name: Resolve RedELK secret values
-  ansible.builtin.set_fact:
-    redelk_server_kibana_system_password: >-
-      {{ (redelk_server_existing_env_content | regex_findall('(?m)^CREDS_kibana_system=(.+)$') | first)
-         | default(lookup('password', '/dev/null length=32 chars=ascii_letters,digits'), true) }}
-    redelk_server_logstash_system_password: >-
-      {{ (redelk_server_existing_env_content | regex_findall('(?m)^CREDS_logstash_system=(.+)$') | first)
-         | default(lookup('password', '/dev/null length=32 chars=ascii_letters,digits'), true) }}
-    redelk_server_redelk_ingest_password: >-
-      {{ (redelk_server_existing_env_content | regex_findall('(?m)^CREDS_redelk_ingest=(.+)$') | first)
-         | default(lookup('password', '/dev/null length=32 chars=ascii_letters,digits'), true) }}
-    redelk_server_redelk_password: >-
-      {{ (redelk_server_existing_env_content | regex_findall('(?m)^CREDS_redelk=(.+)$') | first)
-         | default(lookup('password', '/dev/null length=32 chars=ascii_letters,digits'), true) }}
-    redelk_server_elastic_password: >-
-      {{ (redelk_server_existing_env_content | regex_findall('(?m)^ELASTIC_PASSWORD=(.+)$') | first)
-         | default(lookup('password', '/dev/null length=32 chars=ascii_letters,digits'), true) }}
-    redelk_server_kibana_encryption_key: >-
-      {{ (redelk_server_existing_env_content | regex_findall('(?m)^KBN_XPACK_ENCRYPTEDSAVEDOBJECTS=(.+)$') | first)
-         | default(lookup('password', '/dev/null length=32 chars=ascii_letters,digits'), true) }}
-    redelk_server_neo4j_password: >-
-      {{ (redelk_server_existing_env_content | regex_findall('(?m)^NEO4J_AUTH=neo4j/(.+)$') | first)
-         | default(lookup('password', '/dev/null length=32 chars=ascii_letters,digits'), true) }}
-    redelk_server_postgres_password: >-
-      {{ (redelk_server_existing_env_content | regex_findall('(?m)^POSTGRES_PASSWORD=(.+)$') | first)
-         | default(lookup('password', '/dev/null length=32 chars=ascii_letters,digits'), true) }}
-    redelk_server_bloodhound_password: >-
-      {{ (redelk_server_existing_bloodhound_config_content | regex_findall('"password":\s*"([^"]+)"') | first)
-         | default(lookup('password', '/dev/null length=32 chars=ascii_letters,digits'), true) }}
-    redelk_server_bloodhound_admin_email: >-
-      {{ (redelk_server_existing_bloodhound_config_content | regex_findall('"email_address":\s*"([^"]+)"') | first)
-         | default(redelk_letsencrypt_email | default('redelk@example.com', true), true) }}
+    redelk_kibana_system_password: >-
+      {{
+        lookup(
+          'ansible.builtin.password',
+          playbook_dir + '/secrets/kibana_system_password',
+          length=32,
+          chars=['ascii_letters', 'digits', '_']
+        )
+      }}
+    redelk_logstash_system_password: >-
+      {{
+        lookup(
+          'ansible.builtin.password',
+          playbook_dir + '/secrets/logstash_system_password',
+          length=32,
+          chars=['ascii_letters', 'digits', '_']
+        )
+      }}
+    redelk_redelk_ingest_password: >-
+      {{
+        lookup(
+          'ansible.builtin.password',
+          playbook_dir + '/secrets/redelk_ingest_password',
+          length=32,
+          chars=['ascii_letters', 'digits', '_']
+        )
+      }}
+    redelk_redelk_password: >-
+      {{
+        lookup(
+          'ansible.builtin.password',
+          playbook_dir + '/secrets/redelk_password',
+          length=32,
+          chars=['ascii_letters', 'digits', '_']
+        )
+      }}
+    redelk_elastic_password: >-
+      {{
+        lookup(
+          'ansible.builtin.password',
+          playbook_dir + '/secrets/elastic_password',
+          length=32,
+          chars=['ascii_letters', 'digits', '_']
+        )
+      }}
+    redelk_kibana_encryption_key: >-
+      {{
+        lookup(
+          'ansible.builtin.password',
+          playbook_dir + '/secrets/kibana_encryption_key',
+          length=32,
+          chars=['ascii_letters', 'digits', '_']
+        )
+      }}
+    redelk_neo4j_password: >-
+      {{
+        lookup(
+          'ansible.builtin.password',
+          playbook_dir + '/secrets/neo4j_password',
+          length=32,
+          chars=['ascii_letters', 'digits', '_']
+        )
+      }}
+    redelk_postgres_password: >-
+      {{
+        lookup(
+          'ansible.builtin.password',
+          playbook_dir + '/secrets/postgres_password',
+          length=32,
+          chars=['ascii_letters', 'digits', '_']
+        )
+      }}
+    redelk_bloodhound_password: >-
+      {{
+        lookup(
+          'ansible.builtin.password',
+          playbook_dir + '/secrets/bloodhound_password',
+          length=32,
+          chars=['ascii_letters', 'digits', '_']
+        )
+      }}
+  no_log: true
 
 - name: Ensure RedELK runtime directories exist
   become: true
