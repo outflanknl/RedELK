@@ -48,13 +48,14 @@ Each of those RedELK roles also has its own local `README.md` with role-specific
 
 ## Prerequisites
 
-- Ansible available on the control node
-- required collections installed from `collections.yml`
+- An Ansible control node running an actively supported Ubuntu 24.04 LTS or newer, or Debian 13 or newer
+- `ansible-core` 2.20 or newer on the control node, using a maintained release
+- Python 3.12 or newer on the control node, within the supported range of the selected `ansible-core` release
+- required collections installed from `requirements.yml`
 - SSH access to all targets
-- privilege escalation (`become`) on targets
+- Sudo privileges (`become`) on targets
 - Ubuntu 24.04 or newer on all deployment targets (ELK servers, C2 servers, and redirectors)
 - GNU Rush 2.x on C2 servers
-- valid certificate config at `certs/config.cnf` before running `prepare-packages.yml`
 
 Install the shared Ansible collections first:
 
@@ -63,16 +64,15 @@ cd ansible
 ansible-galaxy collection install -r collections.yml -p .ansible/collections
 ```
 
+The project `ansible.cfg` selects `collections/` as the installation and search path. `--force` ensures collections already installed elsewhere are installed here too.
+
 ## Required Variables
 
 Package preparation runs on localhost, independently of the deployment inventory.
 The `redelk-package-prep` role supplies these defaults:
 - `redelk_local_repo_path`: `"{{ playbook_dir | dirname }}"` (this repository root)
-- `redelk_openssl_config_path`: `certs/config.cnf`, relative to that root
 
-Override preparation variables with `-e` or `-e @file.yml`; target-group variables
-such as `group_vars/elkservers.yml` do not apply to localhost. If overriding
-`redelk_local_repo_path`, use the same workspace for preparation and deployment.
+Override preparation variables with `-e` or `-e @file.yml`; target-group variables such as `group_vars/elkservers.yml` do not apply to localhost. If overriding `redelk_local_repo_path`, use the same workspace for preparation and deployment.
 
 Set deployment variables in `group_vars` or inventory vars matching your own host groups.
 
@@ -108,14 +108,10 @@ ignored, so an existing inventory can be reused.
 
 ```bash
 cd ansible
-ansible-playbook -i localhost, prepare-packages.yml && \
-  ansible-playbook -i inventory.yml playbook.yml
+ansible-playbook -i inventory.yml playbook.yml
 ```
 
-Preparation needs no SSH access to deployment hosts and runs without privilege
-escalation, using the Python interpreter that runs Ansible. If the deployment
-artifacts have already been prepared (including client CA and sync-key files),
-run only the second command. Existing missing-artifact checks still apply.
+Preparation needs no SSH access to deployment hosts and runs without privilege escalation, using the Python interpreter that runs Ansible. If the deployment artifacts have already been prepared (including client CA and sync-key files), run only the second command. Existing missing-artifact checks still apply.
 
 ## Live System Testing
 

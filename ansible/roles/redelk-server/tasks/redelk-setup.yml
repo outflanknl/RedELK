@@ -1,4 +1,70 @@
 ---
+- name: Create PKI directory
+  delegate_to: localhost
+  ansible.builtin.file:
+    path: certs
+    mode: "0755"
+    state: directory
+
+- name: Render OpenSSL template
+  delegate_to: localhost
+  ansible.builtin.template:
+    src: config.cnf.j2
+    dest: certs/config.cnf
+    mode: "0644"
+
+# TODO: Convert these steps to use the community.crypto module instead of command
+- name: Create CA and leaf certificates
+  delegate_to: localhost
+  block:
+    - name: Generate private key for CA
+      ansible.builtin.command:
+        cmd: openssl genrsa -out redelkCA.key 2048
+        creates: redelkCA.key
+        chdir: certs
+        # echo "[*] Generating private key for CA" | tee -a $LOGFILE
+        # openssl genrsa -out ./certs/redelkCA.key 2048
+    - name: Create CA certificate
+      ansible.builtin.command:
+        cmd: openssl req -new -x509 -days 3650 -nodes -key redelkCA.key -sha256 -out redelkCA.crt -extensions v3_ca -config config.cnf
+        creates: redelkCA.crt
+        chdir: certs
+        # echo "[*] Creating Certificate Authority" | tee -a $LOGFILE
+        # openssl req -new -x509 -days 3650 -nodes -key ./certs/redelkCA.key -sha256 -out ./certs/redelkCA.crt -extensions v3_ca -config $1
+    - name: Generate private key for RedELK server
+      ansible.builtin.command:
+        cmd: openssl genrsa -out elkserver.key 2048
+        creates: elkserver.key
+        chdir: certs
+        # echo "[*] Generating private key for ELK server" | tee -a $LOGFILE
+        # openssl genrsa -out ./certs/elkserver.key 2048
+    - name: Create certificate signing request for RedELK server
+      ansible.builtin.command:
+        cmd: openssl req -sha512 -new -key elkserver.key -out elkserver.csr -config config.cnf
+        creates: elkserver.csr
+        chdir: certs
+        # echo "[*] Generating certificate for ELK server" | tee -a $LOGFILE
+        # openssl req -sha512 -new -key ./certs/elkserver.key -out ./certs/elkserver.csr -config $1
+    - name: Sign certificate signing request using CA
+      ansible.builtin.command:
+        cmd: openssl x509 -days 3650 -req -sha512 -in elkserver.csr -CAcreateserial -CA redelkCA.crt -CAkey redelkCA.key -out elkserver.crt -extensions v3_req -extfile config.cnf
+        creates: elkserver.crt
+        chdir: certs
+        # echo "[*] Signing certificate of ELK server with our new CA" | tee -a $LOGFILE
+        # openssl x509 -days 3650 -req -sha512 -in ./certs/elkserver.csr -CAcreateserial -CA ./certs/redelkCA.crt -CAkey ./certs/redelkCA.key -out ./certs/elkserver.crt -extensions v3_req -extfile $1 # noqa
+    - name: Backup RedELK server private key before converting # noqa: risky-file-permissions
+      ansible.builtin.copy:
+        src: certs/elkserver.key
+        dest: certs/elkserver.key.pem
+
+    - name: Convert RedELK server private key to PKCS8 format
+      ansible.builtin.command:
+        cmd: openssl pkcs8 -in elkserver.key.pem -topk8 -nocrypt -out elkserver.key
+        creates: elkserver.key
+        chdir: certs
+        # echo "[*] Converting ELK server private key to PKCS8 format" | tee -a $LOGFILE
+        # openssl pkcs8 -in ./certs/elkserver.key.pem -topk8 -nocrypt -out ./certs/elkserver.key
+
 - name: Ensure local ELK server package exists
   delegate_to: localhost
   ansible.builtin.stat:

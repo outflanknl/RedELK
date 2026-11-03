@@ -1,0 +1,29 @@
+[req]
+distinguished_name = req_distinguished_name
+x509_extensions = v3_req
+prompt = no
+
+[req_distinguished_name]
+C = {{ redelk_certificate_country }}
+ST = {{ redelk_certificate_state }}
+L = {{ redelk_certificate_locality }}
+O = {{ redelk_certifate_organization }}
+OU = {{ redelk_certificate_organizational_unit }}
+CN = {{ redelk_certificate_common_name }}
+emailAddress = {{ redelk_certificate_email }}
+
+[v3_ca]
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid:always,issuer:always
+basicConstraints = CA:TRUE
+
+[v3_req]
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment, dataEncipherment
+extendedKeyUsage = serverAuth
+subjectAltName = @alt_names
+
+[alt_names]
+# Enter the valid IP or DNS where the teamservers and redirectors can reach your ELK server in the fields below. If not done correctly, Logstash on your ELK server will crash with cryptic errors.
+DNS.1 = {{ redelk_certificate_san_1 }}
+DNS.2 = {{ redelk_certificate_san_2 }}
+IP.1 = {{ redelk_certificate_ip_1 }}

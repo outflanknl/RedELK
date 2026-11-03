@@ -1,5 +1,5 @@
 ---
-redelk_local_repo_path: "{{ playbook_dir | dirname }}"
+redelk_local_repo_path: "{{ playbook_dir | dirname }}"  # WARN: Deprecated, everything should be in playbook_dir
 redelk_remote_base_path: /opt/redelk
 redelk_identifier: "{{ inventory_hostname }}"
 redelk_locale_lang: en_US.UTF-8
