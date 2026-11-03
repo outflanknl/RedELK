@@ -13,16 +13,19 @@ CERTS_DIR_ES=/usr/share/elasticsearch/config/certificates
 CERTS_DIR_KBN=/usr/share/kibana/config/certificates
 CERTS_DIR_LOGSTASH=/usr/share/logstash/config/certificates
 CERTS_DIR_REDELK=/usr/share/logstash/redelk-main/certs
+
+
+## Below you can configure the location to the certificates used in logstash
 CERTS_LOGSTASH_INPUT_KEY=/usr/share/logstash/redelk-main/certs/elkserver.key
 CERTS_LOGSTASH_INPUT_CRT=/usr/share/logstash/redelk-main/certs/elkserver.crt
 CERTS_LOGSTASH_OUTPUT_CA=/usr/share/logstash/config/certificates/ca/ca.crt
-CREDS_kibana_system={{ redelk_server_kibana_system_password }}
-CREDS_logstash_system={{ redelk_server_logstash_system_password }}
-CREDS_redelk_ingest={{ redelk_server_redelk_ingest_password }}
-CREDS_redelk={{ redelk_server_redelk_password }}
-ELASTIC_PASSWORD={{ redelk_server_elastic_password }}
+CREDS_kibana_system={{ redelk_kibana_system_password }}
+CREDS_logstash_system={{ redelk_logstash_system_password }}
+CREDS_redelk_ingest={{ redelk_redelk_ingest_password }}
+CREDS_redelk={{ redelk_redelk_password }}
+ELASTIC_PASSWORD={{ redelk_elastic_password }}
 ES_URL=https://redelk-elasticsearch:9200
-KBN_XPACK_ENCRYPTEDSAVEDOBJECTS={{ redelk_server_kibana_encryption_key }}
+KBN_XPACK_ENCRYPTEDSAVEDOBJECTS={{ redelk_kibana_encryption_key }}
 
 NEO4J_AUTH=neo4j/{{ redelk_server_neo4j_password }}
 NEO4J_dbms_memory_heap_initial__size={{ redelk_server_neo4j_memory | default('1G') }}
@@ -30,8 +33,9 @@ NEO4J_dbms_memory_heap_max__size={{ redelk_server_neo4j_memory | default('1G') }
 NEO4J_dbms_memory_pagecache_size={{ redelk_server_neo4j_memory | default('1G') }}
 NEO4J_ALLOW_UPGRADE=true
 BLOODHOUND_TAG=latest
+# Postgres auth configuration
 POSTGRES_USER=bloodhound
-POSTGRES_PASSWORD={{ redelk_server_postgres_password }}
+POSTGRES_PASSWORD={{ redelk_postgres_password }}
 POSTGRES_DATABASE=bloodhound
 BLOODHOUND_PORT=127.0.0.1:8080
 NEO4J_DB_PORT=7687
