@@ -18,12 +18,22 @@
   delegate_to: localhost
   block:
     - name: Generate private key for CA
-      ansible.builtin.command:
-        cmd: openssl genrsa -out redelkCA.key 2048
-        creates: redelkCA.key
-        chdir: certs
-        # echo "[*] Generating private key for CA" | tee -a $LOGFILE
-        # openssl genrsa -out ./certs/redelkCA.key 2048
+      community.crypto.openssl_privatekey:
+        path: certs/redelkCA.key
+        type: RSA
+        size: 2048
+        mode: "0600"
+        format: pkcs8
+        format_mismatch: convert
+        regenerate: fail
+
+    #- name: Generate private key for CA
+    #  ansible.builtin.command:
+    #    cmd: openssl genrsa -out redelkCA.key 2048
+    #    creates: redelkCA.key
+    #    chdir: certs
+    #    # echo "[*] Generating private key for CA" | tee -a $LOGFILE
+    #    # openssl genrsa -out ./certs/redelkCA.key 2048
     - name: Create CA certificate
       ansible.builtin.command:
         cmd: openssl req -new -x509 -days 3650 -nodes -key redelkCA.key -sha256 -out redelkCA.crt -extensions v3_ca -config config.cnf
@@ -52,20 +62,8 @@
         chdir: certs
         # echo "[*] Signing certificate of ELK server with our new CA" | tee -a $LOGFILE
         # openssl x509 -days 3650 -req -sha512 -in ./certs/elkserver.csr -CAcreateserial -CA ./certs/redelkCA.crt -CAkey ./certs/redelkCA.key -out ./certs/elkserver.crt -extensions v3_req -extfile $1 # noqa
-    - name: Backup RedELK server private key before converting # noqa: risky-file-permissions
-      ansible.builtin.copy:
-        src: certs/elkserver.key
-        dest: certs/elkserver.key.pem
 
-    - name: Convert RedELK server private key to PKCS8 format
-      ansible.builtin.command:
-        cmd: openssl pkcs8 -in elkserver.key.pem -topk8 -nocrypt -out elkserver.key
-        creates: elkserver.key
-        chdir: certs
-        # echo "[*] Converting ELK server private key to PKCS8 format" | tee -a $LOGFILE
-        # openssl pkcs8 -in ./certs/elkserver.key.pem -topk8 -nocrypt -out ./certs/elkserver.key
-
-- name: Ensure local ELK server package exists
+- name: Check local ELK server package
   delegate_to: localhost
   ansible.builtin.stat:
     path: "{{ redelk_local_repo_path }}/elkserver.tgz"

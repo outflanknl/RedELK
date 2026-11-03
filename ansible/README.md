@@ -51,6 +51,8 @@ Each of those RedELK roles also has its own local `README.md` with role-specific
 - An Ansible control node running an actively supported Ubuntu 24.04 LTS or newer, or Debian 13 or newer
 - `ansible-core` 2.20 or newer on the control node, using a maintained release
 - Python 3.12 or newer on the control node, within the supported range of the selected `ansible-core` release
+- OpenSSL 3.0.0 or newer on the control node for the current command-based certificate generation
+- required collections installed from `collections.yml`
 - required collections installed from `requirements.yml`
 - SSH access to all targets
 - Sudo privileges (`become`) on targets
@@ -61,7 +63,7 @@ Install the shared Ansible collections first:
 
 ```bash
 cd ansible
-ansible-galaxy collection install -r collections.yml -p .ansible/collections
+ansible-galaxy collection install -r requirements.yml --force
 ```
 
 The project `ansible.cfg` selects `collections/` as the installation and search path. `--force` ensures collections already installed elsewhere are installed here too.
@@ -169,7 +171,7 @@ Run Docker-role tests:
 
 ```bash
 cd ansible
-ansible-galaxy collection install -r collections.yml -p .ansible/collections
+ansible-galaxy collection install -r requirements.yml -p .ansible/collections
 molecule test -s docker
 ```
 
@@ -177,7 +179,7 @@ Run RedELK-role tests:
 
 ```bash
 cd ansible
-ansible-galaxy collection install -r collections.yml -p .ansible/collections
+ansible-galaxy collection install -r requirements.yml -p .ansible/collections
 molecule test -s redelk
 ```
 

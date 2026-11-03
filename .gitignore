@@ -146,3 +146,5 @@ elkserver/mounts/redelk-config/etc/redelk/rogue_useragents.conf
 elkserver/mounts/redelk-config/etc/redelk/roguedomains.conf
 redirs/filebeat/filebeat.yml
 c2servers/filebeat/filebeat_redelk_main.yml
+
+/ansible/collections/
