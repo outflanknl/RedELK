@@ -219,10 +219,20 @@
     src: compose.yml.j2
     dest: /opt/redelk/compose.yml
 
-- name: Set SSH folder permissions
+- name: Set RedELK mount folder permissions
   ansible.builtin.file:
-    dest: /opt/redelk/mounts/redelk-ssh
-    mode: "0700"
+    dest: "{{ item.path }}"
+    mode: "{{ item.mode }}"
+  loop:
+    - { path: "/opt/redelk/bloodhound-config", mode: "0755" }
+    - { path: "/opt/redelk/elasticsearch-config", mode: "0755" }
+    - { path: "/opt/redelk/jupyter-workbooks", mode: "0755" }
+    - { path: "/opt/redelk/logstash-config", mode: "0755" }
+    - { path: "/opt/redelk/nginx-config", mode: "0755" }
+    - { path: "/opt/redelk/redelk-config", mode: "0755" }
+    - { path: "/opt/redelk/redelk-logs", mode: "0755" }
+    - { path: "/opt/redelk/redelk-www", mode: "0755" }
+    - { path: "/opt/redelk/sample-data", mode: "0755" }
 
 - name: Copy SSH keypair for scponly user
   ansible.builtin.copy:
@@ -238,6 +248,35 @@
     src: crontab
     dest: /opt/redelk/mounts/redelk-config/etc/cron.d/redelk
     mode: "0644"
+
+- name: Set Elasticsearch JVM options
+  ansible.builtin.template:
+    src: jvm.options.j2
+    dest: /opt/redelk/mounts/elasticsearch-config/jvm.options.d/jvm.options
+    mode: "0644"
+
+- name: Render RedELK config file
+  become: true
+  ansible.builtin.template:
+    src: config.json.j2
+    dest: "{{ redelk_server_path }}/mounts/redelk-config/etc/redelk/config.json"
+    mode: "0644"
+
+- name: Render RedELK password reference file
+  become: true
+  ansible.builtin.template:
+    src: redelk_passwords.cfg.j2
+    dest: "{{ redelk_server_path }}/redelk_passwords.cfg"
+    mode: "0600"
+
+- name: Create htpasswd file for RedELK web access
+  become: true
+  community.general.htpasswd:
+    path: "{{ redelk_server_path }}/mounts/nginx-config/htpasswd.users.template"
+    name: "{{ redelk_redelk_username }}"
+    password: "{{ redelk_server_redelk_password }}"
+    create: true
+    mode: "0640"
 
 - name: Configure C2 log sync jobs
   become: true
@@ -260,217 +299,14 @@
     mode: "0600"
   when: redelk_server_base_cron.stat.exists
 
-- name: Check for packaged initial setup certificate config
-  ansible.builtin.stat:
-    path: "{{ redelk_server_path }}/initial-setup-data/certs/config.cnf"
-  register: redelk_server_initial_setup_cert_config
-  when: not redelk_letsencrypt_enabled | bool
-
-- name: Read packaged initial setup certificate config
-  ansible.builtin.slurp:
-    src: "{{ redelk_server_path }}/initial-setup-data/certs/config.cnf"
-  register: redelk_server_initial_setup_cert_config_content
-  when:
-    - not redelk_letsencrypt_enabled | bool
-    - redelk_server_initial_setup_cert_config.stat.exists
-
-- name: Resolve self-signed certificate subject from packaged config
-  ansible.builtin.set_fact:
-    redelk_server_self_signed_cert_subject: >-
-      {{
-        (
-          (
-            redelk_server_initial_setup_cert_config_content.content | b64decode
-            if redelk_server_initial_setup_cert_config.stat.exists
-            else ''
-          )
-          | regex_findall('(?m)^(?:DNS|IP)\.\d+\s*=\s*(.+)$')
-          | map('trim')
-          | first
-        )
-        | default(redelk_external_domain | default(redelk_self_signed_cert_dirname, true), true)
-      }}
-  when: not redelk_letsencrypt_enabled | bool
-
-- name: Render Docker environment file
+- name: Configure vm.max_map_count for Elasticsearch
   become: true
-  ansible.builtin.template:
-    src: docker-env.j2
-    dest: "{{ redelk_server_path }}/.env"
-    mode: "0640"
-
-- name: Render RedELK config file
-  become: true
-  ansible.builtin.template:
-    src: config.json.j2
-    dest: "{{ redelk_server_path }}/mounts/redelk-config/etc/redelk/config.json"
-    mode: "0644"
-
-- name: Render BloodHound config
-  become: true
-  ansible.builtin.template:
-    src: bloodhound.config.json.j2
-    dest: "{{ redelk_server_path }}/mounts/bloodhound-config/bloodhound.config.json"
-    mode: "0644"
-  when: redelk_server_bloodhound_enabled | bool
-
-- name: Render RedELK password reference file
-  become: true
-  ansible.builtin.template:
-    src: redelk_passwords.cfg.j2
-    dest: "{{ redelk_server_path }}/redelk_passwords.cfg"
-    mode: "0600"
-
-- name: Render password reference file for Jupyter notebooks
-  become: true
-  ansible.builtin.template:
-    src: redelk_passwords.cfg.j2
-    dest: "{{ redelk_server_path }}/mounts/jupyter-workbooks/redelk_passwords.py"
-    mode: "0600"
-
-- name: Create htpasswd file for RedELK web access
-  become: true
-  community.general.htpasswd:
-    path: "{{ redelk_server_path }}/mounts/nginx-config/htpasswd.users.template"
-    name: "{{ redelk_redelk_username }}"
-    password: "{{ redelk_server_redelk_password }}"
-    create: true
-    mode: "0640"
-
-- name: Set Elasticsearch JVM options
-  ansible.builtin.template:
-    src: jvm.options.j2
-    dest: /opt/redelk/mounts/elasticsearch-config/jvm.options.d/jvm.options
-    mode: "0644"
-
-- name: Ensure recursive ownership on Logstash config
-  become: true
-  ansible.builtin.file:
-    path: "{{ redelk_server_path }}/mounts/logstash-config"
-    owner: "1000"
-    group: "1000"
-    recurse: true
-
-- name: Ensure recursive ownership on RedELK logs
-  become: true
-  ansible.builtin.file:
-    path: "{{ redelk_server_path }}/mounts/redelk-logs"
-    owner: "1000"
-    group: "1000"
-    recurse: true
-
-- name: Ensure recursive ownership on RedELK www data
-  become: true
-  ansible.builtin.file:
-    path: "{{ redelk_server_path }}/mounts/redelk-www"
-    owner: "1000"
-    group: "1000"
-    recurse: true
-
-- name: Ensure recursive ownership on Jupyter workbooks
-  become: true
-  ansible.builtin.file:
-    path: "{{ redelk_server_path }}/mounts/jupyter-workbooks"
-    owner: "1000"
-    group: "1000"
-    recurse: true
-
-- name: Ensure recursive ownership on Elasticsearch config
-  become: true
-  ansible.builtin.file:
-    path: "{{ redelk_server_path }}/mounts/elasticsearch-config"
-    owner: "1000"
-    group: "1000"
-    recurse: true
-
-- name: Find RedELK log files for mode normalization
-  become: true
-  ansible.builtin.find:
-    paths: "{{ redelk_server_path }}/mounts/redelk-logs"
-    file_type: file
-  register: redelk_server_log_files
-
-- name: Set permissions on RedELK log files
-  become: true
-  ansible.builtin.file:
-    path: "{{ item.path }}"
-    mode: "0664"
-  loop: "{{ redelk_server_log_files.files }}"
-  loop_control:
-    label: "{{ item.path }}"
-
-- name: Find RedELK www files for mode normalization
-  become: true
-  ansible.builtin.find:
-    paths: "{{ redelk_server_path }}/mounts/redelk-www"
-    file_type: any
-    recurse: false
-  register: redelk_server_www_entries
-
-- name: Set permissions on RedELK www top-level entries
-  become: true
-  ansible.builtin.file:
-    path: "{{ item.path }}"
-    mode: "0755"
-  loop: "{{ redelk_server_www_entries.files }}"
-  loop_control:
-    label: "{{ item.path }}"
-
-- name: Disable full-only nginx locations for limited install
-  become: true
-  ansible.builtin.lineinfile:
-    path: "{{ redelk_server_path }}/mounts/nginx-config/default.conf.template"
-    regexp: '^\s*include conf\.d/full\.location-conf;\s*$'
-    line: '    # include conf.d/full.location-conf;'
-  when: not (redelk_server_bloodhound_enabled | bool)
-
-- name: Disable full-only nginx BloodHound location for limited install
-  become: true
-  ansible.builtin.lineinfile:
-    path: "{{ redelk_server_path }}/mounts/nginx-config/default.conf.template"
-    regexp: '^\s*include conf\.d/full\.bloodhound-conf;\s*$'
-    line: '# include conf.d/full.bloodhound-conf;'
-  when: not (redelk_server_bloodhound_enabled | bool)
-
-- name: Enable full nginx locations for full-style install
-  become: true
-  ansible.builtin.lineinfile:
-    path: "{{ redelk_server_path }}/mounts/nginx-config/default.conf.template"
-    regexp: '^\s*#\s*include conf\.d/full\.location-conf;\s*$'
-    line: '    include conf.d/full.location-conf;'
-  when: redelk_server_bloodhound_enabled | bool
-
-- name: Enable full nginx BloodHound location for full-style install
-  become: true
-  ansible.builtin.lineinfile:
-    path: "{{ redelk_server_path }}/mounts/nginx-config/default.conf.template"
-    regexp: '^\s*#\s*include conf\.d/full\.bloodhound-conf;\s*$'
-    line: 'include conf.d/full.bloodhound-conf;'
-  when: redelk_server_bloodhound_enabled | bool
-
-- name: Persist vm.max_map_count for Elasticsearch
-  become: true
-  ansible.builtin.copy:
-    dest: /etc/sysctl.d/99-redelk.conf
-    content: "vm.max_map_count={{ redelk_vm_max_map_count }}\n"
-    owner: root
-    group: root
-    mode: "0644"
-  register: redelk_vm_max_map_count_config
-  when: not redelk_dryrun | bool
-
-- name: Apply sysctl settings when vm.max_map_count config changed
-  become: true
-  ansible.builtin.command: sysctl --system
-  when:
-    - not redelk_dryrun | bool
-    - redelk_vm_max_map_count_config.changed
-  changed_when: true
-
-    mode: "0600"
-
-  become: true
+  ansible.posix.sysctl:
+    name: vm.max_map_count
+    value: "262144"
+    sysctl_file: /etc/sysctl.d/99-redelk.conf
     state: present
+    reload: true
 
 
 - name: Start or update RedELK stack
