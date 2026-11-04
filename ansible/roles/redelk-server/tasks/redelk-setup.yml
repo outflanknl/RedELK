@@ -448,14 +448,6 @@
     line: 'include conf.d/full.bloodhound-conf;'
   when: redelk_server_bloodhound_enabled | bool
 
-- name: Link docker-compose.yml to selected RedELK stack file
-  become: true
-  ansible.builtin.file:
-    src: "{{ redelk_server_compose_file }}"
-    dest: "{{ redelk_server_path }}/docker-compose.yml"
-    state: link
-    force: true
-
 - name: Persist vm.max_map_count for Elasticsearch
   become: true
   ansible.builtin.copy:
@@ -687,12 +679,7 @@
 - name: Start or update RedELK stack
   become: true
   community.docker.docker_compose_v2:
-    project_src: "{{ redelk_server_path }}"
-    project_name: "{{ redelk_compose_project_name }}"
-    files:
-      - docker-compose.yml
+    project_src: /opt/redelk
+    project_name: redelk
     build: always
     state: present
-  when:
-    - redelk_start_containers | bool
-    - not redelk_dryrun | bool
