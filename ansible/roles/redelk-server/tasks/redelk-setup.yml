@@ -337,19 +337,11 @@
     create: true
     mode: "0640"
 
-- name: Set Elasticsearch JVM heap minimum
-  become: true
-  ansible.builtin.lineinfile:
-    path: "{{ redelk_server_path }}/mounts/elasticsearch-config/jvm.options.d/jvm.options"
-    regexp: '^-Xms.*$'
-    line: "-Xms{{ redelk_server_es_memory }}"
-
-- name: Set Elasticsearch JVM heap maximum
-  become: true
-  ansible.builtin.lineinfile:
-    path: "{{ redelk_server_path }}/mounts/elasticsearch-config/jvm.options.d/jvm.options"
-    regexp: '^-Xmx.*$'
-    line: "-Xmx{{ redelk_server_es_memory }}"
+- name: Set Elasticsearch JVM options
+  ansible.builtin.template:
+    src: jvm.options.j2
+    dest: /opt/redelk/mounts/elasticsearch-config/jvm.options.d/jvm.options
+    mode: "0644"
 
 - name: Ensure recursive ownership on Logstash config
   become: true
