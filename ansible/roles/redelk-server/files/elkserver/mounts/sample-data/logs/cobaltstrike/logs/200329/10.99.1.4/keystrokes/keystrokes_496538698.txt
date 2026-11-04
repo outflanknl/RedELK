@@ -1,0 +1,23 @@
+03/29 13:55:09 UTC Received keystrokes
+
+
+
+CCobalt Strike
+E=======
+r2[command]
+
+CRun
+E=======
+notepad
+
+C
+E=======
+
+
+
+CUntitled - Notepad
+E=======
+test for keylogger
+03/29 13:55:18 UTC Received keystrokes
+
+ - hello :-)

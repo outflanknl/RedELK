@@ -1,0 +1,100 @@
+{
+    "aliases": {},
+    "index_patterns": [
+        "redelk-*"
+    ],
+    "mappings": {
+        "_routing": {
+            "required": false
+        },
+        "_source": {
+            "enabled": true,
+            "excludes": [],
+            "includes": []
+        },
+        "date_detection": true,
+        "dynamic": true,
+        "dynamic_date_formats": [
+            "strict_date_optional_time",
+            "yyyy/MM/dd HH:mm:ss Z||yyyy/MM/dd Z"
+        ],
+        "dynamic_templates": [],
+        "numeric_detection": true,
+        "properties": {
+            "@timestamp": {
+                "type": "date"
+            },
+            "iplist": {
+                "properties": {
+                    "comments": {
+                        "type": "text"
+                    },
+                    "ip": {
+                        "coerce": true,
+                        "index": true,
+                        "store": false,
+                        "type": "ip_range"
+                    },
+                    "name": {
+                        "type": "keyword"
+                    },
+                    "source": {
+                        "type": "keyword"
+                    }
+                },
+                "type": "object"
+            },
+            "module": {
+                "properties": {
+                    "last_run": {
+                        "dynamic": true,
+                        "enabled": true,
+                        "properties": {
+                            "message": {
+                                "type": "text"
+                            },
+                            "status": {
+                                "type": "keyword"
+                            },
+                            "timestamp": {
+                                "doc_values": true,
+                                "ignore_malformed": false,
+                                "index": true,
+                                "store": false,
+                                "type": "date"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "name": {
+                        "type": "keyword"
+                    },
+                    "type": {
+                        "type": "keyword"
+                    }
+                },
+                "type": "object"
+            },
+            "type": {
+                "type": "keyword"
+            }
+        }
+    },
+    "order": 0,
+    "settings": {
+        "index": {
+            "mapping": {
+                "total_fields": {
+                    "limit": "10000"
+                }
+            },
+            "number_of_replicas": "0",
+            "number_of_shards": "1",
+            "query": {
+                "default_field": "*"
+            },
+            "refresh_interval": "5s"
+        }
+    },
+    "version": 1
+}

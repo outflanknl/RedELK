@@ -1,0 +1,18 @@
+#
+# Part of RedELK
+#
+# In this file you can define the User Agents that are known rogue and should never hit your C2 backend.
+# - One per line
+# - You need to insert query wildcards yourself, e.g. "curl" will match only "curl", "*curl*" will match anything containing "curl"
+#
+# Author: Outflank B.V. / Marc Smeets
+#
+curl*
+python-requests*
+Python-urllib*
+Slackbot*
+Facebot
+Twitterbot*
+facebookexternalhit*
+WhatsApp*
+*SkypeUriPreview*

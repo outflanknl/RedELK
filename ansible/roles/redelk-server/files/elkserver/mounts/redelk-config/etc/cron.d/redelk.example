@@ -1,0 +1,36 @@
+# Part of RedELK
+# cron.d script for periodic actions related to RedELK
+#
+# Authors:
+# - Outflank B.V. / Marc Smeets
+# - Lorenzo Bernardi
+#
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+# RedELK rsync comands for getting remote log files from teamservers via rsync - replace $IP with the remote host's DNS/IP, $HOSTNAME with the remote hostname as configured in filebeat on that system amd $USER with the username to login with.
+# Repeat line for multiple teamservers.
+# m h dom mon dow user  command
+#*/2 * * * * redelk /usr/share/redelk/bin/getremotelogs.sh $IP $HOSTNAME scponly
+#
+
+# Run update script for SSLBL Botnet C2 IP addresses every 30min
+# m h dom mon dow user  command
+*/30 * * * * redelk /usr/share/redelk/bin/run_abusechbotnetc2ipupdate.sh
+
+# Run update script for SSLBL SSL Certificate Blacklis
+# m h dom mon dow user  command
+*/30 * * * * redelk /usr/share/redelk/bin/run_abusechsslcertupdate.sh
+
+# Run update script for rogue domain list
+# And run Chameleon.py for remote checking of domain classification
+# m h dom mon dow user  command
+00 00,12 * * * redelk /usr/share/redelk/bin/run_roguedomainsupdate.sh
+
+# Start script to create thumbnails of received screenshots
+# m h dom mon dow user  command
+*/1 * * * * redelk /usr/share/redelk/bin/makethumbnail.py /var/www/html/c2logs/
+
+# Run the daemon that will process alarms, enrichments and notifications
+* * * * * redelk /usr/share/redelk/bin/run_daemon.sh

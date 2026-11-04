@@ -95,76 +95,25 @@
         ownca_not_after: +3650d
         mode: "0644"
 
-- name: Check local ELK server package
-  delegate_to: localhost
-  ansible.builtin.stat:
-    path: "{{ redelk_local_repo_path }}/elkserver.tgz"
-  register: redelk_server_local_package
 
-- name: Fail when ELK server package is missing
-  ansible.builtin.fail:
-    msg: >-
-      Missing package {{ redelk_local_repo_path }}/elkserver.tgz.
-      Generate it with the package prep role or provide a prebuilt archive.
-  when:
-    - redelk_extract_server_package | bool
-    - not redelk_server_local_package.stat.exists
+- name: Create SSH keys folder # noqa: risky-file-permissions
+  ansible.builtin.file:
+    path: sshkey
+    state: directory
 
-- name: Validate Let's Encrypt settings
-  ansible.builtin.assert:
-    that:
-      - redelk_external_domain | trim | length > 0
-    fail_msg: >-
-      Set redelk_external_domain when redelk_letsencrypt_enabled is true.
-  when: redelk_letsencrypt_enabled | bool
+- name: Generate SSH keypair for scponly user
+  community.crypto.openssh_keypair:
+    path: sshkey/id_ed25519
+    regenerate: fail
+    type: ed25519
 
-- name: Set RedELK server deployment facts
-  ansible.builtin.set_fact:
-    redelk_server_path: "{{ redelk_remote_base_path }}/elkserver"
-    redelk_server_compose_file: "redelk-{{ redelk_server_install_type }}.yml"
-    redelk_server_env_external_domain: >-
-      {{ redelk_external_domain if redelk_letsencrypt_enabled else redelk_self_signed_cert_dirname }}
-    redelk_server_env_le_email: >-
-      {{ redelk_letsencrypt_email if redelk_letsencrypt_enabled else redelk_self_signed_cert_dirname }}
-    redelk_server_bloodhound_enabled: "{{ redelk_server_install_type != 'limited' }}"
 
 - name: Ensure deployment directory exists
   ansible.builtin.file:
-    path: "{{ redelk_remote_base_path }}"
+    path: /opt/redelk
     state: directory
     mode: "0755"
 
-- name: Check if ELK server package content already exists
-  ansible.builtin.stat:
-    path: "{{ redelk_remote_base_path }}/elkserver/VERSION"
-  register: redelk_server_extract_marker
-
-- name: Upload and extract ELK server package
-  ansible.builtin.unarchive:
-    src: "{{ redelk_local_repo_path }}/elkserver.tgz"
-    dest: "{{ redelk_remote_base_path }}"
-    mode: "0755"
-  when:
-    - redelk_extract_server_package | bool
-    - redelk_force_extract_server_package | bool or not redelk_server_extract_marker.stat.exists
-  notify: Restart RedELK docker containers
-
-- name: Check for existing .env file
-  ansible.builtin.stat:
-    path: "{{ redelk_server_path }}/.env"
-  register: redelk_server_env_stat
-
-- name: Read existing .env file
-  ansible.builtin.slurp:
-    src: "{{ redelk_server_path }}/.env"
-  register: redelk_server_env_existing
-  when: redelk_server_env_stat.stat.exists
-
-- name: Check for existing BloodHound config
-  ansible.builtin.stat:
-    path: "{{ redelk_server_path }}/mounts/bloodhound-config/bloodhound.config.json"
-  register: redelk_server_bloodhound_config_stat
-  when: redelk_server_bloodhound_enabled | bool
 
 # TODO: Deleted BloodHound config fetching, add back later?
 
@@ -253,38 +202,42 @@
       }}
   no_log: true
 
-- name: Ensure RedELK runtime directories exist
-  become: true
-  ansible.builtin.file:
-    path: "{{ redelk_server_path }}/{{ item.path }}"
-    state: directory
-    owner: "{{ item.owner | default('root') }}"
-    group: "{{ item.group | default('root') }}"
-    mode: "{{ item.mode | default('0755') }}"
-  loop:
-    - { path: "mounts/certbot/conf/live", owner: "1000", group: "1000" }
-    - { path: "mounts/jupyter-workbooks", owner: "1000", group: "1000" }
-    - { path: "mounts/redelk-logs", owner: "1000", group: "1000" }
-    - { path: "mounts/redelk-ssh", owner: "1000", group: "1000", mode: "0700" }
-    - { path: "mounts/redelk-www", owner: "1000", group: "1000" }
-    - { path: "mounts/logstash-config", owner: "1000", group: "1000" }
-    - { path: "mounts/elasticsearch-config/jvm.options.d", owner: "1000", group: "1000" }
+- name: Copy RedELK files
+  ansible.builtin.copy:
+    dest: /opt/redelk
+    src: redelk
+    mode: "0755"
 
-- name: Normalize RedELK sync key permissions
-  become: true
-  ansible.builtin.file:
-    path: "{{ redelk_server_path }}/mounts/redelk-ssh/{{ item }}"
-    owner: "1000"
-    group: "1000"
-    mode: "0600"
-  loop:
-    - id_rsa
-    - id_rsa.pub
+- name: Place .env file for Docker Compose stack # noqa: risky-file-permissions
+  ansible.builtin.template:
+    src: docker-env.j2
+    dest: /opt/redelk/.env
 
-- name: Check whether RedELK base cron file exists
-  ansible.builtin.stat:
-    path: "{{ redelk_server_path }}/mounts/redelk-config/etc/cron.d/redelk"
-  register: redelk_server_base_cron
+# TODO: Allow customizing install folder
+- name: Place Docker Compose file # noqa: risky-file-permissions
+  ansible.builtin.template:
+    src: compose.yml.j2
+    dest: /opt/redelk/compose.yml
+
+- name: Set SSH folder permissions
+  ansible.builtin.file:
+    dest: /opt/redelk/mounts/redelk-ssh
+    mode: "0700"
+
+- name: Copy SSH keypair for scponly user
+  ansible.builtin.copy:
+    src: "certs/{{ item.path }}"
+    dest: /opt/redelk/mounts/redelk-ssh
+    mode: "{{ item.mode }}"
+  loop:
+    - { path: "id_ed25519", mode: "0600" }
+    - { path: "id_ed25519.pub", mode: "0644" }
+
+- name: Install RedELK base crontab
+  ansible.builtin.copy:
+    src: crontab
+    dest: /opt/redelk/mounts/redelk-config/etc/cron.d/redelk
+    mode: "0644"
 
 - name: Configure C2 log sync jobs
   become: true
