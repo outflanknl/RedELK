@@ -261,6 +261,7 @@
     src: config.json.j2
     dest: "{{ redelk_server_path }}/mounts/redelk-config/etc/redelk/config.json"
     mode: "0644"
+    validate: /usr/bin/python3 -m json.tool %s /dev/null
 
 - name: Render RedELK password reference file
   become: true
@@ -307,6 +308,12 @@
     sysctl_file: /etc/sysctl.d/99-redelk.conf
     state: present
     reload: true
+
+- name: Render RedELK server configuration
+  ansible.builtin.template:
+    src: redelk-config.j2
+    dest: /opt/redelk/mounts/redelk-config/config.json
+    mode: "0644"
 
 
 - name: Start or update RedELK stack

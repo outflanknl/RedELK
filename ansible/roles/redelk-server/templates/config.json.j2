@@ -1,109 +1,111 @@
 {
   "loglevel": {{ redelk_loglevel | to_json }},
-  "interval": {{ redelk_alarm_interval }},
+  "interval": {{ redelk_alarm_interval | int | to_json }},
   "tempDir": {{ redelk_alarm_temp_dir | to_json }},
   "redelkserver_letsencrypt": {
-    "enable_letsencrypt": {{ redelk_letsencrypt_enabled | ternary('true', 'false') }},
+    "enable_letsencrypt": {{ redelk_letsencrypt_enabled | bool | to_json }},
     "external_domain": {{ redelk_external_domain | to_json }},
     "le_email": {{ redelk_letsencrypt_email | to_json }},
-    "staging": {{ redelk_letsencrypt_staging | to_json }}
+    "staging": {{ redelk_letsencrypt_staging | bool | to_json }}
   },
   "project_name": "redelk-project",
   "es_connection": [
-    "https://elastic:{{ redelk_server_elastic_password | urlencode | replace('/', '%2F') }}@redelk-elasticsearch:9200"
+    {{ (
+      'https://elastic:'
+      ~ (redelk_server_elastic_password | urlencode | replace('/', '%2F'))
+      ~ '@redelk-elasticsearch:9200'
+    ) | to_json }}
   ],
   "notifications": {
     "email": {
-      "enabled": false,
+      "enabled": {{ redelk_email_enabled | bool | to_json }},
       "smtp": {
-        "host": "localhost",
-        "port": 25,
-        "login": "redelk@example.com",
-        "pass": "redelk"
+        "host": {{ redelk_smtp_host | to_json }},
+        "port": {{ redelk_smtp_port | int | to_json }},
+        "login": {{ redelk_smtp_username | to_json }},
+        "pass": {{ redelk_smtp_password | to_json }}
       },
-      "from": "redelk@example.com",
-      "to": [
-        "redelk@example.com"
-      ]
+      "from": {{ redelk_email_from | to_json }},
+      "to": {{ redelk_email_to | to_json }}
     },
     "msteams": {
-      "enabled": false,
-      "webhook_url": "INSERT_MSTEAMS_WEBHOOK_URL_HERE"
+      "enabled": {{ redelk_teams_enabled | bool | to_json }},
+      "webhook_url": {{ redelk_teams_webhook | to_json }}
     },
     "slack": {
-      "enabled": false,
-      "webhook_url": "INSERT_SLACK_WEBHOOK_URL_HERE"
+      "enabled": {{ redelk_slack_enabled | bool | to_json }},
+      "webhook_url": {{ redelk_slack_webhook | to_json }}
     }
   },
   "alarms": {
     "alarm_dummy": {
-      "enabled": false
+      "enabled": {{ redelk_alarm_dummy_enabled | bool | to_json }}
     },
     "alarm_filehash": {
-      "enabled": true,
-      "interval": 300,
-      "vt_api_key": "",
-      "ibm_basic_auth": "Basic ",
-      "ha_api_key": ""
+      "enabled": {{ redelk_alarm_filehash_enabled | default(true) | bool | to_json }},
+      "interval": {{ redelk_alarm_filehash_interval | default(300) | int | to_json }},
+      "vt_api_key": {{ redelk_virustotal_api_key | to_json }},
+      "ibm_basic_auth": {{ ('Basic ' ~ redelk_ibm_basic_auth) | to_json }},
+      "ha_api_key": {{ redelk_ha_api_key | to_json }}
     },
     "alarm_httptraffic": {
-      "enabled": true,
-      "interval": 310
+      "enabled": {{ redelk_alarm_http_enabled | default(true) | bool | to_json }},
+      "interval": {{ redelk_alarm_http_interval | default(310) | int | to_json }}
     },
     "alarm_useragent": {
-      "enabled": true,
-      "interval": 320
+      "enabled": {{ redelk_alarm_useragent_enabled | default(true) | bool | to_json }},
+      "interval": {{ redelk_alarm_useragent_interval | default(320) | int | to_json }}
     },
     "alarm_backendalarm": {
-      "enabled": true,
-      "interval": 320
+      "enabled": {{ redelk_alarm_backend_enabled | default(true) | bool | to_json }},
+      "interval": {{ redelk_alarm_backend_interval | default(320) | int | to_json }}
     },
     "alarm_manual": {
-      "enabled": false,
-      "interval": 300
+      "enabled": {{ redelk_alarm_manual_enabled | default(false) | bool | to_json }},
+      "interval": {{ redelk_alarm_manual_interval | default(300) | int | to_json }}
     }
   },
   "enrich": {
     "enrich_csbeacon": {
-      "enabled": true,
-      "interval": 300
+      "enabled": {{ redelk_enrich_csbeacon | default(true) | bool | to_json }},
+      "interval": {{ redelk_enrich_csbeacon_interval | default(300) | int | to_json }}
     },
     "enrich_stage1": {
-      "enabled": true,
-      "interval": 300
+      "enabled": {{ redelk_enrich_stage1 | default(true) | bool | to_json }},
+      "interval": {{ redelk_enrich_stage1_interval | default(300) | int | to_json }}
     },
     "enrich_sliver": {
-      "enabled": true,
-      "interval": 300
+      "enabled": {{ redelk_enrich_sliver | default(true) | bool | to_json }},
+      "interval": {{ redelk_enrich_sliver_interval | default(300) | int | to_json }}
     },
     "enrich_greynoise": {
-      "enabled": true,
-      "interval": 310,
-      "cache": 86400,
-      "api_key": ""
+      "enabled": {{ redelk_enrich_greynoise | default(true) | bool | to_json }},
+      "interval": {{ redelk_enrich_greynoise_interval | default(310) | int | to_json }},
+      "cache": {{ redelk_enrich_greynoise_cache | default(86400) | int | to_json }},
+      "api_key": {{ redelk_greynoise_api_key | default('') | to_json }}
     },
     "enrich_tor": {
-      "enabled": true,
-      "interval": 360,
-      "cache": 360
+      "enabled": {{ redelk_enrich_tor | default(true) | bool | to_json }},
+      "interval": {{ redelk_enrich_tor_interval | default(360) | int | to_json }},
+      "cache": {{ redelk_enrich_tor_cache | default(360) | int | to_json }}
     },
     "enrich_iplists": {
-      "enabled": true,
-      "interval": 30
+      "enabled": {{ redelk_enrich_iplists | default(true) | bool | to_json }},
+      "interval": {{ redelk_enrich_iplists_interval | default(30) | int | to_json }}
     },
     "enrich_synciplists": {
-      "enabled": true,
-      "interval": 360
+      "enabled": {{ redelk_enrich_synciplists | default(true) | bool | to_json }},
+      "interval": {{ redelk_enrich_synciplists_interval | default(360) | int | to_json }}
     },
     "enrich_syncdomainslists": {
-      "enabled": true,
-      "interval": 30
+      "enabled": {{ redelk_enrich_syncdomainslists | default(true) | bool | to_json }},
+      "interval": {{ redelk_enrich_syncdomainslists_interval | default(30) | int | to_json }}
     },
     "enrich_domainscategorization": {
-      "enabled": true,
-      "interval": 1,
-      "ibm_basic_auth": "Basic ",
-      "vt_api_key": ""
+      "enabled": {{ redelk_enrich_domainscategorization | default(true) | bool | to_json }},
+      "interval": {{ redelk_enrich_domainscategorization_interval | default(1) | int | to_json }},
+      "ibm_basic_auth": {{ ('Basic ' ~ redelk_ibm_basic_auth) | to_json }},
+      "vt_api_key": {{ redelk_virustotal_api_key | to_json }}
     }
   }
 }

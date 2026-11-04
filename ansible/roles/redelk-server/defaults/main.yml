@@ -1,27 +1,13 @@
 ---
 redelk_local_repo_path: "{{ playbook_dir | dirname }}"
-redelk_remote_base_path: /opt/redelk
+redelk_install_folder: /opt/redelk
 redelk_version: ""
-redelk_install_type: ""
-redelk_fixedmemory: false
-redelk_dryrun: false
-redelk_extract_server_package: true
-redelk_force_extract_server_package: false
 redelk_compose_project_name: redelk
 redelk_docker_log_max_size: 200m
 redelk_docker_log_max_files: 1
 redelk_redelk_username: redelk
 redelk_sync_user: scponly
-redelk_loglevel: WARNING
-redelk_alarm_interval: 3600
-redelk_alarm_temp_dir: /tmp
-redelk_letsencrypt_enabled: false
 redelk_external_domain: ""
-redelk_letsencrypt_email: ""
-redelk_letsencrypt_staging: "0"
-redelk_self_signed_cert_dirname: noletsencrypt
-redelk_vm_max_map_count: 262144
-redelk_start_containers: true
 
 # Subject for CA and RedELK server certificates, in distinguished-name order
 redelk_certificate_subject:
@@ -42,3 +28,84 @@ redelk_certificate_ip_1: 123.123.123.123
 
 # Set this value to 50% of the system memory remaining after reserving 3GB for the host OS and non-Elasticsearch containers; round up and cap at 9GB.
 redelk_elasticsearch_memory: 3g
+
+# RedELK config.json variables
+redelk_loglevel: WARNING
+redelk_alarm_interval: 3600
+redelk_alarm_temp_dir: /tmp
+
+
+# FIXME: Generated on the fly
+# Elasticsearch — populate through secret generation or Ansible Vault.
+# redelk_server_elastic_password: ""
+
+# Email notifications
+redelk_email_enabled: false
+redelk_smtp_host: localhost
+redelk_smtp_port: 25
+redelk_smtp_username: redelk@example.com
+redelk_smtp_password: redelk
+redelk_email_from: redelk@example.com
+redelk_email_to: ["redelk@example.com"]
+
+# Microsoft Teams notifications
+redelk_teams_enabled: false
+redelk_teams_webhook: ""
+
+# Slack notifications
+redelk_slack_enabled: false
+redelk_slack_webhook: ""
+
+# External API credentials
+redelk_virustotal_api_key: ""
+redelk_ibm_basic_auth: ""
+redelk_ha_api_key: ""
+redelk_greynoise_api_key: ""
+
+# Alarms
+redelk_alarm_dummy_enabled: false
+
+redelk_alarm_filehash_enabled: true
+redelk_alarm_filehash_interval: 300
+
+redelk_alarm_http_enabled: true
+redelk_alarm_http_interval: 310
+
+redelk_alarm_useragent_enabled: true
+redelk_alarm_useragent_interval: 320
+
+redelk_alarm_backend_enabled: true
+redelk_alarm_backend_interval: 320
+
+redelk_alarm_manual_enabled: false
+redelk_alarm_manual_interval: 300
+
+# Enrichment
+redelk_enrich_csbeacon: true
+redelk_enrich_csbeacon_interval: 300
+
+redelk_enrich_stage1: true
+redelk_enrich_stage1_interval: 300
+
+redelk_enrich_sliver: true
+redelk_enrich_sliver_interval: 300
+
+redelk_enrich_greynoise: true
+redelk_enrich_greynoise_interval: 310
+redelk_enrich_greynoise_cache: 86400
+
+redelk_enrich_tor: true
+redelk_enrich_tor_interval: 360
+redelk_enrich_tor_cache: 360
+
+redelk_enrich_iplists: true
+redelk_enrich_iplists_interval: 30
+
+redelk_enrich_synciplists: true
+redelk_enrich_synciplists_interval: 360
+
+redelk_enrich_syncdomainslists: true
+redelk_enrich_syncdomainslists_interval: 30
+
+redelk_enrich_domainscategorization: true
+redelk_enrich_domainscategorization_interval: 1
