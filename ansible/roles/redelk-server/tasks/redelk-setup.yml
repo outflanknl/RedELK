@@ -221,18 +221,22 @@
 
 - name: Set RedELK mount folder permissions
   ansible.builtin.file:
-    dest: "{{ item.path }}"
+    path: "{{ redelk_install_folder }}/mounts/{{ item.path }}"
+    state: directory
+    owner: "{{ item.owner | default(omit) }}"
+    group: "{{ item.group | default(omit) }}"
     mode: "{{ item.mode }}"
   loop:
-    - { path: "{{ redelk_install_folder }}/bloodhound-config", mode: "0755" }
-    - { path: "{{ redelk_install_folder }}/elasticsearch-config", mode: "0755" }
-    - { path: "{{ redelk_install_folder }}/jupyter-workbooks", mode: "0755" }
-    - { path: "{{ redelk_install_folder }}/logstash-config", mode: "0755" }
-    - { path: "{{ redelk_install_folder }}/nginx-config", mode: "0755" }
-    - { path: "{{ redelk_install_folder }}/redelk-config", mode: "0755" }
-    - { path: "{{ redelk_install_folder }}/redelk-logs", mode: "0755" }
-    - { path: "{{ redelk_install_folder }}/redelk-www", mode: "0755" }
-    - { path: "{{ redelk_install_folder }}/sample-data", mode: "0755" }
+    - { path: bloodhound-config, mode: "0755" }
+    - { path: elasticsearch-config, owner: "1000", mode: "0755" }
+    - { path: jupyter-workbooks, owner: "1000", mode: "0755" }
+    - { path: logstash-config, owner: "1000", mode: "0755" }
+    - { path: nginx-config, mode: "0755" }
+    - { path: redelk-config, mode: "0755" }
+    - { path: redelk-logs, owner: "1000", mode: "0755" }
+    - { path: redelk-ssh, mode: "0755" }
+    - { path: redelk-www, owner: "1000", mode: "0755" }
+    - { path: sample-data, mode: "0755" }
 
 - name: Copy SSH keypair for scponly user
   ansible.builtin.copy:
