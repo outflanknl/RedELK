@@ -252,6 +252,7 @@
     dest: "{{ redelk_install_folder }}/mounts/redelk-config/etc/cron.d/redelk"
     mode: "0644"
 
+# FIXME: Much easier to set this as an env var through the Docker compose file
 - name: Set Elasticsearch JVM options
   ansible.builtin.template:
     src: jvm.options.j2
@@ -299,6 +300,7 @@
     hash_scheme: apr_md5_crypt
     mode: "0640"
 
+# FIXME: Make this part of the redelk crontab template we already defined
 - name: Configure C2 log sync jobs
   become: true
   ansible.builtin.blockinfile:
@@ -335,9 +337,7 @@
     dest: "{{ redelk_install_folder }}/mounts/redelk-config/config.json"
     mode: "0644"
 
-
-- name: Start or update RedELK stack
-  become: true
+- name: Start RedELK server
   community.docker.docker_compose_v2:
     project_src: "{{ redelk_install_folder }}"
     project_name: redelk
