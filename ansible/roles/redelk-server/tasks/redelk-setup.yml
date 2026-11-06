@@ -95,7 +95,6 @@
         ownca_not_after: +3650d
         mode: "0644"
 
-
 - name: Create SSH keys folder # noqa: risky-file-permissions
   ansible.builtin.file:
     path: sshkey
@@ -219,6 +218,25 @@
   loop:
     - { path: "id_ed25519", mode: "0600" }
     - { path: "id_ed25519.pub", mode: "0644" }
+
+- name: Create TLS certificate mount directories
+  ansible.builtin.file:
+    path: "{{ redelk_install_folder }}/mounts/logstash-config/certs_inputs"
+    state: directory
+    owner: "1000"
+    group: "1000"
+    mode: "0750"
+
+- name: Install generated TLS certificates
+  ansible.builtin.copy:
+    dest: "{{ redelk_install_folder }}/mounts/logstash-config/certs_inputs"
+    src: "certs/{{ item.path }}"
+    mode: "{{ item.mode }}"
+    owner: "1000"
+    group: "1000"
+  loop:
+    - { path: elkserver.crt, mode: "0644" }
+    - { path: elkserver.key, mode: "0600" }
 
 - name: Install RedELK base crontab
   ansible.builtin.template:
