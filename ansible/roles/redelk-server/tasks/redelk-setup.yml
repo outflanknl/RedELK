@@ -263,6 +263,22 @@
     mode: "0644"
     validate: /usr/bin/python3 -m json.tool %s /dev/null
 
+# FIXME: Templates are static until we expose variables to fill them
+- name: Copy RedELK configuration example files
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ redelk_server_path }}/mounts/redelk-config/etc/redelk/{{ item.dest }}"
+    mode: "0644"
+  loop:
+    - { src: "domainslist_redteam.conf.example", dest: "domainslist_redteam.conf" }
+    - { src: "iplist_alarmed.conf.example", dest: "iplist_alarmed.conf" }
+    - { src: "iplist_blueteam.conf.example", dest: "iplist_blueteam.conf" }
+    - { src: "iplist_customer.conf.example", dest: "iplist_customer.conf" }
+    - { src: "iplist_redteam.conf.example", dest: "iplist_redteam.conf" }
+    - { src: "iplist_unknown.conf.example", dest: "iplist_unknown.conf" }
+    - { src: "rogue_useragents.conf.example", dest: "rogue_useragents.conf" }
+    - { src: "roguedomains.conf.example", dest: "roguedomains.conf" }
+
 - name: Render RedELK password reference file
   become: true
   ansible.builtin.template:
