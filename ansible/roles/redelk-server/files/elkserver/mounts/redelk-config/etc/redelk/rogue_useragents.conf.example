@@ -4,15 +4,79 @@
 # In this file you can define the User Agents that are known rogue and should never hit your C2 backend.
 # - One per line
 # - You need to insert query wildcards yourself, e.g. "curl" will match only "curl", "*curl*" will match anything containing "curl"
+# - Use *Name* for bot names embedded in browser-style User-Agent strings.
+# - robots.txt-only tokens (e.g. Google-Extended, Applebot-Extended) are not HTTP User-Agents.
 #
 # Author: Outflank B.V. / Marc Smeets
 #
+# HTTP clients
 curl*
 python-requests*
 Python-urllib*
+Wget*
+python-httpx*
+Go-http-client*
+
+# Social media and link preview bots
 Slackbot*
 Facebot
 Twitterbot*
 facebookexternalhit*
 WhatsApp*
 *SkypeUriPreview*
+*Discordbot*
+*TelegramBot*
+*LinkedInBot*
+*Pinterestbot*
+*redditbot*
+
+# Search engine crawlers
+*Googlebot*
+*GoogleOther*
+*bingbot*
+*BingPreview*
+*DuckDuckBot*
+*Baiduspider*
+*YandexBot*
+*YandexImages*
+*Applebot*
+*PetalBot*
+*SeznamBot*
+*Sogou*
+
+# SEO and web crawlers
+*AhrefsBot*
+*SemrushBot*
+*MJ12bot*
+*DotBot*
+*BLEXBot*
+
+# AI / LLM crawlers and user-triggered agents
+# OpenAI: https://developers.openai.com/api/docs/bots
+*GPTBot*
+*OAI-SearchBot*
+*ChatGPT-User*
+# Anthropic: https://support.claude.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler
+*ClaudeBot*
+*Claude-SearchBot*
+*Claude-User*
+# Perplexity: https://docs.perplexity.ai/guides/bots
+*PerplexityBot*
+*Perplexity-User*
+# Amazon: https://developer.amazon.com/amazonbot
+*Amazonbot*
+*Amzn-SearchBot*
+*Amzn-User*
+# Mistral: https://docs.mistral.ai/robots
+*MistralAI-User*
+*MistralAI-Index*
+*MistralAI-Training*
+# Meta: https://developers.facebook.com/docs/sharing/webmasters/web-crawlers/
+*meta-externalagent*
+*meta-externalfetcher*
+# Google: https://developers.google.com/crawling/docs/crawlers-fetchers/google-common-crawlers
+*Google-CloudVertexBot*
+# Other AI-related crawlers
+*Bytespider*
+*DuckAssistBot*
+*CCBot*
