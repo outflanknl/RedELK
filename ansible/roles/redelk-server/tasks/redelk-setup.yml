@@ -173,33 +173,6 @@
           chars=['ascii_letters', 'digits', '_']
         )
       }}
-    redelk_neo4j_password: >-
-      {{
-        lookup(
-          'ansible.builtin.password',
-          playbook_dir + '/secrets/neo4j_password',
-          length=32,
-          chars=['ascii_letters', 'digits', '_']
-        )
-      }}
-    redelk_postgres_password: >-
-      {{
-        lookup(
-          'ansible.builtin.password',
-          playbook_dir + '/secrets/postgres_password',
-          length=32,
-          chars=['ascii_letters', 'digits', '_']
-        )
-      }}
-    redelk_bloodhound_password: >-
-      {{
-        lookup(
-          'ansible.builtin.password',
-          playbook_dir + '/secrets/bloodhound_password',
-          length=32,
-          chars=['ascii_letters', 'digits', '_']
-        )
-      }}
   no_log: true
 
 - name: Copy RedELK files
@@ -228,7 +201,6 @@
     group: "{{ item.group | default(omit) }}"
     mode: "{{ item.mode }}"
   loop:
-    - { path: bloodhound-config, mode: "0755" }
     - { path: elasticsearch-config, owner: "1000", mode: "0755" }
     - { path: jupyter-workbooks, owner: "1000", mode: "0755" }
     - { path: logstash-config, owner: "1000", mode: "0755" }
