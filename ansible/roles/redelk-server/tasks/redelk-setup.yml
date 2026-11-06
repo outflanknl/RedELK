@@ -110,7 +110,7 @@
 
 - name: Ensure deployment directory exists
   ansible.builtin.file:
-    path: /opt/redelk
+    path: "{{ redelk_install_folder }}"
     state: directory
     mode: "0755"
 
@@ -204,40 +204,40 @@
 
 - name: Copy RedELK files
   ansible.builtin.copy:
-    dest: /opt/redelk
+    dest: "{{ redelk_install_folder }}"
     src: redelk
     mode: "0755"
 
 - name: Place .env file for Docker Compose stack # noqa: risky-file-permissions
   ansible.builtin.template:
     src: docker-env.j2
-    dest: /opt/redelk/.env
+    dest: "{{ redelk_install_folder }}/.env"
 
 # TODO: Allow customizing install folder
 - name: Place Docker Compose file # noqa: risky-file-permissions
   ansible.builtin.template:
     src: compose.yml.j2
-    dest: /opt/redelk/compose.yml
+    dest: "{{ redelk_install_folder }}/compose.yml"
 
 - name: Set RedELK mount folder permissions
   ansible.builtin.file:
     dest: "{{ item.path }}"
     mode: "{{ item.mode }}"
   loop:
-    - { path: "/opt/redelk/bloodhound-config", mode: "0755" }
-    - { path: "/opt/redelk/elasticsearch-config", mode: "0755" }
-    - { path: "/opt/redelk/jupyter-workbooks", mode: "0755" }
-    - { path: "/opt/redelk/logstash-config", mode: "0755" }
-    - { path: "/opt/redelk/nginx-config", mode: "0755" }
-    - { path: "/opt/redelk/redelk-config", mode: "0755" }
-    - { path: "/opt/redelk/redelk-logs", mode: "0755" }
-    - { path: "/opt/redelk/redelk-www", mode: "0755" }
-    - { path: "/opt/redelk/sample-data", mode: "0755" }
+    - { path: "{{ redelk_install_folder }}/bloodhound-config", mode: "0755" }
+    - { path: "{{ redelk_install_folder }}/elasticsearch-config", mode: "0755" }
+    - { path: "{{ redelk_install_folder }}/jupyter-workbooks", mode: "0755" }
+    - { path: "{{ redelk_install_folder }}/logstash-config", mode: "0755" }
+    - { path: "{{ redelk_install_folder }}/nginx-config", mode: "0755" }
+    - { path: "{{ redelk_install_folder }}/redelk-config", mode: "0755" }
+    - { path: "{{ redelk_install_folder }}/redelk-logs", mode: "0755" }
+    - { path: "{{ redelk_install_folder }}/redelk-www", mode: "0755" }
+    - { path: "{{ redelk_install_folder }}/sample-data", mode: "0755" }
 
 - name: Copy SSH keypair for scponly user
   ansible.builtin.copy:
     src: "certs/{{ item.path }}"
-    dest: /opt/redelk/mounts/redelk-ssh
+    dest: "{{ redelk_install_folder }}/mounts/redelk-ssh"
     mode: "{{ item.mode }}"
   loop:
     - { path: "id_ed25519", mode: "0600" }
@@ -246,13 +246,13 @@
 - name: Install RedELK base crontab
   ansible.builtin.copy:
     src: crontab
-    dest: /opt/redelk/mounts/redelk-config/etc/cron.d/redelk
+    dest: "{{ redelk_install_folder }}/mounts/redelk-config/etc/cron.d/redelk"
     mode: "0644"
 
 - name: Set Elasticsearch JVM options
   ansible.builtin.template:
     src: jvm.options.j2
-    dest: /opt/redelk/mounts/elasticsearch-config/jvm.options.d/jvm.options
+    dest: "{{ redelk_install_folder }}/mounts/elasticsearch-config/jvm.options.d/jvm.options"
     mode: "0644"
 
 - name: Render RedELK config file
@@ -312,14 +312,14 @@
 - name: Render RedELK server configuration
   ansible.builtin.template:
     src: redelk-config.j2
-    dest: /opt/redelk/mounts/redelk-config/config.json
+    dest: "{{ redelk_install_folder }}/mounts/redelk-config/config.json"
     mode: "0644"
 
 
 - name: Start or update RedELK stack
   become: true
   community.docker.docker_compose_v2:
-    project_src: /opt/redelk
+    project_src: "{{ redelk_install_folder }}"
     project_name: redelk
     build: always
     state: present

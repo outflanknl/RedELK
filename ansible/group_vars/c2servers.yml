@@ -4,6 +4,6 @@ deploy_redelk: true
 
 redelk_local_repo_path: "{{ playbook_dir | dirname }}"
 
-redelk_remote_base_path: /opt/redelk
+redelk_install_folder: /opt/redelk
 redelk_attack_scenario: operation-demo
 redelk_logstash_endpoint: redelk.example.org:5044
