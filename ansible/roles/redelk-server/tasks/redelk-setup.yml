@@ -212,11 +212,13 @@
   ansible.builtin.template:
     src: docker-env.j2
     dest: "{{ redelk_install_folder }}/.env"
+    mode: "0644"
 
-- name: Place Docker Compose file # noqa: risky-file-permissions
+- name: Place Docker Compose file
   ansible.builtin.template:
     src: compose.yml.j2
     dest: "{{ redelk_install_folder }}/compose.yml"
+    mode: "0644"
 
 - name: Set RedELK mount folder permissions
   ansible.builtin.file:
