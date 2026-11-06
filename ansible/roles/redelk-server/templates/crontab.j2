@@ -13,7 +13,13 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 # Repeat line for multiple teamservers.
 # m h dom mon dow user  command
 #*/2 * * * * redelk /usr/share/redelk/bin/getremotelogs.sh $IP $HOSTNAME scponly
-#
+{% for host in groups.get('c2servers', []) %}
+{% set sync_host = hostvars[host].ansible_host | default(host) %}
+{% set sync_id = hostvars[host].redelk_identifier | default(host) %}
+{% set sync_user = hostvars[host].redelk_sync_user | default(redelk_sync_user) %}
+{% set sync_port = hostvars[host].redelk_sync_port | default(redelk_sync_port) %}
+*/2 * * * * redelk /usr/share/redelk/bin/getremotelogs.sh {{ sync_host }} {{ sync_id }} {{ sync_user }} {{ sync_port }}
+{% endfor %}
 
 # Run update script for SSLBL Botnet C2 IP addresses every 30min
 # m h dom mon dow user  command
@@ -34,3 +40,4 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
 # Run the daemon that will process alarms, enrichments and notifications
 * * * * * redelk /usr/share/redelk/bin/run_daemon.sh
+

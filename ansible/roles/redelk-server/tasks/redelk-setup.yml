@@ -221,10 +221,12 @@
     - { path: "id_ed25519.pub", mode: "0644" }
 
 - name: Install RedELK base crontab
-  ansible.builtin.copy:
-    src: crontab
+  ansible.builtin.template:
+    src: crontab.j2
     dest: "{{ redelk_install_folder }}/mounts/redelk-config/etc/cron.d/redelk"
-    mode: "0644"
+    owner: root
+    group: root
+    mode: "0600"
 
 # FIXME: Much easier to set this as an env var through the Docker compose file
 - name: Set Elasticsearch JVM options
@@ -273,28 +275,6 @@
     create: true
     hash_scheme: apr_md5_crypt
     mode: "0640"
-
-# FIXME: Make this part of the redelk crontab template we already defined
-- name: Configure C2 log sync jobs
-  become: true
-  ansible.builtin.blockinfile:
-    path: "{{ redelk_server_path }}/mounts/redelk-config/etc/cron.d/redelk"
-    marker: "# {mark} ANSIBLE MANAGED C2 LOG SYNC"
-    insertafter: '^#\*/2 .*getremotelogs'
-    block: |
-      {% for host in groups.get('c2servers', []) %}
-      {% if hostvars[host].deploy_redelk | default(true) | bool %}
-      {% set sync_host = hostvars[host].ansible_host | default(host) %}
-      {% set sync_id = hostvars[host].redelk_identifier | default(host) %}
-      {% set sync_user = hostvars[host].redelk_sync_user | default(redelk_sync_user) %}
-      {% set sync_port = hostvars[host].ansible_port | default(22) %}
-      */2 * * * * redelk /usr/share/redelk/bin/getremotelogs.sh {{ sync_host }} {{ sync_id }} {{ sync_user }} {{ sync_port }}
-      {% endif %}
-      {% endfor %}
-    owner: root
-    group: root
-    mode: "0600"
-  when: redelk_server_base_cron.stat.exists
 
 - name: Configure vm.max_map_count for Elasticsearch
   become: true
