@@ -5,8 +5,10 @@ redelk_version: ""
 redelk_compose_project_name: redelk
 redelk_docker_log_max_size: 200m
 redelk_docker_log_max_files: 1
-redelk_redelk_username: redelk
+
+redelk_username: redelk  # password is generated on the fly
 redelk_sync_user: scponly
+
 redelk_external_domain: ""
 
 # Subject for CA and RedELK server certificates, in distinguished-name order

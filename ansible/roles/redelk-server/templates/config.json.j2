@@ -12,7 +12,7 @@
   "es_connection": [
     {{ (
       'https://elastic:'
-      ~ (redelk_server_elastic_password | urlencode | replace('/', '%2F'))
+      ~ (redelk_elastic_password | urlencode | replace('/', '%2F'))
       ~ '@redelk-elasticsearch:9200'
     ) | to_json }}
   ],

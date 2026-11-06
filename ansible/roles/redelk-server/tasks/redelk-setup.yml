@@ -137,7 +137,7 @@
           chars=['ascii_letters', 'digits', '_']
         )
       }}
-    redelk_redelk_ingest_password: >-
+    redelk_ingest_password: >-
       {{
         lookup(
           'ansible.builtin.password',
@@ -146,7 +146,7 @@
           chars=['ascii_letters', 'digits', '_']
         )
       }}
-    redelk_redelk_password: >-
+    redelk_password: >-
       {{
         lookup(
           'ansible.builtin.password',
@@ -213,7 +213,6 @@
     src: docker-env.j2
     dest: "{{ redelk_install_folder }}/.env"
 
-# TODO: Allow customizing install folder
 - name: Place Docker Compose file # noqa: risky-file-permissions
   ansible.builtin.template:
     src: compose.yml.j2
@@ -290,13 +289,14 @@
     dest: "{{ redelk_server_path }}/redelk_passwords.cfg"
     mode: "0600"
 
-- name: Create htpasswd file for RedELK web access
-  become: true
+- name: Configure Basic Authentication for RedELK web interface through nginx
   community.general.htpasswd:
-    path: "{{ redelk_server_path }}/mounts/nginx-config/htpasswd.users.template"
-    name: "{{ redelk_redelk_username }}"
-    password: "{{ redelk_server_redelk_password }}"
+    name: "{{ redelk_username }}"
+    path: "{{ redelk_install_folder }}/mounts/nginx-config/htpasswd.users.template"
+    password: "{{ redelk_password }}"
+    state: present
     create: true
+    hash_scheme: apr_md5_crypt
     mode: "0640"
 
 - name: Configure C2 log sync jobs
