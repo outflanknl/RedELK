@@ -6,36 +6,11 @@
       - redelk_logstash_endpoint is defined
     fail_msg: "Set redelk_attack_scenario and redelk_logstash_endpoint in inventory or group_vars."
 
-- name: Set connector CA source path for c2servers
-  ansible.builtin.set_fact:
-    redelk_ca_source_path: "{{ redelk_local_repo_path }}/c2servers/filebeat/redelkCA.crt"
-  when: "'c2servers' in group_names"
-
-- name: Set connector CA source path for redirs
-  ansible.builtin.set_fact:
-    redelk_ca_source_path: "{{ redelk_local_repo_path }}/redirs/filebeat/redelkCA.crt"
-  when: "'redirs' in group_names"
-
 - name: Ensure supported connector target type
   ansible.builtin.assert:
     that:
-      - redelk_ca_source_path is defined
+      - "'c2servers' in group_names or 'redirs' in group_names"
     fail_msg: "redelk-client only supports hosts in 'c2servers' or 'redirs'."
-
-- name: Check that RedELK CA certificate exists on control node
-  ansible.builtin.stat:
-    path: "{{ redelk_ca_source_path }}"
-  delegate_to: localhost
-  become: false
-  register: redelk_ca_source
-
-- name: Fail when RedELK CA certificate is missing
-  ansible.builtin.assert:
-    that:
-      - redelk_ca_source.stat.exists
-    fail_msg: >-
-      Missing RedELK CA certificate at {{ redelk_ca_source_path }}.
-      Generate public deployment artifacts first or set a valid CA path.
 
 - name: Ensure Filebeat inputs directory exists
   become: true
@@ -140,7 +115,7 @@
 - name: Deploy RedELK CA certificate
   become: true
   ansible.builtin.copy:
-    src: "{{ redelk_ca_source_path }}"
+    src: "{{ playbook_dir }}/certs/redelkCA.crt"
     dest: "{{ redelk_filebeat_ca_path }}"
     owner: root
     group: root
