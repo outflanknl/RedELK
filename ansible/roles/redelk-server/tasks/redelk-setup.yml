@@ -228,11 +228,21 @@
     group: root
     mode: "0600"
 
-# FIXME: Much easier to set this as an env var through the Docker compose file
+- name: Copy TLS certificates and keys
+  ansible.builtin.copy:
+    src: "certs/{{ item.path }}"
+    dest: "{{ redelk_install_folder }}/mounts/logstash-config/certs_inputs/"
+    mode: "{{ item.mode }}"
+    owner: "1000"
+    group: root
+  loop:
+    - { path: "elkserver.crt", mode: "0644" }
+    - { path: "elkserver.key", mode: "0600" }
+
 - name: Set Elasticsearch JVM options
   ansible.builtin.template:
     src: jvm.options.j2
-    dest: "{{ redelk_install_folder }}/mounts/elasticsearch-config/jvm.options.d/jvm.options"
+    dest: "{{ redelk_install_folder }}/mounts/elasticsearch-config/jvm.options.d/redelk"
     mode: "0644"
 
 - name: Render RedELK config file
