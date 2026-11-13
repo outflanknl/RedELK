@@ -101,17 +101,19 @@
         ownca_not_after: +3650d
         mode: "0644"
 
-- name: Create SSH keys folder # noqa: risky-file-permissions
+- name: Create SSH keys folder
+  delegate_to: localhost
   ansible.builtin.file:
-    path: sshkey
+    path: ssh-keys
     state: directory
+    mode: "0700"
 
 - name: Generate SSH keypair for scponly user
+  delegate_to: localhost
   community.crypto.openssh_keypair:
-    path: sshkey/id_ed25519
+    path: ssh-keys/id_ed25519
     regenerate: fail
     type: ed25519
-
 
 - name: Ensure deployment directory exists
   ansible.builtin.file:
@@ -218,7 +220,7 @@
 
 - name: Copy SSH keypair for scponly user
   ansible.builtin.copy:
-    src: "certs/{{ item.path }}"
+    src: "ssh-keys/{{ item.path }}"
     dest: "{{ redelk_install_folder }}/mounts/redelk-ssh"
     mode: "{{ item.mode }}"
   loop:
