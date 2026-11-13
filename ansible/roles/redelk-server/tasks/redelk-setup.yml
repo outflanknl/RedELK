@@ -180,11 +180,6 @@
       }}
   no_log: true
 
-- name: Copy RedELK files
-  ansible.builtin.copy:
-    dest: "{{ redelk_install_folder }}"
-    src: redelk
-    mode: "0755"
 
 - name: Place .env file for Docker Compose stack
   ansible.builtin.template:
