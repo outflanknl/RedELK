@@ -134,13 +134,3 @@
   tags:
     - c2
   when: "'c2servers' in group_names"
-
-- name: Set client deployment path for C2 servers
-  ansible.builtin.set_fact:
-    redelk_client_path: "{{ redelk_remote_base_path }}/c2servers"
-  when: "'c2servers' in group_names"
-
-- name: Set client deployment path for redirectors
-  ansible.builtin.set_fact:
-    redelk_client_path: "{{ redelk_remote_base_path }}/redirs"
-  when: "'redirs' in group_names"

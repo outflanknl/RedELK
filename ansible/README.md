@@ -80,7 +80,7 @@ Set deployment variables in `group_vars` or inventory vars matching your own hos
 
 Server-related:
 - `redelk_local_repo_path` (usually `"{{ playbook_dir | dirname }}"`)
-- `redelk_remote_base_path` (for example `/opt/redelk`)
+- `redelk_install_folder` (default `/opt/redelk`)
 - `redelk_install_type` (`limited`, `full`, or `dev`)
 - optional `redelk_elk_install_command` for backwards compatibility with older examples
 - optional `redelk_letsencrypt_enabled`, `redelk_external_domain`, `redelk_letsencrypt_email`

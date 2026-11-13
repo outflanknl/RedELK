@@ -28,7 +28,7 @@ Key Variables
 -------------
 
 - `redelk_local_repo_path`: local repository root used to locate `elkserver.tgz`
-- `redelk_remote_base_path`: remote base path, default `/opt/redelk`
+- `redelk_install_folder`: installation directory, default `/opt/redelk`
 - `redelk_install_type`: explicit install type (`limited`, `full`, `dev`)
 - `redelk_elk_install_command`: legacy-compatible input used to infer mode flags
 - `redelk_fixedmemory`: explicit compatibility switch for legacy `fixedmemory`

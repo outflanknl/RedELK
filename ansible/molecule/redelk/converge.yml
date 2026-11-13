@@ -8,7 +8,7 @@
   ansible.builtin.import_playbook: ../../playbook.yml
   vars:
     redelk_local_repo_path: "{{ lookup('env', 'MOLECULE_EPHEMERAL_DIRECTORY') }}/fixtures"
-    redelk_remote_base_path: /opt/redelk
+    redelk_install_folder: /opt/redelk
     redelk_elk_install_command: ./install-elkserver.sh limited
     redelk_start_containers: false
     deploy_redelk: true

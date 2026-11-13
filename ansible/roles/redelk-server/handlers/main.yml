@@ -11,8 +11,6 @@
 - name: Restart RedELK docker containers
   become: true
   community.docker.docker_compose_v2:
-    project_src: "{{ redelk_remote_base_path }}/elkserver"
-    files:
-      - docker-compose.yml
+    project_src: "{{ redelk_install_folder }}"
     build: always
     state: restarted
