@@ -326,7 +326,7 @@
   become: true
   ansible.builtin.template:
     src: config.json.j2
-    dest: "{{ redelk_server_path }}/mounts/redelk-config/etc/redelk/config.json"
+    dest: "{{ redelk_install_folder }}/mounts/redelk-config/etc/redelk/config.json"
     mode: "0644"
     validate: /usr/bin/python3 -m json.tool %s /dev/null
 
