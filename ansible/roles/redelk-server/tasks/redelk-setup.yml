@@ -218,6 +218,39 @@
     - { path: redelk-www, owner: "1000", mode: "0755" }
     - { path: sample-data, mode: "0755" }
 
+- name: Create Logstash configuration folder
+  ansible.builtin.file:
+    path: "{{ redelk_install_folder }}/mounts/logstash-config/config"
+    state: directory
+    owner: "1000"
+    group: "1000"
+    mode: "0755"
+
+- name: Install Logstash pipeline configuration
+  ansible.builtin.copy:
+    src: elkserver/mounts/logstash-config/config/pipelines.yml
+    dest: "{{ redelk_install_folder }}/mounts/logstash-config/config/pipelines.yml"
+    owner: "1000"
+    group: "1000"
+    mode: "0644"
+
+- name: Create Logstash pipeline folder
+  ansible.builtin.file:
+    path: "{{ redelk_install_folder }}/mounts/logstash-config/redelk-main"
+    state: directory
+    owner: "1000"
+    group: "1000"
+    mode: "0755"
+
+- name: Install Logstash pipeline filters and scripts
+  ansible.builtin.copy:
+    src: elkserver/mounts/logstash-config/redelk-main/
+    dest: "{{ redelk_install_folder }}/mounts/logstash-config/redelk-main/"
+    owner: "1000"
+    group: "1000"
+    mode: "0644"
+    directory_mode: "0755"
+
 - name: Copy SSH keypair for scponly user
   ansible.builtin.copy:
     src: "ssh-keys/{{ item.path }}"
@@ -271,6 +304,12 @@
     - { path: "elkserver.crt", mode: "0644" }
     - { path: "elkserver.key", mode: "0600" }
 
+- name: Create JVM options folder
+  ansible.builtin.file:
+    state: directory
+    dest: "{{ redelk_install_folder }}/mounts/elasticsearch-config/jvm.options.d"
+    mode: "0755"
+
 - name: Set Elasticsearch JVM options
   ansible.builtin.template:
     src: jvm.options.j2
@@ -313,7 +352,6 @@
     src: redelk_passwords.cfg.j2
     dest: "{{ redelk_install_folder }}/redelk_passwords.cfg"
     mode: "0600"
-
 
 - name: Configure vm.max_map_count for Elasticsearch
   become: true
