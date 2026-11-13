@@ -186,11 +186,14 @@
     src: redelk
     mode: "0755"
 
-- name: Place .env file for Docker Compose stack # noqa: risky-file-permissions
+- name: Place .env file for Docker Compose stack
   ansible.builtin.template:
     src: docker-env.j2
     dest: "{{ redelk_install_folder }}/.env"
-    mode: "0644"
+    owner: root
+    group: root
+    mode: "0600"
+  no_log: true
 
 - name: Place Docker Compose file
   ansible.builtin.template:
