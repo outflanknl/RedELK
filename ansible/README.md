@@ -83,7 +83,7 @@ Server-related:
 - `redelk_install_folder` (default `/opt/redelk`)
 - `redelk_install_type` (`limited`, `full`, or `dev`)
 - optional `redelk_elk_install_command` for backwards compatibility with older examples
-- optional `redelk_letsencrypt_enabled`, `redelk_external_domain`, `redelk_letsencrypt_email`
+- `redelk_external_domain`: public DNS name for Caddy's automatic HTTPS endpoint
 
 Client-related:
 - `redelk_local_repo_path`

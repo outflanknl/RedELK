@@ -293,7 +293,7 @@
 - name: Copy RedELK configuration example files
   ansible.builtin.template:
     src: "{{ item.src }}"
-    dest: "{{ redelk_server_path }}/mounts/redelk-config/etc/redelk/{{ item.dest }}"
+    dest: "{{ redelk_install_folder }}/mounts/redelk-config/etc/redelk/{{ item.dest }}"
     mode: "0644"
   loop:
     - { src: "domainslist_redteam.conf.example", dest: "domainslist_redteam.conf" }
@@ -309,7 +309,7 @@
   become: true
   ansible.builtin.template:
     src: redelk_passwords.cfg.j2
-    dest: "{{ redelk_server_path }}/redelk_passwords.cfg"
+    dest: "{{ redelk_install_folder }}/redelk_passwords.cfg"
     mode: "0600"
 
 
