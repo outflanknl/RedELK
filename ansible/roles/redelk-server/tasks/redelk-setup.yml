@@ -343,6 +343,5 @@
 - name: Start RedELK server
   community.docker.docker_compose_v2:
     project_src: "{{ redelk_install_folder }}"
-    project_name: redelk
     build: always
     state: present

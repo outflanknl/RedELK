@@ -3,7 +3,6 @@
   become: true
   community.docker.docker_compose_v2:
     project_src: "{{ redelk_install_folder }}"
-    project_name: redelk
     services:
       - caddy
     dependencies: false
@@ -13,7 +12,6 @@
   become: true
   community.docker.docker_compose_v2:
     project_src: "{{ redelk_remote_base_path }}/elkserver"
-    project_name: "{{ redelk_compose_project_name }}"
     files:
       - docker-compose.yml
     build: always

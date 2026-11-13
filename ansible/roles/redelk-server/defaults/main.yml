@@ -2,7 +2,6 @@
 redelk_local_repo_path: "{{ playbook_dir | dirname }}"
 redelk_install_folder: /opt/redelk
 redelk_version: ""
-redelk_compose_project_name: redelk
 redelk_docker_log_max_size: 200m
 redelk_docker_log_max_files: 1
 
