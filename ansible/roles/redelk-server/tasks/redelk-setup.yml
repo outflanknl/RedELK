@@ -343,12 +343,6 @@
     mode: "0644"
   notify: Restart Caddy
 
-- name: Render RedELK server configuration
-  ansible.builtin.template:
-    src: redelk-config.j2
-    dest: "{{ redelk_install_folder }}/mounts/redelk-config/config.json"
-    mode: "0644"
-
 - name: Start RedELK server
   community.docker.docker_compose_v2:
     project_src: "{{ redelk_install_folder }}"
