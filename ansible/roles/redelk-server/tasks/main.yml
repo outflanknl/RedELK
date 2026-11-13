@@ -16,12 +16,6 @@
   tags:
     - always
 
-- name: Calculate install mode prechecks
-  ansible.builtin.import_tasks: memory.yml
-  tags:
-    - memory
-    - redelk-setup
-
 - name: Install required packages
   ansible.builtin.import_tasks: packages.yml
   tags:
