@@ -36,7 +36,7 @@
 - name: Deploy RedELK server
   hosts: elkservers
   roles:
-    - role: docker
+    - role: geerlingguy.docker
       tags: redelk-server
     - role: redelk-server
       tags: redelk-server
