@@ -2,7 +2,7 @@
 - name: Determine whether RedELK server role requires Docker runtime
   ansible.builtin.set_fact:
     redelk_server_requires_docker_runtime: >-
-      {{ (redelk_start_containers | bool) or (redelk_letsencrypt_enabled | bool) }}
+      {{ redelk_start_containers | bool }}
 
 - name: Gather installed package facts
   ansible.builtin.package_facts:

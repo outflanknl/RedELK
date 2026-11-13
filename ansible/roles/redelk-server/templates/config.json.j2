@@ -2,12 +2,6 @@
   "loglevel": {{ redelk_loglevel | to_json }},
   "interval": {{ redelk_alarm_interval | int | to_json }},
   "tempDir": {{ redelk_alarm_temp_dir | to_json }},
-  "redelkserver_letsencrypt": {
-    "enable_letsencrypt": {{ redelk_letsencrypt_enabled | bool | to_json }},
-    "external_domain": {{ redelk_external_domain | to_json }},
-    "le_email": {{ redelk_letsencrypt_email | to_json }},
-    "staging": {{ redelk_letsencrypt_staging | bool | to_json }}
-  },
   "project_name": "redelk-project",
   "es_connection": [
     {{ (
