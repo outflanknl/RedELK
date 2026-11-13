@@ -249,6 +249,12 @@
     - { path: elkserver.crt, mode: "0644" }
     - { path: elkserver.key, mode: "0600" }
 
+- name: Create RedELK crontab folder
+  ansible.builtin.file:
+    state: directory
+    dest: "{{ redelk_install_folder }}/mounts/redelk-config/etc/cron.d/redelk"
+    mode: "0700"
+
 - name: Install RedELK base crontab
   ansible.builtin.template:
     src: crontab.j2
@@ -273,6 +279,12 @@
     src: jvm.options.j2
     dest: "{{ redelk_install_folder }}/mounts/elasticsearch-config/jvm.options.d/redelk"
     mode: "0644"
+
+- name: Create RedELK config folder
+  ansible.builtin.file:
+    state: directory
+    dest: "{{ redelk_install_folder }}/mounts/redelk-config/etc/redelk"
+    mode: "0755"
 
 - name: Render RedELK config file
   become: true
