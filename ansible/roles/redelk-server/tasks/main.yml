@@ -21,11 +21,6 @@
   tags:
     - packages
 
-- name: Apply Docker preflight checks
-  ansible.builtin.import_tasks: docker.yml
-  tags:
-    - docker
-
 - name: Setup RedELK server
   ansible.builtin.import_tasks: redelk-setup.yml
   tags:
