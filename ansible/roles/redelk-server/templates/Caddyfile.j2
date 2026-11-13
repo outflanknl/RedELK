@@ -1,0 +1,36 @@
+{{ redelk_external_domain | to_json }} {
+	header {
+		Strict-Transport-Security "max-age=63072000"
+		-Server
+	}
+
+	basic_auth bcrypt "Restricted Access" {
+		import /etc/caddy/auth.users
+	}
+
+	@c2logs path /c2logs /c2logs/*
+	handle @c2logs {
+		root * /var/www/html
+
+		@plaintext path_regexp (?i)\.(txt|log)$
+		header @plaintext {
+			Content-Type "text/plain; charset=utf-8"
+			X-Content-Type-Options "nosniff"
+		}
+
+		file_server {
+			browse
+			index index.html index.htm
+		}
+	}
+
+	handle {
+		reverse_proxy https://redelk-kibana:5601 {
+			header_up X-Real-IP {remote_host}
+			header_up X-Forwarded-Port 443
+			transport http {
+				tls_trust_pool file /etc/caddy/ca/ca.crt
+			}
+		}
+	}
+}

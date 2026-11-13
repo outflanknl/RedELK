@@ -1,0 +1,2 @@
+{# The salt is based on the system's host name for idempotency reasons. #}
+{{ redelk_username | to_json }} {{ redelk_password | password_hash('bcrypt', (inventory_hostname | hash('sha256'))[:21] ~ '.', rounds=12) }}

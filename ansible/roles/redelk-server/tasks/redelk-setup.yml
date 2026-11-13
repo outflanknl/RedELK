@@ -1,4 +1,10 @@
 ---
+- name: Require an external domain for Caddy
+  ansible.builtin.assert:
+    that:
+      - redelk_external_domain | trim | length > 0
+    fail_msg: Set redelk_external_domain to the public DNS name pointing to this server or the Caddy proxy server will silently fail.
+
 - name: Create PKI directory
   delegate_to: localhost
   ansible.builtin.file:
@@ -203,7 +209,9 @@
     - { path: elasticsearch-config, owner: "1000", mode: "0755" }
     - { path: jupyter-workbooks, owner: "1000", mode: "0755" }
     - { path: logstash-config, owner: "1000", mode: "0755" }
-    - { path: nginx-config, mode: "0755" }
+    - { path: caddy-config, owner: root, group: root, mode: "0755" }
+    - { path: certs, owner: "1000", mode: "0750" }
+    - { path: certs/ca, owner: "1000", mode: "0750" }
     - { path: redelk-config, mode: "0755" }
     - { path: redelk-logs, owner: "1000", mode: "0755" }
     - { path: redelk-ssh, mode: "0755" }
@@ -294,15 +302,6 @@
     dest: "{{ redelk_server_path }}/redelk_passwords.cfg"
     mode: "0600"
 
-- name: Configure Basic Authentication for RedELK web interface through nginx
-  community.general.htpasswd:
-    name: "{{ redelk_username }}"
-    path: "{{ redelk_install_folder }}/mounts/nginx-config/htpasswd.users.template"
-    password: "{{ redelk_password }}"
-    state: present
-    create: true
-    hash_scheme: apr_md5_crypt
-    mode: "0640"
 
 - name: Configure vm.max_map_count for Elasticsearch
   become: true
@@ -312,6 +311,25 @@
     sysctl_file: /etc/sysctl.d/99-redelk.conf
     state: present
     reload: true
+
+- name: Configure Caddy Basic Auth credentials
+  ansible.builtin.template:
+    src: auth.users.j2
+    dest: "{{ redelk_install_folder }}/mounts/caddy-config/auth.users"
+    owner: root
+    group: root
+    mode: "0600"
+  no_log: true
+  notify: Restart Caddy
+
+- name: Configure Caddy as reverse proxy
+  ansible.builtin.template:
+    src: Caddyfile.j2
+    dest: "{{ redelk_install_folder }}/mounts/caddy-config/Caddyfile"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Restart Caddy
 
 - name: Render RedELK server configuration
   ansible.builtin.template:

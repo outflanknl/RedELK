@@ -16,6 +16,8 @@ volumes:
     driver: local
   kibana_data:
     driver: local
+  caddy_data:
+    driver: local
 
 services:
   elasticsearch:
@@ -131,6 +133,7 @@ services:
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=${CERTS_DIR_KBN}/ca/ca.crt
       - SERVER_SSL_CERTIFICATEAUTHORITIES=${CERTS_DIR_KBN}/ca/ca.crt
       - SERVER_SSL_ENABLED=true
+      - SERVER_PUBLICBASEURL=https://{{ redelk_external_domain }}
       - SERVER_SSL_CERTIFICATE=${CERTS_DIR_KBN}/redelk-kibana/redelk-kibana.crt
       - SERVER_SSL_KEY=${CERTS_DIR_KBN}/redelk-kibana/redelk-kibana.key
       - XPACK_ENCRYPTEDSAVEDOBJECTS_ENCRYPTIONKEY=${KBN_XPACK_ENCRYPTEDSAVEDOBJECTS}
@@ -143,26 +146,20 @@ services:
     depends_on:
       - logstash
 
-  nginx:
-    container_name: redelk-nginx
-    image: nginx:latest
+  caddy:
+    container_name: redelk-caddy
+    image: caddy:2.10.2-alpine
     networks:
       - net
     volumes:
-      - ./mounts/nginx-config:/etc/nginx/templates
-      - ./mounts/redelk-www:/var/www/html
-      - ${CERTS_DIR_NGINX_LOCAL}:${CERTS_DIR_NGINX}
-      - ${CERTS_DIR_NGINX_CA_LOCAL}:${CERTS_DIR_NGINX_CA}
-      - ./mounts/certbot/conf:/etc/letsencrypt
-      - ./mounts/certbot/www:/var/www/certbot
+      - ./mounts/caddy-config/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./mounts/caddy-config/auth.users:/etc/caddy/auth.users:ro
+      - ./mounts/redelk-www:/var/www/html:ro
+      - ./mounts/certs/ca:/etc/caddy/ca:ro
+      - caddy_data:/data
     ports:
       - "80:80"
       - "443:443"
-    environment:
-      - TLS_NGINX_CRT_PATH=${TLS_NGINX_CRT_PATH}
-      - TLS_NGINX_KEY_PATH=${TLS_NGINX_KEY_PATH}
-      - TLS_NGINX_CA_PATH=${TLS_NGINX_CA_PATH}
-    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & /docker-entrypoint.d/20-envsubst-on-templates.sh; nginx -g \"daemon off;\"'"
     restart: always
     logging:
       driver: "json-file"
@@ -171,24 +168,6 @@ services:
         max-file: "${LOG_MAX_FILE}"
     depends_on:
       - kibana
-
-  certbot:
-    container_name: redelk-certbot
-    image: certbot/certbot
-    networks:
-      - net
-    volumes:
-      - ./mounts/certbot/conf:/etc/letsencrypt
-      - ./mounts/certbot/www:/var/www/certbot
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
-    restart: always
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "${LOG_MAX_SIZE}"
-        max-file: "${LOG_MAX_FILE}"
-    depends_on:
-      - nginx
 
   base:
     container_name: redelk-base
@@ -210,6 +189,6 @@ services:
         max-size: "${LOG_MAX_SIZE}"
         max-file: "${LOG_MAX_FILE}"
     depends_on:
-      - nginx
+      - caddy
 
 # vim: ft=yaml.docker-compose

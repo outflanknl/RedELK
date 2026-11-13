@@ -1,4 +1,14 @@
 ---
+- name: Restart Caddy
+  become: true
+  community.docker.docker_compose_v2:
+    project_src: "{{ redelk_install_folder }}"
+    project_name: redelk
+    services:
+      - caddy
+    dependencies: false
+    state: restarted
+
 - name: Restart RedELK docker containers
   become: true
   community.docker.docker_compose_v2:
