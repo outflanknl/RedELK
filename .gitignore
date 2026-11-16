@@ -148,3 +148,6 @@ redirs/filebeat/filebeat.yml
 c2servers/filebeat/filebeat_redelk_main.yml
 
 /ansible/collections/
+ansible/certs/*
+ansible/secrets/*
+ansible/ssh-keys/*
