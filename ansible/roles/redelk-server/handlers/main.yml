@@ -8,6 +8,15 @@
     dependencies: false
     state: restarted
 
+- name: Restart Logstash
+  become: true
+  community.docker.docker_compose_v2:
+    project_src: "{{ redelk_install_folder }}"
+    services:
+      - logstash
+    dependencies: false
+    state: restarted
+
 - name: Restart RedELK docker containers
   become: true
   community.docker.docker_compose_v2:
