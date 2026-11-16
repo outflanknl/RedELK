@@ -207,7 +207,6 @@
     mode: "{{ item.mode }}"
   loop:
     - { path: elasticsearch-config, owner: "1000", mode: "0755" }
-    - { path: jupyter-workbooks, owner: "1000", mode: "0755" }
     - { path: logstash-config, owner: "1000", mode: "0755" }
     - { path: caddy-config, owner: root, group: root, mode: "0755" }
     - { path: certs, owner: "1000", mode: "0750" }
@@ -216,6 +215,7 @@
     - { path: redelk-logs, owner: "1000", mode: "0755" }
     - { path: redelk-ssh, mode: "0755" }
     - { path: redelk-www, owner: "1000", mode: "0755" }
+    - { path: redelk-www/c2logs, owner: "1000", mode: "0755" }
     - { path: sample-data, mode: "0755" }
 
 - name: Create Logstash configuration folder
