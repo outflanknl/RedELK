@@ -115,15 +115,6 @@
     regenerate: fail
     type: ed25519
 
-- name: Ensure deployment directory exists
-  ansible.builtin.file:
-    path: "{{ redelk_install_folder }}"
-    state: directory
-    mode: "0755"
-
-
-# TODO: Deleted BloodHound config fetching, add back later?
-
 - name: Generate or retrieve secrets for RedELK's various components
   ansible.builtin.set_fact:
     redelk_kibana_system_password: >-
@@ -182,6 +173,11 @@
       }}
   no_log: true
 
+- name: Ensure deployment directory exists
+  ansible.builtin.file:
+    path: "{{ redelk_install_folder }}"
+    state: directory
+    mode: "0755"
 
 - name: Place .env file for Docker Compose stack
   ansible.builtin.template:
@@ -198,7 +194,7 @@
     dest: "{{ redelk_install_folder }}/compose.yml"
     mode: "0644"
 
-- name: Set RedELK mount folder permissions
+- name: Configure volume mounts
   ansible.builtin.file:
     path: "{{ redelk_install_folder }}/mounts/{{ item.path }}"
     state: directory
@@ -207,149 +203,21 @@
     mode: "{{ item.mode }}"
   loop:
     - { path: elasticsearch-config, owner: "1000", mode: "0755" }
-    - { path: logstash-config, owner: "1000", mode: "0755" }
+    - { path: logstash-config/config, owner: "1000", mode: "0755" }
+    - { path: logstash-config/redelk-main, owner: "1000", mode: "0755" }
+    - { path: logstash-config/certs_inputs, owner: "1000", mode: "0750" }
     - { path: caddy-config, owner: root, group: root, mode: "0755" }
     - { path: certs, owner: "1000", mode: "0750" }
     - { path: certs/ca, owner: "1000", mode: "0750" }
     - { path: redelk-config, mode: "0755" }
+    - { path: redelk-config/etc/cron.d/redelk, owner: "1000", mode: "0755" }
     - { path: redelk-logs, owner: "1000", mode: "0755" }
     - { path: redelk-ssh, mode: "0755" }
     - { path: redelk-www, owner: "1000", mode: "0755" }
     - { path: redelk-www/c2logs, owner: "1000", mode: "0755" }
     - { path: sample-data, mode: "0755" }
-
-- name: Create Logstash configuration folder
-  ansible.builtin.file:
-    path: "{{ redelk_install_folder }}/mounts/logstash-config/config"
-    state: directory
-    owner: "1000"
-    group: "1000"
-    mode: "0755"
-
-- name: Install Logstash pipeline configuration
-  ansible.builtin.copy:
-    src: elkserver/mounts/logstash-config/config/pipelines.yml
-    dest: "{{ redelk_install_folder }}/mounts/logstash-config/config/pipelines.yml"
-    owner: "1000"
-    group: "1000"
-    mode: "0644"
-
-- name: Create Logstash pipeline folder
-  ansible.builtin.file:
-    path: "{{ redelk_install_folder }}/mounts/logstash-config/redelk-main"
-    state: directory
-    owner: "1000"
-    group: "1000"
-    mode: "0755"
-
-- name: Install Logstash pipeline filters and scripts
-  ansible.builtin.copy:
-    src: elkserver/mounts/logstash-config/redelk-main/
-    dest: "{{ redelk_install_folder }}/mounts/logstash-config/redelk-main/"
-    owner: "1000"
-    group: "1000"
-    mode: "0644"
-    directory_mode: "0755"
-
-- name: Copy SSH keypair for scponly user
-  ansible.builtin.copy:
-    src: "ssh-keys/{{ item.path }}"
-    dest: "{{ redelk_install_folder }}/mounts/redelk-ssh"
-    mode: "{{ item.mode }}"
-  loop:
-    - { path: "id_ed25519", mode: "0600" }
-    - { path: "id_ed25519.pub", mode: "0644" }
-
-- name: Create TLS certificate mount directories
-  ansible.builtin.file:
-    path: "{{ redelk_install_folder }}/mounts/logstash-config/certs_inputs"
-    state: directory
-    owner: "1000"
-    group: "1000"
-    mode: "0750"
-
-- name: Install generated TLS certificates
-  ansible.builtin.copy:
-    dest: "{{ redelk_install_folder }}/mounts/logstash-config/certs_inputs"
-    src: "certs/{{ item.path }}"
-    mode: "{{ item.mode }}"
-    owner: "1000"
-    group: "1000"
-  loop:
-    - { path: elkserver.crt, mode: "0644" }
-    - { path: elkserver.key, mode: "0600" }
-
-- name: Create RedELK crontab folder
-  ansible.builtin.file:
-    state: directory
-    dest: "{{ redelk_install_folder }}/mounts/redelk-config/etc/cron.d/redelk"
-    mode: "0700"
-
-- name: Install RedELK base crontab
-  ansible.builtin.template:
-    src: crontab.j2
-    dest: "{{ redelk_install_folder }}/mounts/redelk-config/etc/cron.d/redelk"
-    owner: root
-    group: root
-    mode: "0600"
-
-- name: Create JVM options folder
-  ansible.builtin.file:
-    state: directory
-    dest: "{{ redelk_install_folder }}/mounts/elasticsearch-config/jvm.options.d"
-    mode: "0755"
-
-- name: Set Elasticsearch JVM options
-  ansible.builtin.template:
-    src: jvm.options.j2
-    dest: "{{ redelk_install_folder }}/mounts/elasticsearch-config/jvm.options.d/redelk"
-    mode: "0644"
-
-- name: Create RedELK config folder
-  ansible.builtin.file:
-    state: directory
-    dest: "{{ redelk_install_folder }}/mounts/redelk-config/etc/redelk"
-    mode: "0755"
-
-- name: Render RedELK config file
-  become: true
-  ansible.builtin.template:
-    src: config.json.j2
-    dest: "{{ redelk_install_folder }}/mounts/redelk-config/etc/redelk/config.json"
-    mode: "0644"
-    validate: /usr/bin/python3 -m json.tool %s /dev/null
-
-# FIXME: Templates are static until we expose variables to fill them
-- name: Copy RedELK configuration example files
-  ansible.builtin.template:
-    src: "{{ item.src }}"
-    dest: "{{ redelk_install_folder }}/mounts/redelk-config/etc/redelk/{{ item.dest }}"
-    mode: "0644"
-  loop:
-    - { src: "domainslist_redteam.conf.example", dest: "domainslist_redteam.conf" }
-    - { src: "iplist_alarmed.conf.example", dest: "iplist_alarmed.conf" }
-    - { src: "iplist_blueteam.conf.example", dest: "iplist_blueteam.conf" }
-    - { src: "iplist_customer.conf.example", dest: "iplist_customer.conf" }
-    - { src: "iplist_redteam.conf.example", dest: "iplist_redteam.conf" }
-    - { src: "iplist_unknown.conf.example", dest: "iplist_unknown.conf" }
-    - { src: "rogue_useragents.conf.example", dest: "rogue_useragents.conf" }
-    - { src: "roguedomains.conf.example", dest: "roguedomains.conf" }
-
-- name: Render RedELK password reference file
-  become: true
-  ansible.builtin.template:
-    src: redelk_passwords.cfg.j2
-    dest: "{{ redelk_install_folder }}/redelk_passwords.cfg"
-    mode: "0600"
-
-- name: Configure vm.max_map_count for Elasticsearch
-  become: true
-  ansible.posix.sysctl:
-    name: vm.max_map_count
-    value: "262144"
-    sysctl_file: /etc/sysctl.d/99-redelk.conf
-    state: present
-    reload: true
+    - { path: elasticsearch-config/jvm.options.d, owner: "1000", mode: "0755" }
+    - { path: redelk-config/etc/redelk, owner: "1000", mode: "0755" }
 
 - name: Configure Caddy Basic Auth credentials
   ansible.builtin.template:
@@ -369,6 +237,97 @@
     group: root
     mode: "0644"
   notify: Restart Caddy
+
+- name: Install Logstash pipeline configuration
+  ansible.builtin.copy:
+    src: elkserver/mounts/logstash-config/config/pipelines.yml
+    dest: "{{ redelk_install_folder }}/mounts/logstash-config/config/pipelines.yml"
+    owner: "1000"
+    group: "1000"
+    mode: "0644"
+
+- name: Install Logstash pipeline filters and scripts
+  ansible.builtin.copy:
+    src: elkserver/mounts/logstash-config/redelk-main/
+    dest: "{{ redelk_install_folder }}/mounts/logstash-config/redelk-main/"
+    owner: "1000"
+    group: "1000"
+    mode: "0644"
+    directory_mode: "0755"
+
+- name: Copy SSH keypair for scponly user
+  ansible.builtin.copy:
+    src: "ssh-keys/{{ item.path }}"
+    dest: "{{ redelk_install_folder }}/mounts/redelk-ssh"
+    mode: "{{ item.mode }}"
+  loop:
+    - { path: "id_ed25519", mode: "0600" }
+    - { path: "id_ed25519.pub", mode: "0644" }
+
+- name: Install generated TLS certificates
+  ansible.builtin.copy:
+    dest: "{{ redelk_install_folder }}/mounts/logstash-config/certs_inputs"
+    src: "certs/{{ item.path }}"
+    mode: "{{ item.mode }}"
+    owner: "1000"
+    group: "1000"
+  loop:
+    - { path: elkserver.crt, mode: "0644" }
+    - { path: elkserver.key, mode: "0600" }
+
+- name: Install RedELK base crontab
+  ansible.builtin.template:
+    src: crontab.j2
+    dest: "{{ redelk_install_folder }}/mounts/redelk-config/etc/cron.d/redelk"
+    owner: root
+    group: root
+    mode: "0600"
+
+- name: Set Elasticsearch JVM options
+  ansible.builtin.template:
+    src: jvm.options.j2
+    dest: "{{ redelk_install_folder }}/mounts/elasticsearch-config/jvm.options.d/redelk"
+    mode: "0644"
+
+# FIXME: Templates are static until we expose variables to fill them
+- name: Copy RedELK configuration example files
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ redelk_install_folder }}/mounts/redelk-config/etc/redelk/{{ item.dest }}"
+    mode: "0644"
+  loop:
+    - { src: "domainslist_redteam.conf.example", dest: "domainslist_redteam.conf" }
+    - { src: "iplist_alarmed.conf.example", dest: "iplist_alarmed.conf" }
+    - { src: "iplist_blueteam.conf.example", dest: "iplist_blueteam.conf" }
+    - { src: "iplist_customer.conf.example", dest: "iplist_customer.conf" }
+    - { src: "iplist_redteam.conf.example", dest: "iplist_redteam.conf" }
+    - { src: "iplist_unknown.conf.example", dest: "iplist_unknown.conf" }
+    - { src: "rogue_useragents.conf.example", dest: "rogue_useragents.conf" }
+    - { src: "roguedomains.conf.example", dest: "roguedomains.conf" }
+
+- name: Render RedELK config file
+  become: true
+  ansible.builtin.template:
+    src: config.json.j2
+    dest: "{{ redelk_install_folder }}/mounts/redelk-config/etc/redelk/config.json"
+    mode: "0644"
+    validate: /usr/bin/python3 -m json.tool %s /dev/null
+
+- name: Configure vm.max_map_count for Elasticsearch
+  become: true
+  ansible.posix.sysctl:
+    name: vm.max_map_count
+    value: "262144"
+    sysctl_file: /etc/sysctl.d/99-redelk.conf
+    state: present
+    reload: true
+
+- name: Render RedELK password reference file
+  become: true
+  ansible.builtin.template:
+    src: redelk_passwords.cfg.j2
+    dest: "{{ redelk_install_folder }}/redelk_passwords.cfg"
+    mode: "0600"
 
 - name: Start RedELK server
   community.docker.docker_compose_v2:
