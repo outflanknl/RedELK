@@ -1,9 +1,10 @@
 ---
-- name: Require an external domain for Caddy
+- name: Validate Caddy HTTPS configuration
   ansible.builtin.assert:
     that:
-      - redelk_external_domain | trim | length > 0
-    fail_msg: Set redelk_external_domain to the public DNS name pointing to this server or the Caddy proxy server will silently fail.
+      - redelk_domain | trim | length > 0
+      - redelk_cert_issuer in ['acme', 'internal']
+    fail_msg: Set redelk_domain to a DNS name pointing to this server and redelk_cert_issuer to acme or internal.
 
 - name: Create PKI directory
   delegate_to: localhost
@@ -72,7 +73,7 @@
       community.crypto.openssl_csr:
         path: certs/elkserver.csr
         privatekey_path: certs/elkserver.key
-        common_name: "{{ redelk_external_domain }}"
+        common_name: "{{ redelk_domain }}"
         use_common_name_for_san: false
         digest: sha512
         key_usage:
@@ -85,7 +86,7 @@
           - serverAuth
         extended_key_usage_critical: false
         subject_alt_name:
-          - "DNS:{{ redelk_external_domain }}"
+          - "DNS:{{ redelk_domain }}"
           - "DNS:{{ redelk_certificate_san_1 }}"
           - "DNS:{{ redelk_certificate_san_2 }}"
           - "IP:{{ redelk_certificate_ip_1 }}"

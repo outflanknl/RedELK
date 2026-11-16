@@ -20,12 +20,14 @@ redelk_version: ""
 #  - CN: example.com
 #  - emailAddress: hello@example.com
 
-# The external domain name that the RedELK server should be accessible on
-# This is mandatory and is used for automatic Let's Encrypt certificate generation through Caddy
-#redelk_external_domain: example.com
+# DNS name clients use to reach RedELK (public or private).
+#redelk_domain: example.com
+
+# HTTPS certificate issuer: acme (default) or internal (trust Caddy's CA on clients).
+redelk_cert_issuer: internal
 
 # SANs must match the DNS names/IP that Filebeat clients use to connect to RedELK's Logstash endpoint.
-# You don't need to include the `redelk_external_domain` as one of the SANs.
+# You don't need to include the `redelk_domain` as one of the SANs.
 # Ansible already takes care of that.
 #redelk_certificate_san_1: localhost
 #redelk_certificate_san_2: logs.example.com

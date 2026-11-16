@@ -9,7 +9,8 @@ redelk_username: redelk  # password is generated on the fly
 redelk_sync_user: scponly
 redelk_sync_port: 22
 
-redelk_external_domain: ""
+redelk_domain: ""
+redelk_cert_issuer: acme
 
 # Subject for CA and RedELK server certificates, in distinguished-name order
 redelk_certificate_subject:

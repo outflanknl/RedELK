@@ -1,4 +1,8 @@
-{{ redelk_external_domain | to_json }} {
+{{ redelk_domain | to_json }} {
+{% if redelk_cert_issuer == 'internal' %}
+	tls internal
+
+{% endif %}
 	header {
 		Strict-Transport-Security "max-age=63072000"
 		-Server

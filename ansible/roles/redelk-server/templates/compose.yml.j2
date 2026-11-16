@@ -135,7 +135,7 @@ services:
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=${CERTS_DIR_KBN}/ca/ca.crt
       - SERVER_SSL_CERTIFICATEAUTHORITIES=${CERTS_DIR_KBN}/ca/ca.crt
       - SERVER_SSL_ENABLED=true
-      - SERVER_PUBLICBASEURL=https://{{ redelk_external_domain }}
+      - SERVER_PUBLICBASEURL=https://{{ redelk_domain }}
       - SERVER_SSL_CERTIFICATE=${CERTS_DIR_KBN}/redelk-kibana/redelk-kibana.crt
       - SERVER_SSL_KEY=${CERTS_DIR_KBN}/redelk-kibana/redelk-kibana.key
       - XPACK_ENCRYPTEDSAVEDOBJECTS_ENCRYPTIONKEY=${KBN_XPACK_ENCRYPTEDSAVEDOBJECTS}

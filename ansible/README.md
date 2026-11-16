@@ -83,7 +83,8 @@ Server-related:
 - `redelk_install_folder` (default `/opt/redelk`)
 - `redelk_install_type` (`limited`, `full`, or `dev`)
 - optional `redelk_elk_install_command` for backwards compatibility with older examples
-- `redelk_external_domain`: public DNS name for Caddy's automatic HTTPS endpoint
+- `redelk_domain`: public or private DNS name for the Caddy HTTPS endpoint
+- `redelk_cert_issuer`: `acme` (default) for public certificates, or `internal` for Caddy's internal CA
 
 Client-related:
 - `redelk_local_repo_path`
@@ -92,11 +93,6 @@ Client-related:
 - optional `redelk_identifier` (defaults to `inventory_hostname`)
 - optional `redelk_sync_public_key_path` for C2 rsync access
 - optional `redelk_c2_filebeat_inputs` and `redelk_c2_sync_jobs`
-
-Deployment controls:
-- `deploy_redelk` (`true` in the supplied group vars; set `false` to explicitly skip client deployment on selected hosts)
-
-`redelk_generate_packages` is no longer used. Deployment never invokes package preparation.
 
 ## Usage
 
