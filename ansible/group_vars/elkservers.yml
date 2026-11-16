@@ -19,6 +19,10 @@ redelk_version: ""
 #   - CN: example.com
 #   - emailAddress: hello@example.com
 
+# The external domain name that the RedELK server should be accessible on
+# This is mandatory and is used for automatic Let's Encrypt certificate generation through Caddy
+#redelk_external_domain: example.com
+
 # SANs must match the DNS names/IP that clients use to connect to RedELK.
 # redelk_certificate_san_1: example.com
 # redelk_certificate_san_2: logs.example.com
