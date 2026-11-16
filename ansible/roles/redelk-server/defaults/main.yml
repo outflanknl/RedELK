@@ -21,12 +21,9 @@ redelk_certificate_subject:
   - CN: example.com
   - emailAddress: hello@example.com
 
-# Enter the valid IP or DNS where the teamservers and redirectors can reach
-# your ELK server in the fields below. If not done correctly, Logstash on your
-# ELK server will crash with cryptic errors.
-redelk_certificate_san_1: dnsnameofyourredelkserver
+redelk_certificate_san_1: localhost
 redelk_certificate_san_2: someseconddnsname
-redelk_certificate_ip_1: 123.123.123.123
+redelk_certificate_ip_1: 127.0.0.1
 
 # Set this value to 50% of the system memory remaining after reserving 3GB for the host OS and non-Elasticsearch containers; round up and cap at 9GB.
 redelk_elasticsearch_memory: 3g

@@ -1,29 +1,32 @@
 ---
 ansible_become: true
-deploy_redelk: true
 
 redelk_local_repo_path: "{{ playbook_dir | dirname }}"
 
+# The path on the RedELK server where the application should be installed.
 redelk_install_folder: /opt/redelk
+
 # Set the exact GitHub release tag matching this source checkout.
 redelk_version: ""
 
 # Optional certificate overrides; omit these to use the role defaults.
 # Uncomment the entire subject list to override it.
-# redelk_certificate_subject:
-#   - C: NL
-#   - ST: Noord-Holland
-#   - L: Amsterdam
-#   - O: Contoso
-#   - OU: IT Department
-#   - CN: example.com
-#   - emailAddress: hello@example.com
+#redelk_certificate_subject:
+#  - C: NL
+#  - ST: Noord-Holland
+#  - L: Amsterdam
+#  - O: Contoso
+#  - OU: IT Department
+#  - CN: example.com
+#  - emailAddress: hello@example.com
 
 # The external domain name that the RedELK server should be accessible on
 # This is mandatory and is used for automatic Let's Encrypt certificate generation through Caddy
 #redelk_external_domain: example.com
 
-# SANs must match the DNS names/IP that clients use to connect to RedELK.
-# redelk_certificate_san_1: example.com
-# redelk_certificate_san_2: logs.example.com
-# redelk_certificate_ip_1: 192.0.2.10
+# SANs must match the DNS names/IP that Filebeat clients use to connect to RedELK's Logstash endpoint.
+# You don't need to include the `redelk_external_domain` as one of the SANs.
+# Ansible already takes care of that.
+#redelk_certificate_san_1: localhost
+#redelk_certificate_san_2: logs.example.com
+#redelk_certificate_ip_1: 192.0.2.10
