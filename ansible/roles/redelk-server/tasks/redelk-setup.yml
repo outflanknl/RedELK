@@ -211,7 +211,7 @@
     - { path: certs, owner: "1000", mode: "0750" }
     - { path: certs/ca, owner: "1000", mode: "0750" }
     - { path: redelk-config, mode: "0755" }
-    - { path: redelk-config/etc/cron.d/redelk, owner: "1000", mode: "0755" }
+    - { path: redelk-config/etc/cron.d, owner: "1000", mode: "0755" }
     - { path: redelk-logs, owner: "1000", mode: "0755" }
     - { path: redelk-ssh, mode: "0755" }
     - { path: redelk-www, owner: "1000", mode: "0755" }
