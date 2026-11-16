@@ -72,7 +72,7 @@
       community.crypto.openssl_csr:
         path: certs/elkserver.csr
         privatekey_path: certs/elkserver.key
-        subject_ordered: "{{ redelk_certificate_subject }}"
+        common_name: "{{ redelk_external_domain }}"
         use_common_name_for_san: false
         digest: sha512
         key_usage:
@@ -85,6 +85,7 @@
           - serverAuth
         extended_key_usage_critical: false
         subject_alt_name:
+          - "DNS:{{ redelk_external_domain }}"
           - "DNS:{{ redelk_certificate_san_1 }}"
           - "DNS:{{ redelk_certificate_san_2 }}"
           - "IP:{{ redelk_certificate_ip_1 }}"
