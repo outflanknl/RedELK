@@ -78,6 +78,12 @@
       "cache": {{ redelk_enrich_greynoise_cache | default(86400) | int | to_json }},
       "api_key": {{ redelk_greynoise_api_key | default('') | to_json }}
     },
+    "enrich_vpndetection": {
+      "enabled": {{ redelk_enrich_vpndetection | default(false) | bool | to_json }},
+      "interval": {{ redelk_enrich_vpndetection_interval | default(315) | int | to_json }},
+      "cache": {{ redelk_enrich_vpndetection_cache | default(86400) | int | to_json }},
+      "api_key": {{ redelk_vpndetection_api_key | default('') | to_json }}
+    },
     "enrich_tor": {
       "enabled": {{ redelk_enrich_tor | default(true) | bool | to_json }},
       "interval": {{ redelk_enrich_tor_interval | default(360) | int | to_json }},
