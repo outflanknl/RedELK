@@ -90,6 +90,13 @@ enrich = {
         # Greynoise Community API Key - Default RedELK key if none provided
         "api_key": "cEwJeLyDkNSXzabKNvzJSzZjZW0xEJYSYvf2nfhmmaXQHfCA8bJb49AvI3DF5Tlx",
     },
+    "enrich_vpndetection": {
+        "enabled": False,
+        "interval": 315,
+        "cache": 86400,  # Only query for the same IP hit every 24h by default
+        # Not needed for the VPN, Tor and relay flags
+        "api_key": "",
+    },
     "enrich_tor": {"enabled": True, "interval": 320, "cache": 3600},
     "enrich_iplists": {"enabled": True, "interval": 330},
     "enrich_synciplists": {"enabled": True, "interval": 360},

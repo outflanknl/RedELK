@@ -61,6 +61,7 @@ redelk_virustotal_api_key: ""
 redelk_ibm_basic_auth: ""
 redelk_ha_api_key: ""
 redelk_greynoise_api_key: ""
+redelk_vpndetection_api_key: ""
 
 # Alarms
 redelk_alarm_dummy_enabled: false
@@ -93,6 +94,10 @@ redelk_enrich_sliver_interval: 300
 redelk_enrich_greynoise: true
 redelk_enrich_greynoise_interval: 310
 redelk_enrich_greynoise_cache: 86400
+
+redelk_enrich_vpndetection: false
+redelk_enrich_vpndetection_interval: 315
+redelk_enrich_vpndetection_cache: 86400
 
 redelk_enrich_tor: true
 redelk_enrich_tor_interval: 360

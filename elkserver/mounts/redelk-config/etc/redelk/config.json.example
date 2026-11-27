@@ -82,6 +82,12 @@
             "cache": 86400,
             "api_key": ""
         },
+        "enrich_vpndetection": {
+            "enabled": false,
+            "interval": 315,
+            "cache": 86400,
+            "api_key": ""
+        },
         "enrich_tor": {
             "enabled": true,
             "interval": 360,
